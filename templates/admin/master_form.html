@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}{% if mode=='new' %}마스터 등록{% else %}마스터 수정{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="m-0 fw-bold">{% if mode=='new' %}마스터 등록{% else %}마스터 수정{% endif %}</h3>
+      <a href="/admin/masters" class="btn btn-sm btn-outline-secondary">이전으로</a>
+    </div>
+
+    {% if errors %}
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="card shadow border-0">
+      <div class="card-body p-4">
+        <form method="post" action="{% if mode=='new' %}/admin/masters/new{% else %}/admin/masters/{{ master.master_id }}/edit{% endif %}">
+          
+          {% if mode == 'new' %}
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted">계정 정보</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">로그인 ID</label>
+              <input type="text" name="login_id" class="form-control" value="{{ master.login_id|default('') }}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">비밀번호</label>
+              <input type="password" name="password" class="form-control" minlength="8" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">비밀번호 확인</label>
+              <input type="password" name="password2" class="form-control" required>
+            </div>
+          </div>
+          {% endif %}
+
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted">브랜드 정보</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">선생님 이름</label>
+              <input type="text" name="선생님이름" class="form-control" value="{{ master.선생님이름|default('') }}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">연구소명</label>
+              <input type="text" name="연구소명" class="form-control" value="{{ master.연구소명|default('') }}">
+            </div>
+            
+            <div class="col-md-12">
+              <label class="form-label small fw-bold d-block">호칭조사</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="호칭조사" id="josa1" value="이" {% if master.호칭조사|default('이') == '이' %}checked{% endif %}>
+                <label class="form-check-label" for="josa1">이</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="호칭조사" id="josa2" value="가" {% if master.호칭조사 == '가' %}checked{% endif %}>
+                <label class="form-check-label" for="josa2">가</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">서명문구</label>
+              <input type="text" name="서명문구" class="form-control" value="{{ master.서명문구|default('') }}">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">마무리인사</label>
+              <input type="text" name="마무리인사" class="form-control" value="{{ master.마무리인사|default('') }}">
+            </div>
+          </div>
+
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted">연락처 및 연결 채널</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">연락처</label>
+              <input type="text" name="연락처" class="form-control" value="{{ master.연락처|default('') | phone }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">이메일</label>
+              <input type="email" name="이메일" class="form-control" value="{{ master.이메일|default('') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">홈페이지</label>
+              <input type="text" name="홈페이지" class="form-control" value="{{ master.홈페이지|default('') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">카카오채널</label>
+              <input type="text" name="카카오채널" class="form-control" value="{{ master.카카오채널|default('') }}">
+            </div>
+          </div>
+
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted">색상</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">브랜드색상</label>
+              <div class="d-flex align-items-center">
+                <input type="color" id="brandColorPicker" class="form-control form-control-color me-2" value="{{ master.브랜드색상|default('#1A3A6A') }}">
+                <input type="text" name="브랜드색상" id="brandColorText" class="form-control" value="{{ master.브랜드색상|default('#1A3A6A') }}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">금색</label>
+              <div class="d-flex align-items-center">
+                <input type="color" id="goldColorPicker" class="form-control form-control-color me-2" value="{{ master.금색|default('#C8B860') }}">
+                <input type="text" name="금색" id="goldColorText" class="form-control" value="{{ master.금색|default('#C8B860') }}">
+              </div>
+            </div>
+          </div>
+
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted">관리</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">요금제</label>
+              <select name="plan" class="form-select">
+                <option value="basic" {% if master.plan|default('basic') == 'basic' %}selected{% endif %}>basic</option>
+                <option value="pro" {% if master.plan == 'pro' %}selected{% endif %}>pro</option>
+                <option value="unlimited" {% if master.plan == 'unlimited' %}selected{% endif %}>unlimited</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">상태</label>
+              <select name="status" class="form-select">
+                <option value="대기" {% if master.status|default('대기') == '대기' %}selected{% endif %}>대기</option>
+                <option value="활성" {% if master.status == '활성' %}selected{% endif %}>활성</option>
+                <option value="정지" {% if master.status == '정지' %}selected{% endif %}>정지</option>
+              </select>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">메모</label>
+              <textarea name="memo" class="form-control" rows="3">{{ master.memo|default('') }}</textarea>
+            </div>
+          </div>
+
+          {% if mode == 'edit' %}
+          <h5 class="border-bottom pb-2 mb-3 fw-bold text-muted mt-2">비밀번호 변경</h5>
+          <div class="row g-3 mb-4">
+            <div class="col-md-12">
+              <label class="form-label small fw-bold">새 비밀번호</label>
+              <input type="password" name="new_password" class="form-control">
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3">
+            <a href="/admin/masters" class="btn btn-light px-4">취소</a>
+            <button type="submit" class="btn btn-gold px-5 fw-bold" style="padding: 10px 40px;">저장하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Color Picker Sync
+  document.getElementById('brandColorPicker').addEventListener('input', (e) => { 
+    document.getElementById('brandColorText').value = e.target.value; 
+  });
+  document.getElementById('brandColorText').addEventListener('input', (e) => { 
+    document.getElementById('brandColorPicker').value = e.target.value; 
+  });
+
+  document.getElementById('goldColorPicker').addEventListener('input', (e) => { 
+    document.getElementById('goldColorText').value = e.target.value; 
+  });
+  document.getElementById('goldColorText').addEventListener('input', (e) => { 
+    document.getElementById('goldColorPicker').value = e.target.value; 
+  });
+</script>
+{% endblock %}

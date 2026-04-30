@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>공망 안내박스 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:18pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 공망 개념 설명 박스 ── */
+.concept-card {
+  border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0;
+}
+.concept-hd {
+  background:linear-gradient(135deg,#37474f,#546e7a);
+  padding:8px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.concept-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.concept-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+.concept-body {
+  background:white; padding:12px 16px;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cb-text { font-size:7pt; color:#333; line-height:1.8; }
+.cb-text strong { color:#f44336; }
+
+.gongmang-visual {
+  display:flex; flex-direction:column; gap:6px;
+}
+.gv-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:4px; }
+.gv-table { width:100%; border-collapse:collapse; }
+.gv-table td, .gv-table th {
+  border:1px solid #333; padding:4px 6px;
+  text-align:center; font-size:6.5pt;
+}
+.gv-table th { background:#f5f5f5; font-weight:700; color:#555; }
+.gv-empty { background:#fff3e0 !important; color:#e65100 !important; font-weight:700; }
+.gv-jijisam { font-family:'Nanum Myeongjo',serif; font-size:10pt; font-weight:800; }
+
+/* ── 최원석 공망 핵심 박스 ── */
+.my-gongmang {
+  border:2px solid #f44336; border-radius:14px; overflow:hidden; flex-shrink:0;
+}
+.mg-hd {
+  background:linear-gradient(135deg,#c62828,#f44336);
+  padding:8px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.mg-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.mg-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* 공망 2개 카드 */
+.gm-cards {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; background:white;
+  border-bottom:1px solid #e0e0e0;
+}
+.gm-card {
+  padding:12px 14px; border-right:1px solid #e0e0e0;
+}
+.gm-card:last-child { border-right:none; }
+.gm-card-hd {
+  display:flex; align-items:center; gap:8px; margin-bottom:8px;
+}
+.gm-hanja {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:32pt; font-weight:800; line-height:1;
+  color:#f44336;
+}
+.gm-info {}
+.gm-name { font-size:10pt; font-weight:700; color:#f44336; }
+.gm-pos  { font-size:6.5pt; color:#888; }
+.gm-badge {
+  font-size:6.5pt; font-weight:700; color:white;
+  padding:2px 9px; border-radius:8px; display:inline-block; margin-top:2px;
+}
+
+.gm-rows { display:flex; flex-direction:column; gap:5px; }
+.gm-row  { display:flex; align-items:flex-start; gap:6px; font-size:7pt; }
+.gm-key  { font-size:6pt; font-weight:700; color:white; padding:1px 6px; border-radius:4px; flex-shrink:0; }
+.gm-val  { color:#333; line-height:1.5; }
+
+/* 공망 영향 섹션 */
+.impact-section {
+  padding:10px 14px; background:white;
+  border-bottom:1px solid #e0e0e0;
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.imp-item {
+  border:1.5px solid #333; border-radius:8px; overflow:hidden;
+}
+.imp-hd {
+  padding:5px 10px; font-size:7pt; font-weight:700; color:white;
+}
+.imp-body {
+  padding:7px 10px; background:white; font-size:6.5pt; color:#444; line-height:1.6;
+}
+
+/* 공망 극복 방법 */
+.overcome-section {
+  padding:10px 14px; background:#fffef5;
+  border-bottom:1px solid #ffe082;
+}
+.ov-title { font-size:7pt; font-weight:700; color:#e65100; margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+.ov-title::before { content:''; display:inline-block; width:3px; height:11px; background:#ff9800; border-radius:2px; }
+.ov-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.ov-item { display:flex; align-items:flex-start; gap:6px; font-size:7pt; color:#333; }
+.ov-num  {
+  width:18px; height:18px; border-radius:50%; background:#ff9800;
+  color:white; font-size:8pt; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.ov-text { line-height:1.6; }
+
+/* 60갑자 공망표 미니 */
+.table60-section {
+  padding:10px 14px; background:white;
+}
+.t60-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:7px; }
+.t60-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:3px; }
+.t60-item {
+  border:1px solid #ddd; border-radius:5px; padding:3px 4px;
+  text-align:center; font-size:6pt;
+}
+.t60-ganji { font-family:'Nanum Myeongjo',serif; font-size:9pt; font-weight:700; line-height:1.2; }
+.t60-gm    { font-size:5.5pt; color:#888; }
+.t60-mine  { border:2px solid #f44336 !important; background:#fff3f3 !important; }
+.t60-mine .t60-ganji { color:#f44336; }
+.t60-mine .t60-gm    { color:#f44336; font-weight:700; }
+
+/* 메모 */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 13px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-title">
+  <div>
+    <div class="pt-main">공망(空亡) 안내박스</div>
+    <div class="pt-sub">空亡 — 기운이 비워지는 자리 · 辰·巳 이중 공망</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생</div>
+  </div>
+</div>
+
+<!-- 공망 개념 설명 -->
+<div class="concept-card">
+  <div class="concept-hd">
+    <div class="concept-hd-title">⚡ 공망(空亡)이란 무엇인가</div>
+    <div class="concept-hd-sub">지지 12개 중 짝이 없는 2개의 자리</div>
+  </div>
+  <div class="concept-body">
+    <div class="cb-text">
+      사주에서 공망(空亡)이란 <strong>비어있는 자리</strong>를 뜻합니다.<br><br>
+      天干(천간)은 10개, 地支(지지)는 12개입니다. 60갑자를 10개씩 묶으면 6순(旬)이 되는데, 각 순(旬)에서 천간 10개가 지지 10개와 짝을 이루고 나면 지지 2개가 남습니다. 이 짝이 없는 지지 2개가 바로 <strong>공망</strong>입니다.<br><br>
+      공망에 해당하는 지지가 사주 네 기둥에 들어오면 그 자리의 기운이 <strong>온전히 발현되지 않는</strong> 현상이 나타납니다. 있지만 비어있는 것처럼 작동하는 자리입니다.<br><br>
+      <strong>공망이 무조건 나쁜 것은 아닙니다.</strong> 흉살이 공망에 걸리면 흉이 약해지고, 길신이 공망에 걸리면 길이 약해집니다. 어떤 십성이 공망에 걸렸는지가 핵심입니다.
+    </div>
+    <div class="gongmang-visual">
+      <div class="gv-title">공망 계산 원리 — 甲子旬(갑자순) 예시</div>
+      <table class="gv-table">
+        <tr>
+          <th>天干</th>
+          <td>甲</td><td>乙</td><td>丙</td><td>丁</td><td>戊</td>
+          <td>己</td><td>庚</td><td>辛</td><td>壬</td><td>癸</td>
+          <td class="gv-empty">—</td><td class="gv-empty">—</td>
+        </tr>
+        <tr>
+          <th>地支</th>
+          <td class="gv-jijisam">子</td><td class="gv-jijisam">丑</td>
+          <td class="gv-jijisam">寅</td><td class="gv-jijisam">卯</td>
+          <td class="gv-jijisam">辰</td><td class="gv-jijisam">巳</td>
+          <td class="gv-jijisam">午</td><td class="gv-jijisam">未</td>
+          <td class="gv-jijisam">申</td><td class="gv-jijisam">酉</td>
+          <td class="gv-empty" style="font-family:'Nanum Myeongjo',serif;font-size:10pt;">戌</td>
+          <td class="gv-empty" style="font-family:'Nanum Myeongjo',serif;font-size:10pt;">亥</td>
+        </tr>
+      </table>
+      <div style="font-size:6pt;color:#888;margin-top:4px;">위 예시는 甲子旬 → 戌·亥 공망. 최원석 님은 癸卯旬 → 辰·巳 공망.</div>
+      <div style="background:#fff3e0;border:1.5px solid #ff9800;border-radius:6px;padding:7px 9px;margin-top:6px;">
+        <div style="font-size:6.5pt;font-weight:700;color:#e65100;margin-bottom:3px;">최원석 님 공망 — 癸卯旬(계묘순)</div>
+        <div style="font-size:6.5pt;color:#333;line-height:1.7;">
+          년주 癸卯 기준 → <strong style="color:#f44336;">辰(진)·巳(사) 공망</strong><br>
+          일지 辰 = <strong>배우자·내면 자리</strong> 공망 ⚡<br>
+          시지 巳 = <strong>자녀·말년 자리</strong> 공망 ⚡
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 최원석 공망 핵심 -->
+<div class="my-gongmang">
+  <div class="mg-hd">
+    <div class="mg-hd-title">⚡ 최원석 님의 공망 — 辰·巳 이중 공망</div>
+    <div class="mg-hd-sub">일지·시지 동시 공망 · 배우자궁·자녀궁</div>
+  </div>
+
+  <!-- 공망 2개 상세 -->
+  <div class="gm-cards">
+
+    <!-- 辰 공망 (일지) -->
+    <div class="gm-card">
+      <div class="gm-card-hd">
+        <div class="gm-hanja">辰</div>
+        <div class="gm-info">
+          <div class="gm-name">辰(진) 공망</div>
+          <div class="gm-pos">일지(日支) · 배우자·내면 자리</div>
+          <span class="gm-badge" style="background:#f44336;">⚡ 배우자궁 공망</span>
+        </div>
+      </div>
+      <div class="gm-rows">
+        <div class="gm-row">
+          <span class="gm-key" style="background:#f44336;">위치</span>
+          <span class="gm-val">일지(日支) — 배우자·내면 자리</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#ff9800;">오행</span>
+          <span class="gm-val">土(토) · 습토(濕土) · 용(龍)</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#9e9e9e;">십성</span>
+          <span class="gm-val">비견(比肩) — 경쟁심·자립심</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#2196f3;">지장간</span>
+          <span class="gm-val">乙(정관)·癸(정재)·戊(비견) 숨어있으나 발현 약함</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#f44336;">영향</span>
+          <span class="gm-val">배우자 인연 허전함. 결혼 관계에서 공허감. 재혼 패턴 연결.</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#4caf50;">활성화</span>
+          <span class="gm-val">辰·巳 운(運)이 들어올 때. 己未 대운(64세~) 일부 개방.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 巳 공망 (시지) -->
+    <div class="gm-card">
+      <div class="gm-card-hd">
+        <div class="gm-hanja">巳</div>
+        <div class="gm-info">
+          <div class="gm-name">巳(사) 공망</div>
+          <div class="gm-pos">시지(時支) · 자녀·말년 자리</div>
+          <span class="gm-badge" style="background:#ff5722;">⚡ 자녀궁·용신 공망</span>
+        </div>
+      </div>
+      <div class="gm-rows">
+        <div class="gm-row">
+          <span class="gm-key" style="background:#f44336;">위치</span>
+          <span class="gm-val">시지(時支) — 자녀·말년·꿈 자리</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#f44336;">오행</span>
+          <span class="gm-val">火(화) · 用神 오행! — 공망 핵심 문제</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#9e9e9e;">십성</span>
+          <span class="gm-val">편인(偏印) — 직관력·독창성</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#2196f3;">지장간</span>
+          <span class="gm-val">戊(비견)·庚(식신)·<strong style="color:#f44336;">丙(편인·用神)</strong> — 핵심 공망</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#f44336;">영향</span>
+          <span class="gm-val">용신 丙火 발현 불완전. 자녀 인연 거리감. 말년 꿈 허전함.</span>
+        </div>
+        <div class="gm-row">
+          <span class="gm-key" style="background:#4caf50;">활성화</span>
+          <span class="gm-val">戊午 대운(74세~) 用神 午火 제왕으로 巳 공망 보완.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 공망 영향 3영역 -->
+  <div class="impact-section">
+    <div class="imp-item">
+      <div class="imp-hd" style="background:#f44336;">💑 배우자·가정 영역</div>
+      <div class="imp-body">
+        일지(배우자궁) 辰 공망으로 첫 결혼 관계에서 공허감·이별. <strong>재혼 패턴</strong>과 연결. 현재 재혼 상태 — 공망의 현실화. 아내와의 관계에 의식적 에너지 투자 필요. 소통·감사 표현이 공망 보완책.
+      </div>
+    </div>
+    <div class="imp-item">
+      <div class="imp-hd" style="background:#ff9800;">🔥 용신·운세 영역</div>
+      <div class="imp-body">
+        시지 巳 공망으로 用神 丙火 발현 불완전. 火 기운이 있어도 제대로 작동하지 않는 구간 발생. <strong>의식적인 火 강화</strong> 필요. 붉은색·남방·여름을 평소보다 더 적극적으로 활용. 용신 세운(丙午·2026년)에 공망 일부 극복.
+      </div>
+    </div>
+    <div class="imp-item">
+      <div class="imp-hd" style="background:#2196f3;">👶 자녀·말년 영역</div>
+      <div class="imp-body">
+        시지(자녀궁) 巳 공망으로 자녀 인연에 거리감. 자녀와의 관계에서 소통 노력 필요. 말년(시주) 자리의 공망은 隱遁(은둔)·종교·봉사로 昇華(승화) 가능. <strong>74세 戊午 대운</strong>부터 말년 기운 회복.
+      </div>
+    </div>
+  </div>
+
+  <!-- 공망 극복 방법 -->
+  <div class="overcome-section">
+    <div class="ov-title">💡 공망 극복 · 보완 방법</div>
+    <div class="ov-grid">
+      <div class="ov-item">
+        <div class="ov-num">1</div>
+        <div class="ov-text"><strong>공망 오행(火·土) 의식적 강화</strong><br>붉은색 착용, 남향 생활, 여름 집중 행동으로 시지 巳 공망 부분 극복.</div>
+      </div>
+      <div class="ov-item">
+        <div class="ov-num">2</div>
+        <div class="ov-text"><strong>배우자 관계 의식적 투자</strong><br>일지 공망 = 배우자 자리 허전함. 감사·소통·공동 활동으로 보완 필수.</div>
+      </div>
+      <div class="ov-item">
+        <div class="ov-num">3</div>
+        <div class="ov-text"><strong>공망 운(運) 활용</strong><br>辰·巳 세운·월운에 오히려 공망 기운이 열리는 시기. 역설적 활성화 구간.</div>
+      </div>
+      <div class="ov-item">
+        <div class="ov-num">4</div>
+        <div class="ov-text"><strong>64세 己未 대운 이후</strong><br>己未 대운에서 지장간 丁火 활성화 시작. 공망 기운 점차 열림.</div>
+      </div>
+      <div class="ov-item">
+        <div class="ov-num">5</div>
+        <div class="ov-text"><strong>종교·봉사·창작으로 승화</strong><br>공망 자리는 물질보다 정신·봉사 활동에서 더 풍요롭게 작동.</div>
+      </div>
+      <div class="ov-item">
+        <div class="ov-num">6</div>
+        <div class="ov-text"><strong>74세 戊午 대운 제왕</strong><br>用神 午火 제왕으로 시지 巳 공망 최대 보완. 말년 공망 극복의 정점.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- my-gongmang -->
+
+<!-- 메모 -->
+<div class="memo">
+  <strong style="color:#37474f;">📌 반야선생의 공망 핵심 요약</strong> &nbsp;
+  최원석 님의 <strong style="color:#f44336;">辰·巳 이중 공망</strong>은 배우자궁(일지)과 자녀·말년궁(시지)이 동시에 비어있는 구조입니다. 재혼 패턴과 자녀 관계의 거리감이 이 공망과 연결됩니다.
+  그러나 <strong>공망이 영원히 비어있는 것은 아닙니다.</strong> 辰·巳 운이 들어올 때 역설적으로 공망이 열립니다. 특히 <strong style="color:#f44336;">74세 戊午 대운의 用神 午火 제왕</strong>이 巳 공망을 최대로 보완하는 시기입니다. 지금 건강을 지키는 것이 공망 극복의 열쇠입니다.
+</div>
+
+</div>
+</body>
+</html>

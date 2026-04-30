@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>십이운성 에너지 곡선 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:20pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7.5pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:12pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6.5pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 카드 ── */
+.card {
+  border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0;
+}
+.card-hd {
+  padding:7px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ── 범례 ── */
+.legend {
+  display:flex; align-items:center; gap:16px; padding:8px 16px;
+  background:#fafafa; border-bottom:1px solid #e0e0e0; flex-wrap:wrap;
+}
+.lg-item { display:flex; align-items:center; gap:4px; font-size:7pt; color:#555; }
+.lg-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+.lg-line { width:16px; height:2px; border-top:2px dashed #f44336; flex-shrink:0; }
+
+/* ── 차트 영역 ── */
+.chart-wrap {
+  padding:14px 16px 8px;
+  background:white;
+  border-bottom:1px solid #e0e0e0;
+}
+.chart-inner { position:relative; width:100%; height:52mm; }
+
+/* ── 테이블 ── */
+.dt-table { width:100%; border-collapse:collapse; }
+.dt-table th {
+  font-size:6.5pt; font-weight:700; color:#555;
+  background:#f5f5f5; padding:5px 8px;
+  border:1px solid #333; text-align:center;
+}
+.dt-table th:first-child { border-left:none; }
+.dt-table th:last-child  { border-right:none; }
+.dt-table thead tr th    { border-top:none; }
+
+.dt-table td {
+  border:1px solid #e0e0e0; padding:5px 8px;
+  vertical-align:middle; font-size:7pt; text-align:center;
+}
+.dt-table td:first-child { border-left:none; }
+.dt-table td:last-child  { border-right:none; }
+.dt-table tbody tr:last-child td { border-bottom:none; }
+
+.now-row { background:rgba(255,152,0,0.06); }
+.peak-row { background:rgba(244,67,54,0.05); }
+
+.grade-chip {
+  display:inline-block; padding:2px 8px; border-radius:8px;
+  font-size:6pt; font-weight:700; color:white;
+}
+.gauge-cell { display:flex; align-items:center; gap:5px; }
+.gauge-wrap { flex:1; height:5px; background:#eee; border-radius:3px; overflow:hidden; }
+.gauge-bar  { height:100%; border-radius:3px; }
+.gauge-pct  { font-size:6.5pt; font-weight:700; width:28px; text-align:left; }
+
+/* ── 핵심 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:8px 14px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+
+/* 색상 */
+.c-용신 { background:#f44336; }
+.c-희신 { background:#4caf50; }
+.c-중립 { background:#9e9e9e; }
+.c-병신 { background:#2196f3; }
+.t-용신 { color:#f44336; }
+.t-희신 { color:#4caf50; }
+.t-중립 { color:#9e9e9e; }
+.t-병신 { color:#2196f3; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">십이운성(十二運星) 에너지 곡선</div>
+    <div class="pt-sub">대운별 생명 에너지 흐름 · 후천개화(後天開花) 구조</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 용신 火(화) 기준</div>
+  </div>
+</div>
+
+<!-- 에너지 곡선 카드 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+    <div class="card-hd-title">📈 대운별 십이운성 에너지 곡선</div>
+    <div class="card-hd-sub">4세 ~ 103세 · 10기 대운 전체</div>
+  </div>
+
+  <!-- 범례 -->
+  <div class="legend">
+    <div class="lg-item"><div class="lg-dot c-용신"></div>용신대운 (🔥 火)</div>
+    <div class="lg-item"><div class="lg-dot c-희신"></div>희신대운 (🌱 木)</div>
+    <div class="lg-item"><div class="lg-dot c-중립"></div>중립대운</div>
+    <div class="lg-item"><div class="lg-dot c-병신"></div>병신대운 (💧 水·金)</div>
+    <div class="lg-item"><div class="lg-line"></div>현재 62세</div>
+  </div>
+
+  <!-- 차트 -->
+  <div class="chart-wrap">
+    <div class="chart-inner">
+      <canvas id="energyChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 데이터 테이블 -->
+  <table class="dt-table">
+    <thead>
+      <tr>
+        <th>기</th>
+        <th>나이</th>
+        <th>년도</th>
+        <th>간지</th>
+        <th>12운성</th>
+        <th>성격</th>
+        <th style="width:50mm;">에너지 강도</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1기</td><td>4~13세</td><td>1968년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-희신">乙丑(을축)</td><td>양(養)</td><td><span class="grade-chip c-희신">희신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-희신" style="width:60%;"></div></div><span class="gauge-pct t-희신">60%</span></div></td></tr>
+      <tr><td>2기</td><td>14~23세</td><td>1978년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-병신">甲子(갑자)</td><td>태(胎)</td><td><span class="grade-chip c-병신">병신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:40%;"></div></div><span class="gauge-pct t-병신">40%</span></div></td></tr>
+      <tr><td>3기</td><td>24~33세</td><td>1988년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-병신">癸亥(계해)</td><td>절(絶)</td><td><span class="grade-chip c-병신">병신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:20%;"></div></div><span class="gauge-pct t-병신">20%</span></div></td></tr>
+      <tr><td>4기</td><td>34~43세</td><td>1998년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-병신">壬戌(임술)</td><td>묘(墓)</td><td><span class="grade-chip c-병신">병신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:25%;"></div></div><span class="gauge-pct t-병신">25%</span></div></td></tr>
+      <tr><td>5기</td><td>44~53세</td><td>2008년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-중립">辛酉(신유)</td><td>사(死)</td><td><span class="grade-chip c-중립">중립대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:35%;"></div></div><span class="gauge-pct t-중립">35%</span></div></td></tr>
+      <tr class="now-row"><td>6기<br><span style="font-size:6pt;color:#f44336;font-weight:700;">▶현재</span></td><td>54~63세</td><td>2018년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-중립">庚申(경신)</td><td>병(病)</td><td><span class="grade-chip c-중립">중립대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:45%;"></div></div><span class="gauge-pct t-중립">45%</span></div></td></tr>
+      <tr><td>7기</td><td>64~73세</td><td>2028년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-중립">己未(기미)</td><td>쇠(衰)</td><td><span class="grade-chip c-중립">중립대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:65%;"></div></div><span class="gauge-pct t-중립">65%</span></div></td></tr>
+      <tr class="peak-row"><td>8기<br><span style="font-size:6pt;color:#f44336;font-weight:700;">🌟최고</span></td><td>74~83세</td><td>2038년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-용신">戊午(무오)</td><td>제왕(帝旺)</td><td><span class="grade-chip c-용신">🌟 용신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:100%;"></div></div><span class="gauge-pct t-용신">100%</span></div></td></tr>
+      <tr><td>9기</td><td>84~93세</td><td>2048년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-용신">丁巳(정사)</td><td>건록(建祿)</td><td><span class="grade-chip c-용신">용신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:85%;"></div></div><span class="gauge-pct t-용신">85%</span></div></td></tr>
+      <tr><td>10기</td><td>94~103세</td><td>2058년~</td><td style="font-family:'Nanum Myeongjo',serif;font-size:9pt;font-weight:700;" class="t-용신">丙辰(병진)</td><td>관대(冠帶)</td><td><span class="grade-chip c-용신">용신대운</span></td><td><div class="gauge-cell"><div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:75%;"></div></div><span class="gauge-pct t-용신">75%</span></div></td></tr>
+    </tbody>
+  </table>
+
+</div><!-- card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#4a148c;">📌 반야선생의 십이운성 에너지 핵심 요약</strong><br>
+  최원석 님의 에너지 곡선은 <strong style="color:#f44336;">후천개화(後天開花)</strong> 구조입니다. 초중년에 낮고 노년으로 갈수록 올라갑니다. <strong>4~43세</strong>는 양→태→절→묘로 낮은 에너지(20~60%), <strong>44~63세</strong>는 사→병으로 서서히 회복(35→45%), <strong style="color:#f44336;">74세부터 제왕(100%)→건록(85%)→관대(75%)로 평생 최고 에너지</strong>가 시작됩니다. 건강만 잘 지키면 인생의 진짜 황금기가 기다리고 있습니다.
+</div>
+
+</div>
+
+<script>
+const data = [
+  { age: 4,  ganji: '乙丑', level: 60,  grade: '희신', year: 1968 },
+  { age: 14, ganji: '甲子', level: 40,  grade: '병신', year: 1978 },
+  { age: 24, ganji: '癸亥', level: 20,  grade: '병신', year: 1988 },
+  { age: 34, ganji: '壬戌', level: 25,  grade: '병신', year: 1998 },
+  { age: 44, ganji: '辛酉', level: 35,  grade: '중립', year: 2008 },
+  { age: 54, ganji: '庚申', level: 45,  grade: '중립', year: 2018 },
+  { age: 64, ganji: '己未', level: 65,  grade: '중립', year: 2028 },
+  { age: 74, ganji: '戊午', level: 100, grade: '용신', year: 2038 },
+  { age: 84, ganji: '丁巳', level: 85,  grade: '용신', year: 2048 },
+  { age: 94, ganji: '丙辰', level: 75,  grade: '용신', year: 2058 },
+];
+
+const gradeColor = {
+  '용신': '#f44336',
+  '희신': '#4caf50',
+  '중립': '#9e9e9e',
+  '병신': '#2196f3',
+};
+
+const labels = data.map(d => d.age + '세');
+const levels = data.map(d => d.level);
+const pointColors = data.map(d => gradeColor[d.grade]);
+const pointRadius = data.map(d => d.age === 74 ? 9 : 6);
+
+const ctx = document.getElementById('energyChart').getContext('2d');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [{
+      data: levels,
+      borderColor: '#bdbdbd',
+      borderWidth: 2.5,
+      tension: 0.35,
+      fill: {
+        target: 'origin',
+        above: 'rgba(158,158,158,0.07)',
+      },
+      pointBackgroundColor: pointColors,
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      pointRadius,
+      pointHoverRadius: data.map(d => d.age === 74 ? 11 : 8),
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => {
+            const d = data[items[0].dataIndex];
+            return d.age + '세 (' + d.year + '년~)';
+          },
+          label: (item) => {
+            const d = data[item.dataIndex];
+            return ['간지: ' + d.ganji, '성격: ' + d.grade + '대운', '에너지: ' + d.level + '%'];
+          },
+        },
+        backgroundColor: 'rgba(20,20,20,0.88)',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        padding: 10,
+        cornerRadius: 6,
+      },
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(158,158,158,0.15)' },
+        ticks: { color: '#888', font: { size: 10, family: 'Noto Sans KR' }, autoSkip: false }
+      },
+      y: {
+        min: 0, max: 110,
+        grid: { color: 'rgba(158,158,158,0.15)' },
+        ticks: {
+          color: '#888', font: { size: 10 }, stepSize: 20,
+          callback: v => v + '%'
+        }
+      }
+    }
+  },
+  plugins: [{
+    id: 'nowLine',
+    afterDraw(chart) {
+      const c = chart.ctx;
+      const xA = chart.scales.x;
+      const yA = chart.scales.y;
+      const ratio = (62 - 4) / (94 - 4);
+      const xPx = xA.left + ratio * (xA.right - xA.left);
+      c.save();
+      c.strokeStyle = '#f44336';
+      c.lineWidth = 1.5;
+      c.setLineDash([5, 4]);
+      c.beginPath();
+      c.moveTo(xPx, yA.top);
+      c.lineTo(xPx, yA.bottom);
+      c.stroke();
+      c.fillStyle = '#f44336';
+      c.font = '500 10px Noto Sans KR';
+      c.textAlign = 'center';
+      c.fillText('현재 62세', xPx, yA.top - 5);
+      c.restore();
+    }
+  }, {
+    id: 'peakLabel',
+    afterDraw(chart) {
+      const c = chart.ctx;
+      const meta = chart.getDatasetMeta(0);
+      const pt = meta.data[7];
+      if (!pt) return;
+      c.save();
+      c.fillStyle = '#f44336';
+      c.font = '700 10px Noto Sans KR';
+      c.textAlign = 'center';
+      c.fillText('★ 제왕(100%)', pt.x, pt.y - 14);
+      c.restore();
+    }
+  }]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정통 사주 만세력 (결과)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/a4-print.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            /* Increased width for table */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            overflow: visible;
+            /* Changed from hidden to visible for tooltips */
+            padding-bottom: 30px;
+        }
+
+        /* Header */
+        .header {
+            padding: 25px 30px;
+            background: #3f51b5;
+            /* Revert to solid blue/branding color, or keep gradient? User said "Original colors". Let's stick to clean dark blue header. */
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .date-info {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 30px 20px 15px;
+            color: #333;
+            border-left: 4px solid #3f51b5;
+            padding-left: 10px;
+        }
+
+        /* Table Layout */
+        .saju-table-container {
+            padding: 0 20px;
+            /* overflow-x: auto;  <-- Removed to prevent tooltip clipping */
+            overflow: visible;
+        }
+
+        table.saju-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table.saju-table th,
+        table.saju-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        table.saju-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .column-header-text {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .pillar-time {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: normal;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Ten Gods / Row Labels */
+        .row-header {
+            background-color: #f1f3f5;
+            font-weight: bold;
+            width: 100px;
+            color: #333;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .row-sub {
+            font-size: 0.7rem;
+            color: #777;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .myself {
+            color: #E91E63;
+            /* Pink/Red accent for 'Me' */
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        /* Character Box - Vivid Colors */
+        .char-box {
+            width: 80px;
+            height: 90px;
+            margin: 0 auto;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            /* Default text color for vivid background */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .hanja {
+            font-family: 'Noto Serif KR'Che', 'Noto Serif KR', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .hangul {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        /* Wrapper to handle coloring logic if not inline */
+
+        /* Guide */
+        .guide-card {
+            margin: 30px 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        .action-area {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-back {
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background-color: #303f9f;
+        }
+
+        .small-hangul {
+            font-size: 0.8em;
+            font-weight: normal;
+            margin-left: 2px;
+            color: #777;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3f51b5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .advice-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #333;
+            margin-top: 15px;
+            word-break: keep-all;
+            text-align: left;
+        }
+
+        /* Time Guide Grid */
+        .time-guide-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .time-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .time-col h4 {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+            color: #666;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .time-box {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .time-box.golden {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            color: #1565c0;
+        }
+
+        .time-box.caution {
+            background-color: #ffebee;
+            border-left: 4px solid #ef5350;
+            color: #c62828;
+        }
+
+        .time-box.safe {
+            background-color: #f5f5f5;
+            border-left: 4px solid #9e9e9e;
+            color: #555;
+            text-align: center;
+        }
+
+        .time-range {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .time-tip {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Summary Grid Layout */
+        .summary-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px 24px;
+            text-align: left;
+            font-size: 0.95rem;
+            align-items: baseline;
+        }
+
+        .summary-label {
+            opacity: 0.8;
+            font-weight: 500;
+            min-width: 80px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .summary-value {
+            font-weight: 400;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .summary-label {
+                font-size: 0.85rem;
+                margin-top: 8px;
+            }
+        }
+
+        @media print {
+            .modal-overlay {
+                display: none !important;
+            }
+        }
+
+        /* A4 Publication Spec for Generated Content */
+        .toc-content {
+            font-size: 11pt;
+            /* User Spec: 10.5pt ~ 11pt */
+            line-height: 1.7;
+            /* User Spec: 160% ~ 180% */
+            text-align: justify;
+            word-break: keep-all;
+            color: #333;
+        }
+
+        /* Markdown Elements Styling */
+        .toc-content h1,
+        .toc-content h2,
+        .toc-content h3 {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .toc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 10.5pt;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .toc-content th,
+        .toc-content td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+        }
+
+        .toc-content th {
+            background-color: #f5f7fa;
+            font-weight: 700;
+            text-align: center;
+            color: #333;
+        }
+
+        .toc-content blockquote {
+            margin: 25px 0;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #3f51b5;
+            color: #555;
+            font-style: italic;
+        }
+
+        .toc-content ul,
+        .toc-content ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .toc-content p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Print Controls -->
+    <div class="print-controls">
+        <button class="btn-print" onclick="window.print()">🖨️ 인쇄</button>
+        <a href="/" class="btn-home">🏠 홈</a>
+    </div>
+
+    <div class="container">
+        <!-- Result Header -->
+        <div class="header">
+            <h1>만세력 결과</h1>
+            <!-- Summary Info (Clean Grid Layout) -->
+            <div class="summary-grid">
+
+                <!-- Row 1 -->
+                <div class="summary-label">
+                    {{ result.member_info.name }}{% if result.member_info.name_hanja %} <span
+                        style="font-size: 0.9em; opacity: 0.9;">({{ result.member_info.name_hanja }})</span>{% endif %}
+                    님
+                </div>
+                <div class="summary-value">
+                    <span style="font-weight: 700; color: #ffeb3b; margin-right: 8px;">[{{ result.member_info.gender
+                        }}]</span>
+                    {% if result.meta.calendar_type == 'lunar' %}
+                    <span>{{ result.meta.lunar_date_str }} {{ result.member_info.birth_time_hanja }}</span>
+                    <span style="margin: 0 8px; opacity: 0.6;">|</span>
+                    <span style="opacity: 0.8;">{{ result.meta.solar_date_str }}</span>
+                    {% else %}
+                    <span>{{ result.meta.solar_date_str }} {{ result.member_info.birth_time_hanja }}</span>
+                    <span style="margin: 0 8px; opacity: 0.6;">|</span>
+                    <span style="opacity: 0.8;">{{ result.meta.lunar_date_str }}</span>
+                    {% endif %}
+                    {% if result.member_info.birth_region or result.member_info.living_region %}
+                    <div style="margin-top: 4px; font-size: 0.95em; opacity: 0.9;">
+                        {% set region_map = {'Seoul': '서울', 'Busan': '부산', 'Daegu': '대구', 'Incheon': '인천',
+                        'Gwangju': '광주', 'Daejeon': '대전', 'Ulsan': '울산', 'Sejong': '세종',
+                        'Gyeonggi': '경기', 'Gangwon': '강원', 'Chungbuk': '충북', 'Chungnam': '충남',
+                        'Jeonbuk': '전북', 'Jeonnam': '전남', 'Gyeongbuk': '경북', 'Gyeongnam': '경남',
+                        'Jeju': '제주'} %}
+                        {% if result.member_info.birth_region %}{{ region_map.get(result.member_info.birth_region,
+                        result.member_info.birth_region) }} (출생){% endif %}
+                        {% if result.member_info.birth_region and result.member_info.living_region %} / {% endif %}
+                        {% if result.member_info.living_region %}{{ region_map.get(result.member_info.living_region,
+                        result.member_info.living_region) }} (거주){% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Row 2 -->
+                <div class="summary-label">풀이시간</div>
+                <div class="summary-value">
+                    <div>
+                        {% if result.member_info.calculation_time %}
+                        {{ result.member_info.calculation_time }}
+                        {% else %}
+                        {{ result.meta.query_time }}
+                        {% endif %}
+                    </div>
+                    {% if result.meta.time_desc %}
+                    <div style="margin-top: 6px;">
+                        <span
+                            style="display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 2px 8px; border-radius: 12px; font-size: 0.85rem; color: #fff;">
+                            ℹ️ {{ result.meta.time_desc }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Row 3 -->
+                <div class="summary-label">상세년도</div>
+                <div class="summary-value" style="opacity: 0.95;">
+                    단기 {{ result.meta.dangi_year }}년 / 불기 {{ result.meta.bulgi_year }}년
+                    {% if result.member_info.interests %}
+                    <span style="opacity: 0.7; margin-left: 8px;">| 관심사:
+                        {% set interest_map = {'wealth': '재물', 'health': '건강', 'job': '직업', 'study': '학업', 'love':
+                        '연애/결혼', 'family': '가족', 'travel': '여행', 'business': '사업'} %}
+                        {% for item in result.member_info.interests %}
+                        {{ interest_map.get(item, item) }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                    {% endif %}
+                    {% if result.member_info.marital_status %}
+                    <span style="opacity: 0.7; margin-left: 8px;">| 결혼: {{ "기혼" if result.member_info.marital_status ==
+                        "married" else "미혼" }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Row 4 (Physical Info if exists) -->
+                {% if result.member_info.height or result.member_info.weight or result.member_info.health_area %}
+                <div class="summary-label">신체정보</div>
+                <div class="summary-value" style="opacity: 0.8; font-size: 0.9rem;">
+                    {% if result.member_info.height %}키: {{ result.member_info.height }}cm{% endif %}
+                    {% if result.member_info.weight %} / 몸무게: {{ result.member_info.weight }}kg{% endif %}
+                    {% if result.member_info.health_area %}
+                    {% set health_map = {'heart': '심장/소장', 'liver': '간/담', 'stomach': '위장/비장', 'lung': '폐/대장', 'kidney':
+                    '신장/방광', 'circulation': '혈액순환', 'digestive': '소화기', 'respiratory': '호흡기'} %}
+                    / 취약부위: {{ health_map.get(result.member_info.health_area, result.member_info.health_area) }}
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="section-title">사주 원국</div>
+
+        <div class="saju-table-container">
+            <table class="saju-table">
+                <colgroup>
+                    <col style="width: 15%;">
+                    <col style="width: 21%;"> <!-- Hour -->
+                    <col style="width: 21%;"> <!-- Day -->
+                    <col style="width: 21%;"> <!-- Month -->
+                    <col style="width: 21%;"> <!-- Year -->
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="row-header">구분</th>
+                        <th>
+                            <span class="column-header-text">{{ ui_headers['시주'] }}<span
+                                    class="small-hangul">(시주)</span></span>
+                            <span class="pillar-time">{{ result.hour.text }}</span>
+                        </th>
+                        <th>
+                            <span class="column-header-text">{{ ui_headers['일주'] }}<span
+                                    class="small-hangul">(일주)</span></span>
+                            <span class="pillar-time">{{ result.day.text }}</span>
+                        </th>
+                        <th>
+                            <span class="column-header-text">{{ ui_headers['월주'] }}<span
+                                    class="small-hangul">(월주)</span></span>
+                            <span class="pillar-time">{{ result.month.text }}</span>
+                        </th>
+                        <th>
+                            <span class="column-header-text">{{ ui_headers['연주'] }}<span
+                                    class="small-hangul">(연주)</span></span>
+                            <span class="pillar-time">{{ result.year.text }}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Ten Gods (Ship-sin) -->
+                    <tr>
+                        <td class="row-header">
+                            六親<span class="row-sub">(육친)</span>
+                        </td>
+                        <td style="font-weight: bold; color: #555;">
+                            {% if result.hour.gan.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.hour.gan.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.hour.gan.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="text-align:center; margin-bottom:5px;">
+                                <!-- Valid Zodiac Indices: 0-11. Dragon is 4, Snake is 5. Using Day Ji Index. -->
+                                <img src="{{ url_for('static', filename='ilju_characters/zodiac_' ~ result.day.ji.index ~ '.png') }}?v={{ range(1, 1000) | random }}"
+                                    alt="{{ result.ilju_animal }}" onerror="this.style.display='none';"
+                                    style="width:80px; height:80px; object-fit:contain;">
+                            </div>
+                            <span class="myself" style="display:block; margin-bottom:5px;">일원 (나)</span>
+                            <span
+                                style="font-size:0.9rem; color:#333; font-weight:bold; display:block; margin-bottom:2px;">{{
+                                result.ilju_animal }}</span>
+
+                        </td>
+                        <td style="font-weight: bold; color: #555;">
+                            {% if result.month.gan.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.month.gan.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.month.gan.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td style="font-weight: bold; color: #555;">
+                            {% if result.year.gan.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.year.gan.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.year.gan.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- Heavenly Stems (Gan) -->
+                    <tr>
+                        <td class="row-header">
+                            {{ ui_headers['천간'] }}<span class="row-sub">(천간)</span>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.hour.gan.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.hour.gan.char }}</span>
+                                <span class="hangul">{{ result.hour.gan.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- Day Master Box - Highlighting border? Or just standard. Standard for now. -->
+                            <div class="char-box" style="background-color: {{ result.day.gan.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.day.gan.char }}</span>
+                                <span class="hangul">{{ result.day.gan.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.month.gan.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.month.gan.char }}</span>
+                                <span class="hangul">{{ result.month.gan.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.year.gan.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.year.gan.char }}</span>
+                                <span class="hangul">{{ result.year.gan.kor }}</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Earthly Branches (Ji) -->
+                    <tr>
+                        <td class="row-header">
+                            {{ ui_headers['지지'] }}<span class="row-sub">(지지)</span>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.hour.ji.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.hour.ji.char }}</span>
+                                <span class="hangul">{{ result.hour.ji.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.day.ji.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.day.ji.char }}</span>
+                                <span class="hangul">{{ result.day.ji.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.month.ji.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.month.ji.char }}</span>
+                                <span class="hangul">{{ result.month.ji.kor }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="char-box" style="background-color: {{ result.year.ji.color }};
+                                border-radius: 12px;
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <span class="hanja">{{ result.year.ji.char }}</span>
+                                <span class="hangul">{{ result.year.ji.kor }}</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+                        /* ... previous styles ... */
+
+                        /* Shinsal Tooltip Styles */
+                        .shinsal-tag {
+                            position: relative;
+                            display: inline-block;
+                            cursor: help;
+                            border-bottom: 1px dotted #999;
+                            margin-bottom: 4px;
+                        }
+
+                        /* Ten Gods Specific Style (Bigger Font) */
+                        .ten-god-tag {
+                            font-size: 0.8rem !important;
+                            /* Reduced font size as requested */
+                            color: #3f51b5;
+                            font-weight: 800;
+                        }
+
+                        .shinsal-tag .tooltip-text {
+                            visibility: hidden;
+                            width: 200px;
+                            background-color: #333;
+                            color: #fff;
+                            text-align: center;
+                            border-radius: 6px;
+                            padding: 8px;
+                            position: absolute;
+                            z-index: 100;
+                            bottom: 125%;
+                            /* Position above */
+                            left: 50%;
+                            margin-left: -100px;
+                            /* Center */
+                            opacity: 0;
+                            transition: opacity 0.3s;
+                            font-size: 0.85rem;
+                            font-weight: normal;
+                            line-height: 1.4;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        }
+
+                        .shinsal-tag .tooltip-text::after {
+                            content: "";
+                            position: absolute;
+                            top: 100%;
+                            left: 50%;
+                            margin-left: -5px;
+                            border-width: 5px;
+                            border-style: solid;
+                            border-color: #333 transparent transparent transparent;
+                        }
+
+                        .shinsal-tag:hover .tooltip-text {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    </style>
+                    </head>
+
+                    <!-- ... -->
+
+                    <!-- Ten Gods (Ji) Row -->
+                    <tr>
+                        <td class="row-header">
+                            {{ ui_headers['육친'] }}<span class="row-sub">(지장간 육친)</span>
+                        </td>
+                        <td>
+                            {% if result.hour.ji.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.hour.ji.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.hour.ji.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if result.day.ji.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.day.ji.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.day.ji.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if result.month.ji.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.month.ji.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.month.ji.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if result.year.ji.ten_god %}
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.year.ji.ten_god_disp }}
+                                <span class="tooltip-text">{{ ten_gods_desc.get(result.year.ji.ten_god, '') }}</span>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- Jijanggan Row -->
+                    <tr>
+                        <td class="row-header">
+                            地藏干<span class="row-sub">(지장간)</span>
+                        </td>
+                        <td style="font-size: 0.95rem; color: #666; line-height: 1.4;">
+                            {% for item in result.hour.ji.jijanggan %}
+                            <div>{{ item.char }}({{ item.kor }})</div>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.95rem; color: #666; line-height: 1.4;">
+                            {% for item in result.day.ji.jijanggan %}
+                            <div>{{ item.char }}({{ item.kor }})</div>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.95rem; color: #666; line-height: 1.4;">
+                            {% for item in result.month.ji.jijanggan %}
+                            <div>{{ item.char }}({{ item.kor }})</div>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.95rem; color: #666; line-height: 1.4;">
+                            {% for item in result.year.ji.jijanggan %}
+                            <div>{{ item.char }}({{ item.kor }})</div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+
+                    <!-- 12 Unseong Row -->
+                    <tr>
+                        <td class="row-header">
+                            十二運星<span class="row-sub">(12운성)</span>
+                        </td>
+                        <td>
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.hour.ji.unseong }}
+                                {% set us_hanja = result.hour.ji.unseong.split('(')[0] %}
+                                {% set us_hangul = result.hour.ji.unseong.split('(')[1].replace(')', '') %}
+                                <span class="tooltip-text">{{ unseong_desc.get(us_hangul, '') }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.day.ji.unseong }}
+                                {% set us_hanja = result.day.ji.unseong.split('(')[0] %}
+                                {% set us_hangul = result.day.ji.unseong.split('(')[1].replace(')', '') %}
+                                <span class="tooltip-text">{{ unseong_desc.get(us_hangul, '') }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.month.ji.unseong }}
+                                {% set us_hanja = result.month.ji.unseong.split('(')[0] %}
+                                {% set us_hangul = result.month.ji.unseong.split('(')[1].replace(')', '') %}
+                                <span class="tooltip-text">{{ unseong_desc.get(us_hangul, '') }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="shinsal-tag ten-god-tag">
+                                {{ result.year.ji.unseong }}
+                                {% set us_hanja = result.year.ji.unseong.split('(')[0] %}
+                                {% set us_hangul = result.year.ji.unseong.split('(')[1].replace(')', '') %}
+                                <span class="tooltip-text">{{ unseong_desc.get(us_hangul, '') }}</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Hyeong-Chung-Hoe-Hap Row -->
+                    <tr>
+                        <td class="row-header">
+                            刑沖會合<span class="row-sub">(형충회합)</span>
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555;">
+                            {% if result.interactions %}
+                            {% for intr in result.interactions.hour %}
+                            <span class="shinsal-tag"
+                                style="background-color: #ffcdd2; color: #b71c1c; border:none; padding:2px 6px;">{{ intr
+                                }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555;">
+                            {% if result.interactions %}
+                            {% for intr in result.interactions.day %}
+                            <span class="shinsal-tag"
+                                style="background-color: #ffcdd2; color: #b71c1c; border:none; padding:2px 6px;">{{ intr
+                                }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555;">
+                            {% if result.interactions %}
+                            {% for intr in result.interactions.month %}
+                            <span class="shinsal-tag"
+                                style="background-color: #ffcdd2; color: #b71c1c; border:none; padding:2px 6px;">{{ intr
+                                }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555;">
+                            {% if result.interactions %}
+                            {% for intr in result.interactions.year %}
+                            <span class="shinsal-tag"
+                                style="background-color: #ffcdd2; color: #b71c1c; border:none; padding:2px 6px;">{{ intr
+                                }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- Shinsal Row -->
+                    <tr>
+                        <td class="row-header">
+                            神殺<span class="row-sub">(신살)</span>
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555; vertical-align: top; padding-top: 8px;">
+                            {% for item in result.hour.ji.shinsal %}
+                            <div class="shinsal-tag">
+                                {{ item.name_hz }}<span class="small-hangul">({{ item.name_ko }})</span>
+                                {% if item.desc %}
+                                <span class="tooltip-text">{{ item.desc }}</span>
+                                {% endif %}
+                            </div><br>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555; vertical-align: top; padding-top: 8px;">
+                            {% for item in result.day.ji.shinsal %}
+                            <div class="shinsal-tag">
+                                {{ item.name_hz }}<span class="small-hangul">({{ item.name_ko }})</span>
+                                {% if item.desc %}
+                                <span class="tooltip-text">{{ item.desc }}</span>
+                                {% endif %}
+                            </div><br>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555; vertical-align: top; padding-top: 8px;">
+                            {% for item in result.month.ji.shinsal %}
+                            <div class="shinsal-tag">
+                                {{ item.name_hz }}<span class="small-hangul">({{ item.name_ko }})</span>
+                                {% if item.desc %}
+                                <span class="tooltip-text">{{ item.desc }}</span>
+                                {% endif %}
+                            </div><br>
+                            {% endfor %}
+                        </td>
+                        <td style="font-size: 0.9rem; color: #555; vertical-align: top; padding-top: 8px;">
+                            {% for item in result.year.ji.shinsal %}
+                            <div class="shinsal-tag">
+                                {{ item.name_hz }}<span class="small-hangul">({{ item.name_ko }})</span>
+                                {% if item.desc %}
+                                <span class="tooltip-text">{{ item.desc }}</span>
+                                {% endif %}
+                            </div><br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Daewoon Section -->
+        <h3
+            style="margin-top: 30px; margin-bottom: 15px; font-size: 1.3rem; color: #3f51b5; border-bottom: 2px solid #e8eaf6; padding-bottom: 10px;">
+            ⏳ 대운 흐름 <span style="font-size: 0.9rem; font-weight: normal; color: #777;">(10년 주기)</span>
+            <span style="font-size:0.8rem; color:#888; margin-left:10px;">{{ result.daewoon.start_age }}대운 ({{ '순행' if
+                result.daewoon.direction == 'sun' else '역행' }})</span>
+        </h3>
+
+        <div
+            style="overflow-x: auto; margin-bottom: 30px; border-radius:12px; border:1px solid #eee; padding:10px; background:#fff;">
+            <table style="width: auto; border-collapse: separate; border-spacing: 8px; text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="color:#555; padding:8px; width:60px;">나이</th>
+                        {% for dw in result.daewoon.daewoons %}
+                        <th style="color:#333; padding:8px; font-weight:bold;">{{ dw.age }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Gan -->
+                    <tr>
+                        <td style="font-weight:bold; color:#777;">천간</td>
+                        {% for dw in result.daewoon.daewoons %}
+                        <td
+                            style="padding:6px; {% if dw.is_current %}border: 3px solid #FF5722; border-radius: 8px; background-color: rgba(255,87,34,0.05);{% endif %}">
+                            <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ dw.gan.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ dw.gan.color }};
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ dw.gan.char }}</div>
+                                <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ dw.gan.kor }}</div>
+                            </div>
+                            <!-- Ten God -->
+                            <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                dw.gan.ten_god }}</div>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <!-- Ji -->
+                    <tr>
+                        <td style="font-weight:bold; color:#777;">지지</td>
+                        {% for dw in result.daewoon.daewoons %}
+                        <td
+                            style="padding:6px; {% if dw.is_current %}border: 3px solid #FF5722; border-radius: 8px; background-color: rgba(255,87,34,0.05);{% endif %}">
+                            <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ dw.ji.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ dw.ji.color }};
+                                box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                border-bottom: 4px solid rgba(0,0,0,0.2);
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ dw.ji.char }}</div>
+                                <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ dw.ji.kor }}</div>
+                            </div>
+                            <!-- Ten God -->
+                            <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                dw.ji.ten_god }}</div>
+                            <!-- Unseong -->
+                            <div style="font-size:0.7rem; color:#888; font-weight:600;">{{
+                                dw.ji.unseong.split('(')[1].replace(')', '')
+                                if '(' in dw.ji.unseong else dw.ji.unseong }}</div>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SEWOON -->
+        <div style="margin-top:30px;">
+            <h3
+                style="font-size:1.1rem; font-weight:bold; margin-bottom:10px; color:#333; display:flex; align-items:center;">
+                <span
+                    style="display:inline-block; width:4px; height:18px; background-color:#333; margin-right:8px; border-radius:2px;"></span>
+                세운 (연운: 10년 흐름)
+                <span style="font-size:0.9rem; color:#888; margin-left:10px; font-weight:normal;">
+                    {{ result.sewoon[0].year }}년 ({{ result.sewoon[0].gan.kor }}{{ result.sewoon[0].ji.kor }}년) 기준
+                </span>
+            </h3>
+            <div style="overflow-x:auto;">
+                <table
+                    style="width:100%; border-collapse:separate; border-spacing:1px 5px; text-align:center; font-size:0.9rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding:4px 1px; border-bottom:2px solid #eee; color:#555; width:40px;">연도</th>
+                            {% for sw in result.sewoon %}
+                            <th
+                                style="padding:4px 1px; border-bottom:2px solid #eee; {% if sw.is_current %}{% endif %}">
+                                {{ sw.year }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Gan -->
+                        <tr>
+                            <td style="font-weight:bold; color:#777;">천간</td>
+                            {% for sw in result.sewoon %}
+                            <td
+                                style="padding:4px 1px; {% if sw.is_current %}border-radius: 12px; background-color: rgba(33,150,243,0.05);{% endif %}">
+                                <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ sw.gan.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ sw.gan.color }};
+                                    box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                    border-bottom: 4px solid rgba(0,0,0,0.2);
+                                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                    <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ sw.gan.char }}
+                                    </div>
+                                    <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ sw.gan.kor }}</div>
+                                </div>
+                                <!-- Ten God -->
+                                <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                    sw.gan.ten_god }}</div>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <!-- Ji -->
+                        <tr>
+                            <td style="font-weight:bold; color:#777;">지지</td>
+                            {% for sw in result.sewoon %}
+                            <td
+                                style="padding:4px 1px; {% if sw.is_current %}border-radius: 12px; background-color: rgba(33,150,243,0.05);{% endif %}">
+                                <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ sw.ji.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ sw.ji.color }};
+                                    box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                    border-bottom: 4px solid rgba(0,0,0,0.2);
+                                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                    <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ sw.ji.char }}
+                                    </div>
+                                    <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ sw.ji.kor }}</div>
+                                </div>
+                                <!-- Ten God -->
+                                <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                    sw.ji.ten_god }}</div>
+                                <!-- Unseong -->
+                                <div style="font-size:0.7rem; color:#888; font-weight:600;">{{
+                                    sw.ji.unseong.split('(')[1].replace(')', '') if '(' in sw.ji.unseong else
+                                    sw.ji.unseong }}</div>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- WOLUN (MONTHLY) -->
+        <div style="margin-top:30px;">
+            <h3
+                style="font-size:1.1rem; font-weight:bold; margin-bottom:10px; color:#333; display:flex; align-items:center;">
+                <span
+                    style="display:inline-block; width:4px; height:18px; background-color:#333; margin-right:8px; border-radius:2px;"></span>
+                월운 (12개월 흐름)
+                <span style="font-size:0.9rem; color:#888; margin-left:10px; font-weight:normal;">
+                    {{ result.sewoon[0].year }}년 기준
+                </span>
+            </h3>
+            <div style="overflow-x:auto;">
+                <table
+                    style="min-width: 800px; width:100%; border-collapse:separate; border-spacing:0 5px; text-align:center; font-size:0.9rem;">
+                    <thead>
+                        <tr>
+                            <th style="padding:4px 0; border-bottom:2px solid #eee; color:#555; width:40px;">월</th>
+                            {% for wl in result.wolun %}
+                            <th style="padding:4px 0; border-bottom:2px solid #eee;">
+                                {{ wl.month_idx }}월</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Gan -->
+                        <tr>
+                            <td style="font-weight:bold; color:#777;">천간</td>
+                            {% for wl in result.wolun %}
+                            <td
+                                style="padding:4px 0; {% if wl.is_current %}border-radius: 12px; background-color: rgba(76, 175, 80, 0.05);{% endif %}">
+                                <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ wl.gan.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ wl.gan.color }};
+                                    box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                    border-bottom: 4px solid rgba(0,0,0,0.2);
+                                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                    <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ wl.gan.char }}
+                                    </div>
+                                    <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ wl.gan.kor }}</div>
+                                </div>
+                                <!-- Ten God -->
+                                <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                    wl.gan.ten_god }}</div>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <!-- Ji -->
+                        <tr>
+                            <td style="font-weight:bold; color:#777;">지지</td>
+                            {% for wl in result.wolun %}
+                            <td
+                                style="padding:4px 0; {% if wl.is_current %}border-radius: 12px; background-color: rgba(76, 175, 80, 0.05);{% endif %}">
+                                <div style="display:inline-flex; flex-direction:column; justify-content:center; align-items:center; width:40px; height:42px; border-radius:8px; color:{{ wl.ji.text_color|default('white') }}; font-family:'Noto Serif KR', serif; background-color: {{ wl.ji.color }};
+                                    box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3); 
+                                    border-bottom: 4px solid rgba(0,0,0,0.2);
+                                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                                    <div style="font-size:1.1rem; font-weight:700; line-height:1;">{{ wl.ji.char }}
+                                    </div>
+                                    <div style="font-size:0.7rem; font-weight:400; opacity:0.95;">{{ wl.ji.kor }}</div>
+                                </div>
+                                <!-- Ten God -->
+                                <div style="font-size:0.75rem; color:#666; margin-top:5px; font-weight:500;">{{
+                                    wl.ji.ten_god }}</div>
+                                <!-- Unseong -->
+                                <div style="font-size:0.7rem; color:#888; font-weight:600;">{{
+                                    wl.ji.unseong.split('(')[1].replace(')', '') if '(' in wl.ji.unseong else
+                                    wl.ji.unseong }}</div>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Beginner Guide (Merged & Enhanced) -->
+        <div class="guide-card"
+            style="margin-top: 30px; background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 25px;">
+            <h3
+                style="margin-bottom: 25px; font-size: 1.3rem; color: #3f51b5; border-bottom: 2px solid #e8eaf6; padding-bottom: 15px; display: flex; align-items: center;">
+                <span style="font-size: 1.5rem; margin-right: 10px;">🔰</span>
+                <div>
+                    <strong>만세력 완전 정복</strong>
+                    <span style="font-size: 0.9rem; font-weight: normal; color: #777; margin-left: 5px;">(초보자
+                        가이드)</span>
+                </div>
+            </h3>
+
+            <!-- 1. The 4 Pillars Structure -->
+            <div style="margin-bottom: 35px;">
+                <h4 style="color: #e65100; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center;">
+                    <span style="margin-right: 8px;">🏷️</span> 사주 8글자, 내 인생의 지도
+                </h4>
+                <p
+                    style="font-size: 0.95rem; color: #555; margin-bottom: 20px; line-height: 1.6; background: #fff; padding: 10px 15px; border-radius: 8px; border-left: 4px solid #ffcc80;">
+                    사주는 태어난 <strong>연, 월, 일, 시</strong> 네 개의 기둥(Four Pillars)으로 이루어져 있습니다.<br>
+                    오른쪽(연주)에서 왼쪽(시주)으로 읽으며, 각 기둥은 인생의 시기와 환경을 의미합니다.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; text-align: center;">
+                    <div
+                        style="background: #fff; padding: 15px 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ffe0b2;">
+                        <div style="font-size: 1.8rem; margin-bottom: 5px;">🌳</div>
+                        <strong style="color: #e65100; font-size: 1.0rem; display: block; margin-bottom: 5px;">연주
+                            (Year)</strong>
+                        <div style="font-size: 0.85rem; color: #555; line-height: 1.4;">
+                            <span style="display: block; font-weight: bold; color: #f57c00; margin-bottom: 2px;">초년운
+                                (~19세)</span>
+                            뿌리, 조상, 가문<br>어린 시절 환경
+                        </div>
+                    </div>
+                    <div
+                        style="background: #fff; padding: 15px 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ffe0b2;">
+                        <div style="font-size: 1.8rem; margin-bottom: 5px;">🌱</div>
+                        <strong style="color: #e65100; font-size: 1.0rem; display: block; margin-bottom: 5px;">월주
+                            (Month)</strong>
+                        <div style="font-size: 0.85rem; color: #555; line-height: 1.4;">
+                            <span style="display: block; font-weight: bold; color: #f57c00; margin-bottom: 2px;">청년운
+                                (~39세)</span>
+                            줄기, 부모, 직업<br>사회의 중심
+                        </div>
+                    </div>
+                    <div
+                        style="background: #fff; padding: 15px 10px; border-radius: 12px; box-shadow: 0 4px 8px rgba(229, 57, 53, 0.15); border: 2px solid #ffcdd2;">
+                        <div style="font-size: 1.8rem; margin-bottom: 5px;">🌸</div>
+                        <strong style="color: #c62828; font-size: 1.0rem; display: block; margin-bottom: 5px;">일주
+                            (Day)</strong>
+                        <div style="font-size: 0.85rem; color: #555; line-height: 1.4;">
+                            <span style="display: block; font-weight: bold; color: #d32f2f; margin-bottom: 2px;">중년운
+                                (~59세)</span>
+                            <strong>나 자신</strong>, 배우자<br>인격과 본질
+                        </div>
+                    </div>
+                    <div
+                        style="background: #fff; padding: 15px 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #ffe0b2;">
+                        <div style="font-size: 1.8rem; margin-bottom: 5px;">🍒</div>
+                        <strong style="color: #e65100; font-size: 1.0rem; display: block; margin-bottom: 5px;">시주
+                            (Time)</strong>
+                        <div style="font-size: 0.85rem; color: #555; line-height: 1.4;">
+                            <span style="display: block; font-weight: bold; color: #f57c00; margin-bottom: 2px;">말년운
+                                (60세~)</span>
+                            열매, 자녀, 결과<br>노후의 모습
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 25px;">
+                <!-- 2. Detailed Terms -->
+                <div class="guide-section">
+                    <h4
+                        style="margin: 0 0 15px; color: #1976d2; font-size: 1.1rem; display: flex; align-items: center;">
+                        <span style="margin-right: 8px;">🧩</span> 알면 보이는 핵심 용어
+                    </h4>
+
+                    <div class="guide-item"
+                        style="margin-bottom: 15px; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #e3f2fd; display: flex; align-items: flex-start;">
+                        <span style="font-size: 1.4rem; margin-right: 12px; margin-top: 2px;">🎭</span>
+                        <div>
+                            <span class="guide-title"
+                                style="color: #1565c0; font-weight: bold; font-size: 1.0rem; display: block; margin-bottom: 4px;">십성
+                                (Relationship)</span>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0; line-height: 1.5;">
+                                <strong>나와 세상의 관계</strong>를 보여줍니다.<br>
+                                <span style="font-size: 0.8rem; color: #888; display: inline-block; margin-top: 4px;">예:
+                                    비견(친구/동료), 재성(돈/결실), 관성(직장/명예)</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="guide-item"
+                        style="margin-bottom: 15px; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #e3f2fd; display: flex; align-items: flex-start;">
+                        <span style="font-size: 1.4rem; margin-right: 12px; margin-top: 2px;">🎁</span>
+                        <div>
+                            <span class="guide-title"
+                                style="color: #1565c0; font-weight: bold; font-size: 1.0rem; display: block; margin-bottom: 4px;">지장간
+                                (Hidden Potential)</span>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0; line-height: 1.5;">
+                                글자 속에 숨겨진 <strong>나만의 비밀 무기</strong>입니다.<br>
+                                겉으로 드러나지 않은 잠재력과 속마음을 의미합니다.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="guide-item"
+                        style="margin-bottom: 15px; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #e3f2fd; display: flex; align-items: flex-start;">
+                        <span style="font-size: 1.4rem; margin-right: 12px; margin-top: 2px;">🔋</span>
+                        <div>
+                            <span class="guide-title"
+                                style="color: #1565c0; font-weight: bold; font-size: 1.0rem; display: block; margin-bottom: 4px;">12운성
+                                (Lifecycle)</span>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0; line-height: 1.5;">
+                                인생의 주기에 비유한 <strong>운의 에너지 강도</strong>입니다.<br>
+                                <span
+                                    style="font-size: 0.8rem; color: #888; display: inline-block; margin-top: 4px;">장생(태어남)
+                                    → 제왕(전성기) → 묘(저장/휴식)</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="guide-item"
+                        style="margin-bottom: 15px; padding: 12px; background: #fff; border-radius: 10px; border: 1px solid #e3f2fd; display: flex; align-items: flex-start;">
+                        <span style="font-size: 1.4rem; margin-right: 12px; margin-top: 2px;">⭐</span>
+                        <div>
+                            <span class="guide-title"
+                                style="color: #1565c0; font-weight: bold; font-size: 1.0rem; display: block; margin-bottom: 4px;">신살
+                                (Special Stars)</span>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0; line-height: 1.5;">
+                                내 사주에 있는 <strong>특별한 별(Star)</strong>들입니다.<br>
+                                <span style="font-size: 0.8rem; color: #888; display: inline-block; margin-top: 4px;">예:
+                                    도화살(인기/매력), 역마살(이동/변화), 귀인(도움)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Color Guide -->
+                <div class="guide-section">
+                    <h4
+                        style="margin: 0 0 15px; color: #00796b; font-size: 1.1rem; display: flex; align-items: center;">
+                        <span style="margin-right: 8px;">🎨</span> 오행 컬러 가이드
+                    </h4>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">색깔만 봐도 내 기운을 알 수 있어요!</p>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
+                        <li
+                            style="margin-bottom: 10px; display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #e0f2f1;">
+                            <span
+                                style="width: 14px; height: 14px; background: #4CAF50; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 0 2px #e8f5e9;"></span>
+                            <div>
+                                <strong style="color: #2e7d32;">목 (木)</strong> : 성장, 추진력, 시작 <span
+                                    style="font-size: 0.8rem; color: #888;">(청색)</span>
+                            </div>
+                        </li>
+                        <li
+                            style="margin-bottom: 10px; display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #ffebee;">
+                            <span
+                                style="width: 14px; height: 14px; background: #FF5252; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 0 2px #ffebee;"></span>
+                            <div>
+                                <strong style="color: #c62828;">화 (火)</strong> : 열정, 확산, 표현 <span
+                                    style="font-size: 0.8rem; color: #888;">(적색)</span>
+                            </div>
+                        </li>
+                        <li
+                            style="margin-bottom: 10px; display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #fff3e0;">
+                            <span
+                                style="width: 14px; height: 14px; background: #FFC107; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 0 2px #fff8e1;"></span>
+                            <div>
+                                <strong style="color: #f57f17;">토 (土)</strong> : 중재, 믿음, 포용 <span
+                                    style="font-size: 0.8rem; color: #888;">(황색)</span>
+                            </div>
+                        </li>
+                        <li
+                            style="margin-bottom: 10px; display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #f5f5f5;">
+                            <span
+                                style="width: 14px; height: 14px; background: #9E9E9E; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 0 2px #fafafa;"></span>
+                            <div>
+                                <strong style="color: #616161;">금 (金)</strong> : 결단, 원칙, 의리 <span
+                                    style="font-size: 0.8rem; color: #888;">(백색)</span>
+                            </div>
+                        </li>
+                        <li
+                            style="margin-bottom: 10px; display: flex; align-items: center; background: #fff; padding: 8px 10px; border-radius: 8px; border: 1px solid #eceff1;">
+                            <span
+                                style="width: 14px; height: 14px; background: #212121; border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 0 2px #eceff1;"></span>
+                            <div>
+                                <strong style="color: #212121;">수 (水)</strong> : 지혜, 유연, 휴식 <span
+                                    style="font-size: 0.8rem; color: #888;">(흑색)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Five Elements Analysis Card (Moved & Vertical) -->
+        <div class="card" style="margin-top: 20px;">
+            <h3
+                style="margin-bottom: 20px; color: #333; font-size: 1.1rem; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                📊 오행 분석
+            </h3>
+
+            <!-- Circular 5-Element Graph -->
+            <div
+                style="position: relative; width: 300px; height: 320px; margin: 0 auto; background: #fff; transform: scale(1.3); transform-origin: center top; margin-bottom: 110px; margin-top: 20px;">
+
+                <!-- SVG Arrows Layer -->
+                <svg width="300" height="300" viewBox="0 0 300 300"
+                    style="position: absolute; top: 0; left: 0; z-index: 1;">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                        <marker id="arrowhead-dotted" markerWidth="10" markerHeight="7" refX="9" refY="3.5"
+                            orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#ccc" />
+                        </marker>
+                    </defs>
+
+                    <!-- Generating Cycle (Seng) - Solid Curves -->
+                    <!-- Wood(LeftBottom) -> Fire(LeftTop) -->
+                    <path d="M 85,220 Q 50,180 60,130" fill="none" stroke="#333" stroke-width="1.5"
+                        marker-end="url(#arrowhead)" />
+                    <!-- Fire(LeftTop) -> Earth(Top) -->
+                    <path d="M 70,100 Q 110,60 140,65" fill="none" stroke="#333" stroke-width="1.5"
+                        marker-end="url(#arrowhead)" />
+                    <!-- Earth(Top) -> Metal(RightTop) -->
+                    <path d="M 160,65 Q 200,60 230,100" fill="none" stroke="#333" stroke-width="1.5"
+                        marker-end="url(#arrowhead)" />
+                    <!-- Metal(RightTop) -> Water(RightBottom) -->
+                    <path d="M 240,130 Q 250,180 215,220" fill="none" stroke="#333" stroke-width="1.5"
+                        marker-end="url(#arrowhead)" />
+                    <!-- Water(RightBottom) -> Wood(LeftBottom) -->
+                    <path d="M 190,230 Q 150,250 110,230" fill="none" stroke="#333" stroke-width="1.5"
+                        marker-end="url(#arrowhead)" />
+
+
+                    <!-- Controlling Cycle (Geuk) - Dotted Lines (Star) -->
+                    <!-- Wood -> Earth -->
+                    <line x1="91" y1="231" x2="150" y2="50" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"
+                        marker-end="url(#arrowhead-dotted)" opacity="0.5" />
+                    <!-- Earth -> Water -->
+                    <line x1="150" y1="50" x2="208" y2="231" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"
+                        marker-end="url(#arrowhead-dotted)" opacity="0.5" />
+                    <!-- Water -> Fire -->
+                    <line x1="208" y1="231" x2="54" y2="119" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"
+                        marker-end="url(#arrowhead-dotted)" opacity="0.5" />
+                    <!-- Fire -> Metal -->
+                    <line x1="54" y1="119" x2="245" y2="119" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"
+                        marker-end="url(#arrowhead-dotted)" opacity="0.5" />
+                    <!-- Metal -> Wood -->
+                    <line x1="245" y1="119" x2="91" y2="231" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"
+                        marker-end="url(#arrowhead-dotted)" opacity="0.5" />
+                </svg>
+
+                <!-- Element Nodes (HTML) -->
+                <!-- Center (150, 150) Radius ~95px -->
+                <!-- Earth (Top: 0deg) -->
+                <div class="element-node earth" style="top: 10px; left: 110px;">
+                    <div class="liquid-circle" style="background: #fff8e1;">
+                        <div class="fill"
+                            style="height: {{ (result.ohaeng_dist.earth / 8) * 100 }}%; background: #FFC107;"></div>
+                        <span class="icon">土</span>
+                    </div>
+                    <div class="element-name" style="color: #f57f17;">토(Earth)</div>
+                    <div class="percent" style="color: #f57f17;">{{ "%.1f"|format((result.ohaeng_dist.earth / 8) * 100)
+                        }}%</div>
+                </div>
+
+                <!-- Metal (Right Top: 72deg) -->
+                <div class="element-node metal" style="top: 80px; left: 220px;">
+                    <div class="liquid-circle" style="background: #f5f5f5;">
+                        <div class="fill"
+                            style="height: {{ (result.ohaeng_dist.metal / 8) * 100 }}%; background: #9E9E9E;"></div>
+                        <span class="icon">金</span>
+                    </div>
+                    <div class="element-name" style="color: #616161;">금(Metal)</div>
+                    <div class="percent" style="color: #616161;">{{ "%.1f"|format((result.ohaeng_dist.metal / 8) * 100)
+                        }}%</div>
+                </div>
+
+                <!-- Water (Right Bottom: 144deg) -->
+                <div class="element-node water" style="top: 210px; left: 180px;">
+                    <div class="liquid-circle" style="background: #eceff1;">
+                        <div class="fill"
+                            style="height: {{ (result.ohaeng_dist.water / 8) * 100 }}%; background: #212121;"></div>
+                        <span class="icon" style="color: #fff;">水</span> <!-- White text for dark BG -->
+                    </div>
+                    <div class="element-name" style="color: #000;">수(Water)</div>
+                    <div class="percent" style="color: #000;">{{ "%.1f"|format((result.ohaeng_dist.water / 8) * 100) }}%
+                    </div>
+                </div>
+
+                <!-- Wood (Left Bottom: 216deg) -->
+                <div class="element-node wood" style="top: 210px; left: 40px;">
+                    <div class="liquid-circle" style="background: #e8f5e9;">
+                        <div class="fill"
+                            style="height: {{ (result.ohaeng_dist.wood / 8) * 100 }}%; background: #4CAF50;"></div>
+                        <span class="icon">木</span>
+                    </div>
+                    <div class="element-name" style="color: #2e7d32;">목(Wood)</div>
+                    <div class="percent" style="color: #2e7d32;">{{ "%.1f"|format((result.ohaeng_dist.wood / 8) * 100)
+                        }}%</div>
+                </div>
+
+                <!-- Fire (Left Top: 288deg) -->
+                <div class="element-node fire" style="top: 80px; left: 0px;">
+                    <div class="liquid-circle" style="background: #ffebee;">
+                        <div class="fill"
+                            style="height: {{ (result.ohaeng_dist.fire / 8) * 100 }}%; background: #FF5252;"></div>
+                        <span class="icon">火</span>
+                    </div>
+                    <div class="element-name" style="color: #d32f2f;">화(Fire)</div>
+                    <div class="percent" style="color: #d32f2f;">{{ "%.1f"|format((result.ohaeng_dist.fire / 8) * 100)
+                        }}%</div>
+                </div>
+
+                <!-- Legend -->
+                <div style="position: absolute; top: 10px; left: 10px; font-size: 0.75rem; color: #666;">
+                    <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <span style="width: 20px; height: 2px; background: #333; margin-right: 5px;"></span> 생(상생)
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <span
+                            style="width: 20px; height: 1px; border-bottom: 1px dashed #ccc; margin-right: 5px;"></span>
+                        극(상극)
+                    </div>
+                </div>
+
+            </div>
+
+            <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+                .element-node {
+                    position: absolute;
+                    width: 80px;
+                    text-align: center;
+                    z-index: 2;
+                }
+
+                .liquid-circle {
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    /* Circle Shape as per Reference Image */
+                    overflow: hidden;
+                    position: relative;
+                    margin: 0 auto 5px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    /* Removed star clip-path to match reference image circles */
+                }
+
+                .liquid-circle .fill {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    transition: height 1.5s ease;
+                    opacity: 0.7;
+                    /* Lighter fill to show text */
+                }
+
+                .icon-container {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100%;
+                    text-align: center;
+                    z-index: 3;
+                }
+
+                .main-char {
+                    display: block;
+                    font-size: 1.1rem;
+                    font-weight: 800;
+                    line-height: 1.1;
+                    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+                    color: inherit;
+                    /* Inherits from parent or set explicitly */
+                }
+
+                /* Explicit colors for text in filled area if needed, but shadows help */
+                .sub-char {
+                    display: block;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    margin-top: 2px;
+                    color: inherit;
+                    opacity: 0.9;
+                }
+
+                .percent {
+                    font-size: 0.9rem;
+                    font-weight: 800;
+                    margin-top: -2px;
+                }
+
+                .element-name {
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    margin-bottom: 2px;
+                    white-space: nowrap;
+                }
+            </style>
+            </style>
+
+            <!-- Detailed Analysis Text -->
+            {% if result.ohaeng_analysis %}
+            <div
+                style="margin-top: 25px; background: #fff5f5; border-left: 4px solid #ff6b6b; padding: 15px; border-radius: 4px;">
+                <h4 style="margin: 0 0 10px; color: #c0392b; font-size: 0.95rem;">💡 내 사주 오행 분석 결과</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    {% for advice in result.ohaeng_analysis %}
+                    <li style="margin-bottom: 10px; font-size: 0.9rem; line-height: 1.5; color: #555;">
+                        <span style="font-weight: bold; color: #333;">[{{ advice.element }}]</span>
+                        {% if advice.type == 'lack' %}
+                        <span style="color: #e67e22; font-weight: bold;">부족</span> -
+                        {% else %}
+                        <span style="color: #c0392b; font-weight: bold;">과다</span> -
+                        {% endif %}
+                        {{ advice.msg }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+            <div
+                style="margin-top: 25px; padding: 15px; background: #f0f9eb; border-left: 4px solid #67c23a; border-radius: 4px; color: #555; font-size: 0.9rem;">
+                오행이 골고루 분포되어 있어 <strong>조화로운 구성</strong>입니다.
+            </div>
+            {% endif %}
+
+            <!-- Symbolic Meanings Reference -->
+            <div style="margin-top: 25px; border-top: 1px dashed #ddd; padding-top: 20px;">
+                <h4 style="margin: 0 0 15px; color: #555; font-size: 0.95rem;">📘 오행의 상징적 의미 (참고)</h4>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                    <div style="font-size: 0.85rem; color: #666; line-height: 1.5;">
+                        <strong style="color: #4CAF50;">목(木):</strong> 나무는 곧고 굳은 것으로써 자라남, 성장, 의욕, 힘, 만물이 자라나는 봄을 뜻한다.
+                        <span style="color:#999;">(청색, 신맛)</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; line-height: 1.5;">
+                        <strong style="color: #FF5252;">화(火):</strong> 불은 타오르고 위로 치솟아 오르는 것으로써 분산, 전쟁, 폐허, 온도, 계절, 애정을
+                        뜻한다. <span style="color:#999;">(적색, 쓴맛)</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; line-height: 1.5;">
+                        <strong style="color: #FFC107;">토(土):</strong> 흙은 심고 거두며 일하고 쉬는 것으로써 모든 만물의 중용, 안식, 치부, 재물을 뜻한다.
+                        <span style="color:#999;">(황색, 단맛)</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; line-height: 1.5;">
+                        <strong style="color: #9E9E9E;">금(金):</strong> 쇠는 바꾸고 변형시켜 따르게 하는 것으로써 병기, 토대, 인덕, 주춧돌을 뜻한다.
+                        <span style="color:#999;">(백색, 매운맛)</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; line-height: 1.5;">
+                        <strong style="color: #212121;">수(水):</strong> 물은 적시고 내려가는 것으로써 교합, 대물림을 뜻한다. <span
+                            style="color:#999;">(흑색, 짠맛)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Request: Biorhythm, MBTI, Calendar Order -->
+
+        <!-- 1. Biorhythm Section -->
+        <div class="card" style="margin-top: 20px;">
+            <div id="bioChart" style="width:100%; height:350px;"></div>
+            <script>
+                var bioGraph = {{ charts.biorhythm | safe }};
+                Plotly.newPlot('bioChart', bioGraph.data, bioGraph.layout);
+            </script>
+            <div
+                style="margin-top: 15px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; font-size: 0.9rem; color: #555; display: flex; justify-content: space-around; text-align: center; line-height: 1.6;">
+                <div><strong style="color: red; display: inline-block; padding-top: 2px;">🔴 신체(P)</strong><br>체력, 건강,
+                    자신감<br>(23일 주기)</div>
+                <div><strong style="color: blue; display: inline-block; padding-top: 2px;">🔵 감성(S)</strong><br>기분, 신경,
+                    창의력<br>(28일 주기)</div>
+                <div><strong style="color: green; display: inline-block; padding-top: 2px;">🟢 지성(I)</strong><br>집중력,
+                    판단력, 이해력<br>(33일 주기)</div>
+            </div>
+        </div>
+
+        <!-- 2. MBTI Section -->
+        <div class="card guide-card" style="margin-top: 20px; background: #e3f2fd; border-left: 5px solid #2196f3;">
+            <h3 style="margin: 0 0 10px; color: #1565c0;">🧠 Bio-MBTI 분석</h3>
+            <p style="font-size:1.1rem; margin-bottom: 8px;">
+                당신의 MBTI는 <strong>{{ result.member_info.mbti }}</strong> 입니다.
+            </p>
+            <div
+                style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #bbdefb; color: #444; font-size: 0.95rem; line-height: 1.6;">
+                <strong>💡 분석 결과:</strong><br>
+                {{ mbti_desc.get(result.member_info.mbti, mbti_desc['Unknown']) | safe }}
+            </div>
+            <p style="color:#666; font-size:0.85rem; margin-top: 10px;">
+                * 위 내용은 사주(명리학)적 관점에서 재해석한 성향 분석입니다.
+            </p>
+        </div>
+
+        <!-- AI Life Bible TOC Section -->
+        <div id="ai-report-section" style="margin-top: 40px; border-top: 2px dashed #ccc; padding-top: 40px;"
+            class="page-break">
+            <h2 style="text-align: center; color: #333; margin-bottom: 30px;">🔮 청안(淸眼) 운명 바이블</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                130페이지 분량의 초격차 운명 리포트를 챕터별로 미리 확인해보세요.<br>
+                <span style="font-size: 0.9rem;">(각 버튼을 누르면 AI가 실시간으로 집필을 시작합니다. 1~2분 정도 소요될 수 있습니다.)</span>
+            </p>
+
+            <div class="toc-container" style="max-width: 800px; margin: 0 auto;">
+                {% for chapter in chapters %}
+                <div class="toc-item" id="toc-{{ chapter.id }}"
+                    style="margin-bottom: 15px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff;">
+                    <div class="toc-header"
+                        style="background: #fdfdfd; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid transparent;">
+                        <h4 style="margin: 0; font-size: 1.05rem; color: #333;">{{ chapter.title }}</h4>
+                        <button onclick="generateChapter('{{ chapter.id }}', this)"
+                            style="background: #3f51b5; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: background 0.3s;">
+                            운명 조회 (AI)
+                        </button>
+                    </div>
+                    <div class="toc-content" id="content-{{ chapter.id }}"
+                        style="display: none; padding: 20px; border-top: 1px solid #eee; background: #fafafa;">
+                        <!-- Content will be injected here -->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <script>
+            function generateChapter(chapterId, btn) {
+                const contentDiv = document.getElementById(`content-${chapterId}`);
+                const originalBtnText = btn.innerText;
+
+                // UI Update
+                btn.disabled = true;
+                btn.innerText = "집필 중... (⏳)";
+                btn.style.background = "#9fa8da";
+                contentDiv.style.display = "block";
+                contentDiv.innerHTML = '<div style="text-align:center; padding:20px;"><div class="loading-spinner"></div><p>AI가 당신의 운명을 분석하고 있습니다...</p></div>';
+
+                fetch('/api/generate_chapter_content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chapter_id: chapterId
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error);
+                        }
+
+                        // Render Content
+                        if (data.viz_type === 'daily_calendar') {
+                            // Render JSON Data for Calendar
+                            try {
+                                const jsonData = (typeof data.content === 'string') ? JSON.parse(data.content) : data.content;
+                                contentDiv.innerHTML = renderCalendarJSON(jsonData);
+                            } catch (e) {
+                                contentDiv.innerHTML = `<pre style="white-space: pre-wrap;">${data.content}</pre>`;
+                            }
+                        } else {
+                            // Render Markdown
+                            contentDiv.innerHTML = marked.parse(data.content);
+                        }
+
+                        // Success State
+                        btn.innerText = "조회 완료 (✅)";
+                        btn.style.background = "#4caf50";
+
+                        // Add Preview Button
+                        if (!btn.nextElementSibling || !btn.nextElementSibling.classList.contains('btn-preview')) {
+                            const previewBtn = document.createElement('button');
+                            previewBtn.className = 'btn-preview';
+                            previewBtn.innerHTML = '📄 화면 미리보기';
+                            previewBtn.style.cssText = `
+                                background: #2196F3;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 4px;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                cursor: pointer;
+                                margin-left: 10px;
+                            `;
+                            previewBtn.onclick = () => {
+                                const phone = '{{ result.member_info.phone }}';
+                                console.log('Opening preview:', phone, chapterId);
+                                window.open(`/chapter_preview/${phone}/${chapterId}`, '_blank', 'width=900,height=1200');
+                            };
+                            btn.parentNode.insertBefore(previewBtn, btn.nextSibling);
+                        }
+
+                        // Keep disabled to prevent re-generation cost, or allow re-gen? Let's keep disabled for now.
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        contentDiv.innerHTML = `<div style="color:red; text-align:center;">오류가 발생했습니다: ${err.message}</div>`;
+                        btn.disabled = false;
+                        btn.innerText = originalBtnText;
+                        btn.style.background = "#f44336";
+                    });
+            }
+
+            function renderCalendarJSON(data) {
+                // Simple visualizer for the JSON output of daily calendar
+                // Assuming data is { month: X, days: [...] }
+                if (!data.days) return `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+                let html = `<h4 style="text-align:center;">${data.month}월 상세 운세</h4>`;
+                html += `<table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:0.9rem;">`;
+                html += `<tr style="background:#eee;"><th style="padding:8px; border:1px solid #ddd;">일자</th><th style="padding:8px; border:1px solid #ddd;">운세</th><th style="padding:8px; border:1px solid #ddd;">점수</th></tr>`;
+
+                data.days.forEach(day => {
+                    html += `<tr>
+                    <td style="padding:8px; border:1px solid #ddd; text-align:center;"><strong>${day.day}일</strong><br>${day.daily_ganji}</td>
+                    <td style="padding:8px; border:1px solid #ddd;">
+                        <div style="font-weight:bold;">${day.summary}</div>
+                        <div style="font-size:0.85rem; color:#666;">${day.advice}</div>
+                        <div style="margin-top:4px; font-size:0.8rem;">👍 ${day.lucky_color} / ${day.lucky_action}</div>
+                    </td>
+                    <td style="padding:8px; border:1px solid #ddd; text-align:center; font-weight:bold; color:${day.score >= 80 ? 'blue' : (day.score <= 40 ? 'red' : 'black')}">${day.score}</td>
+                </tr>`;
+                });
+                html += `</table>`;
+                return html;
+            }
+        </script>
+
+        <div id="desk-calendar-section" style="margin-top: 40px;">
+            <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+                @media print {
+                    @page {
+                        size: A4 portrait;
+                        margin: 0;
+                    }
+
+                    /* Reset container layout */
+                    body,
+                    .container {
+                        width: 100%;
+                        margin: 0;
+                        padding: 0;
+                        background: white;
+                        display: block !important;
+                    }
+
+                    /* Hide everything using visibility to avoid nesting issues */
+                    body * {
+                        visibility: hidden;
+                    }
+
+                    /* Show ONLY the calendar and its children */
+                    #desk-calendar-section,
+                    #desk-calendar-section * {
+                        visibility: visible;
+                    }
+
+                    /* Position the calendar over everything */
+                    #desk-calendar-section {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+
+                    /* Restore Flex/Grid display for specific elements */
+                    .month-page-header {
+                        display: flex !important;
+                    }
+
+                    .calendar-grid-print {
+                        display: grid !important;
+                    }
+
+                    .calendar-cell-print {
+                        display: flex !important;
+                    }
+
+                    .legend-print {
+                        display: flex !important;
+                    }
+
+                    /* Force A4 Size */
+                    .month-page {
+                        height: 297mm;
+                        width: 210mm;
+                        box-sizing: border-box;
+                        padding: 15mm !important;
+                        margin: 0 !important;
+                        page-break-after: always;
+                        border: none !important;
+                        box-shadow: none !important;
+                        background: white !important;
+                    }
+
+                    /* Stretch Grid to Fill Page */
+                    .calendar-grid-print {
+                        height: calc(100% - 120px);
+                        align-content: stretch;
+                        border: 2px solid #666 !important;
+                    }
+
+                    .calendar-cell-print {
+                        border-right: 1px solid #666 !important;
+                        border-bottom: 1px solid #666 !important;
+                    }
+                }
+            </style>
+            <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 10px;">
+                <h3 style="margin: 0; color: #333; font-size: 1.8rem;">📅 2026년 월별 운세 (탁상달력형)</h3>
+                <p style="color: #666; margin-top: 5px;">* 인쇄 버튼을 누르고 '배경 그래픽' 옵션을 켜주세요. 월별로 A4 한 장에 꽉 차게 출력됩니다.</p>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+                    <button onclick="window.print()"
+                        style="background: linear-gradient(135deg, #1565c0, #1e88e5); color: white; padding: 12px 28px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3); transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.3rem;">🖨️</span> 이 달력 전체 인쇄하기
+                    </button>
+                </div>
+
+
+            </div>
+
+            <!-- Calendar Container -->
+            <div class="calendar-container">
+                <!-- Cover Page -->
+                <div class="month-page"
+                    style="page-break-inside: avoid; page-break-after: always; min-height: 800px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid #ddd; padding: 60px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 50px;">
+
+                    <div
+                        style="text-align: center; margin-bottom: 60px; border-bottom: 5px double #1565c0; padding-bottom: 30px; width: 100%;">
+                        <h1 style="font-size: 4.5rem; color: #1565c0; margin: 0; letter-spacing: 5px;">2026</h1>
+                        <h2 style="font-size: 2.2rem; color: #333; margin: 10px 0 0; font-weight: 300;">FORTUNE CALENDAR
+                        </h2>
+                        <div style="margin-top: 20px; font-size: 1.2rem; color: #666;">당신만을 위한 맞춤형 운세 달력</div>
+                    </div>
+
+                    <!-- Highly Detailed Guide (Cover Page Content) -->
+                    <div class="calendar-guide-box"
+                        style="width: 100%; padding: 40px; background: #fcfdfe; border: 2px solid #1565c0; border-radius: 12px; font-size: 0.95rem; line-height: 1.7; color: #333; box-shadow: 0 4px 12px rgba(21, 101, 192, 0.1);">
+                        <h3
+                            style="margin: 0 0 25px; color: #1565c0; font-size: 1.6rem; text-align: center; border-bottom: 2px solid #e3f2fd; padding-bottom: 15px; font-weight: 800;">
+                            📖 달력 항목 및 아이콘 활용 가이드</h3>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+                            <!-- Column 1: Core Themes & Scores -->
+                            <div>
+                                <h4
+                                    style="margin: 0 0 18px; color: #1565c0; font-size: 1.2rem; border-left: 5px solid #1565c0; padding-left: 12px;">
+                                    🌟 일일 핵심 테마</h4>
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                        <span style="font-size: 1.6rem; margin-right: 15px; margin-top: -3px;">💪</span>
+                                        <div><strong>건강/체력:</strong> 활력이 넘쳐 활동적인 일과 운동에 최적인 에너지 충전일입니다.</div>
+                                    </li>
+                                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                        <span style="font-size: 1.6rem; margin-right: 15px; margin-top: -3px;">💘</span>
+                                        <div><strong>애정/감성:</strong> 소통운이 극대화되어 관계 회복, 만남, 대화에 매우 긍정적인 날입니다.</div>
+                                    </li>
+                                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                                        <span style="font-size: 1.6rem; margin-right: 15px; margin-top: -3px;">💰</span>
+                                        <div><strong>재물/실익:</strong> 현실적 판단력이 날카로워져 계약, 투자, 구매 활동에 유리한 날입니다.</div>
+                                    </li>
+                                    <li style="margin-bottom: 0; display: flex; align-items: flex-start;">
+                                        <span style="font-size: 1.6rem; margin-right: 15px; margin-top: -3px;">🏆</span>
+                                        <div><strong>성취/명예:</strong> 집중력이 가장 높은 날로, 성과를 내거나 시험, 발표 등에 권장합니다.</div>
+                                    </li>
+                                </ul>
+                                <div
+                                    style="margin-top: 25px; background: #f8faff; padding: 15px; border-radius: 8px; border: 1px solid #e3f2fd; font-size: 0.9rem;">
+                                    <strong>📈 일 운세 점수 가이드:</strong><br>
+                                    • <span style="color:#1e88e5; font-weight:bold;">90점 이상 (대박):</span> 기운이 조화로운 행운의
+                                    날<br>
+                                    • <span style="color:#e53935; font-weight:bold;">40점 이하 (주의):</span> 무리보다는 내실을 기해야
+                                    하는 날<br>
+                                    <strong>🔮 길흉 표시:</strong> <span style="font-size:1.1rem;">🌟</span>(합/길일) vs <span
+                                        style="font-size:1.1rem;">⚠️</span>(충/흉일)
+                                </div>
+                            </div>
+
+                            <!-- Column 2: Times & OOTD -->
+                            <div>
+                                <h4
+                                    style="margin: 0 0 18px; color: #1565c0; font-size: 1.2rem; border-left: 5px solid #1565c0; padding-left: 12px;">
+                                    ⏰ 행동 지침 시간대</h4>
+                                <div style="margin-bottom: 25px; font-size: 0.9rem;">
+                                    • <span style="color:#2e7d32; font-weight:bold;">길(吉) 시간:</span> 소통, 업무, 결정 등에 유리한
+                                    골든 타임입니다.<br>
+                                    • <span style="color:#c62828; font-weight:bold;">흉(凶) 시간:</span> 불필요한 마찰을 피하고 정적인
+                                    활동을 권장합니다.<br>
+                                    <small style="color: #777;">* 각 시간대 하단의 텍스트는 구체적인 권장 활동 및 주의 사항입니다.</small>
+                                </div>
+
+                                <h4
+                                    style="margin: 0 0 18px; color: #1565c0; font-size: 1.2rem; border-left: 5px solid #1565c0; padding-left: 12px;">
+                                    🧥 행운의 코디 (OOTD)</h4>
+                                <div style="margin-bottom: 25px; color: #555; font-size: 0.9rem;">
+                                    당일 나에게 부족한 오행 기운을 채워주는 <strong>행운 컬러(색상 점)</strong>와 <strong>Lucky 아이템</strong>을
+                                    매치하여 긍정적 에너지의 순환을 도와주세요.
+                                </div>
+
+                                <h4
+                                    style="margin: 0 0 18px; color: #1565c0; font-size: 1.2rem; border-left: 5px solid #1565c0; padding-left: 12px;">
+                                    🔖 전통 및 생활 수치</h4>
+                                <div
+                                    style="font-size: 0.85rem; color: #666; background: #fafafa; padding: 15px; border-radius: 8px;">
+                                    • <strong>손없는날:</strong> 악귀가 없어 이사, 개업, 이동에 좋은 전통 길일<br>
+                                    • <strong>음력/지지:</strong> 날짜 아래 표시된 음력 일자와 상징 동물(아이콘) 정보
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 60px; color: #999; font-size: 0.9rem; text-align: center;">
+                        <p>* 본 달력은 개인의 사주 명식과 당일의 기운을 대조하여 생성된 맞춤형 분석 결과입니다.</p>
+                        <p style="font-size: 0.8rem;">Created by Fortune Algorithm System (Gender: {{ form_data.gender
+                            }})</p>
+                    </div>
+                </div>
+                {% for month_data in saju_data_2026 %}
+                <!-- Month Page (A4 Break) -->
+                <div class="month-page"
+                    style="page-break-inside: avoid; page-break-after: always; margin-bottom: 50px; border: 1px solid #ddd; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #1565c0; padding-bottom: 15px; margin-bottom: 20px;">
+                        <h2 style="margin: 0; font-size: 3.5rem; color: #1565c0; line-height: 1;">{{ month_data.month
+                            }}<span
+                                style="font-size: 1.5rem; color: #555; vertical-align: middle; margin-left: 10px;">월</span>
+                        </h2>
+                        <span style="font-size: 2rem; color: #999; font-weight: 300;">{{ month_data.year }}</span>
+                    </div>
+
+                    <!-- Large Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid #888; border-left: 1px solid #888;">
+                        <!-- Headers -->
+                        <div
+                            style="padding: 10px; text-align: center; color: #e53935; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            SUN</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #333; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            MON</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #333; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            TUE</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #333; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            WED</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #333; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            THU</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #333; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            FRI</div>
+                        <div
+                            style="padding: 10px; text-align: center; color: #1e88e5; font-weight: bold; border-right: 1px solid #888; border-bottom: 1px solid #888; background: #f9f9f9;">
+                            SAT</div>
+
+                        <!-- Days -->
+                        {% for item in month_data.days %}
+                        <!-- Desktop/Print Cell -->
+                        <div class="calendar-cell-print" {% if item.day !=''
+                            %}onclick="openAdvice({{ month_data.year }}, {{ month_data.month }}, {{ item.day }})" {%
+                            endif %}
+                            style="cursor: pointer; position: relative; display: flex; flex-direction: column; justify-content: flex-start; border-right: 1px solid #eee; border-bottom: 1px solid #eee; background-color: #fff; padding: 2px 4px; box-sizing: border-box; overflow: hidden;">
+
+                            {% if item.day != '' %}
+
+                            <!-- Row 1: Badge | Icon | Date -->
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; height: 18px; margin-bottom: 2px;">
+                                <div style="flex: 1;">
+                                    {% if item.badge %}
+                                    <span
+                                        style="font-size: 0.6rem; background-color: {% if item.is_red %}#ffebee{% else %}#e3f2fd{% endif %}; color: {% if item.is_red %}#c62828{% else %}#1565c0{% endif %}; padding: 1px 3px; border-radius: 3px; font-weight: bold; white-space: nowrap;">
+                                        {{ item.badge }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div style="flex: 0 0 auto; font-size: 1.0rem; line-height: 1;">
+                                    {% if item.lucky_marker %}
+                                    <span style="font-size: 1.2rem; margin-right: 2px;">{{ item.lucky_marker }}</span>
+                                    {% endif %}
+                                    {{ item.icon }}
+                                </div>
+                                <div
+                                    style="flex: 1; text-align: right; font-size: 1.1rem; font-weight: 700; color: {% if item.is_red %}#d32f2f{% else %}#333{% endif %}; line-height: 1;">
+                                    {{ item.day }}
+                                </div>
+                            </div>
+
+                            <!-- Row 2: Colored Box | Score -->
+                            <div
+                                style="display: flex; justify-content: center; align-items: center; margin-bottom: 2px; height: 14px;">
+                                <div
+                                    style="width: 10px; height: 10px; margin-right: 4px; background-color: {% if item.score >= 90 %}#1e88e5{% elif item.score < 40 %}#e53935{% else %}#fdd835{% endif %};">
+                                </div>
+                                <span style="font-size: 0.8rem; font-weight: 700; color: #000;">{{ item.score }}점</span>
+                            </div>
+
+                            <!-- Row 3: OOTD 1 -->
+                            <div
+                                style="text-align: center; font-size: 0.65rem; color: #555; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden;">
+                                {% if item.lucky_items|length > 0 %}{{ item.lucky_items[0] }}{% else %}&nbsp;{% endif %}
+                            </div>
+
+                            <!-- Row 4: OOTD 2 -->
+                            <div
+                                style="text-align: center; font-size: 0.65rem; color: #555; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden; margin-bottom: 3px;">
+                                {% if item.lucky_items|length > 1 %}{{ item.lucky_items[1] }}{% else %}&nbsp;{% endif %}
+                            </div>
+
+                            <!-- Row 5: Good Time 1 (Range) -->
+                            <div
+                                style="font-size: 0.7rem; color: #2e7d32; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden; text-align: left;">
+                                {% if item.best_times|length > 0 %}
+                                <span style="font-weight: bold;">길</span> {{ item.best_times[0].time }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+                            <!-- Row 6: Good Time 1 (Reason) -->
+                            <div
+                                style="font-size: 0.5rem; color: #2e7d32; height: 10px; line-height: 10px; white-space: nowrap; overflow: hidden; text-align: left; padding-left: 2px;">
+                                {% if item.best_times|length > 0 %}
+                                {{ item.best_times[0].reason }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+
+                            <!-- Row 7: Good Time 2 (Range) -->
+                            <div
+                                style="font-size: 0.7rem; color: #2e7d32; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden; text-align: left;">
+                                {% if item.best_times|length > 1 %}
+                                <span style="font-weight: bold;">길</span> {{ item.best_times[1].time }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+                            <!-- Row 8: Good Time 2 (Reason) -->
+                            <div
+                                style="font-size: 0.5rem; color: #2e7d32; height: 10px; line-height: 10px; white-space: nowrap; overflow: hidden; text-align: left; padding-left: 2px;">
+                                {% if item.best_times|length > 1 %}
+                                {{ item.best_times[1].reason }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+
+                            <!-- Row 9: Bad Time 1 (Range) -->
+                            <div
+                                style="font-size: 0.7rem; color: #c62828; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden; text-align: left; margin-top: 2px;">
+                                {% if item.caution_times|length > 0 %}
+                                <span style="font-weight: bold;">흉</span> {{ item.caution_times[0].time }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+                            <!-- Row 10: Bad Time 1 (Reason) -->
+                            <div
+                                style="font-size: 0.5rem; color: #c62828; height: 10px; line-height: 10px; white-space: nowrap; overflow: hidden; text-align: left; padding-left: 2px;">
+                                {% if item.caution_times|length > 0 %}
+                                {{ item.caution_times[0].reason }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+
+                            <!-- Row 11: Bad Time 2 (Range) -->
+                            <div
+                                style="font-size: 0.7rem; color: #c62828; height: 12px; line-height: 12px; white-space: nowrap; overflow: hidden; text-align: left;">
+                                {% if item.caution_times|length > 1 %}
+                                <span style="font-weight: bold;">흉</span> {{ item.caution_times[1].time }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+                            <!-- Row 12: Bad Time 2 (Reason) -->
+                            <div
+                                style="font-size: 0.5rem; color: #c62828; height: 10px; line-height: 10px; white-space: nowrap; overflow: hidden; text-align: left; padding-left: 2px;">
+                                {% if item.caution_times|length > 1 %}
+                                {{ item.caution_times[1].reason }}
+                                {% else %}&nbsp;{% endif %}
+                            </div>
+
+
+                            <!-- Row 13: Lunar | Zodiac | Iljin -->
+                            <div
+                                style="text-align: right; font-size: 0.6rem; color: #777; height: 14px; line-height: 14px; margin-top: auto; white-space: nowrap; overflow: hidden; padding-right: 2px;">
+                                <span style="font-size: 0.6rem;">{{ item.lunar }}</span> <span
+                                    style="font-size: 0.7rem;">{{ item.zodiac }}</span> {{ item.iljin }}
+                            </div>
+
+                            <!-- Row 14: Special Tags (Handless Day, etc) -->
+                            <div
+                                style="text-align: center; font-size: 0.55rem; color: #e65100; font-weight: bold; height: 11px; line-height: 11px; white-space: nowrap; overflow: hidden;">
+                                {% if item.tags %}{{ item.tags }}{% else %}&nbsp;{% endif %}
+                            </div>
+
+                            {% else %}
+                            <!-- Empty Cell -->
+                            <div style="background-color: #fafafa; width: 100%; height: 100%;"></div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <button onclick="window.print()"
+                        style="background: linear-gradient(135deg, #1565c0, #1e88e5); color: white; padding: 15px 35px; border-radius: 40px; border: none; cursor: pointer; font-weight: bold; font-size: 1.2rem; box-shadow: 0 4px 20px rgba(21, 101, 192, 0.4); display: flex; align-items: center; gap: 10px; margin: 0 auto;">
+                        <span style="font-size: 1.4rem;">🖨️</span> 지금 바로 인쇄하기 (A4용지)
+                    </button>
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">* 인쇄 시 설정에서 '배경 그래픽'을 반드시 체크해 주세요.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Calendar Section (Link to Dashboard) - Keeping for detailed view -->
+        <div class="card guide-card"
+            style="margin-top: 20px; background: #fff3e0; border-left: 5px solid #ff9800; text-align:center;">
+            <h3 style="margin: 0 0 15px; color: #e65100;">📅 2026년 운세 달력</h3>
+            <p style="margin-bottom:15px; color:#555;">1년 치 에너지 흐름을 한눈에 확인하세요.</p>
+
+            <form action="/yearly_2026" method="POST">
+                {% for key, value in form_data.items() %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endfor %}
+                <button type="submit"
+                    style="background:#333; color:white; padding:12px 25px; border:none; border-radius:25px; cursor:pointer; font-weight:bold; font-size:1rem;">
+                    📊 2026년 전체 대시보드 보기
+                </button>
+            </form>
+        </div>
+
+        <div class="action-area">
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn-back" onclick="window.location.href='/'">다시 조회하기</button>
+
+                <!-- AI Report Button Removed as per User Request for Inline Preview -->
+                <!-- 
+                <form action="/report" method="POST" target="_blank">
+                    {% for key, value in form_data.items() %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}">
+                    {% endfor %}
+                    <button type="submit" class="btn-back" style="background-color: #e91e63;">AI 리포트 프롬프트 생성</button>
+                </form> 
+                -->
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal-overlay" id="adviceModal">
+        <div class="modal">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalDate" style="color:#3f51b5; margin-top:0;">날짜 선택</h3>
+            <div id="modalContent">
+                <div class="loading-spinner"></div>
+                <p>AI가 오늘의 운세를 분석 중입니다...</p>
+            </div>
+            <div id="modalAdvice" style="display:none;">
+                <!-- Time Guide Section -->
+                <div class="time-guide-container" id="timeGuideContainer" style="display:none;">
+                    <!-- Left: Golden Time -->
+                    <div class="time-col" id="goldenCol">
+                        /* Time Guide Grid */
+                        .time-guide-container {
+                        display: flex;
+                        gap: 15px;
+                        margin-top: 25px;
+                        text-align: left;
+                        }
+
+                        .time-col {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        }
+
+                        .time-col h4 {
+                        margin: 0 0 10px 0;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        border-bottom: 2px solid #eee;
+                        padding-bottom: 8px;
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        }
+
+                        .time-box {
+                        padding: 15px;
+                        border-radius: 12px;
+                        font-size: 0.95rem;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                        border: 1px solid rgba(0,0,0,0.05);
+                        }
+
+                        .time-box.golden {
+                        background-color: #f0f7ff;
+                        border-left: 5px solid #2196f3;
+                        color: #1565c0;
+                        }
+
+                        .time-box.caution {
+                        background-color: #fff5f5;
+                        border-left: 5px solid #ef5350;
+                        color: #c62828;
+                        }
+
+                        .time-box.safe {
+                        background-color: #f5f5f5;
+                        border-left: 5px solid #9e9e9e;
+                        color: #555;
+                        text-align: center;
+                        }
+
+                        .time-range {
+                        font-weight: 800;
+                        margin-bottom: 8px;
+                        font-size: 1rem;
+                        display: block;
+                        background: rgba(255,255,255,0.6);
+                        padding: 2px 6px;
+                        border-radius: 4px;
+                        width: fit-content;
+                        }
+
+                        .time-keywords {
+                        margin-bottom: 8px;
+                        font-weight: bold;
+                        font-size: 0.9rem;
+                        }
+
+                        .time-quote {
+                        font-size: 0.9rem;
+                        line-height: 1.4;
+                        font-style: italic;
+                        opacity: 0.9;
+                        background: rgba(255,255,255,0.5);
+                        padding: 8px;
+                        border-radius: 6px;
+                        }
+
+                        @media print {
+                        .modal-overlay {
+                        display: none !important;
+                        }
+                        }
+                        </style>
+                        </head>
+
+                        <body>
+                            <!-- (Previous Body Content Omitted for brevity, targeting JS updates below) -->
+
+                            <!-- ... (inside openAdvice success callback) ... -->
+                            // 1. Golden Time (Blue/Gold)
+                            if (data.golden_times && data.golden_times.length > 0) {
+                            data.golden_times.forEach(item => {
+                            const div = document.createElement('div');
+                            div.className = 'time-box golden';
+                            const parsedTime = item.time.replace('~', ' ~ ');
+                            div.innerHTML = `
+                            <div class="time-range">[ ${parsedTime} ]</div>
+                            <div class="time-keywords">👍 추천: ${item.recommend || '휴식, 명상'}</div>
+                            <div class="time-quote">"${item.msg}"</div>
+                            `;
+                            goldenList.appendChild(div);
+                            });
+                            }
+
+                            // 2. Caution Time (Red/Mobile)
+                            if (data.caution_times && data.caution_times.length > 0) {
+                            cautionList.innerHTML = '';
+                            data.caution_times.forEach(item => {
+                            const div = document.createElement('div');
+                            div.className = 'time-box caution';
+                            const parsedTime = item.time.replace('~', ' ~ ');
+                            div.innerHTML = `
+                            <div class="time-range">[ ${parsedTime} ]</div>
+                            <div class="time-keywords">👎 주의: ${item.caution || '안전운전, 언행조심'}</div>
+                            <div class="time-quote">"${item.msg}"</div>
+                            `;
+                            cautionList.appendChild(div);
+                            });
+                            } else {
+                            const div = document.createElement('div');
+                            div.className = 'time-box safe';
+                            div.innerHTML = `
+                            <div class="time-keywords">🌈 오늘은 평온한 하루입니다!</div>
+                            `;
+                            cautionList.appendChild(div);
+                            }
+
+                            } else {
+                            adviceText.innerText = "분석에 실패했습니다.";
+                            }
+                            })
+                            .catch(err => {
+                            console.error(err);
+                            modalContent.style.display = 'none';
+                            modalAdvice.style.display = 'block';
+                            adviceText.innerText = "오류가 발생했습니다.";
+                            });
+                            }
+
+                            function closeModal() {
+                            modal.style.display = 'none';
+                            }
+
+                            // Close on outside click
+                            window.onclick = function (event) {
+                            if (event.target == modal) {
+                            closeModal();
+                            }
+                            }
+                            </script>
+                        </body>
+
+</html>

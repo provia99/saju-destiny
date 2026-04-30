@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}마스터 대시보드{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h3 class="m-0 fw-bold" style="color: var(--brand, {{ brand_color|default('#1A3A6A') }})">안녕하세요, {{ user.선생님이름 }}님!</h3>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">전체회원</div>
+      <div class="stat-number">{{ stats.전체회원 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">집필완료</div>
+      <div class="stat-number text-success">{{ stats.완료 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">집필대기</div>
+      <div class="stat-number text-warning">{{ stats.대기 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">오류</div>
+      <div class="stat-number text-danger">{{ stats.오류 }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-5">
+  <div class="col-md-3 d-grid">
+    <a href="/members/new" class="btn btn-lg fw-bold shadow-sm" style="background-color: var(--brand, {{ brand_color|default('#1A3A6A') }}); color: white; border-radius: 12px; padding: 1.5rem;">회원 등록</a>
+  </div>
+  <div class="col-md-3 d-grid">
+    <a href="/members/list" class="btn btn-lg fw-bold shadow-sm" style="background-color: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 12px; padding: 1.5rem;">회원 목록</a>
+  </div>
+  <div class="col-md-3 d-grid">
+    <a href="/saju/history" class="btn btn-lg fw-bold shadow-sm" style="background-color: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 12px; padding: 1.5rem;">집필 현황</a>
+  </div>
+  <div class="col-md-3 d-grid">
+    <a href="/members/profile" class="btn btn-lg fw-bold shadow-sm" style="background-color: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 12px; padding: 1.5rem;">내 설정</a>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white py-3">
+    <h5 class="m-0 fw-bold text-muted">최근 등록 회원</h5>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle m-0">
+        <thead class="table-light">
+          <tr>
+            <th>이름</th>
+            <th>생년월일</th>
+            <th>성별</th>
+            <th>연락처</th>
+            <th>등록일시</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in recent %}
+          <tr>
+            <td class="fw-bold">{{ r.name }}</td>
+            <td>{{ r.birth_year }}년 {{ r.birth_month }}월 {{ r.birth_day }}일</td>
+            <td>{{ r.gender }}</td>
+            <td>{{ r.phone | phone }}</td>
+            <td>{{ r.created_at[:16] }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-center py-4 text-muted">최근 등록된 회원이 없습니다.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

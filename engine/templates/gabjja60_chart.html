@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>60갑자 일주 위치표시 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:18pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6pt; color:#aaa; margin-top:2px; text-align:right; }
+
+.card { border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0; }
+.card-hd {
+  padding:7px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ── 60갑자 그리드 ── */
+.gabjja-grid {
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:2px; padding:10px 10px 8px;
+  background:white; border-bottom:1px solid #e0e0e0;
+}
+
+.gj-item {
+  border:1px solid #ddd; border-radius:5px;
+  padding:3px 2px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  cursor:default;
+}
+.gj-num   { font-size:5pt; color:#bbb; line-height:1; }
+.gj-ganji {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:10pt; font-weight:800; line-height:1.1;
+}
+.gj-kr    { font-size:4.5pt; color:#aaa; }
+.gj-gm    { font-size:4.5pt; font-weight:700; }
+
+/* 오행 배경 */
+.oh-목 { background:rgba(76,175,80,0.08); border-color:#a5d6a7; }
+.oh-화 { background:rgba(244,67,54,0.08); border-color:#ef9a9a; }
+.oh-토 { background:rgba(255,152,0,0.08); border-color:#ffcc80; }
+.oh-금 { background:rgba(158,158,158,0.10); border-color:#e0e0e0; }
+.oh-수 { background:rgba(33,150,243,0.08); border-color:#90caf9; }
+
+/* 내 일주 강조 */
+.my-ilju {
+  border:2.5px solid #f44336 !important;
+  background:rgba(244,67,54,0.08) !important;
+  box-shadow:0 0 0 1px #f44336;
+}
+.my-ilju .gj-ganji { color:#f44336; }
+.my-ilju .gj-kr    { color:#c62828; font-weight:700; }
+.my-ilju .gj-num   { color:#f44336; font-weight:700; }
+
+/* 같은 순(旬) 강조 */
+.same-sun {
+  border:1.5px solid #ff9800 !important;
+  background:rgba(255,152,0,0.06) !important;
+}
+.same-sun .gj-ganji { color:#e65100; }
+
+/* 공망 표시 */
+.gongmang-mark { color:#f44336 !important; font-weight:900; }
+
+/* ── 순(旬) 레이블 행 ── */
+.sun-labels {
+  display:grid; grid-template-columns:repeat(6,1fr);
+  gap:4px; padding:6px 10px 8px;
+  background:#fafafa; border-bottom:1px solid #e0e0e0;
+}
+.sun-item {
+  border:1.5px solid #333; border-radius:7px;
+  padding:4px 7px; text-align:center;
+}
+.sun-item.my-sun { border-color:#f44336; background:rgba(244,67,54,0.06); }
+.sun-name { font-size:7pt; font-weight:700; color:#333; }
+.sun-name.my { color:#f44336; }
+.sun-gm   { font-size:6pt; color:#888; margin-top:1px; }
+.sun-gm.my { color:#f44336; font-weight:700; }
+
+/* ── 하단 일주 분석 ── */
+.analysis-section {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:0; background:white;
+}
+.an-col { padding:10px 12px; border-right:1px solid #e0e0e0; }
+.an-col:last-child { border-right:none; }
+.an-title {
+  font-size:7pt; font-weight:700; color:#555;
+  margin-bottom:7px; display:flex; align-items:center; gap:4px;
+}
+.an-title::before { content:''; display:inline-block; width:3px; height:10px; border-radius:2px; }
+.an-items { display:flex; flex-direction:column; gap:4px; }
+.an-item  { display:flex; align-items:baseline; gap:5px; font-size:7pt; }
+.an-key   { font-size:6pt; color:#aaa; font-weight:700; width:28px; flex-shrink:0; }
+.an-val   { color:#333; }
+
+/* 60갑자 오행 컬러 텍스트 */
+.t-목 { color:#4caf50; }
+.t-화 { color:#f44336; }
+.t-토 { color:#ff9800; }
+.t-금 { color:#9e9e9e; }
+.t-수 { color:#2196f3; }
+
+/* 메모 */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 13px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+
+/* 범례 */
+.legend {
+  display:flex; align-items:center; gap:12px;
+  padding:6px 10px; background:#fafafa;
+  border-top:1px solid #e0e0e0; flex-wrap:wrap;
+}
+.lg-item { display:flex; align-items:center; gap:3px; font-size:6pt; color:#555; }
+.lg-dot  { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.lg-box  { width:10px; height:10px; border-radius:3px; border:2px solid; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-title">
+  <div>
+    <div class="pt-main">60갑자(六十甲子) 일주 위치표</div>
+    <div class="pt-sub">甲子 ~ 癸亥 60개 일주 중 최원석 님의 위치 — 戊辰(무진) 일주</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#212121,#424242);">
+    <div class="card-hd-title">☯ 60갑자(六十甲子) 일주 전체 위치표</div>
+    <div class="card-hd-sub">천간(天干) 오행별 색상 · 붉은 테두리 = 최원석 님 일주 · 주황 = 같은 순(旬)</div>
+  </div>
+
+  <!-- 60갑자 그리드 (10열 × 6행) -->
+  <div class="gabjja-grid">
+    <!-- 甲子旬 (1~10) -->
+    <div class="gj-item oh-목"><div class="gj-num">1</div><div class="gj-ganji t-목">甲子</div><div class="gj-kr">갑자</div></div>
+    <div class="gj-item oh-목"><div class="gj-num">2</div><div class="gj-ganji t-목">乙丑</div><div class="gj-kr">을축</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">3</div><div class="gj-ganji t-화">丙寅</div><div class="gj-kr">병인</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">4</div><div class="gj-ganji t-화">丁卯</div><div class="gj-kr">정묘</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">5</div><div class="gj-ganji t-토">戊辰</div><div class="gj-kr">무진</div><div class="gj-gm" style="color:#aaa;">戌亥공망</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">6</div><div class="gj-ganji t-토">己巳</div><div class="gj-kr">기사</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">7</div><div class="gj-ganji t-금">庚午</div><div class="gj-kr">경오</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">8</div><div class="gj-ganji t-금">辛未</div><div class="gj-kr">신미</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">9</div><div class="gj-ganji t-수">壬申</div><div class="gj-kr">임신</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">10</div><div class="gj-ganji t-수">癸酉</div><div class="gj-kr">계유</div></div>
+
+    <!-- 甲戌旬 (11~20) -->
+    <div class="gj-item oh-목"><div class="gj-num">11</div><div class="gj-ganji t-목">甲戌</div><div class="gj-kr">갑술</div></div>
+    <div class="gj-item oh-목"><div class="gj-num">12</div><div class="gj-ganji t-목">乙亥</div><div class="gj-kr">을해</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">13</div><div class="gj-ganji t-화">丙子</div><div class="gj-kr">병자</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">14</div><div class="gj-ganji t-화">丁丑</div><div class="gj-kr">정축</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">15</div><div class="gj-ganji t-토">戊寅</div><div class="gj-kr">무인</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">16</div><div class="gj-ganji t-토">己卯</div><div class="gj-kr">기묘</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">17</div><div class="gj-ganji t-금">庚辰</div><div class="gj-kr">경진</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">18</div><div class="gj-ganji t-금">辛巳</div><div class="gj-kr">신사</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">19</div><div class="gj-ganji t-수">壬午</div><div class="gj-kr">임오</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">20</div><div class="gj-ganji t-수">癸未</div><div class="gj-kr">계미</div></div>
+
+    <!-- 甲申旬 (21~30) -->
+    <div class="gj-item oh-목"><div class="gj-num">21</div><div class="gj-ganji t-목">甲申</div><div class="gj-kr">갑신</div></div>
+    <div class="gj-item oh-목"><div class="gj-num">22</div><div class="gj-ganji t-목">乙酉</div><div class="gj-kr">을유</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">23</div><div class="gj-ganji t-화">丙戌</div><div class="gj-kr">병술</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">24</div><div class="gj-ganji t-화">丁亥</div><div class="gj-kr">정해</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">25</div><div class="gj-ganji t-토">戊子</div><div class="gj-kr">무자</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">26</div><div class="gj-ganji t-토">己丑</div><div class="gj-kr">기축</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">27</div><div class="gj-ganji t-금">庚寅</div><div class="gj-kr">경인</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">28</div><div class="gj-ganji t-금">辛卯</div><div class="gj-kr">신묘</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">29</div><div class="gj-ganji t-수">壬辰</div><div class="gj-kr">임진</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">30</div><div class="gj-ganji t-수">癸巳</div><div class="gj-kr">계사</div></div>
+
+    <!-- 甲午旬 (31~40) -->
+    <div class="gj-item oh-목"><div class="gj-num">31</div><div class="gj-ganji t-목">甲午</div><div class="gj-kr">갑오</div></div>
+    <div class="gj-item oh-목"><div class="gj-num">32</div><div class="gj-ganji t-목">乙未</div><div class="gj-kr">을미</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">33</div><div class="gj-ganji t-화">丙申</div><div class="gj-kr">병신</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">34</div><div class="gj-ganji t-화">丁酉</div><div class="gj-kr">정유</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">35</div><div class="gj-ganji t-토">戊戌</div><div class="gj-kr">무술</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">36</div><div class="gj-ganji t-토">己亥</div><div class="gj-kr">기해</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">37</div><div class="gj-ganji t-금">庚子</div><div class="gj-kr">경자</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">38</div><div class="gj-ganji t-금">辛丑</div><div class="gj-kr">신축</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">39</div><div class="gj-ganji t-수">壬寅</div><div class="gj-kr">임인</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">40</div><div class="gj-ganji t-수">癸卯</div><div class="gj-kr">계묘</div></div>
+
+    <!-- 甲辰旬 (41~50) — 최원석 님의 순(旬)! 공망: 辰·巳 -->
+    <div class="gj-item oh-목 same-sun"><div class="gj-num">41</div><div class="gj-ganji">甲辰</div><div class="gj-kr">갑진</div></div>
+    <div class="gj-item oh-목 same-sun"><div class="gj-num">42</div><div class="gj-ganji">乙巳</div><div class="gj-kr">을사</div></div>
+    <div class="gj-item oh-화 same-sun"><div class="gj-num">43</div><div class="gj-ganji">丙午</div><div class="gj-kr">병오</div></div>
+    <div class="gj-item oh-화 same-sun"><div class="gj-num">44</div><div class="gj-ganji">丁未</div><div class="gj-kr">정미</div></div>
+    <!-- 45번: 최원석 님 일주! -->
+    <div class="gj-item oh-토 my-ilju">
+      <div class="gj-num">45</div>
+      <div class="gj-ganji">戊辰</div>
+      <div class="gj-kr">무진 ★나</div>
+      <div class="gj-gm" style="color:#f44336;font-size:5pt;">⚡辰巳공망</div>
+    </div>
+    <div class="gj-item oh-토 same-sun"><div class="gj-num">46</div><div class="gj-ganji">己巳</div><div class="gj-kr">기사</div><div class="gj-gm" style="color:#f44336;font-size:5pt;">⚡공망</div></div>
+    <div class="gj-item oh-금 same-sun"><div class="gj-num">47</div><div class="gj-ganji">庚午</div><div class="gj-kr">경오</div></div>
+    <div class="gj-item oh-금 same-sun"><div class="gj-num">48</div><div class="gj-ganji">辛未</div><div class="gj-kr">신미</div></div>
+    <div class="gj-item oh-수 same-sun"><div class="gj-num">49</div><div class="gj-ganji">壬申</div><div class="gj-kr">임신</div></div>
+    <div class="gj-item oh-수 same-sun"><div class="gj-num">50</div><div class="gj-ganji">癸酉</div><div class="gj-kr">계유</div></div>
+
+    <!-- 甲戌旬 (51~60) -->
+    <div class="gj-item oh-목"><div class="gj-num">51</div><div class="gj-ganji t-목">甲戌</div><div class="gj-kr">갑술</div></div>
+    <div class="gj-item oh-목"><div class="gj-num">52</div><div class="gj-ganji t-목">乙亥</div><div class="gj-kr">을해</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">53</div><div class="gj-ganji t-화">丙子</div><div class="gj-kr">병자</div></div>
+    <div class="gj-item oh-화"><div class="gj-num">54</div><div class="gj-ganji t-화">丁丑</div><div class="gj-kr">정축</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">55</div><div class="gj-ganji t-토">戊寅</div><div class="gj-kr">무인</div></div>
+    <div class="gj-item oh-토"><div class="gj-num">56</div><div class="gj-ganji t-토">己卯</div><div class="gj-kr">기묘</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">57</div><div class="gj-ganji t-금">庚辰</div><div class="gj-kr">경진</div></div>
+    <div class="gj-item oh-금"><div class="gj-num">58</div><div class="gj-ganji t-금">辛巳</div><div class="gj-kr">신사</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">59</div><div class="gj-ganji t-수">壬午</div><div class="gj-kr">임오</div></div>
+    <div class="gj-item oh-수"><div class="gj-num">60</div><div class="gj-ganji t-수">癸未</div><div class="gj-kr">계미</div></div>
+  </div>
+
+  <!-- 6순 레이블 -->
+  <div class="sun-labels">
+    <div class="sun-item"><div class="sun-name">甲子旬 (1~10)</div><div class="sun-gm">戌·亥 공망</div></div>
+    <div class="sun-item"><div class="sun-name">甲戌旬 (11~20)</div><div class="sun-gm">申·酉 공망</div></div>
+    <div class="sun-item"><div class="sun-name">甲申旬 (21~30)</div><div class="sun-gm">午·未 공망</div></div>
+    <div class="sun-item"><div class="sun-name">甲午旬 (31~40)</div><div class="sun-gm">辰·巳 공망</div></div>
+    <div class="sun-item my-sun"><div class="sun-name my">甲辰旬 (41~50) ★</div><div class="sun-gm my">⚡ 辰·巳 공망 — 최원석 님</div></div>
+    <div class="sun-item"><div class="sun-name">甲寅旬 (51~60)</div><div class="sun-gm">子·丑 공망</div></div>
+  </div>
+
+  <!-- 범례 -->
+  <div class="legend">
+    <div class="lg-item"><div class="lg-box" style="border-color:#f44336;background:rgba(244,67,54,.08);"></div>★ 최원석 님 일주 (45번 戊辰)</div>
+    <div class="lg-item"><div class="lg-box" style="border-color:#ff9800;background:rgba(255,152,0,.06);"></div>같은 순(旬) — 甲辰旬</div>
+    <div class="lg-item"><div class="lg-dot" style="background:rgba(76,175,80,.4);"></div>木 천간</div>
+    <div class="lg-item"><div class="lg-dot" style="background:rgba(244,67,54,.4);"></div>火 천간</div>
+    <div class="lg-item"><div class="lg-dot" style="background:rgba(255,152,0,.4);"></div>土 천간</div>
+    <div class="lg-item"><div class="lg-dot" style="background:rgba(158,158,158,.4);"></div>金 천간</div>
+    <div class="lg-item"><div class="lg-dot" style="background:rgba(33,150,243,.4);"></div>水 천간</div>
+    <div style="margin-left:auto;font-size:6pt;color:#aaa;">천간 10개 × 지지 12개 = 60갑자 · 10개씩 6순(旬)</div>
+  </div>
+
+  <!-- 일주 분석 -->
+  <div class="analysis-section">
+    <div class="an-col">
+      <div class="an-title" style="color:#ff9800;">
+        <span style="display:inline-block;width:3px;height:10px;background:#ff9800;border-radius:2px;"></span>
+        일주 위치 정보
+      </div>
+      <div class="an-items">
+        <div class="an-item"><span class="an-key">번호</span><span class="an-val">60갑자 중 <strong style="color:#f44336;">45번째</strong></span></div>
+        <div class="an-item"><span class="an-key">순(旬)</span><span class="an-val">甲辰旬 5번째 (旬 중 순서)</span></div>
+        <div class="an-item"><span class="an-key">천간</span><span class="an-val t-토">戊(무) · 土 · 양간</span></div>
+        <div class="an-item"><span class="an-key">지지</span><span class="an-val t-토">辰(진) · 土 · 용(龍)</span></div>
+        <div class="an-item"><span class="an-key">공망</span><span class="an-val" style="color:#f44336;">辰·巳 (일지·시지)</span></div>
+      </div>
+    </div>
+    <div class="an-col">
+      <div class="an-title" style="color:#f44336;">
+        <span style="display:inline-block;width:3px;height:10px;background:#f44336;border-radius:2px;"></span>
+        같은 일주 특성
+      </div>
+      <div class="an-items">
+        <div class="an-item"><span class="an-key">같은 天</span><span class="an-val">戊寅·戊子·戊戌·戊申·戊午·戊辰 (6개)</span></div>
+        <div class="an-item"><span class="an-key">같은 地</span><span class="an-val">甲辰·丙辰·庚辰·壬辰·戊辰 (5개)</span></div>
+        <div class="an-item"><span class="an-key">동일 순</span><span class="an-val">甲辰旬 10인 중 1인</span></div>
+        <div class="an-item"><span class="an-key">반복주기</span><span class="an-val">60년 주기 (1964→2024년)</span></div>
+        <div class="an-item"><span class="an-key">동갑</span><span class="an-val">1904·1964·2024년 戊辰生</span></div>
+      </div>
+    </div>
+    <div class="an-col">
+      <div class="an-title" style="color:#4caf50;">
+        <span style="display:inline-block;width:3px;height:10px;background:#4caf50;border-radius:2px;"></span>
+        戊辰 일주 특성
+      </div>
+      <div class="an-items">
+        <div class="an-item"><span class="an-key">상징</span><span class="an-val">황토용(黃土龍) · 큰 산 위의 용</span></div>
+        <div class="an-item"><span class="an-key">기질</span><span class="an-val">중후·포용·신뢰·원칙 중시</span></div>
+        <div class="an-item"><span class="an-key">12운성</span><span class="an-val">관대(冠帶) — 성장 완성 에너지</span></div>
+        <div class="an-item"><span class="an-key">지장간</span><span class="an-val">乙(정관)·癸(정재)·戊(비견)</span></div>
+        <div class="an-item"><span class="an-key">신살</span><span class="an-val">백호대살·반안살·홍염살</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 메모 -->
+<div class="memo">
+  <strong style="color:#212121;">📌 반야선생의 60갑자 위치 핵심</strong> &nbsp;
+  최원석 님의 일주 戊辰(무진)은 60갑자 중 <strong style="color:#f44336;">45번째</strong>입니다. 甲辰旬(갑진순) 5번째로, 이 순(旬)의 공망이 <strong style="color:#f44336;">辰·巳</strong>입니다.
+  흥미로운 점은 <strong>일주의 辰이 공망 글자</strong>라는 것 — 일지(배우자궁) 자체가 공망에 해당합니다.
+  60년 주기로 같은 일주가 반복되므로, <strong>1904년·1964년·2024년 戊辰年生</strong>이 동일한 일주를 가집니다. 최원석 님의 다음 동갑(同甲)은 2024년생입니다.
+</div>
+
+</div>
+</body>
+</html>

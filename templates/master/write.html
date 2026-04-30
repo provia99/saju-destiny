@@ -1,0 +1,466 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5" style="max-width: 900px;">
+    
+    <!-- 페이지 타이틀 -->
+    <div class="text-center mb-5">
+        <h1 class="page-title">Saju Creation</h1>
+        <p class="text-muted font-outfit small tracking-widest uppercase">고결한 운명의 흐름을 담아내는 집필 공간</p>
+    </div>
+
+    <!-- 회원 정보 섹션 (Premium Profile Card) -->
+    <div class="glass-card p-4 mb-5 border-0">
+        <div class="d-flex align-items-center mb-4 pb-3 border-bottom border-light">
+            <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center me-3 shadow-lg" style="width: 60px; height: 60px; background: linear-gradient(135deg, #1A1F2C 0%, #D4AF37 100%);">
+                <i class="fas fa-user-tie fs-4"></i>
+            </div>
+            <div>
+                <h4 class="mb-0 fw-bold">{{ member.name }} <small class="text-muted fs-6 fw-normal ms-2">님</small></h4>
+                <div class="small text-muted mt-1">
+                    <span class="badge bg-light text-dark border me-1 font-outfit">{{ member.gender }}</span>
+                    <span class="badge bg-light text-dark border font-outfit">{{ member.activity_type }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 px-2">
+            <div class="col-6 col-md-3">
+                <div class="small text-muted mb-1 opacity-75">생년월일</div>
+                <div class="fw-bold fs-6">{{ member.birth_year }}.{{ member.birth_month }}.{{ member.birth_day }} <small class="text-muted fw-normal">({{ '음력' if member.lunar_yn else '양력' }}{% if member.lunar_yn and member.leap_month_yn %}·윤달{% endif %})</small></div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="small text-muted mb-1 opacity-75">출생시각</div>
+                <div class="fw-bold fs-6 font-outfit">{{ member.birth_time }}</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="small text-muted mb-1 opacity-75">고민분야</div>
+                <div class="fw-bold fs-6 text-primary">{{ member.concern_area }}</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="small text-muted mb-1 opacity-75">휴대폰</div>
+                <div class="fw-bold fs-6 font-outfit">{{ member.phone|phone }}</div>
+            </div>
+        </div>
+    </div>
+
+    {% if not status_mode %}
+    <!-- 집필 요청 영역 -->
+    <div class="glass-card p-5 mb-5 border-0 position-relative overflow-hidden">
+        <!-- 배경 장식 -->
+        <div class="position-absolute opacity-10" style="right: -30px; bottom: -30px; font-size: 15rem; transform: rotate(-15deg); color: var(--accent-gold); pointer-events: none;">
+            <i class="fas fa-feather-alt"></i>
+        </div>
+
+        <div class="position-relative">
+            <h4 class="fw-bold mb-4 font-outfit border-start border-4 border-gold ps-3">New Analysis</h4>
+            <form action="/saju/write/{{ member.id }}" method="post" id="writeForm">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted mb-2">집필 연도 선택</label>
+                        <select name="book_year" class="form-select custom-select py-3 px-4 rounded-4 border-0 bg-light shadow-sm">
+                            {% for y in years %}
+                            <option value="{{ y }}" {% if y == curr_year %}selected{% endif %}>{{ y }}년 대운/세운 분석</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted mb-2">상품 선택</label>
+                        <select name="product_type" class="form-select custom-select py-3 px-4 rounded-4 border-0 bg-light shadow-sm" id="productType">
+                            <option value="saju_full" selected>📖 사주 총본 (전체 18장)</option>
+                            <option value="saju_summary">📋 사주 요약본 (핵심 축약판)</option>
+                            <option value="yearly_fortune">📅 연간운세 (세운+월운+달력)</option>
+                            <option value="wealth_career">💰 재물·직업운</option>
+                            <option value="health">🏥 건강운</option>
+                            <option value="personality">🧠 기질분석</option>
+                            <option value="compatibility">💑 궁합분석</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-4 mt-1">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold text-muted mb-2">판(Edition) 설정</label>
+                        <select name="edition" class="form-select custom-select py-3 px-4 rounded-4 border-0 bg-light shadow-sm">
+                            <option value="초판" selected>Original Edition (초판)</option>
+                            <option value="개정판">Revised Edition (개정판)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="productDesc">
+                        <label class="form-label small fw-bold text-muted mb-2">상품 설명</label>
+                        <div class="py-3 px-4 rounded-4 bg-light small text-muted" id="productDescText">
+                            사주명리 전체 해석서 (350~400페이지)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 궁합 전용: 파트너 정보 입력 섹션 (compatibility 선택 시 표시) -->
+                <div id="partnerSection" class="mt-4 p-4 rounded-4 border bg-light" style="display:none;">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-heart text-danger me-2"></i>상대방(파트너) 정보</h5>
+
+                    <!-- 입력 모드 토글 -->
+                    <div class="btn-group w-100 mb-4" role="group" aria-label="입력 모드">
+                        <input type="radio" class="btn-check" name="partner_mode" id="modeExisting" value="existing" checked>
+                        <label class="btn btn-outline-primary" for="modeExisting"><i class="fas fa-users me-1"></i>기존 회원에서 선택</label>
+                        <input type="radio" class="btn-check" name="partner_mode" id="modeManual" value="manual">
+                        <label class="btn btn-outline-primary" for="modeManual"><i class="fas fa-user-plus me-1"></i>직접 입력</label>
+                    </div>
+
+                    <!-- 모드 A: 기존 회원 선택 -->
+                    <div id="partnerExistingBlock">
+                        <label class="form-label small fw-bold text-muted mb-2">파트너 선택 (본인 제외 전체 회원)</label>
+                        <select name="partner_member_id" class="form-select custom-select py-3 px-4 rounded-4 border-0 bg-white shadow-sm">
+                            <option value="">-- 파트너를 선택하세요 --</option>
+                            {% for p in partner_candidates %}
+                            <option value="{{ p.id }}" data-name="{{ p.name }}" data-gender="{{ p.gender }}">
+                                {{ p.name }} ({{ p.gender }}, {{ p.birth_year }}.{{ p.birth_month }}.{{ p.birth_day }} {{ p.birth_time }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% if not partner_candidates %}
+                        <div class="small text-muted mt-2"><i class="fas fa-info-circle me-1"></i>등록된 다른 회원이 없습니다. "직접 입력"을 선택해주세요.</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- 모드 B: 직접 입력 -->
+                    <div id="partnerManualBlock" style="display:none;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted mb-1">이름</label>
+                                <input type="text" name="partner_name" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" placeholder="홍길동">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted mb-1">성별</label>
+                                <select name="partner_gender" class="form-select custom-select py-2 rounded-3 border-0 bg-white shadow-sm">
+                                    <option value="남">남</option>
+                                    <option value="여">여</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">생년</label>
+                                <input type="number" name="partner_birth_year" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" min="1900" max="2100" placeholder="1990">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">월</label>
+                                <input type="number" name="partner_birth_month" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" min="1" max="12" placeholder="1">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">일</label>
+                                <input type="number" name="partner_birth_day" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" min="1" max="31" placeholder="1">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-muted mb-1">생시</label>
+                                <select name="partner_birth_time" class="form-select custom-select py-2 rounded-3 border-0 bg-white shadow-sm">
+                                    <option value="모름">모름</option>
+                                    <option value="자시">자시 (23:00~01:00)</option>
+                                    <option value="축시">축시 (01:00~03:00)</option>
+                                    <option value="인시">인시 (03:00~05:00)</option>
+                                    <option value="묘시">묘시 (05:00~07:00)</option>
+                                    <option value="진시">진시 (07:00~09:00)</option>
+                                    <option value="사시">사시 (09:00~11:00)</option>
+                                    <option value="오시">오시 (11:00~13:00)</option>
+                                    <option value="미시">미시 (13:00~15:00)</option>
+                                    <option value="신시">신시 (15:00~17:00)</option>
+                                    <option value="유시">유시 (17:00~19:00)</option>
+                                    <option value="술시">술시 (19:00~21:00)</option>
+                                    <option value="해시">해시 (21:00~23:00)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="partner_lunar" value="1" id="partnerLunar">
+                                    <label class="form-check-label small" for="partnerLunar">음력</label>
+                                </div>
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox" name="partner_leap" value="1" id="partnerLeap">
+                                    <label class="form-check-label small" for="partnerLeap">윤달</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 공통: 관계 정보 -->
+                    <hr class="my-4">
+                    <h6 class="fw-bold text-muted mb-3"><i class="fas fa-link me-2"></i>두 분의 관계 정보</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted mb-1">관계 단계</label>
+                            <select name="relationship_stage" class="form-select custom-select py-2 rounded-3 border-0 bg-white shadow-sm">
+                                <option value="썸">썸 (관심·호감 단계)</option>
+                                <option value="연인" selected>연인</option>
+                                <option value="예비부부">예비부부 (결혼 준비)</option>
+                                <option value="부부">부부</option>
+                                <option value="재혼준비">재혼 준비</option>
+                                <option value="재혼">재혼</option>
+                                <option value="별거">별거</option>
+                                <option value="이혼고민">이혼 고민</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold text-muted mb-1">관계 기간 (년)</label>
+                            <input type="number" name="relationship_years" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" min="0" max="100" placeholder="예: 10">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold text-muted mb-1">자녀 수</label>
+                            <input type="number" name="children_count" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm" min="0" placeholder="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted mb-1">결혼 예정일 (예비부부 전용, 선택)</label>
+                            <input type="date" name="marriage_date" class="form-control py-2 rounded-3 border-0 bg-white shadow-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex gap-3">
+                    <button type="submit" class="btn btn-premium flex-grow-1 shadow-lg py-3 fs-5" id="submitBtn">
+                        <i class="fas fa-magic me-2"></i>운명의 해석 시작하기
+                    </button>
+                    <a href="/members/list" class="btn btn-light px-4 rounded-4 d-flex align-items-center border">
+                        <i class="fas fa-times text-muted"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 최근 집필 히스토리 -->
+    {% if books %}
+    <div class="glass-card overflow-hidden border-0">
+        <div class="bg-dark p-3 px-4 text-white d-flex justify-content-between align-items-center">
+            <h6 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-gold"></i>최근 분석 기록</h6>
+            <span class="badge bg-primary rounded-pill px-3">{{ books|length }}건</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr class="small text-muted">
+                        <th class="ps-4">대상 연도</th>
+                        <th>상태</th>
+                        <th>완료 일시</th>
+                        <th class="text-end pe-4">다운로드</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in books %}
+                    <tr>
+                        <td class="ps-4 fw-bold font-outfit">{{ b.book_year }}년</td>
+                        <td>
+                            {% if b.status == '완료' %}
+                            <span class="badge-dot-success"><i class="fas fa-check-circle me-1"></i>완료</span>
+                            {% elif b.status == '생성중' %}
+                            <span class="badge-dot-warning anim-pulse"><i class="fas fa-sync-alt fa-spin me-1"></i>분석중</span>
+                            {% elif b.status == '오류' %}
+                            <span class="badge-dot-danger"><i class="fas fa-exclamation-circle me-1"></i>오류</span>
+                            {% else %}
+                            <span class="badge bg-secondary rounded-pill px-2">{{ b.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="small text-muted font-outfit text-nowrap">{{ b.completed_at or '-' }}</td>
+                        <td class="text-end pe-4">
+                            {% if b.status == '완료' %}
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="/saju/edit/{{ b.id }}" class="btn btn-sm btn-outline-primary rounded-circle" style="width: 32px; height: 32px; padding: 0; line-height: 32px;" title="편집">
+                                    <i class="fas fa-edit small"></i>
+                                </a>
+                                <a href="/saju/download/{{ b.id }}" class="btn btn-sm btn-outline-dark rounded-circle" style="width: 32px; height: 32px; padding: 0; line-height: 32px;" title="다운로드">
+                                    <i class="fas fa-download small"></i>
+                                </a>
+                            </div>
+                            {% else %}
+                            <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <!-- 집필 상태 확인 모드 -->
+    <div class="glass-card p-5 text-center border-0 shadow-lg">
+        
+        {% if book.status == '생성중' or book.status == '대기' %}
+        <div class="py-5">
+            <div class="mb-5 position-relative d-inline-block">
+                <div class="spinner-ring"></div>
+                <div class="position-absolute top-50 start-50 translate-middle">
+                    <i class="fas fa-star text-gold fs-2 anim-pulse"></i>
+                </div>
+            </div>
+            <h3 class="fw-bold mb-3">하늘의 운명을 읽어내고 있습니다...</h3>
+            <p class="text-muted fs-5 leading-relaxed">
+                현재 데이터 분석 엔진이 작동 중입니다. <br>
+                <span class="text-gold fw-bold">천간과 지지의 조화</span>를 분석하는 상서로운 시간입니다.
+            </p>
+            
+            <div class="loading-bar-container mt-5 mx-auto">
+                <div class="loading-bar-fill shadow-gold"></div>
+            </div>
+            <p class="small text-muted mt-3">예상 대기 시간: 약 45초 (데이터 크기에 따라 다름)</p>
+        </div>
+        
+        <script>
+            const pollInterval = setInterval(() => {
+                fetch('/saju/status/{{ book.id }}/json')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === '완료' || data.status === '오류') {
+                            clearInterval(pollInterval);
+                            location.reload();
+                        }
+                    });
+            }, 5000);
+        </script>
+        
+        {% elif book.status == '완료' %}
+        <div class="py-5">
+            <div class="mb-4">
+                <div class="d-inline-block bg-success bg-opacity-10 p-4 rounded-circle mb-3">
+                    <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                </div>
+            </div>
+            <h2 class="fw-bold mb-2">집필 완료</h2>
+            <p class="text-muted mb-5 fs-5">정교하고 고결한 사주 해석서 작성이 모두 끝났습니다.</p>
+            
+            <div class="d-grid gap-3 col-md-8 mx-auto">
+                <a href="/saju/edit/{{ book.id }}" class="btn btn-premium btn-lg py-3 shadow-lg fs-5">
+                    <i class="fas fa-edit me-2"></i>A4 용지에서 편집하기
+                </a>
+                <a href="/saju/download/{{ book.id }}" class="btn btn-gold btn-lg py-3 shadow-lg fs-5">
+                    <i class="fas fa-file-pdf me-2"></i>해석서(TXT) 다운로드
+                </a>
+                <a href="/members/list" class="btn btn-link text-muted mt-3">회원 목록으로 돌아가기</a>
+            </div>
+        </div>
+
+        {% elif book.status == '오류' %}
+        <div class="py-5">
+            <div class="mb-4">
+                <i class="fas fa-exclamation-triangle text-danger" style="font-size: 5rem;"></i>
+            </div>
+            <h4 class="fw-bold text-danger mb-2">분석 중 이상 발생</h4>
+            <p class="text-muted mb-4">운명의 흐름을 읽는 중 기술적인 충돌이 발생했습니다.</p>
+            
+            <div class="bg-light p-4 rounded-4 mb-5 text-start border border-danger border-opacity-25 mx-auto" style="max-width: 500px;">
+                <h6 class="fw-bold small text-danger mb-2">Error Log</h6>
+                <code class="text-dark small" style="word-break: break-all;">{{ book.error_msg or '정의되지 않은 시스템 오류' }}</code>
+            </div>
+
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="/saju/write/{{ member.id }}" class="btn btn-premium px-5 py-3">
+                    <i class="fas fa-redo me-2"></i>재시도
+                </a>
+                <a href="/members/list" class="btn btn-outline-secondary px-5 py-3">취소</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .text-gold { color: var(--accent-gold); }
+    .border-gold { border-color: var(--accent-gold) !important; }
+    .tracking-widest { letter-spacing: 0.3em; }
+    .leading-relaxed { line-height: 1.8; }
+    
+    .loading-bar-container {
+        height: 6px; width: 100%; max-width: 400px;
+        background: #eee; border-radius: 10px; overflow: hidden;
+    }
+    .loading-bar-fill {
+        height: 100%; width: 60%; background: var(--accent-gold);
+        border-radius: 10px; animation: loadingIndeterminate 2s infinite ease-in-out;
+    }
+    @keyframes loadingIndeterminate {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(200%); }
+    }
+
+    .spinner-ring {
+        width: 80px; height: 80px; border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--accent-gold); border-radius: 50%;
+        animation: spin 1.5s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .badge-dot-success { color: #198754; font-weight: 600; font-size: 0.85rem; }
+    .badge-dot-warning { color: #f59e0b; font-weight: 600; font-size: 0.85rem; }
+    .badge-dot-danger { color: #dc3545; font-weight: 600; font-size: 0.85rem; }
+
+    .shadow-gold { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+
+    .custom-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat; background-position: right 1.25rem center; background-size: 16px 12px;
+    }
+</style>
+
+<script>
+    // 상품 선택 시 설명 변경
+    const productDescs = {
+        saju_summary: '총본의 핵심만 추린 요약서 (30~50페이지)',
+        saju_full: '사주명리 전체 해석서 (350~400페이지)',
+        yearly_fortune: '올해 세운·월운·운세달력 (40~60페이지)',
+        wealth_career: '재물운·직업 적합도·대운 흐름 (80~120페이지)',
+        health: '오행 체질·건강 관리·양생법 (40~60페이지)',
+        personality: '일주 기질·강점·약점·방어책 (50~80페이지)',
+        compatibility: '두 사람 사주 비교·궁합표 (30~50페이지)',
+    };
+    document.getElementById('productType')?.addEventListener('change', function() {
+        document.getElementById('productDescText').textContent = productDescs[this.value] || '';
+        togglePartnerSection(this.value);
+    });
+
+    // 궁합 선택 시 파트너 섹션 표시/숨김
+    function togglePartnerSection(productValue) {
+        const section = document.getElementById('partnerSection');
+        if (!section) return;
+        section.style.display = (productValue === 'compatibility') ? 'block' : 'none';
+    }
+    // 초기 로드 시에도 상태 반영
+    togglePartnerSection(document.getElementById('productType')?.value);
+
+    // 파트너 입력 모드 토글 (기존 회원 ↔ 직접 입력)
+    document.querySelectorAll('input[name="partner_mode"]').forEach(r => {
+        r.addEventListener('change', function() {
+            const isExisting = this.value === 'existing';
+            document.getElementById('partnerExistingBlock').style.display = isExisting ? 'block' : 'none';
+            document.getElementById('partnerManualBlock').style.display = isExisting ? 'none' : 'block';
+        });
+    });
+
+    // 폼 제출: 궁합 필수 검증 + 제출 후 버튼 스피너
+    document.getElementById('writeForm')?.addEventListener('submit', function(e) {
+        const productValue = document.getElementById('productType')?.value;
+        if (productValue === 'compatibility') {
+            const mode = document.querySelector('input[name="partner_mode"]:checked')?.value;
+            if (mode === 'existing') {
+                const pid = document.querySelector('select[name="partner_member_id"]')?.value;
+                if (!pid) {
+                    e.preventDefault();
+                    alert('파트너를 선택하거나 "직접 입력"으로 전환하여 정보를 입력해주세요.');
+                    return;
+                }
+            } else {
+                const name = document.querySelector('input[name="partner_name"]')?.value?.trim();
+                const by = document.querySelector('input[name="partner_birth_year"]')?.value;
+                const bm = document.querySelector('input[name="partner_birth_month"]')?.value;
+                const bd = document.querySelector('input[name="partner_birth_day"]')?.value;
+                if (!name || !by || !bm || !bd) {
+                    e.preventDefault();
+                    alert('파트너 이름과 생년월일을 모두 입력해주세요.');
+                    return;
+                }
+            }
+        }
+        // 검증 통과 — 버튼 스피너 표시
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>운명을 기록하고 있습니다...';
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>사주 인테리어 가이드 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{ border:1px solid #333;width:604px;max-height:840px;padding:10px 14px;background:transparent;display:flex;flex-direction:column;gap:8px;overflow:hidden;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;border-radius:4px;}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}body{background:transparent;margin:0;padding:0;}.page{margin:0;width:604px;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-radius:10px;}
+.banner-hdr-title{font-size:12pt;font-weight:900;color:white;}
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card{border:2px solid #333;border-radius:10px;overflow:hidden;}
+.card-hd{padding:7px 14px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:9pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:7pt;color:rgba(255,255,255,.85);}
+/* 오행 가이드 테이블 */
+.oh-tbl{width:100%;border-collapse:collapse;}
+.oh-tbl th{font-size:7pt;font-weight:700;color:#555;padding:6px 6px;background:#f8f8f8;border-bottom:2px solid #ddd;text-align:center;white-space:nowrap;}
+.oh-tbl td{font-size:7pt;padding:6px 6px;border-bottom:1px solid #f0f0f0;text-align:center;vertical-align:middle;}
+.oh-tbl tr:last-child td{border-bottom:none;}
+.oh-badge{display:inline-block;padding:2px 8px;border-radius:5px;color:white;font-size:6.5pt;font-weight:700;}
+.oh-name{font-size:10pt;font-weight:900;}
+/* 방별 배치 */
+.room-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;}
+.room-cell{padding:8px 6px;border-right:1px solid #eee;text-align:center;display:flex;flex-direction:column;gap:3px;}
+.room-cell:last-child{border-right:none;}
+.room-icon{font-size:16pt;}
+.room-name{font-size:8pt;font-weight:700;color:#333;}
+.room-tip{font-size:7pt;color:#555;line-height:1.5;}
+.room-mat{font-size:6.5pt;color:#999;font-style:italic;}
+/* 체크리스트 */
+.check-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+.check-col{padding:8px 10px;border-right:1px solid #eee;}
+.check-col:last-child{border-right:none;}
+.check-title{font-size:8pt;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.check-item{font-size:7pt;color:#555;line-height:1.8;padding-left:10px;text-indent:-10px;}
+.check-item::before{content:'□ ';color:#aaa;}
+/* 예산 */
+.budget-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #eee;}
+.budget-cell{padding:6px 8px;border-right:1px solid #eee;text-align:center;}
+.budget-cell:last-child{border-right:none;}
+.budget-label{font-size:7pt;font-weight:700;color:#c9a227;}
+.budget-items{font-size:6.5pt;color:#555;line-height:1.6;}
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#5d4037,#795548);">
+  <div>
+    <div class="banner-hdr-title">🏠 사주 인테리어 가이드</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">戊辰(무진) · 용신 木(목)</div>
+  </div>
+</div>
+
+<!-- ① 오행별 인테리어 가이드 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#4e342e,#6d4c41);">
+    <div class="card-hd-title">① 오행별 인테리어 가이드</div>
+    <div class="card-hd-sub">용신·희신·기신별 색상·소재·방위·식물·향·건강</div>
+  </div>
+  <table class="oh-tbl">
+    <thead><tr>
+      <th>분류</th><th>오행</th><th>추천 색상</th><th>방위</th><th>계절</th><th>소재·가구</th><th>식물</th><th>향</th><th>건강 연관</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+  <td><span class="oh-badge" style="background:#4caf50;">★ 용신</span></td>
+  <td><span class="oh-name" style="color:#4caf50;">🌿 木(목)</span></td>
+  <td style="font-weight:700;">그린·에메랄드</td>
+  <td>동(東)</td>
+  <td>봄(2~4월)</td>
+  <td style="text-align:left;">원목·대나무·리넨·면</td>
+  <td style="text-align:left;">고무나무·몬스테라·아이비</td>
+  <td style="text-align:left;">시더우드·유칼립투스</td>
+  <td>간·담·근육·눈</td>
+</tr>
+      <tr>
+  <td><span class="oh-badge" style="background:#1565c0;">○ 희신</span></td>
+  <td><span class="oh-name" style="color:#2196f3;">💧 水(수)</span></td>
+  <td style="font-weight:700;">네이비·차콜·딥블루</td>
+  <td>북(北)</td>
+  <td>겨울(11~1월)</td>
+  <td style="text-align:left;">유리·거울·아크릴·수반</td>
+  <td style="text-align:left;">수경재배·수련·이끼</td>
+  <td style="text-align:left;">라벤더·캐모마일</td>
+  <td>신장·방광·뼈·귀</td>
+</tr>
+      <tr>
+  <td><span class="oh-badge" style="background:#c62828;">✕ 기신</span></td>
+  <td><span class="oh-name" style="color:#ff9800;">🏔️ 土(토)</span></td>
+  <td style="font-weight:700;">베이지·황토·테라코타</td>
+  <td>중앙</td>
+  <td>환절기</td>
+  <td style="text-align:left;">도자기·석재·타일·점토</td>
+  <td style="text-align:left;">다육이·선인장·허브가든</td>
+  <td style="text-align:left;">산달우드·파출리·베티버</td>
+  <td>위장·비장·소화기</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ② 방별 배치 요약 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#1976d2);">
+    <div class="card-hd-title">② 방별 배치 요약</div>
+    <div class="card-hd-sub">거실·침실·서재·현관·주방 핵심 포인트</div>
+  </div>
+  <div class="room-grid">
+    <div class="room-cell">
+      <div class="room-icon">🛋️</div>
+      <div class="room-name">거실</div>
+      <div class="room-tip">메인 컬러 그린·에메랄드</div>
+      <div class="room-tip">소파 방향 동(東)</div>
+      <div class="room-mat">원목</div>
+    </div><div class="room-cell">
+      <div class="room-icon">🛏️</div>
+      <div class="room-name">침실</div>
+      <div class="room-tip">침구 네이비·차콜·딥블루</div>
+      <div class="room-tip">머리 방향 동(東)</div>
+      <div class="room-mat">유리</div>
+    </div><div class="room-cell">
+      <div class="room-icon">📚</div>
+      <div class="room-name">서재</div>
+      <div class="room-tip">책상 위치 동(東)</div>
+      <div class="room-tip">조명 용신 톤</div>
+      <div class="room-mat">원목</div>
+    </div><div class="room-cell">
+      <div class="room-icon">🚪</div>
+      <div class="room-name">현관</div>
+      <div class="room-tip">매트 그린·에메랄드</div>
+      <div class="room-tip">디퓨저 용신 향</div>
+      <div class="room-mat">시더우드</div>
+    </div><div class="room-cell">
+      <div class="room-icon">🍳</div>
+      <div class="room-name">주방</div>
+      <div class="room-tip">식기 그린·에메랄드</div>
+      <div class="room-tip">도마·수저 용신</div>
+      <div class="room-mat">대나무</div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 종합 처방전 체크리스트 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#2e7d32,#388e3c);">
+    <div class="card-hd-title">③ 종합 처방전 체크리스트</div>
+    <div class="card-hd-sub">용신 강화 · 희신 보조 · 기신 줄이기</div>
+  </div>
+  <div class="check-grid">
+    <div class="check-col">
+      <div class="check-title" style="color:#4caf50;">★ 용신 木(목) 강화</div>
+      <div class="check-item">거실 메인 컬러 그린·에메랄드</div>
+      <div class="check-item">서재·작업실 동(東) 배치</div>
+      <div class="check-item">용신 소재 소품 3개 이상</div>
+      <div class="check-item">매일 쓰는 물건 용신 소재</div>
+      <div class="check-item">고무나무 배치</div>
+    </div>
+    <div class="check-col">
+      <div class="check-title" style="color:#1565c0;">○ 희신 水(수) 보조</div>
+      <div class="check-item">침실 침구 네이비·차콜·딥블루</div>
+      <div class="check-item">용신 공간 근처 희신 소품</div>
+      <div class="check-item">휴식 공간 유리</div>
+      <div class="check-item">라벤더 디퓨저</div>
+    </div>
+    <div class="check-col">
+      <div class="check-title" style="color:#c62828;">✕ 기신 土(토) 줄이기</div>
+      <div class="check-item">베이지·황토·테라코타 메인 컬러 아닌지</div>
+      <div class="check-item">중앙 중요 공간 집중 피하기</div>
+      <div class="check-item">도자기 소품 과다 아닌지</div>
+      <div class="check-item">환절기 인테리어 보강</div>
+    </div>
+  </div>
+  <div class="budget-grid">
+    <div class="budget-cell">
+      <div class="budget-label">5만원 이하</div>
+      <div class="budget-items">쿠션 2개<br>현관 매트<br>디퓨저 1개</div>
+    </div>
+    <div class="budget-cell">
+      <div class="budget-label">10~30만원</div>
+      <div class="budget-items">커튼 교체<br>러그 교체<br>식물 1~2개</div>
+    </div>
+    <div class="budget-cell">
+      <div class="budget-label">50~100만원</div>
+      <div class="budget-items">포인트 벽면<br>가구 1개 교체<br>조명 시스템</div>
+    </div>
+    <div class="budget-cell">
+      <div class="budget-label">100만원+</div>
+      <div class="budget-items">전체 리뉴얼<br>가구 소재 교체<br>바닥재 변경</div>
+    </div>
+  </div>
+</div>
+
+<div style="font-size:7pt;color:#999;text-align:center;margin-top:6px;">
+  용신 木(목) 강화 · 희신 水(수) 보조 · 기신 土(토) 줄이기 》 이 세 원칙이 사주 인테리어의 전부입니다.
+</div>
+
+</div></body></html>

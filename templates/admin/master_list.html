@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}마스터 목록{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="m-0 fw-bold">마스터 목록</h3>
+  <a href="/admin/masters/new" class="btn btn-premium fw-bold">+ 마스터 등록</a>
+</div>
+
+<div class="card shadow-sm border-0 mb-4 py-2 px-3">
+  <form method="get" action="/admin/masters" class="row g-2 align-items-center">
+    <div class="col-auto">
+      <div class="btn-group">
+        <button type="submit" name="status" value="전체" class="btn btn-sm {% if status=='전체' or not status %}btn-secondary{% else %}btn-outline-secondary{% endif %}">전체</button>
+        <button type="submit" name="status" value="활성" class="btn btn-sm {% if status=='활성' %}btn-success{% else %}btn-outline-success{% endif %}">활성</button>
+        <button type="submit" name="status" value="대기" class="btn btn-sm {% if status=='대기' %}btn-warning{% else %}btn-outline-warning{% endif %}">대기</button>
+        <button type="submit" name="status" value="정지" class="btn btn-sm {% if status=='정지' %}btn-danger{% else %}btn-outline-danger{% endif %}">정지</button>
+      </div>
+    </div>
+    <div class="col-auto ms-auto d-flex">
+      {% if status %}
+      <input type="hidden" name="status" value="{{ status }}">
+      {% endif %}
+      <input type="text" name="search" class="form-control form-control-sm" placeholder="이름/ID 검색..." value="{{ search|default('') }}">
+      <button type="submit" class="btn btn-sm btn-dark ms-1">검색</button>
+    </div>
+  </form>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle m-0">
+      <thead class="table-light">
+        <tr>
+          <th>브랜드ID</th>
+          <th>선생님이름</th>
+          <th>연구소명</th>
+          <th>연락처</th>
+          <th>요금제</th>
+          <th>상태</th>
+          <th>등록일시</th>
+          <th class="text-end">액션</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in masters %}
+        <tr>
+          <td><span class="text-muted small fw-bold">{{ m.master_id }}</span></td>
+          <td class="fw-bold">{{ m.선생님이름 }}</td>
+          <td>{{ m.연구소명 }}</td>
+          <td>{{ m.연락처 | phone }}</td>
+          <td><span class="badge bg-secondary">{{ m.plan|upper }}</span></td>
+          <td>
+            {% if m.status == '활성' %}<span class="badge bg-success">활성</span>
+            {% elif m.status == '대기' %}<span class="badge bg-warning text-dark">대기</span>
+            {% else %}<span class="badge bg-danger">정지</span>{% endif %}
+          </td>
+          <td>{{ m.created_at[:16] }}</td>
+          <td class="text-end">
+            <a href="/admin/masters/{{ m.master_id }}/edit" class="btn btn-sm btn-outline-primary">수정</a>
+            <form method="post" action="/admin/masters/{{ m.master_id }}/toggle" class="d-inline">
+              <button type="submit" class="btn btn-sm btn-outline-dark" onclick="return confirm('상태를 변경하시겠습니까?');">
+                {% if m.status == '활성' %}정지{% else %}활성화{% endif %}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" class="text-center py-5 text-muted">조건에 맞는 마스터가 없습니다.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

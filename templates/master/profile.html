@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}내 설정{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="m-0 fw-bold">내 설정 (브랜드 프로필)</h3>
+      <a href="/members/dashboard" class="btn btn-sm btn-outline-secondary">대시보드로</a>
+    </div>
+
+    {% if errors %}
+    <div class="alert alert-danger shadow-sm border-0">
+      <ul class="mb-0">
+        {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="card shadow border-0" style="border-radius: 12px;">
+      <div class="card-body p-4 p-md-5">
+        <form method="post" action="/members/profile">
+          
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-width: 2px !important; border-color: {{ brand_color|default('#1A3A6A') }} !important;">시스템 정보 (읽기전용)</h5>
+          <div class="row g-3 mb-5">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">로그인 ID</label>
+              <input type="text" class="form-control bg-light" value="{{ master.login_id }}" readonly>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">브랜드 ID</label>
+              <input type="text" class="form-control bg-light" value="{{ master.master_id }}" readonly>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">요금제</label>
+              <input type="text" class="form-control bg-light text-uppercase fw-bold" value="{{ master.plan }}" readonly>
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-width: 2px !important; border-color: {{ brand_color|default('#1A3A6A') }} !important;">브랜드 정보</h5>
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">선생님 이름 <span class="text-danger">*</span></label>
+              <input type="text" name="선생님이름" class="form-control" value="{{ master.선생님이름|default('') }}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">연구소명</label>
+              <input type="text" name="연구소명" class="form-control" value="{{ master.연구소명|default('') }}">
+            </div>
+            
+            <div class="col-md-12">
+              <label class="form-label small fw-bold text-muted d-block">호칭 조사 (선생님 '이' / 선생님 '가')</label>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="호칭조사" id="josa1" value="이" {% if master.호칭조사|default('이') == '이' %}checked{% endif %}>
+                <label class="form-check-label" for="josa1">이</label>
+              </div>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="호칭조사" id="josa2" value="가" {% if master.호칭조사 == '가' %}checked{% endif %}>
+                <label class="form-check-label" for="josa2">가</label>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label small fw-bold text-muted">해석서 서명 문구</label>
+              <input type="text" name="서명문구" class="form-control" value="{{ master.서명문구|default('') }}" placeholder="예: 평안을 기원합니다.">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label small fw-bold text-muted">해석서 마무리 인사</label>
+              <input type="text" name="마무리인사" class="form-control" value="{{ master.마무리인사|default('') }}" placeholder="따뜻한 인사말 한 줄 남겨주세요">
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-width: 2px !important; border-color: {{ brand_color|default('#1A3A6A') }} !important;">연락처 및 링크</h5>
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">대표 연락처</label>
+              <input type="text" name="연락처" class="form-control" value="{{ master.연락처|default('') | phone }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">이메일</label>
+              <input type="email" name="이메일" class="form-control" value="{{ master.이메일|default('') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">홈페이지 URL</label>
+              <input type="text" name="홈페이지" class="form-control" value="{{ master.홈페이지|default('') }}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">카카오채널 URL</label>
+              <input type="text" name="카카오채널" class="form-control" value="{{ master.카카오채널|default('') }}">
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-width: 2px !important; border-color: {{ brand_color|default('#1A3A6A') }} !important;">테마 색상 커스텀</h5>
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">메인 브랜드 색상</label>
+              <div class="input-group">
+                <input type="color" id="brandColorPicker" class="form-control form-control-color border-end-0" value="{{ master.브랜드색상|default('#1A3A6A') }}" title="색상 선택">
+                <input type="text" name="브랜드색상" id="brandColorText" class="form-control" value="{{ master.브랜드색상|default('#1A3A6A') }}">
+              </div>
+              <div class="form-text small mt-1">네비게이션 바 및 주요 버튼 색상</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">서브 포인트 (금색 계열 추천)</label>
+              <div class="input-group">
+                <input type="color" id="goldColorPicker" class="form-control form-control-color border-end-0" value="{{ master.금색|default('#C8B860') }}" title="색상 선택">
+                <input type="text" name="금색" id="goldColorText" class="form-control" value="{{ master.금색|default('#C8B860') }}">
+              </div>
+              <div class="form-text small mt-1">해석서 내 강조 요소 색상</div>
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-4 pb-2 border-bottom bg-light p-2 rounded text-danger">비밀번호 변경 (선택)</h5>
+          <div class="row g-4 mb-4 bg-light p-3 rounded mx-0">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">현재 비밀번호</label>
+              <input type="password" name="current_pw" class="form-control" placeholder="비밀번호 변경 시 필수">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">새 비밀번호</label>
+              <input type="password" name="new_pw" class="form-control" placeholder="최소 8자">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">새 비밀번호 확인</label>
+              <input type="password" name="new_pw2" class="form-control">
+            </div>
+          </div>
+
+          <div class="d-grid pt-4 mt-2 border-top text-end d-md-flex justify-content-md-end">
+            <button type="submit" class="btn px-5 text-white fw-bold rounded-pill shadow-sm py-2" style="background-color: {{ brand_color|default('#1A3A6A') }}; font-size: 1.1rem; border: none;">설정 저장하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Color Picker Sync
+  const bcPicker = document.getElementById('brandColorPicker');
+  const bcText = document.getElementById('brandColorText');
+  bcPicker.addEventListener('input', (e) => { bcText.value = e.target.value; });
+  bcText.addEventListener('input', (e) => { bcPicker.value = e.target.value; });
+
+  const gcPicker = document.getElementById('goldColorPicker');
+  const gcText = document.getElementById('goldColorText');
+  gcPicker.addEventListener('input', (e) => { gcText.value = e.target.value; });
+  gcText.addEventListener('input', (e) => { gcPicker.value = e.target.value; });
+</script>
+{% endblock %}

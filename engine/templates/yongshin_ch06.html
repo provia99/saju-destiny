@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>4신 요약표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 외곽 카드 ── */
+.card {
+  border:2px solid #333;
+  border-radius:14px;
+  overflow:hidden;
+}
+.card-hd {
+  padding:9px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:10.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+
+/* ── 신강약 + 격국 배너 ── */
+.banner {
+  background:#fafafa; border-bottom:1px solid #e0e0e0;
+  padding:10px 20px;
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.banner-item {
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.b-label { font-size:6pt; color:#aaa; font-weight:700; letter-spacing:.5px; }
+.b-value { font-size:9pt; font-weight:700; color:#333; }
+.b-badge {
+  padding:3px 12px; border-radius:10px; color:white;
+  font-size:8pt; font-weight:900;
+}
+.banner-divider { width:1px; height:30px; background:#e0e0e0; }
+
+/* ── 4신 메인 그리드 ── */
+.four-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:0;
+}
+
+.shin-col {
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column;
+}
+.shin-col:last-child { border-right:none; }
+
+/* 컬럼 헤더 */
+.shin-hd {
+  padding:10px 8px 8px;
+  text-align:center;
+  border-bottom:1px solid #e0e0e0;
+}
+.shin-num  { font-size:6pt; font-weight:700; color:white; padding:1px 7px; border-radius:8px; display:inline-block; margin-bottom:4px; }
+.shin-name { font-size:12pt; font-weight:900; line-height:1.1; }
+.shin-hanja{ font-family:'Nanum Myeongjo',serif; font-size:8pt; color:#888; margin-top:1px; }
+
+/* 오행 뱃지 */
+.ohaeng-badge {
+  display:flex; align-items:center; justify-content:center; gap:5px;
+  padding:8px; border-bottom:1px solid #e0e0e0;
+}
+.oh-circle {
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Nanum Myeongjo',serif;
+  font-size:18pt; font-weight:800; color:white;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.oh-info {}
+.oh-hanja { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; }
+.oh-kr    { font-size:6.5pt; color:#888; }
+
+/* 속성 행 */
+.shin-body { padding:8px 10px; display:flex; flex-direction:column; gap:6px; }
+.attr-row  { display:flex; flex-direction:column; gap:2px; }
+.attr-lbl  {
+  font-size:5.5pt; font-weight:700; color:white;
+  padding:1px 6px; border-radius:3px;
+  display:inline-block; width:fit-content;
+}
+.attr-val  { font-size:7pt; color:#333; line-height:1.4; padding-left:2px; }
+
+/* ── 비교 바 ── */
+.compare-section {
+  padding:12px 18px; border-top:1px solid #e0e0e0; background:#fafafa;
+}
+.cs-title {
+  font-size:7.5pt; font-weight:700; color:#555; margin-bottom:10px;
+  display:flex; align-items:center; gap:6px;
+}
+.cs-title::before {
+  content:''; display:inline-block;
+  width:3px; height:12px; border-radius:2px;
+}
+
+.compare-grid { display:flex; flex-direction:column; gap:5px; }
+.cmp-row { display:flex; align-items:center; gap:8px; }
+.cmp-label { font-size:6.5pt; font-weight:700; width:36px; text-align:right; flex-shrink:0; }
+.cmp-bar-wrap { flex:1; height:7px; background:#eee; border-radius:4px; overflow:hidden; }
+.cmp-bar { height:100%; border-radius:4px; }
+.cmp-grade { font-size:6.5pt; font-weight:700; width:28px; text-align:left; flex-shrink:0; }
+.cmp-note  { font-size:6pt; color:#aaa; }
+
+/* ── 실생활 활용 섹션 ── */
+.usage-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; border-top:1px solid #e0e0e0;
+}
+.usage-item {
+  padding:10px 14px;
+  border-right:1px solid #e0e0e0;
+  border-bottom:1px solid #e0e0e0;
+}
+.usage-item:nth-child(2n) { border-right:none; }
+.usage-item:nth-last-child(-n+2) { border-bottom:none; }
+.ui-title { font-size:7pt; font-weight:700; margin-bottom:5px; display:flex; align-items:center; gap:4px; }
+.ui-dot   { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.ui-content { font-size:6.5pt; color:#555; line-height:1.6; }
+
+/* ── 하단 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:9px 14px;
+  font-size:7pt; color:#555; line-height:1.8;
+}
+
+/* 오행 색상 */
+.c-화 { background:#f44336; }
+.c-목 { background:#4caf50; }
+.c-수 { background:#2196f3; }
+.c-금 { background:#9e9e9e; }
+.c-토 { background:#ff9800; }
+.t-화 { color:#f44336; }
+.t-목 { color:#4caf50; }
+.t-수 { color:#2196f3; }
+.t-금 { color:#9e9e9e; }
+.t-토 { color:#ff9800; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="card">
+
+  <!-- 헤더 -->
+  <div class="card-hd" style="background:linear-gradient(135deg,#e65100,#f44336);">
+    <div class="card-hd-title">🧭 용신(用神) 4신 요약표</div>
+    <div class="card-hd-sub">최원석 님 · 戊辰(무진) 일주 · 내 사주의 나침반</div>
+  </div>
+
+  <!-- 신강약 + 격국 배너 -->
+  <div class="banner">
+    <div class="banner-item">
+      <div class="b-label">일주(日柱)</div>
+      <div class="b-value" style="font-family:'Nanum Myeongjo',serif;font-size:13pt;">戊辰(무진)</div>
+    </div>
+    <div class="banner-divider"></div>
+    <div class="banner-item">
+      <div class="b-label">일간 강도</div>
+      <div class="b-badge" style="background:#ff9800;">신강(身强) 72%</div>
+    </div>
+    <div class="banner-divider"></div>
+    <div class="banner-item">
+      <div class="b-label">格局</div>
+      <div class="b-value">겁재격(劫財格)</div>
+    </div>
+    <div class="banner-divider"></div>
+    <div class="banner-item">
+      <div class="b-label">억부용신</div>
+      <div class="b-badge" style="background:#4caf50;">木(목)</div>
+    </div>
+    <div class="banner-divider"></div>
+    <div class="banner-item">
+      <div class="b-label">조후용신</div>
+      <div class="b-badge" style="background:#f44336;">火(화)</div>
+    </div>
+    <div class="banner-divider"></div>
+    <div class="banner-item">
+      <div class="b-label">최종 용신</div>
+      <div class="b-badge" style="background:#f44336;font-size:9.5pt;">🔥 火(화)</div>
+    </div>
+  </div>
+
+  <!-- 4신 메인 그리드 -->
+  <div class="four-grid">
+
+    <!-- 用神 火 -->
+    <div class="shin-col">
+      <div class="shin-hd" style="background:rgba(244,67,54,0.06);">
+        <span class="shin-num" style="background:#f44336;">① 용신(用神)</span>
+        <div class="shin-name t-화">火(화)</div>
+        <div class="shin-hanja">가장 필요한 기운</div>
+      </div>
+      <div class="ohaeng-badge" style="background:rgba(244,67,54,0.04);">
+        <div class="oh-circle c-화">火</div>
+        <div class="oh-info">
+          <div class="oh-hanja t-화">火(화)</div>
+          <div class="oh-kr">불·열·빛·남방</div>
+        </div>
+      </div>
+      <div class="shin-body">
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#f44336;">역할</span>
+          <div class="attr-val">신강한 土를 설기(洩氣)시켜 균형 확보. 조후 한기 해소.</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#e65100;">색상</span>
+          <div class="attr-val">🔴 적색 · 주황색</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#c62828;">방위</span>
+          <div class="attr-val">南(남) 방향</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#f44336;">시간</span>
+          <div class="attr-val">巳(9-11시)·午(11-13시)·未(13-15시)</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#e65100;">직업군</span>
+          <div class="attr-val">에너지·IT·미디어·마케팅·방송</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#f44336;">계절</span>
+          <div class="attr-val">여름(5~7월) 활성</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 喜神 木 -->
+    <div class="shin-col">
+      <div class="shin-hd" style="background:rgba(76,175,80,0.06);">
+        <span class="shin-num" style="background:#4caf50;">② 희신(喜神)</span>
+        <div class="shin-name t-목">木(목)</div>
+        <div class="shin-hanja">두 번째 도움 기운</div>
+      </div>
+      <div class="ohaeng-badge" style="background:rgba(76,175,80,0.04);">
+        <div class="oh-circle c-목">木</div>
+        <div class="oh-info">
+          <div class="oh-hanja t-목">木(목)</div>
+          <div class="oh-kr">나무·성장·동방</div>
+        </div>
+      </div>
+      <div class="shin-body">
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#4caf50;">역할</span>
+          <div class="attr-val">용신 火를 생(生)하는 보조 기운. 억부용신으로 일간 견제.</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#388e3c;">색상</span>
+          <div class="attr-val">🟢 초록색 · 청록색</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#2e7d32;">방위</span>
+          <div class="attr-val">東(동) 방향</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#4caf50;">시간</span>
+          <div class="attr-val">寅(3-5시)·卯(5-7시)·辰(7-9시)</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#388e3c;">직업군</span>
+          <div class="attr-val">교육·의료·출판·환경·문화</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#4caf50;">계절</span>
+          <div class="attr-val">봄(2~4월) 활성</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 忌神 水 -->
+    <div class="shin-col">
+      <div class="shin-hd" style="background:rgba(33,150,243,0.06);">
+        <span class="shin-num" style="background:#2196f3;">③ 병신(忌神)</span>
+        <div class="shin-name t-수">水(수)</div>
+        <div class="shin-hanja">가장 해로운 기운</div>
+      </div>
+      <div class="ohaeng-badge" style="background:rgba(33,150,243,0.04);">
+        <div class="oh-circle c-수">水</div>
+        <div class="oh-info">
+          <div class="oh-hanja t-수">水(수)</div>
+          <div class="oh-kr">물·냉기·북방</div>
+        </div>
+      </div>
+      <div class="shin-body">
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#2196f3;">역할</span>
+          <div class="attr-val">용신 火를 극(剋)하여 균형 파괴. 한기 강화로 조후 악화.</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#1565c0;">주의색</span>
+          <div class="attr-val">🔵 파란색 · 검정색</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#0d47a1;">주의방위</span>
+          <div class="attr-val">北(북) 방향 주의</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#2196f3;">주의시간</span>
+          <div class="attr-val">子(23-1시)·亥(21-23시) 주의</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#1565c0;">주의직업</span>
+          <div class="attr-val">수산·냉동·물류·금융(水계)</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#2196f3;">주의계절</span>
+          <div class="attr-val">겨울(11~1월) 주의</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 閑神 金 -->
+    <div class="shin-col">
+      <div class="shin-hd" style="background:rgba(158,158,158,0.06);">
+        <span class="shin-num" style="background:#9e9e9e;">④ 한신(閑神)</span>
+        <div class="shin-name t-금">金(금)</div>
+        <div class="shin-hanja">중립·보조 기운</div>
+      </div>
+      <div class="ohaeng-badge" style="background:rgba(158,158,158,0.04);">
+        <div class="oh-circle c-금">金</div>
+        <div class="oh-info">
+          <div class="oh-hanja t-금">金(금)</div>
+          <div class="oh-kr">쇠·결실·서방</div>
+        </div>
+      </div>
+      <div class="shin-body">
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#9e9e9e;">역할</span>
+          <div class="attr-val">희신 木을 극(剋)하므로 주의. 직접 해롭지는 않으나 간접 방해.</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#757575;">중립색</span>
+          <div class="attr-val">⚪ 흰색 · 은색</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#616161;">방위</span>
+          <div class="attr-val">西(서) 방향 중립</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#9e9e9e;">시간</span>
+          <div class="attr-val">申(15-17시)·酉(17-19시) 중립</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#757575;">직업군</span>
+          <div class="attr-val">금속·기계·재무·회계(중립)</div>
+        </div>
+        <div class="attr-row">
+          <span class="attr-lbl" style="background:#9e9e9e;">계절</span>
+          <div class="attr-val">가을(8~10월) 중립</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- four-grid -->
+
+  <!-- 오행 강약 비교 바 -->
+  <div class="compare-section">
+    <div class="cs-title" style="background:transparent;">
+      <span style="display:inline-block;width:3px;height:12px;background:#f44336;border-radius:2px;"></span>
+      원국 오행 분포 vs 4신 관계
+    </div>
+    <div class="compare-grid">
+      <div class="cmp-row">
+        <span class="cmp-label t-화">火(화)</span>
+        <div class="cmp-bar-wrap"><div class="cmp-bar c-화" style="width:50%;"></div></div>
+        <span class="cmp-grade t-화">보통</span>
+        <span class="cmp-note">🔥 用神 — 더 강화해야 함</span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label t-목">木(목)</span>
+        <div class="cmp-bar-wrap"><div class="cmp-bar c-목" style="width:50%;"></div></div>
+        <span class="cmp-grade t-목">보통</span>
+        <span class="cmp-note">🌱 喜神 — 유지·보강 필요</span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label t-토">土(토)</span>
+        <div class="cmp-bar-wrap"><div class="cmp-bar c-토" style="width:92%;"></div></div>
+        <span class="cmp-grade t-토">매우강</span>
+        <span class="cmp-note">⚠️ 과다 — 설기(洩氣) 필요</span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label t-수">水(수)</span>
+        <div class="cmp-bar-wrap"><div class="cmp-bar c-수" style="width:25%;"></div></div>
+        <span class="cmp-grade t-수">약</span>
+        <span class="cmp-note">💧 忌神 — 약해도 극用神 주의</span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label t-금">金(금)</span>
+        <div class="cmp-bar-wrap"><div class="cmp-bar c-금" style="width:10%;"></div></div>
+        <span class="cmp-grade t-금">매우약</span>
+        <span class="cmp-note">⚪ 閑神 — 희신 木 견제 주의</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 실생활 활용 -->
+  <div class="usage-grid">
+    <div class="usage-item">
+      <div class="ui-title"><div class="ui-dot c-화"></div><span style="color:#f44336;">🔥 용신 활용법 — 火 기운 강화</span></div>
+      <div class="ui-content">
+        붉은색·주황색 의류·소품 착용. 남향 집·사무실 선호.
+        여름(5~7월)에 중요한 결정·계약 집중.
+        巳午未 시간대 핵심 업무 배치. 촛불·조명 활용.
+      </div>
+    </div>
+    <div class="usage-item">
+      <div class="ui-title"><div class="ui-dot c-목"></div><span style="color:#4caf50;">🌱 희신 활용법 — 木 기운 보강</span></div>
+      <div class="ui-content">
+        초록색 식물·화분을 주변에. 동쪽 창문 활용.
+        봄(2~4월)에 새 시작·계획 수립.
+        나무 소재 가구·악세서리 활용. 숲·공원 산책.
+      </div>
+    </div>
+    <div class="usage-item">
+      <div class="ui-title"><div class="ui-dot c-수"></div><span style="color:#2196f3;">💧 병신 방어법 — 水 기운 차단</span></div>
+      <div class="ui-content">
+        겨울(11~1월) 중요 결정 자제.
+        파란색·검정색 과다 사용 주의.
+        북향 방 장기 거주 주의. 水관련 직종 투자 조심.
+        자시(子時) 중요 미팅 피하기.
+      </div>
+    </div>
+    <div class="usage-item">
+      <div class="ui-title"><div class="ui-dot c-금"></div><span style="color:#9e9e9e;">⚪ 한신 주의법 — 金 기운 관리</span></div>
+      <div class="ui-content">
+        가을(8~10월) 희신 木이 약해지는 시기 주의.
+        金 기운 강한 대운·세운 구간 방어 필요.
+        현재 원국 내 金 매우 약 → 세운에서 金 들어올 때 충격 흡수 준비.
+      </div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#e65100;">📌 반야선생의 4신 핵심 요약</strong><br>
+  최원석 님의 사주는 <strong style="color:#ff9800;">土(토)가 매우 강한(72%) 신강(身强) 구조</strong>입니다. 이 과한 土 기운을 식혀주는 것이 핵심입니다.
+  <strong style="color:#f44336;">用神 火(화)</strong>는 土를 설기(洩氣)시키고 조후(調候) 한기를 해소하는 가장 필요한 기운 — 붉은색·여름·남방이 에너지를 높여줍니다.
+  <strong style="color:#4caf50;">喜神 木(목)</strong>은 용신 火를 생(生)하는 보조 역할 — 초록색·봄·동방이 함께 작동합니다.
+  반면 <strong style="color:#2196f3;">忌神 水(수)</strong>는 용신 火를 꺼뜨리는 가장 해로운 기운 — 겨울·파란색·북방을 의식적으로 피하는 것이 방어책입니다.
+</div>
+
+</div>
+</body>
+</html>

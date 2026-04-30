@@ -1,0 +1,155 @@
+{# Manseoryeok Table Component - Restored #}
+<div class="manseoryeok-container">
+    <div class="header-unified-box">
+        <div class="info-section">
+            <div class="character-wrapper">
+                <div class="character-circle">
+                    {{ saju_data.year_animal_emoji|default('🐉') }}
+                </div>
+            </div>
+            <table class="info-table-container">
+                <tr>
+                    <td class="info-cell title-cell" colspan="4">{{ user_profile.name }}님의 천명 설계도 (天命 設計圖)</td>
+                </tr>
+                <tr>
+                    <td class="info-cell label">기본정보</td>
+                    <td class="info-cell value" colspan="3">
+                        {{ user_profile.name }},
+                        {{ user_profile.gender_kr|default('남성') }},
+                        {{ user_profile.age }}세
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-cell label">일주동물</td>
+                    <td class="info-cell value highlight" colspan="3">
+                        {{ saju_data.ilju_animal|default('황금용') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-cell label">양력</td>
+                    <td class="info-cell value" colspan="3">
+                        {{ user_profile.birth_solar|default('-') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info-cell label">음력</td>
+                    <td class="info-cell value" colspan="3">
+                        {{ user_profile.birth_lunar|default('-') }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="manseoryeok-table-wrapper">
+        <table class="manseoryeok-table">
+            <colgroup>
+                <col style="width: 100px;">
+                <col style="width: 115px;">
+                <col style="width: 115px;">
+                <col style="width: 115px;">
+                <col style="width: 115px;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="label-cell">구분<span class="label-hanja">(區分)</span></th>
+                    <th>시주 (時柱)</th>
+                    <th>일주 (日柱)</th>
+                    <th>월주 (月柱)</th>
+                    <th>년주 (年柱)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1. 천간십성 (Ten Star for Stem) -->
+                <tr>
+                    <td class="label-cell">천간십성<span class="label-hanja">(天干十星)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div class="sipseong {{ 'primary' if pillar == 'day' else 'normal' }}">
+                            {{ manseryeok[pillar].sipseong_stem|default('-') }}
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 2. 천간 (Stem) -->
+                <tr>
+                    <td class="label-cell">천간<span class="label-hanja">(天干)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div style="display:flex; justify-content:center; align-items:center;">
+                            <div class="ganji-box {{ manseryeok[pillar].stem_element }}">
+                                <div class="hanja">{{ manseryeok[pillar].stem }}</div>
+                                <div class="hangul">({{ manseryeok[pillar].stem_kr }})</div>
+                            </div>
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 3. 지지 (Branch) -->
+                <tr>
+                    <td class="label-cell">지지<span class="label-hanja">(地支)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div style="display:flex; justify-content:center; align-items:center;">
+                            <div class="ganji-box {{ manseryeok[pillar].branch_element }}">
+                                <div class="hanja">{{ manseryeok[pillar].branch }}</div>
+                                <div class="hangul">({{ manseryeok[pillar].branch_kr }})</div>
+                            </div>
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 4. 지지십성 (Ten Star for Branch) -->
+                <tr>
+                    <td class="label-cell">지지십성<span class="label-hanja">(地支十星)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div class="sipseong normal">
+                            {{ manseryeok[pillar].sipseong_branch|default('-') }}
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 5. 지장간 (Jijanggan) -->
+                <tr>
+                    <td class="label-cell">지장간<span class="label-hanja">(支藏干)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div class="sipseong-detail">
+                            {{ manseryeok[pillar].jijanggan_html|safe }}
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 6. 12운성 (12 Unseong) -->
+                <tr>
+                    <td class="label-cell">12운성<span class="label-hanja">(十二運星)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div class="unseong">
+                            {{ manseryeok[pillar].unseong|default('-') }}
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- 7. 신살 (Shinsal) -->
+                <tr>
+                    <td class="label-cell">신살<span class="label-hanja">(神殺)</span></td>
+                    {% for pillar in ['time', 'day', 'month', 'year'] %}
+                    <td>
+                        <div class="sinsal">
+                            {{ manseryeok[pillar].shinsal_html|safe }}
+                        </div>
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

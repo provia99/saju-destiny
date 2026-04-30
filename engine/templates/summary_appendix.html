@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>사주 원국 요약표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:9px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:8px; flex-shrink:0;
+}
+.pt-left {}
+.pt-main { font-family:'DM Serif Display',serif; font-size:22pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:8pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-right { text-align:right; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:14pt; font-weight:800; color:#c9a227; }
+.pt-info { font-size:7pt; color:#aaa; margin-top:2px; }
+
+/* ── 공통 카드 ── */
+.card {
+  border:2px solid #333;
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.card-hd {
+  padding:7px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:9pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ═══════════════════════════════
+   섹션1: 기본 정보 + 원국 4기둥
+   ═══════════════════════════════ */
+.info-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; background:white;
+}
+.info-left {
+  padding:10px 14px; border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:5px;
+}
+.info-right { padding:10px 14px; }
+
+/* 기본 정보 행 */
+.info-row { display:flex; align-items:baseline; gap:6px; }
+.ir-label { font-size:6.5pt; font-weight:700; color:#aaa; width:32px; flex-shrink:0; }
+.ir-val   { font-size:8pt; color:#333; font-weight:500; }
+.ir-val strong { color:#222; }
+
+/* 원국 4기둥 미니 */
+.pillar-mini {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:5px;
+}
+.pm-col {
+  border:1.5px solid #333; border-radius:8px;
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.pm-hd {
+  background:#f5f5f5; text-align:center;
+  padding:3px 4px; border-bottom:1px solid #e0e0e0;
+}
+.pm-hd-lbl  { font-size:5.5pt; color:#aaa; font-weight:700; }
+.pm-hd-name { font-size:6pt; font-weight:700; color:#555; }
+.pm-stem, .pm-branch {
+  text-align:center; padding:5px 3px;
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.pm-stem { border-bottom:1px solid #f0f0f0; }
+.pm-hanja {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:16pt; font-weight:800; line-height:1;
+}
+.pm-kr     { font-size:5.5pt; color:#888; }
+.pm-ss     { font-size:6pt; font-weight:700; color:white; padding:1px 6px; border-radius:6px; }
+.pm-sinsal { font-size:5pt; color:#e65100; text-align:center; padding:3px 3px; background:#fff8f5; border-top:1px solid #ffe0b2; min-height:14px; }
+.ilgan-dot { font-size:5pt; font-weight:900; color:#f44336; }
+.gongmang-dot { font-size:5pt; color:#f44336; font-weight:700; }
+
+/* ═══════════════════════════════
+   섹션2: 핵심 명리 정보 3열
+   ═══════════════════════════════ */
+.core-grid {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:0; background:white;
+}
+.core-item {
+  padding:9px 12px; border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:4px;
+}
+.core-item:last-child { border-right:none; }
+.ci-label { font-size:6.5pt; font-weight:700; color:#aaa; margin-bottom:1px; }
+.ci-main  { font-size:11pt; font-weight:900; font-family:'Nanum Myeongjo',serif; line-height:1.2; }
+.ci-sub   { font-size:6.5pt; color:#666; line-height:1.5; }
+.ci-badge {
+  display:inline-block; padding:2px 10px; border-radius:8px;
+  font-size:7pt; font-weight:700; color:white; width:fit-content;
+}
+
+/* ═══════════════════════════════
+   섹션3: 4신 요약
+   ═══════════════════════════════ */
+.shin-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; background:white;
+}
+.shin-item {
+  padding:8px 10px; border-right:1px solid #e0e0e0;
+  text-align:center; display:flex; flex-direction:column; gap:3px;
+}
+.shin-item:last-child { border-right:none; }
+.sh-num   { font-size:6pt; font-weight:700; }
+.sh-name  { font-size:7.5pt; font-weight:700; }
+.sh-ohaeng{
+  font-family:'Nanum Myeongjo',serif;
+  font-size:20pt; font-weight:800; line-height:1;
+}
+.sh-meaning { font-size:6pt; color:#888; line-height:1.5; }
+.sh-tip   { font-size:6pt; font-weight:700; padding:1px 7px; border-radius:6px; color:white; display:inline-block; margin-top:2px; }
+
+/* ═══════════════════════════════
+   섹션4: 오행 분포 바
+   ═══════════════════════════════ */
+.ohaeng-section { padding:10px 16px; background:white; }
+.oh-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:7px; display:flex; align-items:center; gap:5px; }
+.oh-title::before { content:''; display:inline-block; width:3px; height:11px; background:#ff9800; border-radius:2px; }
+.oh-bars { display:flex; flex-direction:column; gap:4px; }
+.oh-row  { display:flex; align-items:center; gap:7px; }
+.oh-label{ font-size:6.5pt; font-weight:700; width:32px; text-align:right; flex-shrink:0; }
+.oh-wrap { flex:1; height:7px; background:#eee; border-radius:4px; overflow:hidden; }
+.oh-bar  { height:100%; border-radius:4px; }
+.oh-grade{ font-size:6pt; font-weight:700; width:32px; flex-shrink:0; }
+.oh-note { font-size:6pt; color:#aaa; }
+
+/* ═══════════════════════════════
+   섹션5: 합충형파해 요약
+   ═══════════════════════════════ */
+.hcf-section { padding:10px 14px; background:white; }
+.hcf-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.hcf-title::before { content:''; display:inline-block; width:3px; height:11px; background:#9c27b0; border-radius:2px; }
+.hcf-list { display:flex; flex-direction:column; gap:4px; }
+.hcf-row { display:flex; align-items:flex-start; gap:8px; }
+.hcf-type { font-size:6.5pt; font-weight:700; color:white; padding:2px 8px; border-radius:6px; flex-shrink:0; width:44px; text-align:center; }
+.hcf-content { font-size:7pt; color:#333; line-height:1.5; }
+
+/* ═══════════════════════════════
+   섹션6: 대운 요약
+   ═══════════════════════════════ */
+.daewoon-section { padding:10px 14px; background:white; }
+.dw-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.dw-title::before { content:''; display:inline-block; width:3px; height:11px; background:#f44336; border-radius:2px; }
+.dw-list { display:flex; gap:5px; flex-wrap:wrap; }
+.dw-chip {
+  border:1.5px solid #333; border-radius:8px;
+  padding:5px 10px; display:flex; flex-direction:column;
+  align-items:center; gap:2px; min-width:22mm;
+}
+.dw-ganji { font-family:'Nanum Myeongjo',serif; font-size:10pt; font-weight:800; line-height:1; }
+.dw-age   { font-size:6pt; color:#888; }
+.dw-grade { font-size:6pt; font-weight:700; color:white; padding:1px 6px; border-radius:5px; }
+.dw-now   { border:2px solid #f44336 !important; background:#fff5f5; }
+
+/* ═══════════════════════════════
+   섹션7: 신살 요약
+   ═══════════════════════════════ */
+.sinsal-section {
+  padding:8px 14px; background:white;
+  display:flex; gap:12px;
+}
+.ss-group { flex:1; }
+.ss-group-title { font-size:6.5pt; font-weight:700; margin-bottom:5px; }
+.ss-chips { display:flex; flex-wrap:wrap; gap:4px; }
+.ss-chip  { font-size:6.5pt; font-weight:700; padding:2px 9px; border-radius:7px; color:white; }
+
+/* ── 하단 주석 ── */
+.footer {
+  margin-top:auto; padding-top:8px; border-top:1px solid #e0e0e0;
+  display:flex; justify-content:space-between; align-items:center;
+  flex-shrink:0;
+}
+.ft-note  { font-size:6pt; color:#bbb; line-height:1.7; }
+.ft-brand { font-size:7pt; color:#999; font-weight:700; text-align:right; }
+
+/* 색상 */
+.c-화 { background:#f44336; } .t-화 { color:#f44336; }
+.c-목 { background:#4caf50; } .t-목 { color:#4caf50; }
+.c-수 { background:#2196f3; } .t-수 { color:#2196f3; }
+.c-금 { background:#9e9e9e; } .t-금 { color:#9e9e9e; }
+.c-토 { background:#ff9800; } .t-토 { color:#ff9800; }
+.ss-비겁 { background:#4caf50; }
+.ss-재성 { background:#ff9800; }
+.ss-관성 { background:#9e9e9e; }
+.ss-인성 { background:#2196f3; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div class="pt-left">
+    <div class="pt-main">사주 원국 요약표</div>
+    <div class="pt-sub">四柱 原局 要約表 · Appendix</div>
+  </div>
+  <div class="pt-right">
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 2026년</div>
+  </div>
+</div>
+
+<!-- ═══ 섹션1: 기본 정보 + 원국 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#212121,#424242);">
+    <div class="card-hd-title">① 기본 정보 및 사주 원국(原局)</div>
+    <div class="card-hd-sub">네 기둥 여덟 글자</div>
+  </div>
+  <div class="info-grid">
+    <div class="info-left">
+      <div class="info-row"><span class="ir-label">이름</span><span class="ir-val"><strong>최원석</strong> 님</span></div>
+      <div class="info-row"><span class="ir-label">음력</span><span class="ir-val">1963년 12월 6일 사시(巳時)</span></div>
+      <div class="info-row"><span class="ir-label">양력</span><span class="ir-val">1964년 1월 20일</span></div>
+      <div class="info-row"><span class="ir-label">성별</span><span class="ir-val">남성</span></div>
+      <div class="info-row"><span class="ir-label">만나이</span><span class="ir-val"><strong>62세</strong> (2026년 기준)</span></div>
+      <div class="info-row"><span class="ir-label">일주</span><span class="ir-val"><strong style="font-family:'Nanum Myeongjo',serif;font-size:10pt;">戊辰(무진)</strong> — 황토용(黃土龍)</span></div>
+      <div class="info-row"><span class="ir-label">격국</span><span class="ir-val">겁재격(劫財格)</span></div>
+      <div class="info-row"><span class="ir-label">신강약</span><span class="ir-val"><strong>신강(身强)</strong> — 비겁·인성 비율 높음</span></div>
+      <div class="info-row"><span class="ir-label">공망</span><span class="ir-val"><strong style="color:#f44336;">辰·巳</strong> (일지·시지 이중 공망)</span></div>
+    </div>
+    <div class="info-right">
+      <div class="pillar-mini">
+        <!-- 년주 -->
+        <div class="pm-col">
+          <div class="pm-hd"><div class="pm-hd-lbl">년주(年柱)</div><div class="pm-hd-name">조상·초년</div></div>
+          <div class="pm-stem">
+            <div class="pm-hanja t-수">癸</div>
+            <div class="pm-kr">계 · 水</div>
+            <div class="pm-ss ss-재성">정재</div>
+          </div>
+          <div class="pm-branch">
+            <div class="pm-hanja t-목">卯</div>
+            <div class="pm-kr">묘 · 木</div>
+            <div class="pm-ss ss-관성">정관</div>
+          </div>
+          <div class="pm-sinsal">장성살</div>
+        </div>
+        <!-- 월주 -->
+        <div class="pm-col">
+          <div class="pm-hd"><div class="pm-hd-lbl">월주(月柱)</div><div class="pm-hd-name">부모·직업</div></div>
+          <div class="pm-stem">
+            <div class="pm-hanja t-목">乙</div>
+            <div class="pm-kr">을 · 木</div>
+            <div class="pm-ss ss-관성">정관</div>
+          </div>
+          <div class="pm-branch">
+            <div class="pm-hanja t-토">丑</div>
+            <div class="pm-kr">축 · 土</div>
+            <div class="pm-ss ss-비겁">겁재</div>
+          </div>
+          <div class="pm-sinsal">천을귀인·태극귀인</div>
+        </div>
+        <!-- 일주 ★ -->
+        <div class="pm-col" style="border:2px solid #f44336;">
+          <div class="pm-hd" style="background:#fff3e0;">
+            <div class="pm-hd-lbl" style="color:#f44336;">일주(日柱)★</div>
+            <div class="pm-hd-name" style="color:#e65100;">나·배우자</div>
+          </div>
+          <div class="pm-stem" style="background:#fff8f5;">
+            <div class="ilgan-dot">일간(나)</div>
+            <div class="pm-hanja t-토">戊</div>
+            <div class="pm-kr">무 · 土</div>
+            <div class="pm-ss" style="background:#aaa;">일원</div>
+          </div>
+          <div class="pm-branch" style="background:#fff8f5;">
+            <div class="pm-hanja t-토">辰</div>
+            <div class="pm-kr">진·土<span class="gongmang-dot">⚡공망</span></div>
+            <div class="pm-ss ss-비겁">비견</div>
+          </div>
+          <div class="pm-sinsal" style="background:#fce4ec;border-color:#f48fb1;color:#c62828;">백호대살·반안살</div>
+        </div>
+        <!-- 시주 -->
+        <div class="pm-col">
+          <div class="pm-hd"><div class="pm-hd-lbl">시주(時柱)</div><div class="pm-hd-name">자녀·말년</div></div>
+          <div class="pm-stem">
+            <div class="pm-hanja t-화">丁</div>
+            <div class="pm-kr">정·火←用神</div>
+            <div class="pm-ss ss-인성">정인</div>
+          </div>
+          <div class="pm-branch">
+            <div class="pm-hanja t-화">巳</div>
+            <div class="pm-kr">사·火<span class="gongmang-dot">⚡공망</span></div>
+            <div class="pm-ss ss-인성">편인</div>
+          </div>
+          <div class="pm-sinsal">역마살</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 섹션2: 핵심 명리 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#e65100,#f44336);">
+    <div class="card-hd-title">② 핵심 명리 정보 — 용신·신강약·격국</div>
+    <div class="card-hd-sub">내 사주의 나침반</div>
+  </div>
+  <div class="shin-grid">
+    <div class="shin-item">
+      <div class="sh-num" style="color:#f44336;">① 용신(用神)</div>
+      <div class="sh-name" style="color:#f44336;">가장 필요한 기운</div>
+      <div class="sh-ohaeng t-화">火</div>
+      <div class="sh-meaning">적색·주황색·남방<br>여름·巳午未 시간대</div>
+      <span class="sh-tip c-화">🔥 강화</span>
+    </div>
+    <div class="shin-item">
+      <div class="sh-num" style="color:#4caf50;">② 희신(喜神)</div>
+      <div class="sh-name" style="color:#4caf50;">보조 기운</div>
+      <div class="sh-ohaeng t-목">木</div>
+      <div class="sh-meaning">초록색·동방<br>봄·寅卯辰 시간대</div>
+      <span class="sh-tip c-목">🌱 보강</span>
+    </div>
+    <div class="shin-item">
+      <div class="sh-num" style="color:#2196f3;">③ 병신(忌神)</div>
+      <div class="sh-name" style="color:#2196f3;">해로운 기운</div>
+      <div class="sh-ohaeng t-수">水</div>
+      <div class="sh-meaning">파란색·검정·북방<br>겨울·子亥 시간대</div>
+      <span class="sh-tip c-수">💧 주의</span>
+    </div>
+    <div class="shin-item">
+      <div class="sh-num" style="color:#9e9e9e;">④ 한신(閑神)</div>
+      <div class="sh-name" style="color:#9e9e9e;">중립 기운</div>
+      <div class="sh-ohaeng t-금">金</div>
+      <div class="sh-meaning">흰색·은색·서방<br>가을·申酉 시간대</div>
+      <span class="sh-tip c-금">⚪ 관리</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 섹션3: 오행 분포 + 합충형파해 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#7b1fa2);">
+    <div class="card-hd-title">③ 오행 분포 · 합충형파해(合沖刑破害)</div>
+    <div class="card-hd-sub">기운의 강약과 기둥의 대화</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:white;">
+    <!-- 오행 분포 -->
+    <div class="ohaeng-section" style="border-right:1px solid #e0e0e0;">
+      <div class="oh-title">오행 강약 분포</div>
+      <div class="oh-bars">
+        <div class="oh-row"><span class="oh-label t-화">火(화)</span><div class="oh-wrap"><div class="oh-bar c-화" style="width:50%;"></div></div><span class="oh-grade t-화">보통</span><span class="oh-note">← 用神 강화 필요</span></div>
+        <div class="oh-row"><span class="oh-label t-목">木(목)</span><div class="oh-wrap"><div class="oh-bar c-목" style="width:50%;"></div></div><span class="oh-grade t-목">보통</span><span class="oh-note">← 喜神 유지</span></div>
+        <div class="oh-row"><span class="oh-label t-토">土(토)</span><div class="oh-wrap"><div class="oh-bar c-토" style="width:92%;"></div></div><span class="oh-grade t-토">매우강</span><span class="oh-note">← 과다, 설기 필요</span></div>
+        <div class="oh-row"><span class="oh-label t-수">水(수)</span><div class="oh-wrap"><div class="oh-bar c-수" style="width:25%;"></div></div><span class="oh-grade t-수">약</span><span class="oh-note">← 忌神 주의</span></div>
+        <div class="oh-row"><span class="oh-label t-금">金(금)</span><div class="oh-wrap"><div class="oh-bar c-금" style="width:10%;"></div></div><span class="oh-grade t-금">매우약</span><span class="oh-note">← 閑神</span></div>
+      </div>
+    </div>
+    <!-- 합충형파해 -->
+    <div class="hcf-section">
+      <div class="hcf-title">합충형파해 요약</div>
+      <div class="hcf-list">
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#4caf50;">천간합</span>
+          <span class="hcf-content"><strong>癸戊합 → 化火</strong> 년간·일간 / 用神 강화 ✅ 길</span>
+        </div>
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#9c27b0;">지지합</span>
+          <span class="hcf-content"><strong>巳丑 반합 → 化金</strong> 시지·월지 / 忌神 강화 ⚠️</span>
+        </div>
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#bdbdbd;">지지충</span>
+          <span class="hcf-content">없음 — 기본 안정 구조 ✅</span>
+        </div>
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#bdbdbd;">지지형</span>
+          <span class="hcf-content">없음 ✅</span>
+        </div>
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#ff5722;">파(破)</span>
+          <span class="hcf-content"><strong>丑辰파</strong> 월지·일지 / 마무리 무너지는 패턴 ⚠️</span>
+        </div>
+        <div class="hcf-row">
+          <span class="hcf-type" style="background:#e91e63;">해(害)</span>
+          <span class="hcf-content"><strong>卯辰해</strong> 년지·일지 / 보이지 않는 방해 ⚠️</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 섹션4: 대운 목록 + 신살 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#2e7d32,#388e3c);">
+    <div class="card-hd-title">④ 대운(大運) 목록 · 신살(神殺)</div>
+    <div class="card-hd-sub">시간의 흐름과 타고난 에너지 표식</div>
+  </div>
+  <div style="background:white;">
+    <!-- 대운 -->
+    <div class="daewoon-section">
+      <div class="dw-title">대운(大運) 목록 — 만나이 기준</div>
+      <div class="dw-list">
+        <div class="dw-chip"><div class="dw-ganji" style="color:#9e9e9e;">乙丑</div><div class="dw-age">4~13세 / 1968년~</div><div class="dw-grade" style="background:#4caf50;">희신</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#9e9e9e;">甲子</div><div class="dw-age">14~23세 / 1978년~</div><div class="dw-grade" style="background:#9e9e9e;">중립</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#9e9e9e;">癸亥</div><div class="dw-age">24~33세 / 1988년~</div><div class="dw-grade" style="background:#2196f3;">병신</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#9e9e9e;">壬戌</div><div class="dw-age">34~43세 / 1998년~</div><div class="dw-grade" style="background:#2196f3;">병신</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#9e9e9e;">辛酉</div><div class="dw-age">44~53세 / 2008년~</div><div class="dw-grade" style="background:#9e9e9e;">중립</div></div>
+        <div class="dw-chip dw-now"><div class="dw-ganji" style="color:#f44336;">庚申</div><div class="dw-age">54~63세 / 2018년~</div><div class="dw-grade" style="background:#9e9e9e;">▶현재</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#ff9800;">己未</div><div class="dw-age">64~73세 / 2028년~</div><div class="dw-grade" style="background:#9e9e9e;">중립</div></div>
+        <div class="dw-chip" style="border:2px solid #f44336;background:#fff5f5;"><div class="dw-ganji" style="color:#f44336;">戊午</div><div class="dw-age">74~83세 / 2038년~</div><div class="dw-grade" style="background:#f44336;">🌟용신</div></div>
+        <div class="dw-chip"><div class="dw-ganji" style="color:#f44336;">丁巳</div><div class="dw-age">84~93세 / 2048년~</div><div class="dw-grade" style="background:#f44336;">용신</div></div>
+      </div>
+    </div>
+    <!-- 신살 -->
+    <div class="sinsal-section" style="border-top:1px solid #e0e0e0;">
+      <div class="ss-group">
+        <div class="ss-group-title" style="color:#2196f3;">✅ 귀인·길신</div>
+        <div class="ss-chips">
+          <span class="ss-chip" style="background:#2196f3;">천을귀인</span>
+          <span class="ss-chip" style="background:#3f51b5;">태극귀인</span>
+          <span class="ss-chip" style="background:#607d8b;">장성살</span>
+        </div>
+      </div>
+      <div class="ss-group">
+        <div class="ss-group-title" style="color:#f44336;">⚠️ 흉살·주의</div>
+        <div class="ss-chips">
+          <span class="ss-chip" style="background:#e91e63;">홍염살</span>
+          <span class="ss-chip" style="background:#f44336;">백호대살</span>
+          <span class="ss-chip" style="background:#ff9800;">역마살</span>
+        </div>
+      </div>
+      <div class="ss-group">
+        <div class="ss-group-title" style="color:#f44336;">⚡ 공망(空亡)</div>
+        <div class="ss-chips">
+          <span class="ss-chip" style="background:#ff5722;">辰(일지)</span>
+          <span class="ss-chip" style="background:#ff5722;">巳(시지)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 하단 주석 -->
+<div class="footer">
+  <div class="ft-note">
+    ※ 이 요약표는 책 전체 내용의 핵심을 압축한 참조 자료입니다. 각 항목의 자세한 풀이는 해당 장(章)을 참고하세요.<br>
+    만나이 기준 · 양력 생년월일 기준 계산 · 용신 Fire 기준 오행 분석
+  </div>
+  <div class="ft-brand">반야 백년 사주 연구소<br>반야선생 · 2026</div>
+</div>
+
+</div>
+</body>
+</html>

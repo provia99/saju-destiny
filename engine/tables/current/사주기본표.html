@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>사주기본표 》 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Noto Sans KR',sans-serif;
+       background:#f5f5f5; padding:40px 0;
+       display:flex; justify-content:center; align-items:flex-start; min-height:100vh; }
+.page { border:1px solid #333; width:604px; padding:6px 10px; background:transparent;
+        border-radius:8px;  overflow:hidden; box-sizing:border-box; }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #333; border-radius:12px; overflow:hidden; margin-top:5px; }
+.card-hd { padding:5px 14px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:9pt; font-weight:900; color:white; }
+.card-hd-sub { font-size:6.5pt; color:rgba(255,255,255,.85); }
+.main-tbl { width:100%; border-collapse:collapse; table-layout:fixed; }
+.main-tbl th, .main-tbl td { border:1px solid #3335b5; width:20%; }
+.col-hd { text-align:center; padding:5px 4px; color:#fff; }
+.col-hd .hanja { font-size:12pt; font-weight:900; letter-spacing:1px; display:block; }
+.col-hd .kor { font-size:7pt; opacity:.75; margin-top:1px; }
+.col-hd .ganju { font-size:8.5pt; font-weight:normal; opacity:.88;
+                 border-top:1px solid rgba(255,255,255,.25); margin-top:2px; padding-top:2px; }
+.row-lbl { background:#f0ebe0; text-align:center; width:56px; padding:0 4px;
+           border-right:2px solid #ccc5b5; vertical-align:middle; }
+.row-lbl .r1 { font-size:10pt; font-weight:900; color:#475569; display:block; line-height:1.1; }
+.row-lbl .r2 { font-size:6.5pt; color:#555570; display:block; margin-top:1px; }
+.tg-cell { text-align:center; padding:5px 4px 4px; vertical-align:middle; }
+.tg-hj { font-size:19pt; font-weight:900; display:block; line-height:1; }
+.tg-kr { font-size:7.5pt; color:#555570; display:block; margin-top:2px; }
+.jj-cell { text-align:center; padding:5px 4px 3px; vertical-align:middle; }
+.jj-hj { font-size:16pt; font-weight:800; display:block; line-height:1; }
+.jj-kr { font-size:7.5pt; color:#555570; display:block; margin-top:2px; }
+.badge { display:inline-block; padding:2px 7px; border-radius:10px; font-size:7.5pt; font-weight:bold; margin:2px 1px; }
+.sum-tbl { width:100%; border-collapse:collapse; }
+.sum-tbl td { border:1px solid #3335b5; padding:3px 8px; font-size:8.5pt; vertical-align:middle; }
+.sum-k { background:#f0ebe0; font-weight:bold; font-size:8pt; color:#1a3a60;
+         width:95px; text-align:right; padding-right:12px; white-space:nowrap; }
+.sum-v { background:transparent; }
+.sum-v2 { background:#faf8f3; }
+.oh-bar-bg { background:#e8e4da; border-radius:3px; height:7px; overflow:hidden; }
+.oh-bar-fg { height:7px; border-radius:3px; }
+.yb { display:inline-flex; align-items:center; gap:4px; padding:2px 8px 2px 6px;
+      border-radius:16px; font-size:8pt; font-weight:bold; margin:2px; }
+.yd { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.oh-row { display:flex; gap:4px; flex-wrap:wrap; }
+.oh-item { display:flex; align-items:center; gap:4px; min-width:105px;
+           border-radius:5px; padding:2px 5px; }
+.oh-nm { font-weight:bold; font-size:8pt; min-width:36px; }
+.oh-tr { flex:1; height:6px; background:#e8e8e8; border-radius:3px; overflow:hidden; min-width:30px; }
+.oh-fl { height:100%; border-radius:3px; }
+.oh-pc { font-size:7pt; color:#888; min-width:26px; text-align:right; }
+@media print {
+  body { background:transparent; padding:0; display:block; min-height:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#4a148c);">
+  <div>
+    <div class="banner-hdr-title">📋 사주 기본표 (四柱 基本表)</div>
+    <div class="banner-hdr-sub">戊辰(무진) 일주 · 편관격(偏官格)</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">1968-2-28 묘시 · 여 · 58세 · 중화형신강 · 用神 木(목)</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#475569,#64748b);">
+    <div class="card-hd-title">① 사주 원국 (四柱 原局)</div>
+    <div class="card-hd-sub">네 기둥 여덟 글자</div>
+  </div>
+  <table class="main-tbl"><thead><tr>
+    <th style="background:#475569;width:56px;"></th>
+    <th class="col-hd" style="background:linear-gradient(135deg,#9b6f00,#c9a200);"><span class="hanja">年柱</span><span class="kor">년주</span><div class="ganju">戊申(무신)</div></th>
+    <th class="col-hd" style="background:linear-gradient(135deg,#1e6b2a,#3ab54a);"><span class="hanja">月柱</span><span class="kor">월주</span><div class="ganju">甲寅(갑인)</div></th>
+    <th class="col-hd" style="background:linear-gradient(135deg,#9b6f00,#c9a200);"><span class="hanja">日柱</span><span class="kor">일주</span><div class="ganju">戊辰(무진)</div></th>
+    <th class="col-hd" style="background:linear-gradient(135deg,#1e6b2a,#3ab54a);"><span class="hanja">時柱</span><span class="kor">시주</span><div class="ganju">甲寅(갑인)</div></th>
+  </tr></thead><tbody>
+  <tr><td class="row-lbl"><span class="r1">天干</span><span class="r2">천간</span></td>
+    <td class="tg-cell" style="background:#fffdf4;"><span class="tg-hj" style="color:#9b6f00;">戊</span><span class="tg-kr">무</span></td>
+    <td class="tg-cell" style="background:#f3fcf5;"><span class="tg-hj" style="color:#1e6b2a;">甲</span><span class="tg-kr">갑</span></td>
+    <td class="tg-cell" style="background:#fffdf4;"><span class="tg-hj" style="color:#9b6f00;">戊</span><span class="tg-kr">무</span></td>
+    <td class="tg-cell" style="background:#f3fcf5;"><span class="tg-hj" style="color:#1e6b2a;">甲</span><span class="tg-kr">갑</span></td>
+  </tr>
+  <tr><td class="row-lbl"><span class="r1">地支</span><span class="r2">지지</span></td>
+    <td class="jj-cell" style="background:#eef1f4;"><span class="jj-hj" style="color:#5a7080;">申</span><span class="jj-kr">신</span></td>
+    <td class="jj-cell" style="background:#e8f7ec;"><span class="jj-hj" style="color:#2d9e3e;">寅</span><span class="jj-kr">인</span></td>
+    <td class="jj-cell" style="background:#fff8e0;"><span class="jj-hj" style="color:#c99400;">辰</span><span class="jj-kr">진</span></td>
+    <td class="jj-cell" style="background:#e8f7ec;"><span class="jj-hj" style="color:#2d9e3e;">寅</span><span class="jj-kr">인</span></td>
+  </tr>
+  <tr style="background:#fdfaf8;"><td class="row-lbl"><span class="r1">十星</span><span class="r2">십성</span></td>
+    <td style="text-align:center;padding:5px 4px;"><div style="margin-bottom:3px;"><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#dbeafe;color:#1e40af;">비견</span></div><div><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#dcfce7;color:#166534;">식신</span></div></td>
+    <td style="text-align:center;padding:5px 4px;"><div style="margin-bottom:3px;"><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#ffe4e6;color:#9f1239;">편관</span></div><div><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#ffe4e6;color:#9f1239;">편관</span></div></td>
+    <td style="text-align:center;padding:5px 4px;"><div style="margin-bottom:3px;"><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#fef08a;color:#713f12;">일원(나)</span></div><div><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#dbeafe;color:#1e40af;">비견</span></div></td>
+    <td style="text-align:center;padding:5px 4px;"><div style="margin-bottom:3px;"><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#ffe4e6;color:#9f1239;">편관</span></div><div><span style="display:inline-block;padding:2px 6px;border-radius:20px;font-size:7pt;font-weight:bold;background:#ffe4e6;color:#9f1239;">편관</span></div></td>
+  </tr>
+  <tr><td class="row-lbl"><span class="r1">藏干</span><span class="r2">지장간</span></td>
+    <td style="padding:5px 7px;vertical-align:middle;"><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">戊(무)</b> <span style="color:#888;font-size:7pt;">비견</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">壬(임)</b> <span style="color:#888;font-size:7pt;">편재</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">庚(경)</b> <span style="color:#888;font-size:7pt;">식신</span></div></td>
+    <td style="padding:5px 7px;vertical-align:middle;"><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">戊(무)</b> <span style="color:#888;font-size:7pt;">비견</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">丙(병)</b> <span style="color:#888;font-size:7pt;">편인</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">甲(갑)</b> <span style="color:#888;font-size:7pt;">편관</span></div></td>
+    <td style="padding:5px 7px;vertical-align:middle;"><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">乙(을)</b> <span style="color:#888;font-size:7pt;">정관</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">癸(계)</b> <span style="color:#888;font-size:7pt;">정재</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">戊(무)</b> <span style="color:#888;font-size:7pt;">비견</span></div></td>
+    <td style="padding:5px 7px;vertical-align:middle;"><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">戊(무)</b> <span style="color:#888;font-size:7pt;">비견</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">丙(병)</b> <span style="color:#888;font-size:7pt;">편인</span></div><div style="font-size:7.5pt;line-height:1.55;color:#333;"><b style="color:#222;">甲(갑)</b> <span style="color:#888;font-size:7pt;">편관</span></div></td>
+  </tr>
+  <tr style="background:#fdfaf8;"><td class="row-lbl"><span class="r1">神殺</span><span class="r2">신살</span></td>
+    <td style="text-align:center;padding:4px 3px;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #a5d6a7;background:#e8f5e9;color:#1b5e20;margin:1px;">문창귀인</span><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">겁살</span></td>
+    <td style="text-align:center;padding:4px 3px;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">망신살</span></td>
+    <td style="text-align:center;padding:4px 3px;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #a5d6a7;background:#e8f5e9;color:#1b5e20;margin:1px;">태극귀인</span><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">홍염살</span><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ffcc80;background:#fff3e0;color:#e65100;margin:1px;">반안살</span></td>
+    <td style="text-align:center;padding:4px 3px;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">망신살</span></td>
+  </tr>
+  </tbody></table>
+</div>
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#c65c00,#e87020);">
+    <div class="card-hd-title">② 핵심 명리 정보 (命理 要約)</div>
+    <div class="card-hd-sub">격국 · 용신 · 신강약 · 오행</div>
+  </div>
+  <table class="sum-tbl"><tbody>
+  <tr><td class="sum-k">일간 · 신강약</td><td class="sum-v"><span style="font-size:15pt;font-weight:900;color:#9b6f00;">戊</span><span style="font-size:8pt;color:#888;margin-left:4px;">무 · 土(토)</span> &nbsp; <span style="font-size:9.5pt;font-weight:bold;color:#555;">戊辰(무진)</span> &nbsp;&nbsp; <span style="font-weight:bold;color:#8b0000;font-size:9.5pt;">중화형신강</span></td></tr>
+  <tr><td class="sum-k">격국 (格局)</td><td class="sum-v2"><span style="font-weight:bold;color:#222;font-size:9.5pt;">편관격(偏官格)</span></td></tr>
+  <tr><td class="sum-k">용신 체계</td><td class="sum-v" style="line-height:1.7;"><span class="yb" style="background:#d4f0db;color:#145020;border:1px solid #a8dbb5;"><span class="yd" style="background:#1e6b2a;"></span><span style="font-size:7pt;color:#999;">용신</span> <span style="font-size:9pt;">木(목)</span></span><span class="yb" style="background:#c8e0f4;color:#0d3558;border:1px solid #90bfe0;"><span class="yd" style="background:#1a4e7a;"></span><span style="font-size:7pt;color:#999;">희신</span> <span style="font-size:9pt;">水(수)</span></span><span class="yb" style="background:#fcedc2;color:#7a5200;border:1px solid #f0d470;"><span class="yd" style="background:#9b6f00;"></span><span style="font-size:7pt;color:#999;">기신</span> <span style="font-size:9pt;">土(토)</span></span><span class="yb" style="background:#dce6ec;color:#2c3e50;border:1px solid #b0c4d0;"><span class="yd" style="background:#3d4f5c;"></span><span style="font-size:7pt;color:#999;">한신</span> <span style="font-size:9pt;">金(금)</span></span></td></tr>
+  <tr><td class="sum-k">오행 분포</td><td class="sum-v2"><div class="oh-row"><div class="oh-item" style="border:1px solid #a8dbb5;background:#f3fcf5;"><span class="oh-nm" style="color:#1e6b2a;">목(木)</span><div class="oh-tr"><div class="oh-fl" style="width:100%;background:#36b54a;"></div></div><span class="oh-pc">7.4<br>51%</span><span style="font-size:7pt;font-weight:bold;color:#1a7a3c;">★용</span></div><div class="oh-item" style="border:1px solid #f5a9a5;background:#fff5f5;"><span class="oh-nm" style="color:#b92e27;">화(火)</span><div class="oh-tr"><div class="oh-fl" style="width:4%;background:#e05a55;"></div></div><span class="oh-pc">0.3<br>2%</span></div><div class="oh-item" style="border:1px solid #f0d470;background:#fffdf4;"><span class="oh-nm" style="color:#9b6f00;">토(土)</span><div class="oh-tr"><div class="oh-fl" style="width:82%;background:#c9a200;"></div></div><span class="oh-pc">6.0<br>42%</span><span style="font-size:7pt;font-weight:bold;color:#c0392b;">▲병</span></div><div class="oh-item" style="border:1px solid #b0c4d0;background:#f7f9fa;"><span class="oh-nm" style="color:#3d4f5c;">금(金)</span><div class="oh-tr"><div class="oh-fl" style="width:8%;background:#607080;"></div></div><span class="oh-pc">0.6<br>4%</span></div><div class="oh-item" style="border:1px solid #90bfe0;background:#f0f6ff;"><span class="oh-nm" style="color:#1a4e7a;">수(水)</span><div class="oh-tr"><div class="oh-fl" style="width:2%;background:#2874a6;"></div></div><span class="oh-pc">0.1<br>1%</span><span style="font-size:7pt;font-weight:bold;color:#2980b9;">◆희</span></div></div></td></tr>
+  <tr><td class="sum-k">공망 (空亡)</td><td class="sum-v" style="font-size:8.5pt;color:#555;">戌·亥 》 원국 내 공망 없음</td></tr>
+  <tr><td class="sum-k">합·충·형·파해</td><td class="sum-v2" style="font-size:8pt;line-height:1.9;"><span style="color:#1e6b2a;font-weight:bold;">합</span> 申辰(신진) 삼합(三合) → 水(수) [반합] / 위치: 년지·일지 &nbsp;|&nbsp; <span style="color:#b92e27;font-weight:bold;">충</span> 申(신)·寅(인) 충(沖) / 위치: 년지·월지 / 申(신)·寅(인) 충(沖) / 위치: 년지·시지</td></tr>
+  <tr><td class="sum-k">귀인 신살</td><td class="sum-v" style="font-size:8pt;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #a5d6a7;background:#e8f5e9;color:#1b5e20;margin:1px;">태극귀인</span><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #a5d6a7;background:#e8f5e9;color:#1b5e20;margin:1px;">문창귀인</span></td></tr>
+  <tr><td class="sum-k">흉 살</td><td class="sum-v2" style="font-size:8pt;"><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">홍염살</span><span style="display:inline-block;padding:1px 5px;border-radius:10px;font-size:7pt;border:1px solid #ef9a9a;background:#fde8e8;color:#b71c1c;margin:1px;">백호대살</span></td></tr>
+  </tbody></table>
+</div>
+</div>
+</body>
+</html>

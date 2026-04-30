@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>{{ master.선생님이름 }} - 마이페이지</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root { --brand: {{ brand_color|default('#1A3A6A') }}; --gold: {{ gold|default('#C8B860') }}; }
+    body { background-color: #1e1433; font-family: 'Noto Sans KR', sans-serif; margin: 0; display: flex; justify-content: center; }
+    .mobile-wrapper { background-color: #271a45; max-width: 480px; width: 100%; min-height: 100vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+    .top-bar { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(155,89,182,0.25); position: sticky; top: 0; background: #271a45; z-index: 10; }
+    .top-bar .title { font-weight: 800; font-size: 1.2rem; color: var(--brand); }
+    .top-bar a.logout-btn { color: #9b82c0; font-size: 0.9rem; text-decoration: none; font-weight: 600; }
+    
+    .page-container { flex: 1; padding: 1.5rem 1.25rem; overflow-y: auto; padding-bottom: 40px; }
+    
+    .status-card { background: #271a45; border-radius: 16px; padding: 1.5rem; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 1.25rem; }
+    .card-title { font-weight: 800; font-size: 1.1rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    
+    .timeline { position: relative; padding-left: 24px; margin-top: 20px; }
+    .timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 10px; width: 2px; background: #e9ecef; }
+    .timeline-item { position: relative; padding-bottom: 1.5rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -22px; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: #e9ecef; border: 2px solid white; z-index: 1; }
+    .timeline-item.active::before { background: var(--brand); box-shadow: 0 0 0 3px rgba(26,58,106,0.15); }
+    .timeline-item.done::before { background: var(--gold); }
+    
+    .book-card { border: 2px solid rgba(200,184,96,0.2); background: #271a45; border-radius: 16px; text-align: center; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+    .btn-brand { background-color: var(--brand); color: white; border-radius: 12px; font-weight: 700; padding: 14px; border: none; width: 100%; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <div class="top-bar">
+      <div class="title">{{ master.선생님이름 }}</div>
+      <a href="/expert/{{ master.master_id }}/logout" class="logout-btn"><i class="bi bi-box-arrow-right me-1"></i>로그아웃</a>
+    </div>
+    
+    <div class="page-container">
+      
+      <div class="mb-4 pt-2 d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="fw-bold mb-1">{{ client.name }}님, 안녕하세요</h4>
+          <p class="text-muted small mb-0">마이페이지에서 나의 사주 정보를 관리하세요.</p>
+        </div>
+        <a href="/expert/{{ master.master_id }}/profile" class="btn btn-sm btn-light border rounded-pill px-3 py-2 shadow-sm d-flex align-items-center" style="font-weight:600;">
+          <i class="bi bi-gear-fill me-1 text-muted"></i> 설정
+        </a>
+      </div>
+
+      {% if msg %}
+      <div class="alert alert-success px-3 py-2 small rounded-3 border-0 bg-success text-white bg-opacity-75 mb-4 shadow-sm">
+        <i class="bi bi-check-circle-fill me-2"></i> {{ msg }}
+      </div>
+      {% endif %}
+
+      <!-- 내 사주 정보 -->
+      <div class="status-card">
+        <div class="card-title">
+          <span><i class="bi bi-person-fill me-2" style="color: var(--brand);"></i>사주 입력 정보</span>
+          <a href="/expert/{{ master.master_id }}/saju/new" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold text-muted" style="font-size: 0.8rem;">사주 정보 수정</a>
+        </div>
+        
+        {% if member %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">생년월일</span>
+          <span class="fw-bold">{{ member.birth_year }}.{{ member.birth_month }}.{{ member.birth_day }} <span class="badge bg-light text-dark fw-normal border ms-1">{% if member.lunar_yn %}음력{% if member.leap_month_yn %}(윤달){% endif %}{% else %}양력{% endif %}</span></span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">생시</span>
+          <span class="fw-bold" style="color: var(--brand);">{{ member.birth_time }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">성별</span>
+          <span class="fw-bold">{{ member.gender }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">현재 활동</span>
+          <span class="fw-bold">{{ member.activity_type }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">결혼 여부</span>
+          <span class="fw-bold">{{ member.marital_status }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">자녀 유무</span>
+          <span class="fw-bold">{{ member.has_children }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">형제자매</span>
+          <span class="fw-bold">{{ member.has_siblings }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">부모님</span>
+          <span class="fw-bold">{{ member.parent_status }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted small fw-bold">건강 상태</span>
+          <span class="fw-bold text-end" style="max-width: 60%;">{{ member.health_concern }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2 pt-2 border-top">
+          <span class="text-muted small fw-bold">궁금한 점</span>
+          <span class="fw-bold text-end" style="color: var(--brand); max-width: 70%;">{{ member.concern_area }}</span>
+        </div>
+        {% if member.memo %}
+        <div class="d-flex flex-column pt-2 border-top">
+          <span class="text-muted small fw-bold mb-1">참고 메모</span>
+          <div class="small text-muted p-2 bg-light rounded-3">{{ member.memo }}</div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="text-center py-4">
+          <p class="text-muted small mb-3">등록된 사주 정보가 아직 없습니다.</p>
+          <a href="/expert/{{ master.master_id }}/saju/new" class="btn btn-brand py-2 w-100 shadow-sm rounded-pill">사주 정보 등록하기</a>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if member %}
+      <!-- 진행 현황 -->
+      <div class="status-card">
+        <div class="card-title">
+          <span><i class="bi bi-clock-history me-2" style="color: var(--brand);"></i>진행 현황</span>
+        </div>
+        
+        <div class="timeline">
+          <!-- 1단계: 정보 입력 -->
+          <div class="timeline-item done">
+            <div class="fw-bold text-dark small mb-1">정보 입력 완료</div>
+          </div>
+          
+          <!-- 2단계: 신청 & 검토 -->
+          {% if member.request_status == '대기' %}
+          <div class="timeline-item active">
+            <div class="fw-bold text-brand small mb-1 bg-light p-2 rounded d-inline-block text-primary">해석서 신청 대기 중</div>
+            <div class="mt-2"><a href="/expert/{{ master.master_id }}/saju/confirm" class="btn btn-brand w-100 py-2 shadow-sm rounded-pill">해석서 신청하기</a></div>
+          </div>
+          <div class="timeline-item">
+            <div class="fw-bold text-muted small">선생님 검토 진행</div>
+          </div>
+          <div class="timeline-item">
+            <div class="fw-bold text-muted small">해석서 다운로드</div>
+          </div>
+          
+          {% elif member.request_status == '신청완료' %}
+          <div class="timeline-item done">
+            <div class="fw-bold text-dark small mb-1">해석서 신청 완료</div>
+          </div>
+          <div class="timeline-item active">
+            <div class="fw-bold text-brand small mb-1">선생님 검토 중</div>
+            <div class="text-muted" style="font-size: 0.75rem;">순차적으로 해석서를 작성하고 있습니다.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="fw-bold text-muted small">해석서 다운로드</div>
+          </div>
+          
+          {% elif member.request_status == '승인' %}
+          <div class="timeline-item done">
+            <div class="fw-bold text-dark small mb-1">해석서 신청 완료</div>
+          </div>
+          
+          {% set latest_book = books[0] if books else None %}
+          {% if latest_book and latest_book.status == '완료' %}
+          <div class="timeline-item done">
+            <div class="fw-bold text-dark small mb-1">집필 완료</div>
+          </div>
+          <div class="timeline-item active">
+            <div class="fw-bold text-success small mb-1">결과물 모아보기</div>
+            <div class="text-muted" style="font-size: 0.75rem;">아래 리스트에서 다운로드하세요.</div>
+          </div>
+          {% elif latest_book and (latest_book.status == '대기' or latest_book.status == '생성중') %}
+          <div class="timeline-item active">
+            <div class="fw-bold text-brand small mb-1">AI 엔진 집필 중...</div>
+            <div class="text-muted" style="font-size: 0.75rem;">거의 다 완성되었습니다! 잠시만 기다려주세요.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="fw-bold text-muted small">결과물 모아보기</div>
+          </div>
+          {% else %}
+          <div class="timeline-item active">
+            <div class="fw-bold text-brand small mb-1">선생님 집필 승인</div>
+            <div class="text-muted" style="font-size: 0.75rem;">조만간 집필이 시작됩니다.</div>
+          </div>
+          {% endif %}
+          
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- 내 해석서 리스트 -->
+      <div class="status-card border-0 p-0 shadow-none mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold mb-0">내 보관함</h5>
+          <span class="badge bg-secondary rounded-pill">{{ books|length }}건</span>
+        </div>
+        
+        {% if books %}
+        <div class="d-flex flex-column gap-3">
+          {% for b in books %}
+          <div class="book-card">
+            <i class="bi bi-journal-text text-gold mb-2" style="font-size: 2.5rem;"></i>
+            <h6 class="fw-bold mb-1">{{ b.book_year }}년 {{ b.edition }}</h6>
+            <p class="text-muted small mb-3">완성일: {{ b.completed_at[:10] }}</p>
+            <a href="/expert/{{ master.master_id }}/download/{{ b.id }}" class="btn btn-brand w-100 shadow-sm rounded-pill py-2">
+              <i class="bi bi-download me-1"></i> 다운로드
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-light rounded-4 text-center py-5 px-3">
+          <i class="bi bi-folder-x text-muted mb-2 d-block" style="font-size: 2rem;"></i>
+          <p class="text-muted small mb-0">아직 보관함에 해석서가 없습니다.</p>
+        </div>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+</body>
+</html>

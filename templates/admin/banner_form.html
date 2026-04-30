@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{% if mode=='new' %}배너 등록{% else %}배너 수정{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="m-0 fw-bold">{% if mode=='new' %}배너 등록{% else %}배너 수정 #{{ banner.id }}{% endif %}</h3>
+      <a href="/admin/banners" class="btn btn-sm btn-outline-secondary">목록</a>
+    </div>
+
+    <div class="card shadow border-0">
+      <div class="card-body p-4">
+        <form method="post" action="{% if mode=='new' %}/admin/banners/new{% else %}/admin/banners/{{ banner.id }}/edit{% endif %}">
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">노출 대상</label>
+              <select name="master_id" class="form-select">
+                <option value="" {% if not banner.master_id %}selected{% endif %}>전역 — 모든 마스터에 노출</option>
+                {% for m in masters %}
+                <option value="{{ m.master_id }}" {% if banner.master_id == m.master_id %}selected{% endif %}>{{ m.master_id }} ({{ m.선생님이름 }})</option>
+                {% endfor %}
+              </select>
+              <div class="form-text small">"전역" = 모든 손님에게 노출. 특정 마스터 선택 = 그 마스터의 손님에게만.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold text-muted">순서 (낮을수록 먼저)</label>
+              <input type="number" name="position" class="form-control" value="{{ banner.position|default(0) }}" min="0" max="999">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold text-muted">상태</label>
+              <select name="is_active" class="form-select">
+                <option value="1" {% if banner.is_active|default(1) == 1 %}selected{% endif %}>활성</option>
+                <option value="0" {% if banner.is_active == 0 %}selected{% endif %}>비활성</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-9">
+              <label class="form-label small fw-bold text-muted">상단 배지 (작은 라벨)</label>
+              <input type="text" name="badge" class="form-control" value="{{ banner.badge|default('') }}"
+                     placeholder="예: ✨ 반야선생 마스터 직접 풀이">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold text-muted">아이콘 (이모지)</label>
+              <input type="text" name="icon" class="form-control" value="{{ banner.icon|default('🔮') }}"
+                     placeholder="🔮" maxlength="4" style="font-size:1.4rem;text-align:center;">
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">제목 윗줄</label>
+              <input type="text" name="title_top" class="form-control" value="{{ banner.title_top|default('') }}"
+                     placeholder="예: 소름 돋는">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">제목 강조 (아래줄)</label>
+              <input type="text" name="title_bottom" class="form-control" value="{{ banner.title_bottom|default('') }}"
+                     placeholder="예: 미래 예측">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">본문 (줄바꿈 시 &lt;br&gt; 사용)</label>
+            <textarea name="sub" class="form-control" rows="2"
+                      placeholder="예: 가장 정확한 정통 사주로<br>오늘의 운명을 확인하세요">{{ banner.sub|default('') }}</textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-muted">클릭 시 이동할 URL</label>
+            <input type="text" name="href" class="form-control" value="{{ banner.href|default('') }}"
+                   placeholder="예: /shop 또는 /expert/{master}/shop">
+            <div class="form-text small">상대경로(/shop)는 자동으로 마스터 base_url 적용. 절대 경로는 그대로 사용.</div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <a href="/admin/banners" class="btn btn-light px-4 border">취소</a>
+            <button type="submit" class="btn px-5 text-white fw-bold" style="background-color:{{ brand_color }};">저장</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

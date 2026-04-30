@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최원석님의 월운 (月運) Monthly Rhythm</title>
+    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #525659;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* A4 Visual Wrapper */
+        .a4-wrapper {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 25mm;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* --- Profile Card CSS (Shared) --- */
+        h1 {
+            text-align: center;
+            margin: 0;
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding: 8px 12px;
+            background: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header-unified-box {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            margin-bottom: 20px;
+            max-width: 610px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-section {
+            display: flex;
+            gap: 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .character-wrapper {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            border-right: 1px solid #333;
+            border-radius: 0;
+            padding: 10px;
+        }
+
+        .character-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-size: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-circle::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            right: -20%;
+            bottom: -20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+        }
+
+        .info-table-container {
+            flex: 1;
+            border-collapse: collapse;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+        }
+
+        .info-table-container td {
+            padding: 5px 16px;
+            border-bottom: 1px solid #333;
+            border-right: 1px solid #333;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .info-table-container td:last-child {
+            border-right: none;
+        }
+
+        .info-table-container tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-cell.label {
+            width: 110px;
+            font-weight: 600;
+            color: #555;
+            background: #fafafa;
+            text-align: center;
+        }
+
+        .info-cell.value {
+            background: white;
+            color: #333;
+        }
+
+        .info-cell.value.highlight {
+            font-weight: 600;
+            color: #c9a227;
+        }
+
+        /* --- Daewoon/Seun/Wolun Table Specific CSS --- */
+        .daewoon-box {
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 0;
+            position: relative;
+            box-shadow: none;
+            min-width: 550px;
+            overflow: hidden;
+        }
+
+        .daewoon-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(12, 1fr);
+            /* 12 Months */
+            gap: 0;
+            border: none;
+            align-items: center;
+            min-width: 450px;
+            justify-content: start;
+            position: relative;
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            position: relative;
+            z-index: 2;
+            border-right: 1px solid #999;
+            border-bottom: 1px solid #999;
+        }
+
+        .cell.last-col {
+            border-right: none;
+        }
+
+        .cell.label {
+            justify-content: center;
+            padding-right: 0;
+            font-weight: 600;
+            color: #555;
+            font-size: 12px;
+            background-color: #f9f9f9;
+        }
+
+        .cell.month {
+            font-size: 13px;
+            color: #1f77b4;
+            /* Changed to Blue */
+            align-items: center;
+            padding-bottom: 0;
+            line-height: 1.2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cell.month.current {
+            font-weight: 800;
+            color: #1f77b4;
+            font-size: 15px;
+        }
+
+        /* Column Highlight (Myeongjo + Blue + Background) */
+        .cell.current-col {
+            font-family: 'Noto Serif KR', serif;
+            color: #1f77b4;
+            font-weight: 700;
+            background-color: #e6f2ff !important;
+        }
+
+        .cell.current-col .inner-box {
+            color: white !important;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .cell.data {
+            background-color: white;
+            border-radius: 0;
+            box-shadow: none;
+            width: 100%;
+        }
+
+        .cell.colored {
+            border-radius: 0;
+            background-color: white;
+            color: #333;
+            width: 100%;
+            padding: 0;
+        }
+
+        .inner-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 76%;
+            height: 70%;
+            border-radius: 6px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            /* Hanja Only */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Colors */
+        .bg-wood {
+            background-color: #2ca02c;
+        }
+
+        .bg-water {
+            background-color: #1f77b4;
+            color: white !important;
+        }
+
+        .bg-earth-dark {
+            background-color: #8c564b;
+        }
+
+        .bg-earth-brown {
+            background-color: #a06a5f;
+        }
+
+        .bg-fire {
+            background-color: #d62728;
+        }
+
+        .bg-metal {
+            background-color: #7f7f7f;
+            color: white !important;
+        }
+
+        .spacer-top {
+            margin-top: 0;
+            border-top: 2px solid #bbb;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .a4-wrapper {
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                margin: 0;
+                padding: 25mm !important;
+                border: none;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .daewoon-box {
+                box-shadow: none;
+                padding: 0;
+                min-width: 0;
+                width: 100%;
+                overflow: hidden;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                border: 2px solid #555;
+                border-radius: 0;
+            }
+
+            .daewoon-grid {
+                min-width: 0;
+                width: 100%;
+                gap: 0;
+                border: none;
+            }
+
+            .cell {
+                box-shadow: none;
+                border: none;
+                border-right: 1px solid #999;
+                border-bottom: 1px solid #999;
+                font-size: 9px;
+                height: 32px;
+            }
+
+            .cell:nth-child(13n) {
+                /* 1 label + 12 data cols = 13 */
+                border-right: none;
+            }
+
+            .cell.label {
+                font-size: 9px;
+                padding-right: 5px;
+            }
+
+            .cell.month {
+                font-size: 9px;
+            }
+
+            .cell.month.current {
+                font-size: 10px;
+            }
+
+            .cell.colored {
+                font-size: 10px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .inner-box {
+                width: 76%;
+                height: 75%;
+                border-radius: 4px;
+                font-size: 10px;
+                box-shadow: none;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-wrapper">
+        <div class="container">
+            <!-- Profile Card -->
+            <div class="header-unified-box">
+                <h1>최원석님의 월운 (月運) Monthly Rhythm</h1>
+                <div class="info-section">
+                    <div class="character-wrapper">
+                        <div class="character-circle">
+                            🐉
+                        </div>
+                    </div>
+                    <table class="info-table-container">
+                        <tr>
+                            <td class="info-cell label">기본정보</td>
+                            <td class="info-cell value" colspan="3">최원석, 남성, 61세<sup>*1</sup></td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">일주동물</td>
+                            <td class="info-cell value highlight" colspan="3">황금용(黃金龍)<sup>*2</sup></td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">양력</td>
+                            <td class="info-cell value" colspan="3">1964-01-20 09:30 / 사시(巳時)</td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">음력</td>
+                            <td class="info-cell value" colspan="3">1963-12-06 09:30 / 사시(巳時)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Wolun Table -->
+            <div class="daewoon-box">
+                <div class="daewoon-grid">
+                    <!-- Content rendered by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wolunData = [
+            {
+                "year": 2025,
+                "month": "1월",
+                "ganji": "丁丑",
+                "hsSipseong": "정인",
+                "stem": "丁",
+                "stemColor": "bg-fire",
+                "branch": "丑",
+                "branchColor": "bg-earth-brown",
+                "ebSipseong": "겁재",
+                "unsung": "양",
+                "sinsal": "월살",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "2월",
+                "ganji": "戊寅",
+                "hsSipseong": "비견",
+                "stem": "戊",
+                "stemColor": "bg-earth-dark",
+                "branch": "寅",
+                "branchColor": "bg-wood",
+                "ebSipseong": "편관",
+                "unsung": "장생",
+                "sinsal": "망신",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "3월",
+                "ganji": "己卯",
+                "hsSipseong": "겁재",
+                "stem": "己",
+                "stemColor": "bg-earth-brown",
+                "branch": "卯",
+                "branchColor": "bg-wood",
+                "ebSipseong": "정관",
+                "unsung": "목욕",
+                "sinsal": "장성",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "4월",
+                "ganji": "庚辰",
+                "hsSipseong": "식신",
+                "stem": "庚",
+                "stemColor": "bg-metal",
+                "branch": "辰",
+                "branchColor": "bg-earth-dark",
+                "ebSipseong": "비견",
+                "unsung": "관대",
+                "sinsal": "반안",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "5월",
+                "ganji": "辛巳",
+                "hsSipseong": "상관",
+                "stem": "辛",
+                "stemColor": "bg-metal",
+                "branch": "巳",
+                "branchColor": "bg-fire",
+                "ebSipseong": "편인",
+                "unsung": "건록",
+                "sinsal": "역마",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "6월",
+                "ganji": "壬午",
+                "hsSipseong": "편재",
+                "stem": "壬",
+                "stemColor": "bg-water",
+                "branch": "午",
+                "branchColor": "bg-fire",
+                "ebSipseong": "정인",
+                "unsung": "제왕",
+                "sinsal": "육해",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "7월",
+                "ganji": "癸未",
+                "hsSipseong": "정재",
+                "stem": "癸",
+                "stemColor": "bg-water",
+                "branch": "未",
+                "branchColor": "bg-earth-brown",
+                "ebSipseong": "겁재",
+                "unsung": "쇠",
+                "sinsal": "화개",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "8월",
+                "ganji": "甲申",
+                "hsSipseong": "편관",
+                "stem": "甲",
+                "stemColor": "bg-wood",
+                "branch": "申",
+                "branchColor": "bg-metal",
+                "ebSipseong": "식신",
+                "unsung": "병",
+                "sinsal": "겁살",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "9월",
+                "ganji": "乙酉",
+                "hsSipseong": "정관",
+                "stem": "乙",
+                "stemColor": "bg-wood",
+                "branch": "酉",
+                "branchColor": "bg-metal",
+                "ebSipseong": "상관",
+                "unsung": "사",
+                "sinsal": "재살",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "10월",
+                "ganji": "丙戌",
+                "hsSipseong": "편인",
+                "stem": "丙",
+                "stemColor": "bg-fire",
+                "branch": "戌",
+                "branchColor": "bg-earth-dark",
+                "ebSipseong": "비견",
+                "unsung": "묘",
+                "sinsal": "천살",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "11월",
+                "ganji": "丁亥",
+                "hsSipseong": "정인",
+                "stem": "丁",
+                "stemColor": "bg-fire",
+                "branch": "亥",
+                "branchColor": "bg-water",
+                "ebSipseong": "편재",
+                "unsung": "절",
+                "sinsal": "지살",
+                "isCurrent": false
+            },
+            {
+                "year": 2025,
+                "month": "12월",
+                "ganji": "戊子",
+                "hsSipseong": "비견",
+                "stem": "戊",
+                "stemColor": "bg-earth-dark",
+                "branch": "子",
+                "branchColor": "bg-water",
+                "ebSipseong": "정재",
+                "unsung": "태",
+                "sinsal": "년살",
+                "isCurrent": false
+            }
+        ];
+
+        function renderWolunTable() {
+            const grid = document.querySelector('.daewoon-grid');
+
+            // 1. Month Row
+            let html = `<div class="cell label">월 (Month)</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                // Display dynamic year + month
+                html += `<div class="cell month ${item.isCurrent ? 'current' : ''} ${isCurrentCol} ${isLast}">${item.year}<br>${item.month}</div>`;
+            });
+
+            // 2. Ganji Row (간지)
+            html += `<div class="cell label">간지</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell data ${isCurrentCol} ${isLast}">${item.ganji}</div>`;
+            });
+
+            // 3. HS Sipseong (천간십성)
+            html += `<div class="cell label spacer-top">천간십성</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell data spacer-top ${isCurrentCol} ${isLast}">${item.hsSipseong}</div>`;
+            });
+
+            // 4. Heaven Stem (천간)
+            html += `<div class="cell label">천간</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell colored ${isCurrentCol} ${isLast}"><div class="inner-box ${item.stemColor}">${item.stem}</div></div>`;
+            });
+
+            // 5. Earth Branch (지지)
+            html += `<div class="cell label">지지</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell colored ${isCurrentCol} ${isLast}"><div class="inner-box ${item.branchColor}">${item.branch}</div></div>`;
+            });
+
+            // 6. EB Sipseong (지지십성)
+            html += `<div class="cell label">지지십성</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell data ${isCurrentCol} ${isLast}">${item.ebSipseong}</div>`;
+            });
+
+            // 7. 12 Unsung (12운성)
+            html += `<div class="cell label spacer-top">12운성</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell data spacer-top ${isCurrentCol} ${isLast}">${item.unsung}</div>`;
+            });
+
+            // 8. 12 Sinsal (12신살)
+            html += `<div class="cell label">12신살</div>`;
+            wolunData.forEach((item, index) => {
+                const isLast = index === wolunData.length - 1 ? 'last-col' : '';
+                const isCurrentCol = item.isCurrent ? 'current-col' : '';
+                html += `<div class="cell data ${isCurrentCol} ${isLast}">${item.sinsal}</div>`;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        renderWolunTable();
+    </script>
+</body>
+
+</html>

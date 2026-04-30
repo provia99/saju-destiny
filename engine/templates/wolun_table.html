@@ -1,0 +1,463 @@
+{# Wolun (月運) Table Component #}
+<!-- 
+    [LAYOUT NOTE]
+    This table is optimized to fit on the FIRST PAGE of Chapter 11, including the Chapter Title.
+    - Page Limit (preview.html MAX_HEIGHT_PX): 880px
+    - Chapter Title Area (Title + Margins): ~100px
+    - Current Table Height: ~737px
+    - Remaining Safe Margin: ~43px
+    
+    * Do not increase vertical padding or margins significantly, or it will overflow to the next page.
+-->
+<style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+    .wolun-container {
+        max-width: 610px;
+        margin: 5px auto;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+    }
+
+    /* Header Box */
+    .wolun-header-box {
+        border: 2px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+        margin-bottom: 4px;
+    }
+
+    .wolun-header-title {
+        text-align: center;
+        margin: 0;
+        color: #333;
+        border-bottom: 2px solid #333;
+        padding: 8px 12px;
+        background: white;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .wolun-info-section {
+        display: flex;
+        padding: 0;
+    }
+
+    .wolun-character-wrapper {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-right: 1px solid #333;
+        padding: 5px;
+    }
+
+    .wolun-character-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wolun-info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .wolun-info-table td {
+        padding: 2px 12px;
+        border-bottom: 1px solid #333;
+        border-right: 1px solid #333;
+        vertical-align: middle;
+        font-size: 13px;
+    }
+
+    .wolun-info-table td:last-child {
+        border-right: none;
+    }
+
+    .wolun-info-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .wolun-info-label {
+        width: 110px;
+        font-weight: 600;
+        color: #555;
+        background: #fafafa;
+        text-align: center;
+    }
+
+    .wolun-info-value {
+        background: white;
+        color: #333;
+    }
+
+    .wolun-info-value.highlight {
+        font-weight: 600;
+        color: #c9a227;
+    }
+
+    /* Wolun Table */
+    .wolun-box {
+        background-color: white;
+        border: 2px solid #333;
+        border-radius: 12px;
+        padding: 0;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .wolun-grid {
+        display: grid;
+        grid-template-columns: 80px repeat(12, 1fr);
+        gap: 0;
+        border: none;
+        align-items: center;
+        min-width: 450px;
+    }
+
+    .wolun-cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #333;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+    }
+
+    .wolun-cell.last-col {
+        border-right: none;
+    }
+
+    .wolun-cell.label {
+        font-weight: 600;
+        color: #555;
+        font-size: 11px;
+        background-color: #f9f9f9;
+    }
+
+    .wolun-cell.month {
+        font-size: 11px;
+        color: #1f77b4;
+        flex-direction: column;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .wolun-cell.month.current {
+        font-weight: 800;
+        color: #1f77b4;
+        font-size: 12px;
+    }
+
+    .wolun-cell.current-col {
+        font-family: 'Noto Serif KR', serif;
+        color: #1f77b4;
+        font-weight: 700;
+        background-color: #e6f2ff !important;
+    }
+
+    .wolun-cell.current-col .inner-box {
+        color: white !important;
+        font-family: 'Noto Serif KR', serif;
+    }
+
+    .wolun-cell.data {
+        background-color: white;
+    }
+
+    .wolun-cell.colored {
+        background-color: white;
+        color: #333;
+        padding: 0;
+    }
+
+    .wolun-inner-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        height: 75%;
+        border-radius: 4px;
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Element Colors */
+    .bg-wood {
+        background-color: #2ca02c;
+    }
+
+    .bg-water {
+        background-color: #1f77b4;
+    }
+
+    .bg-earth-dark {
+        background-color: #8c564b;
+    }
+
+    .bg-earth-brown {
+        background-color: #a06a5f;
+    }
+
+    .bg-fire {
+        background-color: #d62728;
+    }
+
+    .bg-metal {
+        background-color: #7f7f7f;
+    }
+
+    .wolun-spacer-top {
+        border-top: 2px solid #bbb;
+    }
+</style>
+
+<div class="wolun-container">
+    <!-- Header Box -->
+    <div class="wolun-header-box">
+        <h2 class="wolun-header-title">{{ user_profile.name }}님의 월운 (月運) Monthly Rhythm</h2>
+        <div class="wolun-info-section">
+            <div class="wolun-character-wrapper">
+                <div class="wolun-character-circle">{{ user_profile.year_animal_emoji }}</div>
+            </div>
+            <table class="wolun-info-table">
+                <tr>
+                    <td class="wolun-info-label">기본정보</td>
+                    <td class="wolun-info-value" colspan="3">{{ user_profile.name }}, {{ user_profile.gender_kr }}, {{
+                        user_profile.age }}세</td>
+                </tr>
+                <tr>
+                    <td class="wolun-info-label">일주동물</td>
+                    <td class="wolun-info-value highlight" colspan="3">{{ saju_data.ilju_animal }}</td>
+                </tr>
+                <tr>
+                    <td class="wolun-info-label">양력</td>
+                    <td class="wolun-info-value" colspan="3">{{ user_profile.birth_solar }}</td>
+                </tr>
+                <tr>
+                    <td class="wolun-info-label">음력</td>
+                    <td class="wolun-info-value" colspan="3">{{ user_profile.birth_lunar }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Wolun Table -->
+    <div class="wolun-box">
+        <div class="wolun-grid">
+            <!-- Month Row -->
+            <div class="wolun-cell label">월 (Month)</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell month {% if period.is_current %}current{% endif %} {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.month }}<br><span style="font-size:9px; color:#666;">{{ period.year }}</span>
+            </div>
+            {% endfor %}
+
+            <!-- Ganji (간지) -->
+            <div class="wolun-cell label">간지</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.ganji }}</div>
+            {% endfor %}
+
+            <!-- Heaven Stem Sipseong -->
+            <div class="wolun-cell label wolun-spacer-top">천간십성</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell data wolun-spacer-top {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.hs_sipseong }}</div>
+            {% endfor %}
+
+            <!-- Heaven Stem -->
+            <div class="wolun-cell label">천간</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell colored {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                <div class="wolun-inner-box {{ period.stem_color }}">{{ period.stem }}</div>
+            </div>
+            {% endfor %}
+
+            <!-- Earth Branch -->
+            <div class="wolun-cell label">지지</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell colored {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                <div class="wolun-inner-box {{ period.branch_color }}">{{ period.branch }}</div>
+            </div>
+            {% endfor %}
+
+            <!-- Earth Branch Sipseong -->
+            <div class="wolun-cell label">지지십성</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.eb_sipseong }}</div>
+            {% endfor %}
+
+            <!-- 12 Unsung -->
+            <div class="wolun-cell label wolun-spacer-top">12운성</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell data wolun-spacer-top {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.unsung }}</div>
+            {% endfor %}
+
+            <!-- 12 Sinsal -->
+            <div class="wolun-cell label">12신살</div>
+            {% for period in wolun_data %}
+            <div
+                class="wolun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.sinsal }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 12-Month Summary Table -->
+    <div class="wolun-monthly-summary">
+        <table class="monthly-table">
+            <tbody>
+                {% for period in wolun_data %}
+                <tr class="{% if period.is_current %}current-month{% endif %}">
+                    <td class="month-cell">{{ period.month }}</td>
+                    <td class="ganji-cell">
+                        <span class="mini-box {{ period.stem_color }}">{{ period.stem }}</span>
+                        <span class="mini-box {{ period.branch_color }}">{{ period.branch }}</span>
+                    </td>
+                    <td class="sipseong-cell">{{ period.hs_sipseong }}</td>
+                    <td class="sipseong-cell">{{ period.eb_sipseong }}</td>
+                    <td class="tip-cell">{{ period.tip }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+    /* 12-Month Summary Table Styles */
+    .wolun-monthly-summary {
+        margin-top: 2px;
+        background-color: white;
+        border: 2px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .monthly-summary-title {
+        text-align: center;
+        margin: 0;
+        padding: 5px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .monthly-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11.5px;
+    }
+
+    .monthly-table thead th {
+        background-color: #f5f5f5;
+        padding: 4px 4px;
+        text-align: center;
+        font-weight: 600;
+        color: #444;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .monthly-table tbody tr {
+        border-bottom: 1px solid #eee;
+    }
+
+    .monthly-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .monthly-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .monthly-table tbody tr.current-month {
+        background-color: #e6f2ff !important;
+        font-weight: 600;
+    }
+
+    .monthly-table td {
+        padding: 4px 5px;
+        vertical-align: middle;
+    }
+
+    .month-cell {
+        text-align: center;
+        font-weight: 600;
+        color: #1f77b4;
+    }
+
+    .ganji-cell {
+        text-align: center;
+    }
+
+    .mini-box {
+        display: inline-block;
+        width: 19px;
+        height: 19px;
+        line-height: 19px;
+        text-align: center;
+        border-radius: 3px;
+        color: white;
+        font-weight: 600;
+        font-size: 10.5px;
+        margin: 0 1px;
+    }
+
+    .sipseong-cell {
+        text-align: center;
+        color: #555;
+    }
+
+    .tip-cell {
+        color: #333;
+        padding-left: 7px;
+        font-size: 10.5px;
+        line-height: 1.25;
+    }
+</style>

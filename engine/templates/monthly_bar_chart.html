@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>2026년 월별 길흉 막대그래프 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:7px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:16pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:6.5pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:10pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6.5pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 카드 ── */
+.card { border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0; }
+.card-hd {
+  padding:6px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:8.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ── 범례 ── */
+.legend {
+  display:flex; align-items:center; gap:12px; padding:5px 14px;
+  background:#fafafa; border-bottom:1px solid #e0e0e0; flex-wrap:wrap;
+}
+.lg-item { display:flex; align-items:center; gap:4px; font-size:6pt; color:#555; }
+.lg-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+
+/* ── 차트 영역 ── */
+.chart-wrap { padding:10px 14px 6px; background:white; }
+.chart-inner { position:relative; width:100%; height:65mm; }
+
+/* ── 월 성격 배지 행 ── */
+.badge-row {
+  display:flex; padding:4px 14px 6px;
+  background:white; border-top:1px solid #f0f0f0;
+  gap:4px;
+}
+.month-badge-col {
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.mb-month { font-size:5.5pt; font-weight:700; color:#555; }
+.mb-ganji { font-family:'Nanum Myeongjo',serif; font-size:7pt; font-weight:800; line-height:1.2; text-align:center; }
+.mb-grade {
+  font-size:5pt; font-weight:700; color:white;
+  padding:1px 4px; border-radius:4px; text-align:center;
+}
+.mb-unsung { font-size:5.5pt; color:#aaa; }
+
+/* ── 상세 테이블 ── */
+.dt-table { width:100%; border-collapse:collapse; }
+.dt-table th {
+  font-size:6pt; font-weight:700; color:#555;
+  background:#f5f5f5; padding:4px 6px;
+  border:1px solid #333; text-align:center;
+}
+.dt-table th:first-child { border-left:none; }
+.dt-table th:last-child  { border-right:none; }
+.dt-table thead tr th    { border-top:none; }
+.dt-table td {
+  border:1px solid #e0e0e0; padding:4px 6px;
+  vertical-align:middle; font-size:6.5pt; text-align:center;
+}
+.dt-table td:first-child { border-left:none; }
+.dt-table td:last-child  { border-right:none; }
+.dt-table tbody tr:last-child td { border-bottom:none; }
+.dt-table td.left { text-align:left; }
+
+.grade-chip {
+  display:inline-block; padding:2px 8px; border-radius:8px;
+  font-size:6pt; font-weight:700; color:white;
+}
+.ratio-bar-wrap { display:flex; align-items:center; gap:4px; }
+.ratio-bar { height:6px; border-radius:3px; }
+.ratio-num { font-size:6pt; font-weight:700; min-width:16px; }
+
+/* ── 요약 칩 행 ── */
+.summary-chips {
+  display:flex; gap:0; border-top:1px solid #e0e0e0;
+}
+.sc-item {
+  flex:1; padding:6px 6px; text-align:center;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.sc-item:last-child { border-right:none; }
+.sc-l { font-size:5.5pt; color:#aaa; font-weight:700; }
+.sc-v { font-family:'DM Serif Display',serif; font-size:11pt; font-weight:700; line-height:1; }
+.sc-s { font-size:5pt; color:#aaa; }
+
+/* ── 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 12px;
+  font-size:6pt; color:#555; line-height:1.7; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">2026년 월별 길흉(吉凶) 막대그래프</div>
+    <div class="pt-sub">月別 吉凶 Bar Chart — 용신·희신일(길) vs 병신일(흉) 일수 비교</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 절기 기준 2026.2 ~ 2027.1</div>
+  </div>
+</div>
+
+<!-- 막대그래프 카드 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#c62828,#f44336);">
+    <div class="card-hd-title">📊 월별 길일 vs 조심일 일수 비교</div>
+    <div class="card-hd-sub">용신 火(화) 기준 · 절기 기준 월 경계</div>
+  </div>
+
+  <!-- 범례 -->
+  <div class="legend">
+    <div class="lg-item"><div class="lg-dot" style="background:#f44336;"></div>🌟 길일 (용신·희신일)</div>
+    <div class="lg-item"><div class="lg-dot" style="background:#2196f3;"></div>⚠️ 조심일 (병신일)</div>
+    <div class="lg-item"><div class="lg-dot" style="background:#f44336;opacity:.3;"></div>용신월</div>
+    <div class="lg-item"><div class="lg-dot" style="background:#4caf50;opacity:.3;"></div>희신월</div>
+    <div class="lg-item"><div class="lg-dot" style="background:#9e9e9e;opacity:.3;"></div>중립월</div>
+    <div class="lg-item"><div class="lg-dot" style="background:#2196f3;opacity:.3;"></div>병신월</div>
+  </div>
+
+  <!-- 차트 -->
+  <div class="chart-wrap">
+    <div class="chart-inner">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+
+  <!-- 월 배지 행 -->
+  <div class="badge-row">
+    <div class="month-badge-col">
+      <div class="mb-month">2월</div>
+      <div class="mb-ganji t-희신" style="color:#4caf50;">庚寅</div>
+      <div class="mb-grade" style="background:#4caf50;">희신월</div>
+      <div class="mb-unsung">장생</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">3월</div>
+      <div class="mb-ganji" style="color:#4caf50;">辛卯</div>
+      <div class="mb-grade" style="background:#4caf50;">희신월</div>
+      <div class="mb-unsung">목욕</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">4월</div>
+      <div class="mb-ganji" style="color:#2196f3;">壬辰</div>
+      <div class="mb-grade" style="background:#2196f3;">병신월</div>
+      <div class="mb-unsung">관대</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">5월</div>
+      <div class="mb-ganji" style="color:#f44336;">癸巳</div>
+      <div class="mb-grade" style="background:#f44336;">용신월</div>
+      <div class="mb-unsung">건록</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">6월</div>
+      <div class="mb-ganji" style="color:#f44336;">甲午</div>
+      <div class="mb-grade" style="background:#f44336;">용신월</div>
+      <div class="mb-unsung">제왕</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">7월</div>
+      <div class="mb-ganji" style="color:#4caf50;">乙未</div>
+      <div class="mb-grade" style="background:#4caf50;">희신월</div>
+      <div class="mb-unsung">쇠</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">8월</div>
+      <div class="mb-ganji" style="color:#f44336;">丙申</div>
+      <div class="mb-grade" style="background:#f44336;">용신월</div>
+      <div class="mb-unsung">병</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">9월</div>
+      <div class="mb-ganji" style="color:#f44336;">丁酉</div>
+      <div class="mb-grade" style="background:#f44336;">용신월</div>
+      <div class="mb-unsung">사</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">10월</div>
+      <div class="mb-ganji" style="color:#9e9e9e;">戊戌</div>
+      <div class="mb-grade" style="background:#9e9e9e;">중립월</div>
+      <div class="mb-unsung">묘</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">11월</div>
+      <div class="mb-ganji" style="color:#2196f3;">己亥</div>
+      <div class="mb-grade" style="background:#2196f3;">병신월</div>
+      <div class="mb-unsung">절</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">12월</div>
+      <div class="mb-ganji" style="color:#2196f3;">庚子</div>
+      <div class="mb-grade" style="background:#2196f3;">병신월</div>
+      <div class="mb-unsung">태</div>
+    </div>
+    <div class="month-badge-col">
+      <div class="mb-month">27.1월</div>
+      <div class="mb-ganji" style="color:#9e9e9e;">辛丑</div>
+      <div class="mb-grade" style="background:#9e9e9e;">중립월</div>
+      <div class="mb-unsung">양</div>
+    </div>
+  </div>
+
+  <!-- 상세 테이블 -->
+  <table class="dt-table">
+    <thead>
+      <tr>
+        <th style="width:12mm;">월</th>
+        <th style="width:18mm;">월운 성격</th>
+        <th style="width:14mm;">길일 수</th>
+        <th style="width:14mm;">조심일 수</th>
+        <th style="width:14mm;">길/흉 비율</th>
+        <th>길흉 비율 바</th>
+        <th style="width:36mm;">핵심 조언</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>2월</strong></td>
+        <td><span class="grade-chip" style="background:#4caf50;">희신월</span></td>
+        <td><strong style="color:#f44336;">7일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>50 : 50</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:50%;background:#f44336;"></div><div class="ratio-bar" style="width:50%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">길일 집중. 10·11·22일 최적.</td>
+      </tr>
+      <tr style="background:rgba(76,175,80,0.04);">
+        <td><strong>3월</strong></td>
+        <td><span class="grade-chip" style="background:#4caf50;">희신월</span></td>
+        <td><strong style="color:#f44336;">12일</strong></td>
+        <td style="color:#2196f3;">5일</td>
+        <td>71 : 29</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:71%;background:#f44336;"></div><div class="ratio-bar" style="width:29%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">적극 행동. 이직·계약·도전 GO.</td>
+      </tr>
+      <tr style="background:rgba(33,150,243,0.04);">
+        <td><strong>4월</strong></td>
+        <td><span class="grade-chip" style="background:#2196f3;">병신월</span></td>
+        <td><strong style="color:#f44336;">8일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>53 : 47</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:53%;background:#f44336;"></div><div class="ratio-bar" style="width:47%;background:#2196f3;opacity:.5;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">길일에만 행동. 조심일 계약 자제.</td>
+      </tr>
+      <tr style="background:rgba(244,67,54,0.04);">
+        <td><strong>5월</strong></td>
+        <td><span class="grade-chip" style="background:#f44336;">🔥 용신월</span></td>
+        <td><strong style="color:#f44336;">13일</strong></td>
+        <td style="color:#2196f3;">5일</td>
+        <td>72 : 28</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:72%;background:#f44336;"></div><div class="ratio-bar" style="width:28%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;"><strong style="color:#f44336;">최고 기회.</strong> 중요 결정 집중.</td>
+      </tr>
+      <tr style="background:rgba(244,67,54,0.04);">
+        <td><strong>6월</strong></td>
+        <td><span class="grade-chip" style="background:#f44336;">🌟 용신월</span></td>
+        <td><strong style="color:#f44336;">8일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>53 : 47</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:53%;background:#f44336;"></div><div class="ratio-bar" style="width:47%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;"><strong style="color:#f44336;">제왕 에너지.</strong> 대형 결정 GO.</td>
+      </tr>
+      <tr style="background:rgba(76,175,80,0.04);">
+        <td><strong>7월</strong></td>
+        <td><span class="grade-chip" style="background:#4caf50;">희신월</span></td>
+        <td><strong style="color:#f44336;">13일</strong></td>
+        <td style="color:#2196f3;">5일</td>
+        <td>72 : 28</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:72%;background:#f44336;"></div><div class="ratio-bar" style="width:28%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">상반기 결실 수확. 관계 챙기기.</td>
+      </tr>
+      <tr style="background:rgba(244,67,54,0.03);">
+        <td><strong>8월</strong></td>
+        <td><span class="grade-chip" style="background:#f44336;">용신월</span></td>
+        <td><strong style="color:#f44336;">8일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>53 : 47</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:53%;background:#f44336;"></div><div class="ratio-bar" style="width:47%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">건강 점검. 길일 집중 활용.</td>
+      </tr>
+      <tr style="background:rgba(244,67,54,0.03);">
+        <td><strong>9월</strong></td>
+        <td><span class="grade-chip" style="background:#f44336;">용신월</span></td>
+        <td><strong style="color:#f44336;">12일</strong></td>
+        <td style="color:#2196f3;">5일</td>
+        <td>71 : 29</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:71%;background:#f44336;"></div><div class="ratio-bar" style="width:29%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">학습·자격 활동 최적. 연말 준비.</td>
+      </tr>
+      <tr>
+        <td><strong>10월</strong></td>
+        <td><span class="grade-chip" style="background:#9e9e9e;">중립월</span></td>
+        <td><strong style="color:#f44336;">9일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>56 : 44</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:56%;background:#f44336;"></div><div class="ratio-bar" style="width:44%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">내실 다지기. 2027년 계획 수립.</td>
+      </tr>
+      <tr style="background:rgba(33,150,243,0.04);">
+        <td><strong>11월</strong></td>
+        <td><span class="grade-chip" style="background:#2196f3;">병신월</span></td>
+        <td><strong style="color:#f44336;">11일</strong></td>
+        <td style="color:#2196f3;">6일</td>
+        <td>65 : 35</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:65%;background:#f44336;"></div><div class="ratio-bar" style="width:35%;background:#2196f3;opacity:.5;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">연말 마무리. 조심일 재물 주의.</td>
+      </tr>
+      <tr style="background:rgba(33,150,243,0.04);">
+        <td><strong>12월</strong></td>
+        <td><span class="grade-chip" style="background:#2196f3;">병신월</span></td>
+        <td><strong style="color:#f44336;">10일</strong></td>
+        <td style="color:#2196f3;">6일</td>
+        <td>63 : 37</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:63%;background:#f44336;"></div><div class="ratio-bar" style="width:37%;background:#2196f3;opacity:.5;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">감사·마무리. 길일에만 중요 결정.</td>
+      </tr>
+      <tr>
+        <td><strong>27.1월</strong></td>
+        <td><span class="grade-chip" style="background:#9e9e9e;">중립월</span></td>
+        <td><strong style="color:#f44336;">10일</strong></td>
+        <td style="color:#2196f3;">7일</td>
+        <td>59 : 41</td>
+        <td><div class="ratio-bar-wrap"><div class="ratio-bar" style="width:59%;background:#f44336;"></div><div class="ratio-bar" style="width:41%;background:#e0e0e0;"></div></div></td>
+        <td class="left" style="font-size:6.5pt;">새해 시작. 안정적 출발.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 요약 칩 -->
+  <div class="summary-chips">
+    <div class="sc-item">
+      <div class="sc-l">연간 총 길일</div>
+      <div class="sc-v" style="color:#f44336;">121일</div>
+      <div class="sc-s">연중 33%</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-l">연간 총 조심일</div>
+      <div class="sc-v" style="color:#2196f3;">76일</div>
+      <div class="sc-s">연중 21%</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-l">최다 길일</div>
+      <div class="sc-v" style="color:#f44336;">13일</div>
+      <div class="sc-s">5월 · 7월</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-l">최소 조심일</div>
+      <div class="sc-v" style="color:#4caf50;">5일</div>
+      <div class="sc-s">3·5·7·9월</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-l">최고 길흉비</div>
+      <div class="sc-v" style="color:#f44336;">72%</div>
+      <div class="sc-s">3·5·7·9월</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-l">용신월</div>
+      <div class="sc-v" style="color:#f44336;">4개월</div>
+      <div class="sc-s">5·6·8·9월</div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#c62828;">📌 반야선생의 월별 길흉 핵심 요약</strong><br>
+  <strong style="color:#f44336;">5월(13일)·7월(13일)</strong>이 연중 가장 많은 길일을 가진 달입니다. <strong style="color:#f44336;">3·9월(12일)</strong>도 뒤를 잇습니다. 이 달들에 중요한 결정·계약·시작을 집중하세요.
+  반면 <strong style="color:#2196f3;">4월·6월·8월·10월</strong>은 길일과 조심일이 비슷하게 맞서는 달 — 조심일을 피해 길일에만 행동하는 전략이 필요합니다.
+  <strong style="color:#2196f3;">11·12월 병신월</strong>은 길일 수가 많아 보여도 월 자체가 병신 기운이므로 재물·계약 특히 주의하세요.
+</div>
+
+</div>
+
+<script>
+const months = ['2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','27.1월'];
+const gilil  = [7, 12, 8, 13, 8, 13, 8, 12, 9, 11, 10, 10];
+const josim  = [7,  5, 7,  5, 7,  5, 7,  5, 7,  6,  6,  7];
+
+const gradeColors = {
+  '희신': 'rgba(76,175,80,0.15)',
+  '용신': 'rgba(244,67,54,0.12)',
+  '병신': 'rgba(33,150,243,0.12)',
+  '중립': 'rgba(158,158,158,0.1)',
+};
+const grades = ['희신','희신','병신','용신','용신','희신','용신','용신','중립','병신','병신','중립'];
+
+const ctx = document.getElementById('barChart').getContext('2d');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: months,
+    datasets: [
+      {
+        label: '🌟 길일',
+        data: gilil,
+        backgroundColor: '#f44336',
+        borderColor: '#c62828',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderSkipped: false,
+      },
+      {
+        label: '⚠️ 조심일',
+        data: josim,
+        backgroundColor: '#2196f3',
+        borderColor: '#1565c0',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => items[0].label + ' (' + grades[items[0].dataIndex] + '월)',
+          label: (item) => item.dataset.label + ': ' + item.raw + '일',
+        },
+        backgroundColor: 'rgba(20,20,20,0.88)',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        padding: 10,
+        cornerRadius: 6,
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#888', font: { size: 10, family: 'Noto Sans KR' } }
+      },
+      y: {
+        min: 0, max: 16,
+        grid: { color: 'rgba(158,158,158,0.15)' },
+        ticks: {
+          color: '#888', font: { size: 10 }, stepSize: 2,
+          callback: v => v + '일'
+        }
+      }
+    }
+  },
+  plugins: [{
+    id: 'bgZones',
+    beforeDraw(chart) {
+      const ctx = chart.ctx;
+      const xAxis = chart.scales.x;
+      const yAxis = chart.scales.y;
+      const gradeColorMap = {
+        '용신': 'rgba(244,67,54,0.08)',
+        '희신': 'rgba(76,175,80,0.08)',
+        '병신': 'rgba(33,150,243,0.08)',
+        '중립': 'rgba(158,158,158,0.08)',
+      };
+      const barCount = grades.length;
+      const barWidth = (xAxis.right - xAxis.left) / barCount;
+      grades.forEach((g, i) => {
+        ctx.save();
+        ctx.fillStyle = gradeColorMap[g] || 'transparent';
+        ctx.fillRect(xAxis.left + i * barWidth, yAxis.top, barWidth, yAxis.bottom - yAxis.top);
+        ctx.restore();
+      });
+    }
+  }, {
+    id: 'avgLine',
+    afterDraw(chart) {
+      const ctx = chart.ctx;
+      const xA = chart.scales.x;
+      const yA = chart.scales.y;
+      const avgGil = gilil.reduce((a,b) => a+b, 0) / gilil.length;
+      const yPx = yA.getPixelForValue(avgGil);
+      ctx.save();
+      ctx.strokeStyle = '#f44336';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(xA.left, yPx);
+      ctx.lineTo(xA.right, yPx);
+      ctx.stroke();
+      ctx.fillStyle = '#f44336';
+      ctx.font = '10px Noto Sans KR';
+      ctx.textAlign = 'left';
+      ctx.fillText('평균 ' + avgGil.toFixed(1) + '일', xA.right + 4, yPx + 4);
+      ctx.restore();
+    }
+  }]
+});
+</script>
+</body>
+</html>

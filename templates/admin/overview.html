@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}어드민 — 전체 한눈{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="m-0 fw-bold">전체 한눈</h3>
+  <a href="/admin/dashboard" class="btn btn-sm btn-outline-secondary">대시보드</a>
+</div>
+
+{# 시스템 통계 카드 #}
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="card border-0 shadow-sm" style="border-left:4px solid #1A3A6A !important;">
+      <div class="card-body">
+        <div class="small text-muted">마스터</div>
+        <div class="fw-bold" style="font-size:2rem;color:#1A3A6A;">{{ sys_stats.masters }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card border-0 shadow-sm" style="border-left:4px solid #0f766e !important;">
+      <div class="card-body">
+        <div class="small text-muted">손님(client)</div>
+        <div class="fw-bold" style="font-size:2rem;color:#0f766e;">{{ sys_stats.clients }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card border-0 shadow-sm" style="border-left:4px solid #c9a227 !important;">
+      <div class="card-body">
+        <div class="small text-muted">활성 회원(member)</div>
+        <div class="fw-bold" style="font-size:2rem;color:#c9a227;">{{ sys_stats.members_active }}</div>
+        <div class="small text-muted">전체 {{ sys_stats.members_total }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card border-0 shadow-sm" style="border-left:4px solid #b91c1c !important;">
+      <div class="card-body">
+        <div class="small text-muted">총 매출</div>
+        <div class="fw-bold" style="font-size:1.6rem;color:#b91c1c;">{{ "{:,}".format(sys_stats.revenue_total) }}원</div>
+        <div class="small text-muted">B2C {{ "{:,}".format(sys_stats.revenue_orders) }} / 책 {{ "{:,}".format(sys_stats.revenue_books) }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# 등급 분포 #}
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+    <h5 class="fw-bold mb-2">손님 등급 분포</h5>
+    <div class="card border-0 shadow-sm"><div class="card-body">
+      {% for limit, count in tier_dist.items()|sort %}
+      {% set pct = (count / sys_stats.clients * 100) if sys_stats.clients else 0 %}
+      <div class="d-flex align-items-center mb-2">
+        <div style="width:80px;" class="small">한도 {{ limit }}명:</div>
+        <div class="flex-grow-1 mx-2">
+          <div class="progress" style="height:18px;">
+            <div class="progress-bar" style="width:{{ pct }}%;background:{% if limit==5 %}#94a3b8{% elif limit==10 %}#3b82f6{% elif limit==20 %}#10b981{% else %}#f59e0b{% endif %};">{{ count }}명</div>
+          </div>
+        </div>
+        <div style="width:60px;" class="small text-end fw-bold">{{ "%.1f"|format(pct) }}%</div>
+      </div>
+      {% endfor %}
+    </div></div>
+  </div>
+
+  {# 상위 결제 client TOP 10 #}
+  <div class="col-md-6">
+    <h5 class="fw-bold mb-2">상위 결제 손님 TOP 10</h5>
+    <div class="card border-0 shadow-sm"><div class="table-responsive">
+      <table class="table table-sm mb-0 small">
+        <thead class="table-light"><tr><th>#</th><th>이름</th><th>마스터</th><th class="text-end">누적 결제</th><th class="text-end">등급</th></tr></thead>
+        <tbody>
+          {% if not top_clients %}<tr><td colspan="5" class="text-center text-muted py-3">결제 이력 있는 손님 없음</td></tr>{% endif %}
+          {% for c in top_clients %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td><a href="/clients/{{ c.client_id }}" class="text-decoration-none fw-bold">{{ c.name|default('-') }}</a></td>
+            <td class="small text-muted">{{ c.master_id }}</td>
+            <td class="text-end fw-bold">{{ "{:,}".format(c.paid) }}원</td>
+            <td class="text-end"><span class="badge bg-warning text-dark">{{ c.limit }}명</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+  </div>
+</div>
+
+{# 마스터별 운영 현황 #}
+<h5 class="fw-bold mb-2">마스터별 운영 현황</h5>
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-sm mb-0 align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>마스터 ID</th>
+          <th>선생님</th>
+          <th>상태</th>
+          <th class="text-end">손님</th>
+          <th class="text-end">활성 회원</th>
+          <th class="text-end">매출</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in masters %}
+        <tr>
+          <td><a href="/admin/masters/{{ m.master_id }}/edit" class="text-decoration-none">{{ m.master_id }}</a></td>
+          <td>{{ m.선생님이름|default('-') }}</td>
+          <td><span class="badge bg-{% if m.status=='활성' %}success{% elif m.status=='대기' %}warning text-dark{% else %}secondary{% endif %}">{{ m.status }}</span></td>
+          <td class="text-end fw-bold">{{ m.clients_cnt }}</td>
+          <td class="text-end fw-bold">{{ m.members_cnt }}</td>
+          <td class="text-end fw-bold">{{ "{:,}".format(m.revenue) }}원</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

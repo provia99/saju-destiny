@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1e1433">
+<title>백년사주연구소</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #1e1433;
+    --lav-mid:    #6d3fa0;
+    --lav-main:   #9b59b6;
+    --lav-light:  #c084e8;
+    --lav-pale:   #e9d5f7;
+    --gold:       #f5c842;
+    --gold-light: #fde68a;
+    --text:       #faf5ff;
+    --text-dim:   #d4b8f0;
+    --text-muted: #9b82c0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    width:100%; height:100%;
+    overflow:hidden;
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── 별 캔버스 ── */
+  #starCanvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+  /* ── 배경 빛 번짐 ── */
+  .glow-orb { position:fixed; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:1; }
+  .glow-orb.top    { width:320px; height:320px; top:-80px; left:50%; transform:translateX(-50%); background:rgba(155,89,182,0.25); }
+  .glow-orb.bottom { width:260px; height:260px; bottom:-60px; right:-40px; background:rgba(109,63,160,0.2); }
+  .glow-orb.left   { width:180px; height:180px; top:40%; left:-60px; background:rgba(192,132,252,0.12); }
+
+  /* ── 메인 컨테이너 ── */
+  .intro-wrap {
+    position:relative; z-index:10;
+    width:100%; height:100svh;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:40px 32px; text-align:center;
+  }
+
+  /* ── 로고 영역 ── */
+  .logo-area {
+    margin-bottom:44px;
+    opacity:0; animation:fadeUp 0.9s ease forwards 0.3s;
+  }
+  .moon-icon {
+    font-size:3.2rem; display:block; margin-bottom:14px;
+    animation:floatMoon 4s ease-in-out infinite;
+  }
+  @keyframes floatMoon {
+    0%,100% { transform:translateY(0) rotate(-5deg); }
+    50%      { transform:translateY(-10px) rotate(5deg); }
+  }
+  .brand-name {
+    font-family:'Noto Serif KR', serif;
+    font-size:1.9rem; font-weight:700; letter-spacing:0.08em;
+    background:linear-gradient(135deg, var(--lav-pale) 0%, var(--gold-light) 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text; display:block; margin-bottom:6px;
+  }
+  .brand-sub {
+    font-size:0.82rem; color:var(--text-muted); letter-spacing:0.2em; font-weight:300;
+  }
+
+  /* ── 구분선 ── */
+  .divider {
+    width:60px; height:1px; margin:0 auto 40px;
+    background:linear-gradient(90deg, transparent, var(--lav-light), transparent);
+    opacity:0; animation:fadeUp 0.9s ease forwards 0.6s;
+  }
+
+  /* ── 오늘의 말씀 ── */
+  .quote-area {
+    max-width:300px;
+    opacity:0; animation:fadeUp 1s ease forwards 0.9s;
+  }
+  .quote-label {
+    font-size:0.7rem; letter-spacing:0.25em; color:var(--gold);
+    font-weight:500; margin-bottom:14px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .quote-label::before,
+  .quote-label::after {
+    content:''; flex:1; max-width:36px; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold));
+  }
+  .quote-label::after { background:linear-gradient(90deg, var(--gold), transparent); }
+  .quote-text {
+    font-family:'Noto Serif KR', serif;
+    font-size:1.15rem; font-weight:600; line-height:1.85;
+    color:var(--text); min-height:72px;
+  }
+  .quote-text .char {
+    display:inline-block;
+    opacity:0; transform:translateY(8px);
+    transition:opacity 0.04s ease, transform 0.04s ease;
+  }
+  .quote-text .char.visible { opacity:1; transform:translateY(0); }
+  .quote-author {
+    margin-top:14px; font-size:0.78rem;
+    color:var(--text-muted); letter-spacing:0.1em;
+    opacity:0; transition:opacity 0.6s ease;
+  }
+  .quote-author.visible { opacity:1; }
+
+  /* ── 상태 메시지 ── */
+  .status-msg {
+    margin-top:36px; font-size:0.82rem;
+    color:var(--text-muted); letter-spacing:0.05em;
+    opacity:0; animation:fadeUp 0.8s ease forwards 1.3s;
+    min-height:20px;
+  }
+  .status-msg .highlight { color:var(--gold-light); font-weight:600; }
+
+  /* ── 진행 바 ── */
+  .progress-wrap {
+    margin-top:20px; width:120px;
+    opacity:0; animation:fadeUp 0.9s ease forwards 1.4s;
+  }
+  .progress-bar {
+    width:100%; height:2px;
+    background:rgba(155,89,182,0.2); border-radius:2px; overflow:hidden;
+  }
+  .progress-fill {
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--lav-main), var(--gold));
+    border-radius:2px; transition:width linear;
+  }
+  .progress-dots {
+    display:flex; justify-content:center; gap:6px; margin-top:10px;
+  }
+  .progress-dots span {
+    width:5px; height:5px; border-radius:50%;
+    background:rgba(155,89,182,0.3);
+    animation:dotPulse 1.4s ease-in-out infinite;
+  }
+  .progress-dots span:nth-child(2) { animation-delay:0.2s; }
+  .progress-dots span:nth-child(3) { animation-delay:0.4s; }
+  @keyframes dotPulse {
+    0%,100% { background:rgba(155,89,182,0.3); transform:scale(1); }
+    50%      { background:var(--lav-light); transform:scale(1.4); }
+  }
+
+  /* ── 건너뛰기 ── */
+  .skip-btn {
+    position:fixed; top:20px; right:20px; z-index:20;
+    padding:7px 16px; border-radius:20px;
+    background:rgba(155,89,182,0.15); border:1px solid rgba(155,89,182,0.3);
+    color:var(--text-muted); font-size:0.78rem; cursor:pointer;
+    font-family:'Noto Sans KR', sans-serif; transition:all 0.2s;
+    opacity:0; animation:fadeIn 0.5s ease forwards 1.5s;
+  }
+  .skip-btn:hover { background:rgba(155,89,182,0.3); color:var(--text); }
+
+  /* ── 하단 ── */
+  .master-badge {
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+    z-index:20; text-align:center;
+    opacity:0; animation:fadeUp 0.9s ease forwards 1.4s;
+  }
+  .master-badge .name { font-size:0.78rem; color:var(--text-muted); letter-spacing:0.12em; }
+  .master-badge .name strong { color:var(--gold-light); font-weight:600; }
+
+  /* ── 공통 애니메이션 ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  body.fade-out { animation:fadeOut 0.6s ease forwards; }
+  @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+</style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+<div class="glow-orb top"></div>
+<div class="glow-orb bottom"></div>
+<div class="glow-orb left"></div>
+
+<button class="skip-btn" id="skipBtn" onclick="skipIntro()">건너뛰기 ›</button>
+
+<div class="intro-wrap">
+
+  <!-- 로고 -->
+  <div class="logo-area">
+    <span class="moon-icon">🔮</span>
+    <span class="brand-name">백년사주연구소</span>
+    <span class="brand-sub">사주 · 명리 · 운세</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 오늘의 말씀 -->
+  <div class="quote-area">
+    <div class="quote-label">오늘의 말씀</div>
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-author" id="quoteAuthor"></div>
+  </div>
+
+  <!-- 상태 메시지 -->
+  <div class="status-msg" id="statusMsg"></div>
+
+  <!-- 진행 바 -->
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+</div>
+
+<div class="master-badge">
+  <div class="name">powered by <strong>백년사주연구소</strong></div>
+</div>
+
+<script>
+// ── 서버에서 주입되는 로그인 상태 ──
+// Jinja2 템플릿 변수로 주입됨
+const IS_LOGGED_IN = {{ 'true' if client else 'false' }};
+const BASE_URL     = "{{ base_url }}";
+
+// ── 이동 경로 설정 ──
+const HOME_URL    = BASE_URL + "/home";     // 기존 회원 → 운세 홈
+const WELCOME_URL = BASE_URL + "/welcome";  // 비회원 → 무료운세 + 가입 유도
+
+// ── 오늘의 좋은 말 목록 ──
+const QUOTES = [
+  { text: "하늘이 무너져도 솟아날 구멍이 있다.", author: "한국 속담" },
+  { text: "오늘 하루도 당신의 별이 빛나고 있습니다.", author: "백년사주연구소" },
+  { text: "씨앗은 땅속에서 오랜 시간을 기다린 뒤에야 꽃을 피웁니다.", author: "백년사주연구소" },
+  { text: "운명은 바꿀 수 없어도, 마음은 바꿀 수 있습니다.", author: "백년사주연구소" },
+  { text: "좋은 기운은 좋은 마음에서 시작됩니다.", author: "백년사주연구소" },
+  { text: "봄이 오지 않는 겨울은 없습니다.", author: "한국 속담" },
+  { text: "당신이 걷는 길이 곧 당신의 운명입니다.", author: "백년사주연구소" },
+  { text: "작은 행운이 쌓여 큰 복이 됩니다.", author: "백년사주연구소" },
+  { text: "오늘의 선택이 내일의 운명을 만듭니다.", author: "백년사주연구소" },
+  { text: "마음이 맑으면 하늘도 맑아집니다.", author: "백년사주연구소" },
+  { text: "어둠이 깊을수록 새벽은 더 가까이 있습니다.", author: "백년사주연구소" },
+  { text: "당신의 사주 안에는 이미 빛나는 별이 있습니다.", author: "백년사주연구소" },
+  { text: "지금 이 순간도 당신의 운은 흐르고 있습니다.", author: "백년사주연구소" },
+  { text: "기다림 끝에 반드시 좋은 인연이 찾아옵니다.", author: "백년사주연구소" },
+  { text: "오늘 하루, 작은 것에 감사하면 큰 복이 옵니다.", author: "백년사주연구소" },
+];
+
+// 오늘 날짜 기반으로 말씀 선택 (매일 자동으로 바뀜)
+const today = new Date();
+const idx = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % QUOTES.length;
+const quote = QUOTES[idx];
+
+// ── 이동 목적지 결정 ──
+const destUrl = IS_LOGGED_IN ? HOME_URL : WELCOME_URL;
+
+// ── 타자기 효과 ──
+function typeWriter(el, text, delay, onDone) {
+  el.innerHTML = '';
+  [...text].forEach((ch, i) => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    el.appendChild(span);
+    setTimeout(() => span.classList.add('visible'), delay + i * 55);
+  });
+  setTimeout(onDone, delay + text.length * 55 + 200);
+}
+
+// ── 별 캔버스 ──
+(function initStars() {
+  const canvas = document.getElementById('starCanvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < 120; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        speed: Math.random() * 0.008 + 0.003,
+        phase: Math.random() * Math.PI * 2,
+        color: Math.random() > 0.7 ? '#f5c842' : '#e9d5f7'
+      });
+    }
+  }
+  function drawStars(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const op = 0.2 + 0.8 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = op;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(drawStars);
+  }
+  resize(); createStars(); requestAnimationFrame(drawStars);
+  window.addEventListener('resize', () => { resize(); createStars(); });
+})();
+
+// ── 이동 함수 ──
+let autoTimer = null;
+function navigate(url) {
+  clearTimeout(autoTimer);
+  document.body.classList.add('fade-out');
+  setTimeout(() => { window.location.href = url; }, 600);
+}
+function skipIntro() { navigate(destUrl); }
+
+// ── 진행 바 시작 ──
+const DURATION = 2500; // 2.5초
+function startProgress() {
+  const fill = document.getElementById('progressFill');
+  fill.style.transition = `width ${DURATION}ms linear`;
+  requestAnimationFrame(() => { fill.style.width = '100%'; });
+  autoTimer = setTimeout(() => navigate(destUrl), DURATION);
+}
+
+// ── 상태 메시지 표시 ──
+function showStatusMsg() {
+  const el = document.getElementById('statusMsg');
+  if (IS_LOGGED_IN) {
+    el.innerHTML = '✦ <span class="highlight">운세 페이지</span>로 이동합니다...';
+  } else {
+    el.innerHTML = '✦ <span class="highlight">무료 운세</span>를 확인해 보세요';
+  }
+}
+
+// ── 초기화 ──
+window.addEventListener('DOMContentLoaded', () => {
+  const quoteEl  = document.getElementById('quoteText');
+  const authorEl = document.getElementById('quoteAuthor');
+
+  // 1.2초 후 타자기 시작
+  setTimeout(() => {
+    typeWriter(quoteEl, quote.text, 0, () => {
+      authorEl.textContent = '— ' + quote.author;
+      authorEl.classList.add('visible');
+    });
+  }, 1200);
+
+  // 1.3초 후 상태 메시지 + 진행 바 시작
+  setTimeout(() => {
+    showStatusMsg();
+    startProgress();
+  }, 1300);
+});
+</script>
+</body>
+</html>

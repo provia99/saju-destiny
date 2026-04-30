@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>오행 생극도 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:18pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6pt; color:#aaa; margin-top:2px; text-align:right; }
+
+.card { border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0; }
+.card-hd {
+  padding:7px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ── SVG 다이어그램 영역 ── */
+.diagram-wrap {
+  background:white; padding:14px 16px;
+  border-bottom:1px solid #e0e0e0;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.svg-area { flex:1; min-width:0; }
+.legend-area { width:52mm; flex-shrink:0; }
+
+/* 범례 */
+.leg-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:8px; }
+.leg-section { margin-bottom:10px; }
+.leg-sec-title { font-size:6.5pt; font-weight:700; color:#333; margin-bottom:5px; display:flex; align-items:center; gap:4px; }
+.leg-items { display:flex; flex-direction:column; gap:4px; }
+.leg-item { display:flex; align-items:center; gap:6px; font-size:6.5pt; color:#444; }
+.leg-line { height:2px; width:24px; flex-shrink:0; border-radius:1px; }
+.leg-line-dash { height:0; width:24px; flex-shrink:0; border-top:2px dashed; }
+.leg-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+
+/* ── 상생상극 텍스트 섹션 ── */
+.relation-section {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; background:white;
+  border-bottom:1px solid #e0e0e0;
+}
+.rel-col { padding:10px 14px; border-right:1px solid #e0e0e0; }
+.rel-col:last-child { border-right:none; }
+.rel-title { font-size:7pt; font-weight:700; margin-bottom:7px; display:flex; align-items:center; gap:5px; }
+.rel-title::before { content:''; display:inline-block; width:3px; height:11px; border-radius:2px; }
+.rel-rows { display:flex; flex-direction:column; gap:5px; }
+.rel-row { display:flex; align-items:center; gap:6px; font-size:7pt; }
+.rel-from { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; width:18px; text-align:center; }
+.rel-arrow { font-size:7pt; color:#555; font-weight:700; }
+.rel-to   { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; width:18px; text-align:center; }
+.rel-note { font-size:6.5pt; color:#555; line-height:1.4; }
+.rel-badge { font-size:6pt; font-weight:700; padding:1px 6px; border-radius:4px; color:white; flex-shrink:0; }
+
+/* ── 원국 오행 배치 ── */
+.wonkuk-section { padding:10px 14px; background:#fafafa; border-bottom:1px solid #e0e0e0; }
+.wk-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:7px; }
+.wk-grid { display:flex; gap:6px; align-items:stretch; }
+.wk-pillar {
+  flex:1; border:1.5px solid #333; border-radius:8px; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.wk-p-hd { text-align:center; padding:3px 4px; background:#f5f5f5; border-bottom:1px solid #e0e0e0; }
+.wk-p-lbl { font-size:5.5pt; color:#aaa; font-weight:700; }
+.wk-p-name{ font-size:6pt; font-weight:700; color:#555; }
+.wk-stem, .wk-branch { padding:5px 4px; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.wk-stem { border-bottom:1px solid #f0f0f0; }
+.wk-hanja { font-family:'Nanum Myeongjo',serif; font-size:14pt; font-weight:800; line-height:1; }
+.wk-kr    { font-size:5.5pt; color:#888; }
+.wk-oh    { font-size:5.5pt; font-weight:700; color:white; padding:1px 6px; border-radius:4px; }
+
+/* ── 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 13px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="page-title">
+  <div>
+    <div class="pt-main">오행(五行) 생극도(生剋圖)</div>
+    <div class="pt-sub">相生(상생) · 相剋(상극) — 오행이 서로 돕고 제어하는 관계</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 용신 火(화) 기준</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#2e7d32,#43a047);">
+    <div class="card-hd-title">☯ 오행 상생(相生) · 상극(相剋) 생극도</div>
+    <div class="card-hd-sub">최원석 님의 사주 오행 강약과 생극 관계</div>
+  </div>
+
+  <!-- SVG 다이어그램 -->
+  <div class="diagram-wrap">
+    <div class="svg-area">
+      <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:75mm;">
+        <defs>
+          <!-- 상생 화살표 (초록) -->
+          <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4caf50"/>
+          </marker>
+          <!-- 상극 화살표 (빨강) -->
+          <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#f44336"/>
+          </marker>
+          <!-- 용신 강조 화살표 -->
+          <marker id="arr-gold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#ff9800"/>
+          </marker>
+        </defs>
+
+        <!-- 오각형 배치: 木(상), 火(우상), 土(중앙), 金(우하), 水(좌) -->
+        <!-- 중심 (160, 150) -->
+        <!-- 木: top center (160, 30) -->
+        <!-- 火: right top (260, 100) -->
+        <!-- 土: center (160, 150) — 일간이므로 중앙 -->
+        <!-- 金: right bottom (260, 220) -->
+        <!-- 水: left (60, 160) -->
+
+        <!-- ══ 상생 화살표 (외곽 오각형 순환) ══ -->
+        <!-- 木→火 -->
+        <line x1="175" y1="48" x2="248" y2="96" stroke="#4caf50" stroke-width="2.5" marker-end="url(#arr-green)" stroke-dasharray="none"/>
+        <!-- 火→土 -->
+        <line x1="252" y1="114" x2="185" y2="143" stroke="#4caf50" stroke-width="2.5" marker-end="url(#arr-green)"/>
+        <!-- 土→金 -->
+        <line x1="185" y1="158" x2="252" y2="208" stroke="#4caf50" stroke-width="2.5" marker-end="url(#arr-green)"/>
+        <!-- 金→水 -->
+        <line x1="242" y1="224" x2="82" y2="172" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-green)" opacity="0.5"/>
+        <!-- 水→木 -->
+        <line x1="68" y1="152" x2="148" y2="46" stroke="#4caf50" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-green)" opacity="0.5"/>
+
+        <!-- ══ 상극 화살표 (교차선) ══ -->
+        <!-- 水→火 (병신이 용신 극 — 핵심!) -->
+        <line x1="78" y1="150" x2="240" y2="108" stroke="#f44336" stroke-width="3" marker-end="url(#arr-red)" stroke-dasharray="none"/>
+        <!-- 木→土 (희신이 태과 土 제어 — 길) -->
+        <line x1="162" y1="52" x2="162" y2="130" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arr-gold)"/>
+        <!-- 土→水 (태과 土가 병신 水 막음 — 길) -->
+        <line x1="148" y1="155" x2="82" y2="163" stroke="#ff9800" stroke-width="2" marker-end="url(#arr-gold)" stroke-dasharray="4,2"/>
+        <!-- 金→木 (한신이 희신 극 — 주의, 약함) -->
+        <line x1="245" y1="212" x2="178" y2="52" stroke="#9e9e9e" stroke-width="1.5" marker-end="url(#arr-red)" stroke-dasharray="4,3" opacity="0.6"/>
+        <!-- 火→金 (용신이 한신 극) -->
+        <line x1="255" y1="118" x2="255" y2="200" stroke="#9e9e9e" stroke-width="1.5" marker-end="url(#arr-red)" stroke-dasharray="4,3" opacity="0.4"/>
+
+        <!-- ══ 오행 노드 ══ -->
+
+        <!-- 木 (희신) — 상단 -->
+        <circle cx="160" cy="38" r="28" fill="#4caf50" stroke="#333" stroke-width="2"/>
+        <text x="160" y="32" font-family="Nanum Myeongjo" font-size="20" font-weight="800" fill="white" text-anchor="middle">木</text>
+        <text x="160" y="50" font-size="9" fill="white" text-anchor="middle" font-family="Noto Sans KR">희신</text>
+        <!-- 강약 표시 -->
+        <rect x="134" y="62" width="52" height="12" rx="6" fill="#4caf50" fill-opacity="0.15" stroke="#4caf50" stroke-width="1"/>
+        <text x="160" y="72" font-size="8" fill="#2e7d32" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">보통 50%</text>
+
+        <!-- 火 (용신) — 우상 -->
+        <circle cx="262" cy="106" r="30" fill="#f44336" stroke="#333" stroke-width="2.5"/>
+        <text x="262" y="100" font-family="Nanum Myeongjo" font-size="22" font-weight="800" fill="white" text-anchor="middle">火</text>
+        <text x="262" y="118" font-size="9" fill="white" text-anchor="middle" font-family="Noto Sans KR">용신🔥</text>
+        <rect x="232" y="133" width="60" height="12" rx="6" fill="#f44336" fill-opacity="0.15" stroke="#f44336" stroke-width="1"/>
+        <text x="262" y="143" font-size="8" fill="#c62828" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">보통 50%</text>
+
+        <!-- 土 (일간·태과) — 중앙 -->
+        <circle cx="160" cy="152" r="26" fill="#ff9800" stroke="#333" stroke-width="2.5"/>
+        <text x="160" y="147" font-family="Nanum Myeongjo" font-size="18" font-weight="800" fill="white" text-anchor="middle">土</text>
+        <text x="160" y="163" font-size="8" fill="white" text-anchor="middle" font-family="Noto Sans KR">일간</text>
+        <rect x="127" y="175" width="66" height="12" rx="6" fill="#ff9800" fill-opacity="0.15" stroke="#ff9800" stroke-width="1"/>
+        <text x="160" y="185" font-size="8" fill="#e65100" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">매우강 ⚠️</text>
+
+        <!-- 金 (한신) — 우하 -->
+        <circle cx="262" cy="220" r="24" fill="#9e9e9e" stroke="#333" stroke-width="1.5"/>
+        <text x="262" y="215" font-family="Nanum Myeongjo" font-size="17" font-weight="800" fill="white" text-anchor="middle">金</text>
+        <text x="262" y="229" font-size="8" fill="white" text-anchor="middle" font-family="Noto Sans KR">한신</text>
+        <rect x="234" y="242" width="56" height="12" rx="6" fill="#9e9e9e" fill-opacity="0.15" stroke="#9e9e9e" stroke-width="1"/>
+        <text x="262" y="252" font-size="8" fill="#555" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">매우약 5%</text>
+
+        <!-- 水 (병신) — 좌 -->
+        <circle cx="58" cy="162" r="26" fill="#2196f3" stroke="#333" stroke-width="2"/>
+        <text x="58" y="156" font-family="Nanum Myeongjo" font-size="18" font-weight="800" fill="white" text-anchor="middle">水</text>
+        <text x="58" y="172" font-size="9" fill="white" text-anchor="middle" font-family="Noto Sans KR">병신</text>
+        <rect x="27" y="185" width="62" height="12" rx="6" fill="#2196f3" fill-opacity="0.15" stroke="#2196f3" stroke-width="1"/>
+        <text x="58" y="195" font-size="8" fill="#1565c0" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">약 8%</text>
+
+        <!-- 핵심 관계 레이블 -->
+        <!-- 水→火 극 레이블 -->
+        <rect x="100" y="112" width="68" height="14" rx="4" fill="#f44336" fill-opacity="0.9"/>
+        <text x="134" y="123" font-size="8" fill="white" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">⚡ 병신이 용신 극!</text>
+
+        <!-- 木→土 제어 레이블 -->
+        <rect x="168" y="87" width="52" height="13" rx="4" fill="#ff9800" fill-opacity="0.9"/>
+        <text x="194" y="97" font-size="7.5" fill="white" text-anchor="middle" font-family="Noto Sans KR" font-weight="700">희신이 제어✅</text>
+
+      </svg>
+    </div>
+
+    <!-- 범례 -->
+    <div class="legend-area">
+      <div class="leg-title">생극도 범례</div>
+
+      <div class="leg-section">
+        <div class="leg-sec-title" style="color:#4caf50;">
+          <span style="display:inline-block;width:3px;height:10px;background:#4caf50;border-radius:1px;"></span>
+          상생(相生) — 서로 돕는 관계
+        </div>
+        <div class="leg-items">
+          <div class="leg-item"><div class="leg-line" style="background:#4caf50;"></div>실선 상생 (활성)</div>
+          <div class="leg-item"><div class="leg-line-dash" style="border-color:#4caf50;opacity:.5;"></div>점선 상생 (약함)</div>
+        </div>
+      </div>
+
+      <div class="leg-section">
+        <div class="leg-sec-title" style="color:#f44336;">
+          <span style="display:inline-block;width:3px;height:10px;background:#f44336;border-radius:1px;"></span>
+          상극(相剋) — 제어하는 관계
+        </div>
+        <div class="leg-items">
+          <div class="leg-item"><div class="leg-line" style="background:#f44336;"></div>실선 상극 (핵심 위험)</div>
+          <div class="leg-item"><div class="leg-line" style="background:#ff9800;"></div>주황 상극 (길한 제어)</div>
+          <div class="leg-item"><div class="leg-line-dash" style="border-color:#9e9e9e;"></div>점선 상극 (약한 영향)</div>
+        </div>
+      </div>
+
+      <div class="leg-section">
+        <div class="leg-sec-title" style="color:#333;">
+          <span style="display:inline-block;width:3px;height:10px;background:#333;border-radius:1px;"></span>
+          노드 크기 = 원국 강약
+        </div>
+        <div class="leg-items">
+          <div class="leg-item"><div class="leg-dot" style="background:#f44336;width:14px;height:14px;"></div>용신 火 — 보통(강화 필요)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#4caf50;width:12px;height:12px;"></div>희신 木 — 보통(유지 필요)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#ff9800;width:12px;height:12px;"></div>일간 土 — 매우강(태과)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#2196f3;width:10px;height:10px;"></div>병신 水 — 약(방어 필수)</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#9e9e9e;width:9px;height:9px;"></div>한신 金 — 매우약(중립)</div>
+        </div>
+      </div>
+
+      <div style="background:#fff3e0;border:1px solid #ff9800;border-radius:6px;padding:7px 9px;margin-top:6px;">
+        <div style="font-size:6.5pt;font-weight:700;color:#e65100;margin-bottom:4px;">📌 핵심 관계 3가지</div>
+        <div style="font-size:6.5pt;color:#333;line-height:1.7;">
+          ❶ <strong style="color:#f44336;">水→火 극</strong> = 병신이 용신 공격 (최위험)<br>
+          ❷ <strong style="color:#4caf50;">木→火 생</strong> = 희신이 용신 강화 (최길)<br>
+          ❸ <strong style="color:#ff9800;">木→土 극</strong> = 희신이 태과 제어 (길)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 상생·상극 텍스트 정리 -->
+  <div class="relation-section">
+    <div class="rel-col">
+      <div class="rel-title" style="color:#4caf50;">
+        <span style="display:inline-block;width:3px;height:11px;background:#4caf50;border-radius:2px;"></span>
+        상생(相生) — 내 사주의 돕는 흐름
+      </div>
+      <div class="rel-rows">
+        <div class="rel-row">
+          <span class="rel-from" style="color:#4caf50;">木</span>
+          <span class="rel-arrow">→생→</span>
+          <span class="rel-to" style="color:#f44336;">火</span>
+          <span class="rel-badge" style="background:#4caf50;">핵심 ✅</span>
+          <span class="rel-note">희신이 용신을 생(生) — 木이 강하면 火가 살아남</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#f44336;">火</span>
+          <span class="rel-arrow">→생→</span>
+          <span class="rel-to" style="color:#ff9800;">土</span>
+          <span class="rel-badge" style="background:#ff9800;">주의 ⚠️</span>
+          <span class="rel-note">용신이 일간 土를 생 — 土 더 강해져 설기 필요</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#ff9800;">土</span>
+          <span class="rel-arrow">→생→</span>
+          <span class="rel-to" style="color:#9e9e9e;">金</span>
+          <span class="rel-badge" style="background:#9e9e9e;">중립</span>
+          <span class="rel-note">태과 土가 한신 金을 생 — 한신이 희신 木 극할 수 있어 주의</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#9e9e9e;">金</span>
+          <span class="rel-arrow">→생→</span>
+          <span class="rel-to" style="color:#2196f3;">水</span>
+          <span class="rel-badge" style="background:#2196f3;">위험 ❌</span>
+          <span class="rel-note">한신이 병신 水를 생 — 병신 강화로 이어질 수 있음</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#2196f3;">水</span>
+          <span class="rel-arrow">→생→</span>
+          <span class="rel-to" style="color:#4caf50;">木</span>
+          <span class="rel-badge" style="background:#4caf50;">보통 ✅</span>
+          <span class="rel-note">병신이 희신을 생 — 희신 木을 강화, 간접 용신 도움</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rel-col">
+      <div class="rel-title" style="color:#f44336;">
+        <span style="display:inline-block;width:3px;height:11px;background:#f44336;border-radius:2px;"></span>
+        상극(相剋) — 내 사주의 제어 흐름
+      </div>
+      <div class="rel-rows">
+        <div class="rel-row">
+          <span class="rel-from" style="color:#2196f3;">水</span>
+          <span class="rel-arrow" style="color:#f44336;">→극→</span>
+          <span class="rel-to" style="color:#f44336;">火</span>
+          <span class="rel-badge" style="background:#f44336;">최위험 ❌</span>
+          <span class="rel-note">병신이 용신을 직접 극 — 가장 위험한 관계</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#4caf50;">木</span>
+          <span class="rel-arrow" style="color:#ff9800;">→극→</span>
+          <span class="rel-to" style="color:#ff9800;">土</span>
+          <span class="rel-badge" style="background:#ff9800;">길 ✅</span>
+          <span class="rel-note">희신이 태과 土를 제어 — 균형 회복에 도움</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#ff9800;">土</span>
+          <span class="rel-arrow" style="color:#ff9800;">→극→</span>
+          <span class="rel-to" style="color:#2196f3;">水</span>
+          <span class="rel-badge" style="background:#ff9800;">길 ✅</span>
+          <span class="rel-note">태과 土가 병신 水를 막아줌 — 역설적으로 길한 작용</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#9e9e9e;">金</span>
+          <span class="rel-arrow" style="color:#f44336;">→극→</span>
+          <span class="rel-to" style="color:#4caf50;">木</span>
+          <span class="rel-badge" style="background:#9e9e9e;">주의 ⚠️</span>
+          <span class="rel-note">한신이 희신을 극 — 金 강한 대운·세운 시 희신 약화</span>
+        </div>
+        <div class="rel-row">
+          <span class="rel-from" style="color:#f44336;">火</span>
+          <span class="rel-arrow">→극→</span>
+          <span class="rel-to" style="color:#9e9e9e;">金</span>
+          <span class="rel-badge" style="background:#9e9e9e;">중립</span>
+          <span class="rel-note">용신이 한신을 극 — 한신 매우 약해 실질 영향 미미</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 원국 오행 배치 -->
+  <div class="wonkuk-section">
+    <div class="wk-title">원국 8글자 오행 배치 — 각 기둥의 오행 분포</div>
+    <div class="wk-grid">
+      <div class="wk-pillar">
+        <div class="wk-p-hd"><div class="wk-p-lbl">년주</div><div class="wk-p-name">조상·초년</div></div>
+        <div class="wk-stem"><div class="wk-hanja" style="color:#2196f3;">癸</div><div class="wk-kr">계</div><div class="wk-oh" style="background:#2196f3;">水</div></div>
+        <div class="wk-branch"><div class="wk-hanja" style="color:#4caf50;">卯</div><div class="wk-kr">묘</div><div class="wk-oh" style="background:#4caf50;">木</div></div>
+      </div>
+      <div class="wk-pillar">
+        <div class="wk-p-hd"><div class="wk-p-lbl">월주</div><div class="wk-p-name">부모·직업</div></div>
+        <div class="wk-stem"><div class="wk-hanja" style="color:#4caf50;">乙</div><div class="wk-kr">을</div><div class="wk-oh" style="background:#4caf50;">木</div></div>
+        <div class="wk-branch"><div class="wk-hanja" style="color:#ff9800;">丑</div><div class="wk-kr">축</div><div class="wk-oh" style="background:#ff9800;">土</div></div>
+      </div>
+      <div class="wk-pillar" style="border:2px solid #f44336;">
+        <div class="wk-p-hd" style="background:#fff3e0;"><div class="wk-p-lbl" style="color:#f44336;">일주★</div><div class="wk-p-name" style="color:#e65100;">나</div></div>
+        <div class="wk-stem" style="background:#fff8f5;"><div class="wk-hanja" style="color:#ff9800;">戊</div><div class="wk-kr">무(일간)</div><div class="wk-oh" style="background:#ff9800;">土</div></div>
+        <div class="wk-branch" style="background:#fff8f5;"><div class="wk-hanja" style="color:#ff9800;">辰</div><div class="wk-kr">진⚡공망</div><div class="wk-oh" style="background:#ff9800;">土</div></div>
+      </div>
+      <div class="wk-pillar">
+        <div class="wk-p-hd"><div class="wk-p-lbl">시주</div><div class="wk-p-name">자녀·말년</div></div>
+        <div class="wk-stem"><div class="wk-hanja" style="color:#f44336;">丁</div><div class="wk-kr">정←用神</div><div class="wk-oh" style="background:#f44336;">火</div></div>
+        <div class="wk-branch"><div class="wk-hanja" style="color:#f44336;">巳</div><div class="wk-kr">사⚡공망</div><div class="wk-oh" style="background:#f44336;">火</div></div>
+      </div>
+      <!-- 오행 집계 -->
+      <div style="flex:1;padding:6px 10px;background:#fafafa;border:1.5px solid #333;border-radius:8px;display:flex;flex-direction:column;gap:4px;">
+        <div style="font-size:6pt;font-weight:700;color:#555;margin-bottom:2px;">오행 집계</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:14px;height:14px;border-radius:3px;background:#4caf50;display:inline-block;flex-shrink:0;"></span>木 × 2개 (보통)</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:14px;height:14px;border-radius:3px;background:#f44336;display:inline-block;flex-shrink:0;"></span>火 × 2개 (보통)</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:16px;height:16px;border-radius:3px;background:#ff9800;display:inline-block;flex-shrink:0;"></span>土 × 3개 (매우강) ⚠️</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:10px;height:10px;border-radius:3px;background:#9e9e9e;display:inline-block;flex-shrink:0;"></span>金 × 0개 (없음)</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:12px;height:12px;border-radius:3px;background:#2196f3;display:inline-block;flex-shrink:0;"></span>水 × 1개 (약)</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 메모 -->
+<div class="memo">
+  <strong style="color:#2e7d32;">📌 반야선생의 생극도 핵심</strong> &nbsp;
+  가장 중요한 관계는 <strong style="color:#f44336;">水→火 극(剋)</strong>입니다. 忌神 水가 用神 火를 직접 공격하는 구조 — 겨울·파란색·水 기운을 피하는 것이 가장 중요한 방어책입니다.
+  반면 <strong style="color:#4caf50;">木→火 생(生)</strong>은 喜神이 用神을 살리는 가장 길한 흐름 — 봄·초록색·木 기운이 운을 열어줍니다.
+  <strong style="color:#ff9800;">木→土 극</strong>은 태과 土를 제어하는 길한 작용으로, 希神 木이 이중으로 도움을 줍니다.
+</div>
+
+</div>
+</body>
+</html>

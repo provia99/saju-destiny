@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>합충형파해 분석표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{ border:1px solid #333;width:604px;padding:6px 10px;background:transparent;display:flex;flex-direction:column;gap:4px;overflow:hidden;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;border-radius:4px;}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}body{background:transparent;margin:0;padding:0;}.page{margin:0;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+.card{border:1.5px solid #333;border-radius:8px;overflow:hidden;}
+.card-hd{padding:4px 12px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:8pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:6pt;color:rgba(255,255,255,.85);}
+/* 사주 기둥 */
+.pillar-row{display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;background:#fafafa;}
+.p-col{text-align:center;padding:4px 8px;border-radius:6px;background:transparent;border:1px solid #333;min-width:60px;}
+.p-label{font-size:7pt;color:#aaa;font-weight:700;}
+.p-tg{font-family:'Noto Serif KR',serif;font-size:14pt;font-weight:800;line-height:1.1;}
+.p-jj{font-family:'Noto Serif KR',serif;font-size:14pt;font-weight:800;line-height:1.1;}
+.p-kr{font-size:6pt;color:#888;margin-left:1px;}
+.p-arrow{font-size:8pt;color:#ccc;}
+/* 테이블 */
+table{width:100%;border-collapse:collapse;}
+th{font-size:6pt;font-weight:700;color:#555;padding:4px 5px;background:#f5f5f5;border-bottom:1.5px solid #ddd;text-align:center;}
+td{font-size:7pt;padding:4px 5px;border-bottom:1px solid #f0f0f0;text-align:center;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+.type-badge{font-size:6pt;font-weight:700;color:white;padding:2px 6px;border-radius:4px;white-space:nowrap;display:inline-block;}
+/* 없음/메모 */
+.none-row{font-size:6.5pt;color:#888;padding:4px 10px;background:#f9f9f9;border-top:1px solid #eee;}
+.memo{font-size:6.5pt;color:#555;padding:5px 10px;background:#f8f9fa;border-top:1px solid #eee;line-height:1.6;}
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+  <div>
+    <div class="banner-hdr-title">⚡ 합충형파해(合沖刑破害) 분석표</div>
+    <div class="banner-hdr-sub">네 기둥의 대화 · 합·충·형·파·해·암합</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">戊申·甲寅·戊辰·甲寅 · 戊辰(무진)</div>
+  </div>
+</div>
+
+<!-- 사주 4기둥 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">원국 사주 네 기둥</div>
+    <div class="card-hd-sub">년주·월주·일주(★)·시주</div>
+  </div>
+  <div class="pillar-row"><div class="p-col" style="">
+  <div class="p-label">년주(年柱)</div>
+  <div class="p-tg" style="color:#ff9800;">戊<span class="p-kr">무</span></div>
+  <div class="p-jj" style="color:#9e9e9e;">申<span class="p-kr">신</span></div>
+</div><div class="p-arrow">→</div><div class="p-col" style="">
+  <div class="p-label">월주(月柱)</div>
+  <div class="p-tg" style="color:#4caf50;">甲<span class="p-kr">갑</span></div>
+  <div class="p-jj" style="color:#4caf50;">寅<span class="p-kr">인</span></div>
+</div><div class="p-arrow">→</div><div class="p-col" style="border:2px solid #c62828;background:#fff5f5;">
+  <div class="p-label">일주(日柱)</div>
+  <div class="p-tg" style="color:#ff9800;">戊<span class="p-kr">무</span></div>
+  <div class="p-jj" style="color:#ff9800;">辰<span class="p-kr">진</span></div>
+</div><div class="p-arrow">→</div><div class="p-col" style="">
+  <div class="p-label">시주(時柱)</div>
+  <div class="p-tg" style="color:#4caf50;">甲<span class="p-kr">갑</span></div>
+  <div class="p-jj" style="color:#4caf50;">寅<span class="p-kr">인</span></div>
+</div></div>
+</div>
+
+<!-- 합충형파해 테이블 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+    <div class="card-hd-title">합충형파해 분석 (7건)</div>
+    <div class="card-hd-sub">합·충·형·파·해·지장간암합</div>
+  </div>
+  <table>
+    <thead><tr><th>종류</th><th>관계 글자</th><th>위치</th><th>영역</th><th>변환/효과</th></tr></thead>
+    <tbody><tr>
+  <td><span class="type-badge" style="background:#9c27b0;">🔮 삼합</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#333;">(</span><span style="font-size:6pt;color:#888;">)</span> <span style="color:#aaa;">+</span> <span style="font-size:10pt;font-weight:800;color:#333;">(</span><span style="font-size:6pt;color:#888;">)</span></td>
+  <td style="font-size:6pt;">—</td>
+  <td style="font-size:6pt;color:#888;"></td>
+  <td><span style="font-size:6.5pt;font-weight:700;color:#2196f3;">→ 化水(수)</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#f44336;">💥 충</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#9e9e9e;">申</span><span style="font-size:6pt;color:#888;">(신)</span> <span style="color:#aaa;">↯</span> <span style="font-size:10pt;font-weight:800;color:#4caf50;">寅</span><span style="font-size:6pt;color:#888;">(인)</span></td>
+  <td style="font-size:6pt;">年支↔月支</td>
+  <td style="font-size:6pt;color:#888;">조상·사회↔부모·직업</td>
+  <td><span style="color:#ccc;">—</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#f44336;">💥 충</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#9e9e9e;">申</span><span style="font-size:6pt;color:#888;">(신)</span> <span style="color:#aaa;">↯</span> <span style="font-size:10pt;font-weight:800;color:#4caf50;">寅</span><span style="font-size:6pt;color:#888;">(인)</span></td>
+  <td style="font-size:6pt;">年支↔時支</td>
+  <td style="font-size:6pt;color:#888;">조상·사회↔자녀·말년</td>
+  <td><span style="color:#ccc;">—</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#607d8b;">🌀 지장간암합</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#9e9e9e;">申</span><span style="font-size:6pt;color:#888;">(신)속 戊(무)</span> <span style="color:#aaa;">+</span> <span style="font-size:10pt;font-weight:800;color:#ff9800;">辰</span><span style="font-size:6pt;color:#888;">(진)속 癸(계)</span></td>
+  <td style="font-size:6pt;">年支↔日支</td>
+  <td style="font-size:6pt;color:#888;">조상·사회↔배우자·내면</td>
+  <td><span style="font-size:6.5pt;font-weight:700;color:#f44336;">→ 化火(화) [미약]</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#607d8b;">🌀 지장간암합</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#9e9e9e;">申</span><span style="font-size:6pt;color:#888;">(신)속 庚(경)</span> <span style="color:#aaa;">+</span> <span style="font-size:10pt;font-weight:800;color:#ff9800;">辰</span><span style="font-size:6pt;color:#888;">(진)속 乙(을)</span></td>
+  <td style="font-size:6pt;">年支↔日支</td>
+  <td style="font-size:6pt;color:#888;">조상·사회↔배우자·내면</td>
+  <td><span style="font-size:6.5pt;font-weight:700;color:#9e9e9e;">→ 化金(금) [미약]</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#607d8b;">🌀 지장간암합</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#4caf50;">寅</span><span style="font-size:6pt;color:#888;">(인)속 戊(무)</span> <span style="color:#aaa;">+</span> <span style="font-size:10pt;font-weight:800;color:#ff9800;">辰</span><span style="font-size:6pt;color:#888;">(진)속 癸(계)</span></td>
+  <td style="font-size:6pt;">月支↔日支</td>
+  <td style="font-size:6pt;color:#888;">부모·직업↔배우자·내면</td>
+  <td><span style="font-size:6.5pt;font-weight:700;color:#f44336;">→ 化火(화) [미약]</span></td>
+</tr>
+<tr>
+  <td><span class="type-badge" style="background:#607d8b;">🌀 지장간암합</span></td>
+  <td><span style="font-size:10pt;font-weight:800;color:#ff9800;">辰</span><span style="font-size:6pt;color:#888;">(진)속 癸(계)</span> <span style="color:#aaa;">+</span> <span style="font-size:10pt;font-weight:800;color:#4caf50;">寅</span><span style="font-size:6pt;color:#888;">(인)속 戊(무)</span></td>
+  <td style="font-size:6pt;">日支↔時支</td>
+  <td style="font-size:6pt;color:#888;">배우자·내면↔자녀·말년</td>
+  <td><span style="font-size:6.5pt;font-weight:700;color:#f44336;">→ 化火(화) [미약]</span></td>
+</tr></tbody>
+  </table>
+  <div class="none-row">✅ 없음: 🤝 天합 · ⚡ 天충 · 💎 육합 · ⚡ 형 · 💔 파 · 🔗 해</div>
+  <div class="memo">📝 원국 내 3건의 합충형파해 + 지장간암합 4건. 대운·세운과 교차할 때 해당 영역의 변화에 주의하세요.</div>
+</div>
+
+</div></body></html>

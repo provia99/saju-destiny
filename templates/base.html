@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}반야선생 사주 관리 시스템{% endblock %}</title>
+  <!-- Modern Typography ('Noto Sans KR') -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- 상단 네비게이션 바 -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: {{ brand_color|default('#1A3A6A') }}">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">반야선생 사주 관리 시스템</a>
+      
+      {% if request.session.get('선생님이름') %}
+      <span class="navbar-text text-white mx-auto d-none d-lg-block fw-bold fs-5">
+        {{ request.session.get('선생님이름') }}
+      </span>
+      {% endif %}
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if request.session.get('role') == 'admin' %}
+          <li class="nav-item"><a class="nav-link text-white" href="/admin/overview">전체 한눈</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/admin/masters">마스터 관리</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/admin/banners">배너 관리</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/admin/orders">주문 관리</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/logout">로그아웃</a></li>
+          {% elif request.session.get('role') == 'master' %}
+          <li class="nav-item"><a class="nav-link text-white" href="/members/list">회원 목록</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/clients/list">손님 목록</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/saju/history">집필 현황</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/members/profile">내 설정</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/logout">로그아웃</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 메시지 알림 (flash message) -->
+  {% set msg = request.query_params.get('msg') %}
+  {% set msg_type = request.query_params.get('msg_type', 'success') %}
+  {% set error = request.query_params.get('error') %}
+  
+  {% if error %}
+  <div class="alert alert-danger alert-dismissible m-3">
+    {{ error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endif %}
+  
+  {% if msg %}
+  <div class="alert alert-{{ msg_type }} alert-dismissible m-3 shadow-sm border-0">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endif %}
+
+  <!-- 메인 콘텐츠 -->
+  <main class="container-fluid py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Bootstrap 5 JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

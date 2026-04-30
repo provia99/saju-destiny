@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>2026년 세운·월운 달력 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; font-size:7pt; }
+.page { border:1px solid #333; width:604px; max-height:840px; overflow:hidden; padding:10px 14px; background:transparent; display:flex; flex-direction:column; gap:5px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; max-height:840px; overflow:hidden; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 840px; margin:0; }
+}
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:4px 10px;border-radius:6px; }
+.banner-hdr-title { font-size:9pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6pt;color:rgba(255,255,255,.75);margin-top:1px; }
+.banner-hdr-name { font-size:9pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6pt;color:rgba(255,255,255,.75);text-align:right;margin-top:1px; }
+.card { border:1.5px solid #333; border-radius:8px; overflow:hidden; flex-shrink:0; }
+.card-hd { padding:4px 10px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:8pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+/* 세운 요약 스트립 》 1줄 */
+.seun-strip { display:grid; grid-template-columns:repeat(7,1fr); background:transparent; }
+.seun-cell  { padding:3px 3px; text-align:center; border-right:1px solid #eee; }
+.seun-cell:last-child { border-right:none; }
+.seun-lbl   { font-size:7pt; color:#aaa; font-weight:700; margin-bottom:1px; }
+.seun-val   { font-size:7pt; font-weight:800; color:#333; }
+/* 월운 그리드 4행×3열 */
+.month-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:transparent; }
+.mc { border-right:1px solid #e8e8e8; border-bottom:1px solid #e8e8e8; padding:4px 6px; display:flex; flex-direction:column; gap:1px; }
+.mc:nth-child(3n) { border-right:none; }
+.mc:nth-last-child(-n+3) { border-bottom:none; }
+.mc-month { font-size:9pt; font-weight:900; line-height:1; }
+.mc-ganji { font-size:6.5pt; font-weight:700; }
+.mc-chip  { font-size:7pt; font-weight:700; padding:1px 5px; border-radius:3px; color:white; display:inline-block; }
+.mc-meta  { font-size:7pt; color:#888; }
+.mc-bar-wrap { height:4px; background:#e8e8e8; border-radius:2px; overflow:hidden; margin-top:1px; }
+.mc-bar { height:100%; border-radius:2px; }
+.mc-days { font-size:7pt; color:#888; line-height:1.4; margin-top:1px; }
+.mc-days span { font-weight:700; }
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">📆 2026년 세운·월운 달력</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 대운 戊申(무신)</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#00796b,#009688);">
+    <div class="card-hd-title">① 2026년 세운 기본 정보</div>
+    <div class="card-hd-sub">세운 간지 · 성격 · 총운 · 오행 · 방위</div>
+  </div>
+  <div class="seun-strip">
+  <div class="seun-cell"><div class="seun-lbl">세운 간지</div><div class="seun-val">丙午(병오)</div></div>
+  <div class="seun-cell"><div class="seun-lbl">세운 성격</div><div class="seun-val" style="color:#555;">중립세운</div></div>
+  <div class="seun-cell"><div class="seun-lbl">올해 총운</div><div class="seun-val" style="color:#2e7d32;">중상</div></div>
+  <div class="seun-cell"><div class="seun-lbl">세운 오행</div><div class="seun-val">火(화)</div></div>
+  <div class="seun-cell"><div class="seun-lbl">용신 방위</div><div class="seun-val" style="color:#2e7d32;">동(東)</div></div>
+  <div class="seun-cell"><div class="seun-lbl">희신 방위</div><div class="seun-val" style="color:#1565c0;">북(北)</div></div>
+  <div class="seun-cell"><div class="seun-lbl">기신 방위</div><div class="seun-val" style="color:#c62828;">중앙(中央)</div></div>
+</div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">② 월별 운세 달력</div>
+    <div class="card-hd-sub">월 간지 · 성격 · 절기 · 12운성 · 운세강도 · ✦좋은날 / ✕조심날</div>
+  </div>
+  <div class="month-grid">
+    <div class="mc" style="background:#e8f5e9;">
+  <div class="mc-month" style="color:#2e7d32;">2월</div>
+  <div class="mc-ganji" style="color:#1b5e20;">庚寅(경인)</div>
+  <div>
+    <span class="mc-chip" style="background:#2e7d32;">용신월</span>
+  </div>
+  <div class="mc-meta">입춘(入春) · 장생</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:95%;background:#2e7d32;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 6·7·8·9·18·19…일<br><span style="color:#c62828;">✕</span> 2·5·11·12·13·14…일
+  </div>
+</div><div class="mc" style="background:#e8f5e9;">
+  <div class="mc-month" style="color:#2e7d32;">3월</div>
+  <div class="mc-ganji" style="color:#1b5e20;">辛卯(신묘)</div>
+  <div>
+    <span class="mc-chip" style="background:#2e7d32;">용신월</span>
+  </div>
+  <div class="mc-meta">경칩(驚蟄) · 목욕</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:95%;background:#2e7d32;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 1·2·3·10·11·14…일<br><span style="color:#c62828;">✕</span> 4·5·7·13·16·22…일
+  </div>
+</div><div class="mc" style="background:#e3f2fd;">
+  <div class="mc-month" style="color:#1565c0;">4월</div>
+  <div class="mc-ganji" style="color:#0d47a1;">壬辰(임진)</div>
+  <div>
+    <span class="mc-chip" style="background:#1565c0;">희신월</span>
+  </div>
+  <div class="mc-meta">청명(淸明) · 관대</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:80%;background:#1565c0;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 7·8·9·10·19·20…일<br><span style="color:#c62828;">✕</span> 3·6·12·13·14·15…일
+  </div>
+</div><div class="mc" style="background:#e3f2fd;">
+  <div class="mc-month" style="color:#1565c0;">5월</div>
+  <div class="mc-ganji" style="color:#0d47a1;">癸巳(계사)</div>
+  <div>
+    <span class="mc-chip" style="background:#1565c0;">희신월</span>
+  </div>
+  <div class="mc-meta">입하(立夏) · 건록</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:80%;background:#1565c0;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 1·2·9·10·13·14…일<br><span style="color:#c62828;">✕</span> 3·4·6·12·15·21…일
+  </div>
+</div><div class="mc" style="background:#e8f5e9;">
+  <div class="mc-month" style="color:#2e7d32;">6월</div>
+  <div class="mc-ganji" style="color:#1b5e20;">甲午(갑오)</div>
+  <div>
+    <span class="mc-chip" style="background:#2e7d32;">용신월</span>
+  </div>
+  <div class="mc-meta">망종(芒種) · 제왕</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:95%;background:#2e7d32;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 6·7·8·9·18·19…일<br><span style="color:#c62828;">✕</span> 2·5·11·12·13·14…일
+  </div>
+</div><div class="mc" style="background:#e8f5e9;">
+  <div class="mc-month" style="color:#2e7d32;">7월</div>
+  <div class="mc-ganji" style="color:#1b5e20;">乙未(을미)</div>
+  <div>
+    <span class="mc-chip" style="background:#2e7d32;">용신월</span>
+  </div>
+  <div class="mc-meta">소서(小暑) · 쇠</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:95%;background:#2e7d32;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 1·8·9·12·13·18…일<br><span style="color:#c62828;">✕</span> 2·3·5·11·14·20…일
+  </div>
+</div><div class="mc" style="background:#f5f5f5;">
+  <div class="mc-month" style="color:#666;">8월</div>
+  <div class="mc-ganji" style="color:#444;">丙申(병신)</div>
+  <div>
+    <span class="mc-chip" style="background:#666;">중립월</span>
+  </div>
+  <div class="mc-meta">입추(立秋) · 병</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:55%;background:#666;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 5·6·7·8·17·18…일<br><span style="color:#c62828;">✕</span> 1·4·10·11·12·13…일
+  </div>
+</div><div class="mc" style="background:#f5f5f5;">
+  <div class="mc-month" style="color:#666;">9월</div>
+  <div class="mc-ganji" style="color:#444;">丁酉(정유)</div>
+  <div>
+    <span class="mc-chip" style="background:#666;">중립월</span>
+  </div>
+  <div class="mc-meta">백로(白露) · 사</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:55%;background:#666;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 6·7·10·11·16·17…일<br><span style="color:#c62828;">✕</span> 1·3·9·12·18·21…일
+  </div>
+</div><div class="mc" style="background:#ffebee;">
+  <div class="mc-month" style="color:#c62828;">10월</div>
+  <div class="mc-ganji" style="color:#b71c1c;">戊戌(무술)</div>
+  <div>
+    <span class="mc-chip" style="background:#c62828;">기신월</span>
+  </div>
+  <div class="mc-meta">한로(寒로) · 묘</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:40%;background:#c62828;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 4·5·6·7·16·17…일<br><span style="color:#c62828;">✕</span> 3·9·10·11·12·18…일
+  </div>
+</div><div class="mc" style="background:#e3f2fd;">
+  <div class="mc-month" style="color:#1565c0;">11월</div>
+  <div class="mc-ganji" style="color:#0d47a1;">己亥(기해)</div>
+  <div>
+    <span class="mc-chip" style="background:#1565c0;">희신월</span>
+  </div>
+  <div class="mc-meta">입동(立冬) · 절</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:80%;background:#1565c0;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 5·6·9·10·15·16…일<br><span style="color:#c62828;">✕</span> 2·8·11·17·20·29일
+  </div>
+</div><div class="mc" style="background:#e3f2fd;">
+  <div class="mc-month" style="color:#1565c0;">12월</div>
+  <div class="mc-ganji" style="color:#0d47a1;">庚子(경자)</div>
+  <div>
+    <span class="mc-chip" style="background:#1565c0;">희신월</span>
+  </div>
+  <div class="mc-meta">대설(大雪) · 태</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:80%;background:#1565c0;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 3·4·5·6·15·16…일<br><span style="color:#c62828;">✕</span> 2·8·9·10·11·17…일
+  </div>
+</div><div class="mc" style="background:#ffebee;">
+  <div class="mc-month" style="color:#c62828;">1월</div>
+  <div class="mc-ganji" style="color:#b71c1c;">辛丑(신축)</div>
+  <div>
+    <span class="mc-chip" style="background:#c62828;">기신월</span>
+  </div>
+  <div class="mc-meta">소한(小寒) · 양</div>
+  <div class="mc-bar-wrap"><div class="mc-bar" style="width:40%;background:#c62828;"></div></div>
+  <div class="mc-days">
+    <span style="color:#2e7d32;">✦</span> 4·5·8·9·14·15…일<br><span style="color:#c62828;">✕</span> 1·7·10·16·19·28…일
+  </div>
+</div>
+  </div>
+</div>
+
+</div></body></html>

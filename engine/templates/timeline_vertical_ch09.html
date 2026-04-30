@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>전환점 타임라인 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:18pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 현재 위치 배너 ── */
+.now-banner {
+  border:2px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0;
+}
+.nb-hd {
+  background:linear-gradient(135deg,#4a148c,#7b1fa2);
+  padding:6px 18px; display:flex; align-items:center; justify-content:space-between;
+}
+.nb-hd-title { font-size:9pt; font-weight:900; color:white; }
+.nb-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+.nb-body { display:flex; background:white; }
+.nb-item {
+  flex:1; padding:7px 10px; text-align:center;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.nb-item:last-child { border-right:none; }
+.nb-l { font-size:6pt; color:#aaa; font-weight:700; }
+.nb-v { font-size:10pt; font-weight:900; font-family:'Nanum Myeongjo',serif; line-height:1.1; }
+.nb-s { font-size:6pt; color:#666; }
+
+/* ── 메인 타임라인 ── */
+.tl-outer {
+  border:2px solid #333; border-radius:14px; overflow:hidden; flex:1;
+  display:flex; flex-direction:column;
+}
+.tl-hd {
+  background:linear-gradient(135deg,#b71c1c,#f44336);
+  padding:7px 18px; display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.tl-hd-title { font-size:9pt; font-weight:900; color:white; }
+.tl-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* 타임라인 본체 */
+.tl-body {
+  flex:1; background:white; padding:10px 20px;
+  display:flex; flex-direction:column; gap:0;
+  position:relative;
+}
+
+/* 중앙 세로선 */
+.tl-body::before {
+  content:'';
+  position:absolute;
+  left:47mm; top:10px; bottom:10px; width:3px;
+  background:linear-gradient(to bottom,
+    #9e9e9e 0%, #9e9e9e 38%,
+    #ff9800 38%, #ff9800 52%,
+    #f44336 52%, #f44336 100%
+  );
+  border-radius:2px;
+}
+
+/* 개별 전환점 행 */
+.tp-row {
+  display:flex; align-items:center;
+  gap:0; padding:8px 0; position:relative;
+  min-height:40mm;
+}
+.tp-row:last-child { min-height:38mm; }
+
+/* 왼쪽: 나이·년도 영역 */
+.tp-left {
+  width:44mm; flex-shrink:0;
+  display:flex; flex-direction:column; align-items:flex-end;
+  padding-right:12px; gap:2px;
+}
+.tp-age {
+  font-family:'DM Serif Display',serif;
+  font-size:22pt; font-weight:700; line-height:1;
+}
+.tp-year  { font-size:7pt; color:#888; }
+.tp-diff  {
+  font-size:6pt; font-weight:700; color:white;
+  padding:1px 7px; border-radius:6px;
+  display:inline-block;
+}
+
+/* 중앙: 도트 */
+.tp-dot-wrap {
+  width:6mm; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; z-index:3;
+}
+.tp-dot {
+  width:18px; height:18px; border-radius:50%;
+  border:3px solid white;
+  box-shadow:0 0 0 2px currentColor;
+  flex-shrink:0;
+}
+.tp-dot.past     { background:#9e9e9e; color:#9e9e9e; }
+.tp-dot.now      { background:#ff9800; color:#ff9800;
+  box-shadow:0 0 0 3px #ff9800, 0 0 8px rgba(255,152,0,.4); }
+.tp-dot.future   { background:#ff9800; color:#ff9800; }
+.tp-dot.golden   {
+  background:#f44336; color:#f44336;
+  width:22px; height:22px;
+  box-shadow:0 0 0 3px #f44336, 0 0 10px rgba(244,67,54,.45);
+}
+
+/* 오른쪽: 내용 카드 */
+.tp-card {
+  flex:1; margin-left:12px;
+  border:1.5px solid #333; border-radius:10px; overflow:hidden;
+}
+.tp-card-hd {
+  padding:5px 12px; display:flex; align-items:center; gap:8px;
+}
+.tp-card-hd-ganji {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:13pt; font-weight:800; color:white; line-height:1;
+}
+.tp-card-hd-info { display:flex; flex-direction:column; gap:1px; }
+.tp-card-hd-title { font-size:8pt; font-weight:900; color:white; }
+.tp-card-hd-sub   { font-size:6pt; color:rgba(255,255,255,.85); }
+.tp-card-body { background:white; padding:7px 12px; display:flex; flex-direction:column; gap:5px; }
+
+/* 카드 내용 행 */
+.tc-row { display:flex; align-items:flex-start; gap:6px; }
+.tc-label {
+  font-size:6pt; font-weight:700; color:white;
+  padding:1px 6px; border-radius:4px; flex-shrink:0; margin-top:1px;
+}
+.tc-text { font-size:7pt; color:#333; line-height:1.5; }
+
+/* 등급 배지 */
+.grade-badge {
+  display:inline-block; padding:2px 9px; border-radius:8px;
+  font-size:6.5pt; font-weight:700; color:white;
+}
+
+/* 구분선 + 섹션 레이블 */
+.section-divider {
+  display:flex; align-items:center; gap:8px;
+  margin:2px 0; padding:4px 0;
+  flex-shrink:0;
+}
+.sd-line { flex:1; height:1px; background:#e0e0e0; }
+.sd-label {
+  font-size:7pt; font-weight:700; padding:2px 12px;
+  border-radius:8px; color:white; flex-shrink:0;
+}
+
+/* ── 하단 범례 ── */
+.legend {
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:7px 16px; border-top:1px solid #e0e0e0;
+  background:#fafafa; flex-shrink:0;
+}
+.lg-item { display:flex; align-items:center; gap:4px; font-size:6.5pt; color:#666; }
+.lg-dot  { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+
+/* ── 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 13px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">인생 전환점 타임라인</div>
+    <div class="pt-sub">過去 · 現在 · 未來 — 대운(大運) 교체기 5개 전환점 · 만나이 기준</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 戊辰(무진) 일주</div>
+  </div>
+</div>
+
+<!-- 현재 위치 배너 -->
+<div class="now-banner">
+  <div class="nb-hd">
+    <div class="nb-hd-title">▶ 현재 위치 — 만 62세 · 庚申(경신) 대운 진행 중</div>
+    <div class="nb-hd-sub">54~63세 구간 · 2018~2027년</div>
+  </div>
+  <div class="nb-body">
+    <div class="nb-item">
+      <div class="nb-l">현재 나이</div>
+      <div class="nb-v" style="color:#f44336;">62세</div>
+      <div class="nb-s">만나이 기준</div>
+    </div>
+    <div class="nb-item">
+      <div class="nb-l">지나온 전환점</div>
+      <div class="nb-v" style="color:#9e9e9e;">3개</div>
+      <div class="nb-s">34 · 44 · 54세</div>
+    </div>
+    <div class="nb-item">
+      <div class="nb-l">다음 전환점</div>
+      <div class="nb-v" style="color:#ff9800;">64세</div>
+      <div class="nb-s">2년 후 · 2028년</div>
+    </div>
+    <div class="nb-item">
+      <div class="nb-l">남은 전환점</div>
+      <div class="nb-v" style="color:#ff9800;">2개</div>
+      <div class="nb-s">64 · 74세</div>
+    </div>
+    <div class="nb-item">
+      <div class="nb-l">황금 전환점</div>
+      <div class="nb-v" style="color:#f44336;">74세</div>
+      <div class="nb-s">🌟 용신 午火 제왕</div>
+    </div>
+  </div>
+</div>
+
+<!-- 메인 타임라인 카드 -->
+<div class="tl-outer">
+  <div class="tl-hd">
+    <div class="tl-hd-title">⏳ 과거 · 현재 · 미래 전환점 타임라인</div>
+    <div class="tl-hd-sub">대운 교체기 · 10년마다 삶이 바뀌는 순간들</div>
+  </div>
+
+  <div class="tl-body">
+
+    <!-- 과거 섹션 레이블 -->
+    <div class="section-divider">
+      <div class="sd-line"></div>
+      <span class="sd-label" style="background:#9e9e9e;">과거 — 이미 지나온 전환점</span>
+      <div class="sd-line"></div>
+    </div>
+
+    <!-- ① 34세 병신 과거 -->
+    <div class="tp-row">
+      <div class="tp-left">
+        <div class="tp-age" style="color:#bdbdbd;">34</div>
+        <div class="tp-year">1998년</div>
+        <span class="tp-diff" style="background:#9e9e9e;">28년 전</span>
+        <div style="margin-top:3px;">
+          <span class="grade-badge" style="background:#9e9e9e;">① 병신대운</span>
+        </div>
+      </div>
+      <div class="tp-dot-wrap"><div class="tp-dot past"></div></div>
+      <div class="tp-card">
+        <div class="tp-card-hd" style="background:#9e9e9e;">
+          <div class="tp-card-hd-ganji">壬戌</div>
+          <div class="tp-card-hd-info">
+            <div class="tp-card-hd-title">임술(壬戌) 대운 · 12운성: 묘(墓)</div>
+            <div class="tp-card-hd-sub">忌神 壬水 · 가장 어려운 전환점</div>
+          </div>
+        </div>
+        <div class="tp-card-body">
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">상황</span>
+            <span class="tc-text">병신(忌神)의 기운이 새롭게 들어오는 교체기. 用神 火를 직접 극(剋)하는 가장 힘든 전환점.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">전략</span>
+            <span class="tc-text">무리한 확장 자제. 방어와 내실 다지기. 기초 역량 쌓기. 버티는 것이 최선이었던 시기.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">의미</span>
+            <span class="tc-text">이 시기를 버텨낸 것 자체가 이후 성장의 토대. 힘든 이유가 있었다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 44세 중립 과거 -->
+    <div class="tp-row">
+      <div class="tp-left">
+        <div class="tp-age" style="color:#bdbdbd;">44</div>
+        <div class="tp-year">2008년</div>
+        <span class="tp-diff" style="background:#9e9e9e;">18년 전</span>
+        <div style="margin-top:3px;">
+          <span class="grade-badge" style="background:#9e9e9e;">② 중립대운</span>
+        </div>
+      </div>
+      <div class="tp-dot-wrap"><div class="tp-dot past"></div></div>
+      <div class="tp-card">
+        <div class="tp-card-hd" style="background:#9e9e9e;">
+          <div class="tp-card-hd-ganji">辛酉</div>
+          <div class="tp-card-hd-info">
+            <div class="tp-card-hd-title">신유(辛酉) 대운 · 12운성: 사(死)</div>
+            <div class="tp-card-hd-sub">金金 중립 · 병신 이후 회복기</div>
+          </div>
+        </div>
+        <div class="tp-card-body">
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">상황</span>
+            <span class="tc-text">병신 대운 이후 회복 시작. 드라마틱하지 않고 조용한 전환. 金 기운으로 희신 木 약화 주의.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">전략</span>
+            <span class="tc-text">노력한 만큼 정직하게 결과가 나오는 시기. 실력과 실무 중심으로 성장.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#9e9e9e;">의미</span>
+            <span class="tc-text">중립기에 쌓은 실력과 인맥이 이후 용신 대운의 자산이 됨.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 54세 중립 과거/현재 -->
+    <div class="tp-row">
+      <div class="tp-left">
+        <div class="tp-age" style="color:#ff9800;">54</div>
+        <div class="tp-year">2018년</div>
+        <span class="tp-diff" style="background:#ff9800;">현재 진행 중</span>
+        <div style="margin-top:3px;">
+          <span class="grade-badge" style="background:#ff9800;">③ 중립대운</span>
+        </div>
+      </div>
+      <div class="tp-dot-wrap"><div class="tp-dot now"></div></div>
+      <div class="tp-card" style="border:2px solid #ff9800;">
+        <div class="tp-card-hd" style="background:linear-gradient(135deg,#e65100,#ff9800);">
+          <div class="tp-card-hd-ganji">庚申</div>
+          <div class="tp-card-hd-info">
+            <div class="tp-card-hd-title">경신(庚申) 대운 · 12운성: 병(病) ▶ 현재</div>
+            <div class="tp-card-hd-sub">金金 중립 · 54~63세 · 2018~2027년</div>
+          </div>
+        </div>
+        <div class="tp-card-body" style="background:#fffef5;">
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">현재</span>
+            <span class="tc-text"><strong style="color:#e65100;">지금 이 구간을 지나는 중.</strong> 金金 식신 — 재능 표현과 창작 활동 좋음. 2028년 전환점까지 2년 남음.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">전략</span>
+            <span class="tc-text">무리한 확장보다 내실 다지기. 건강 관리 집중. 64세 전환점을 위한 준비 기간으로 활용.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">핵심</span>
+            <span class="tc-text"><strong style="color:#f44336;">지금부터 2년이 황금기 준비의 골든타임.</strong> 체력·재물·관계 모두 정비할 것.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 미래 섹션 레이블 -->
+    <div class="section-divider">
+      <div class="sd-line"></div>
+      <span class="sd-label" style="background:#f44336;">미래 — 다가올 전환점</span>
+      <div class="sd-line"></div>
+    </div>
+
+    <!-- ④ 64세 중립 미래 -->
+    <div class="tp-row">
+      <div class="tp-left">
+        <div class="tp-age" style="color:#ff9800;">64</div>
+        <div class="tp-year">2028년</div>
+        <span class="tp-diff" style="background:#ff9800;">2년 후</span>
+        <div style="margin-top:3px;">
+          <span class="grade-badge" style="background:#ff9800;">④ 중립대운</span>
+        </div>
+      </div>
+      <div class="tp-dot-wrap"><div class="tp-dot future"></div></div>
+      <div class="tp-card">
+        <div class="tp-card-hd" style="background:linear-gradient(135deg,#e65100,#ff9800);">
+          <div class="tp-card-hd-ganji">己未</div>
+          <div class="tp-card-hd-info">
+            <div class="tp-card-hd-title">기미(己未) 대운 · 12운성: 쇠(衰)</div>
+            <div class="tp-card-hd-sub">土土 중립 · 64~73세 · 2028~2037년</div>
+          </div>
+        </div>
+        <div class="tp-card-body">
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">전망</span>
+            <span class="tc-text">안정적 중립. 지장간 丁火 활성화 시작. 이전보다 에너지 상승. 사회 활동 재정비.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">전략</span>
+            <span class="tc-text">봉사·취미·학습 확장 좋은 시기. 74세 황금기를 위한 체력·재물 준비 집중.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#ff9800;">핵심</span>
+            <span class="tc-text">황금기 전초전. 이 10년을 어떻게 보내느냐가 74세 이후의 질을 결정함.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⑤ 74세 용신 황금 -->
+    <div class="tp-row">
+      <div class="tp-left">
+        <div class="tp-age" style="color:#f44336;">74</div>
+        <div class="tp-year">2038년</div>
+        <span class="tp-diff" style="background:#f44336;">12년 후</span>
+        <div style="margin-top:3px;">
+          <span class="grade-badge" style="background:#f44336;">⑤ 🌟 용신대운</span>
+        </div>
+      </div>
+      <div class="tp-dot-wrap"><div class="tp-dot golden"></div></div>
+      <div class="tp-card" style="border:2px solid #f44336;">
+        <div class="tp-card-hd" style="background:linear-gradient(135deg,#b71c1c,#f44336);">
+          <div class="tp-card-hd-ganji">戊午</div>
+          <div class="tp-card-hd-info">
+            <div class="tp-card-hd-title">무오(戊午) 대운 · 12운성: 제왕(帝旺) 🌟</div>
+            <div class="tp-card-hd-sub">用神 午火 · 역대 최고 에너지 · 74~83세</div>
+          </div>
+        </div>
+        <div class="tp-card-body" style="background:#fff8f5;">
+          <div class="tc-row">
+            <span class="tc-label" style="background:#f44336;">전망</span>
+            <span class="tc-text"><strong style="color:#c62828;">🌟 인생 최고 전성기.</strong> 用神 午火 제왕(帝旺) — 평생 최고 에너지. 戊午 대운은 일간과 같은 오행이라 자신감도 절정.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#f44336;">전략</span>
+            <span class="tc-text">하고 싶은 것을 이 10년에 모두. 귀인·인정·성취 극대화. 사회 공헌·창작·여행 모두 GO.</span>
+          </div>
+          <div class="tc-row">
+            <span class="tc-label" style="background:#f44336;">전제</span>
+            <span class="tc-text"><strong style="color:#c62828;">건강이 전제 조건.</strong> 지금부터 체력을 지키는 것이 이 황금기를 온전히 누리는 유일한 방법.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 범례 -->
+    <div class="legend">
+      <div class="lg-item"><div class="lg-dot" style="background:#9e9e9e;"></div>과거 전환점</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#ff9800;box-shadow:0 0 0 2px #ff9800;"></div>현재 진행 / 다음 전환점</div>
+      <div class="lg-item"><div class="lg-dot" style="background:#f44336;box-shadow:0 0 0 2px #f44336;"></div>황금 전환점 (용신대운)</div>
+      <div style="margin-left:auto;font-size:6pt;color:#aaa;">세로선: 회색=병신·중립 / 주황=현재 / 빨강=용신 구간</div>
+    </div>
+
+  </div><!-- tl-body -->
+</div><!-- tl-outer -->
+
+<!-- 메모 -->
+<div class="memo">
+  <strong style="color:#b71c1c;">📌 반야선생의 전환점 핵심</strong> &nbsp;
+  최원석 님의 인생 흐름은 <strong style="color:#f44336;">후천개화(後天開花)</strong> — 젊을수록 힘들고 나이 들수록 좋아지는 구조입니다.
+  지금(62세)은 3번째 전환점(54세)이 시작된 지 8년째로, <strong style="color:#ff9800;">다음 전환점(64세)까지 2년이 남은 결정적 준비 구간</strong>입니다.
+  그리고 <strong style="color:#f44336;">74세 戊午 대운 — 用神 午火 제왕(帝旺)</strong>이 인생의 진짜 황금기입니다. 지금 건강을 지키는 것이 그 황금기를 여는 열쇠입니다.
+</div>
+
+</div>
+</body>
+</html>

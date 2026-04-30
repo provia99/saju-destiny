@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>오행인테리어비교표 - 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:30px 0;}
+.page{ border:1px solid #333;width:604px;margin:0 auto;background:transparent;border-radius:8px;padding:12px 16px;}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+table{width:100%;border-collapse:collapse;margin-bottom:6px;}
+th{background:#1a3a6a;color:white;font-family:'Noto Serif KR',serif;font-size:11px;font-weight:700;padding:5px 5px;border:1px solid #1a3a6a;text-align:center;}
+td{font-size:10px;padding:5px 5px;border:1px solid #333;vertical-align:middle;line-height:1.4;}
+tr:nth-child(even) td{background:#fafafa;}
+tr:nth-child(odd) td{background:transparent;}
+.oh-cell{font-family:'Noto Serif KR',serif;font-size:14px;font-weight:800;text-align:center;}
+.role-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:700;color:white;margin-top:2px;}
+.legend{display:flex;gap:14px;justify-content:flex-end;font-size:8pt;color:#555;}
+.legend-item{display:flex;align-items:center;gap:4px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;border:1px solid #333;}
+@media print{body{background:transparent;padding:0;display:block;}.page{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{ border:1px solid #333;size:604px auto;margin:0;}}
+</style></head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+  <div>
+    <div class="banner-hdr-title">五行 인테리어 비교표</div>
+    <div class="banner-hdr-sub">오행별 색상 · 소재 · 가구 · 식물 · 향 · 방위</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 용신 木 · 기신 土</div>
+  </div>
+</div>
+
+<table>
+<thead><tr>
+  <th style="width:48px;">오행</th>
+  <th>색상</th>
+  <th>소재</th>
+  <th>가구</th>
+  <th>식물</th>
+  <th>향</th>
+  <th style="width:42px;">방위</th>
+</tr></thead>
+<tbody>
+<tr style="background:#dcfce7;border-left:3px solid #22c55e;">
+  <td class="oh-cell" style="color:#1e6b2a;">木(목)<br><span class="role-tag" style="background:#22c55e;">용신 - 적극 활용</span></td>
+  <td>그린 · 에메랄드 · 연두</td>
+  <td>원목 · 대나무 · 리넨 · 면</td>
+  <td>원목 테이블 · 나무 책장</td>
+  <td>몬스테라 · 고무나무 · 아이비</td>
+  <td>시더우드 · 유칼립투스 · 편백</td>
+  <td style="text-align:center;font-weight:600;">동(東)</td>
+</tr>
+<tr>
+  <td class="oh-cell" style="color:#b92e27;">火(화)</td>
+  <td>레드 · 코랄 · 오렌지 · 핑크</td>
+  <td>가죽 · 울 · 실크 · 캔들</td>
+  <td>레드 소파 · 벽난로 · 조명</td>
+  <td>안시리움 · 장미 · 포인세티아</td>
+  <td>시나몬 · 바닐라 · 로즈마리</td>
+  <td style="text-align:center;font-weight:600;">남(南)</td>
+</tr>
+<tr style="background:#fee2e2;border-left:3px solid #ef4444;">
+  <td class="oh-cell" style="color:#9b6f00;">土(토)<br><span class="role-tag" style="background:#ef4444;">기신 - 자제</span></td>
+  <td>베이지 · 황토 · 테라코타</td>
+  <td>도자기 · 석재 · 타일 · 점토</td>
+  <td>도자기 화병 · 석재 테이블</td>
+  <td>다육이 · 선인장 · 허브</td>
+  <td>산달우드 · 파출리 · 베티버</td>
+  <td style="text-align:center;font-weight:600;">중앙</td>
+</tr>
+<tr>
+  <td class="oh-cell" style="color:#3d4f5c;">金(금)</td>
+  <td>화이트 · 실버 · 골드</td>
+  <td>스테인리스 · 황동 · 크리스탈</td>
+  <td>메탈 선반 · 거울 프레임</td>
+  <td>백합 · 치자 · 국화</td>
+  <td>페퍼민트 · 티트리 · 유향</td>
+  <td style="text-align:center;font-weight:600;">서(西)</td>
+</tr>
+<tr>
+  <td class="oh-cell" style="color:#1a4e7a;">水(수)</td>
+  <td>네이비 · 차콜 · 딥블루</td>
+  <td>유리 · 거울 · 아크릴 · 수반</td>
+  <td>유리 테이블 · 수반 · 어항</td>
+  <td>수경재배 · 수련 · 이끼</td>
+  <td>라벤더 · 캐모마일 · 자스민</td>
+  <td style="text-align:center;font-weight:600;">북(北)</td>
+</tr>
+</tbody></table>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#dcfce7;border-color:#22c55e;"></div>용신 오행 (木) - 적극 활용 추천</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border-color:#ef4444;"></div>기신 오행 (土) - 과다 사용 자제</div>
+</div>
+</div></body></html>

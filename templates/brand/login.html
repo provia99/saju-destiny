@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1e1433">
+<title>로그인 | {{ master.선생님이름 }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:    #1e1433;
+    --bg-card:    #271a45;
+    --bg-card2:   #2f2055;
+    --lav-dark:   #3b2068;
+    --lav-mid:    #6d3fa0;
+    --lav-main:   #9b59b6;
+    --lav-light:  #c084e8;
+    --lav-pale:   #e9d5f7;
+    --gold:       #f5c842;
+    --gold-light: #fde68a;
+    --gold-dark:  #d4a017;
+    --text:       #faf5ff;
+    --text-dim:   #d4b8f0;
+    --text-muted: #9b82c0;
+    --border:     rgba(155,89,182,0.25);
+    --border-gold:rgba(245,200,66,0.3);
+    --error:      #ff6b6b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-deep);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(155,89,182,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(109,63,160,0.12) 0%, transparent 50%);
+    color: var(--text);
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(30,20,51,0.95);
+    backdrop-filter: blur(14px);
+  }
+  .back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(155,89,182,0.12);
+    border: 1px solid var(--border);
+    color: var(--lav-light); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: rgba(155,89,182,0.25); box-shadow: 0 0 12px rgba(155,89,182,0.4); }
+  .top-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .container {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px 60px;
+    max-width: 420px; margin: 0 auto; width: 100%;
+  }
+  .logo-area { text-align: center; margin-bottom: 36px; }
+  .logo-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--lav-dark), var(--lav-mid));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--gold-light);
+    margin: 0 auto 16px;
+    border: 2px solid rgba(192,132,252,0.5);
+    box-shadow: 0 8px 32px rgba(109,63,160,0.5), 0 0 0 4px rgba(155,89,182,0.1);
+  }
+  .logo-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.3rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+  }
+  .logo-sub { font-size: 0.82rem; color: var(--text-muted); }
+
+  .alert-box {
+    width: 100%; padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
+    color: var(--error); font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+  .form-group { width: 100%; margin-bottom: 14px; }
+  .form-label {
+    display: block; font-size: 0.8rem; font-weight: 500;
+    color: var(--text-muted); margin-bottom: 7px;
+  }
+  .form-input {
+    width: 100%; padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px; color: var(--text);
+    font-size: 0.95rem; font-family: 'Noto Sans KR', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none; outline: none;
+  }
+  .form-input:focus {
+    border-color: var(--lav-main);
+    box-shadow: 0 0 0 3px rgba(155,89,182,0.2);
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+
+  .remember-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.82rem; color: var(--text-muted);
+  }
+  .remember-row input[type="checkbox"] {
+    width: 17px; height: 17px; accent-color: var(--lav-main);
+  }
+
+  .forgot-link {
+    font-size: 0.82rem; color: rgba(245,200,66,0.7);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .forgot-link:hover { color: var(--gold-light); }
+
+  .submit-btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--lav-mid), var(--lav-dark));
+    border: none; border-radius: 14px;
+    color: #fff; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.25s;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 8px 24px rgba(109,63,160,0.5);
+    margin-bottom: 20px;
+    position: relative; overflow: hidden;
+  }
+  .submit-btn::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  }
+  .submit-btn:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(109,63,160,0.6); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .divider {
+    width: 100%; display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--border);
+  }
+  .divider span { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+  .register-btn {
+    display: block; width: 100%; padding: 15px;
+    background: rgba(155,89,182,0.08);
+    border: 1.5px solid var(--border);
+    border-radius: 14px; color: var(--text-dim);
+    font-size: 0.95rem; font-weight: 500;
+    text-align: center; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .register-btn:hover { background: rgba(155,89,182,0.15); border-color: rgba(155,89,182,0.45); color: var(--lav-pale); }
+
+  .back-to-home {
+    text-align: center; margin-top: 24px;
+    font-size: 0.82rem; color: var(--text-muted);
+  }
+  .back-to-home a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .back-to-home a:hover { color: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="{{ base_url }}/" class="back-btn">←</a>
+  <div class="top-title">{{ master.선생님이름 }}</div>
+</div>
+
+<div class="container">
+  <div class="logo-area">
+    <div class="logo-icon">{{ master.선생님이름[0] }}</div>
+    <div class="logo-name">{{ master.선생님이름 }}</div>
+    <div class="logo-sub">{{ master.연구소명 or '사주 명리 연구소' }}</div>
+  </div>
+
+  {% if error %}
+  <div class="alert-box">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="{{ base_url }}/login"
+        style="width:100%;" id="loginForm">
+
+    <div class="form-group">
+      <label class="form-label">이메일</label>
+      <input type="email" name="login_id" class="form-input"
+             placeholder="가입한 이메일을 입력해 주세요"
+             value="{{ form.login_id or '' }}" required autofocus>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">비밀번호</label>
+      <input type="password" name="password" class="form-input"
+             placeholder="비밀번호를 입력해 주세요" required>
+    </div>
+
+    <div class="remember-row">
+      <input type="checkbox" name="remember" value="on" id="rememberCheck">
+      <label for="rememberCheck">로그인 상태 유지 (30일)</label>
+    </div>
+
+    <div style="text-align:right;margin-bottom:16px;">
+      <a href="{{ base_url }}/forgot-password" class="forgot-link">비밀번호를 잊으셨나요?</a>
+    </div>
+    <button type="submit" class="submit-btn" id="submitBtn">
+      ✦ 로그인
+    </button>
+
+    <div class="divider"><span>또는</span></div>
+
+    <a href="{{ base_url }}/register" class="register-btn">
+      ✦ 무료 회원가입
+    </a>
+
+    <div class="back-to-home">
+      <a href="{{ base_url }}/">← 홈으로 돌아가기</a>
+    </div>
+  </form>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function() {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '로그인 중...';
+});
+</script>
+</body>
+</html>

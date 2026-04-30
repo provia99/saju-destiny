@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>오행 점수표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:18px 22px; background:transparent; display:flex; flex-direction:column; gap:8px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; }
+}
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0; }
+.card-hd { padding:7px 14px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:9pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+/* 요약 스트립 */
+.sum-strip { display:grid; grid-template-columns:repeat(5,1fr); background:transparent; }
+.sum-cell { padding:7px 6px; text-align:center; border-right:1px solid #eee; }
+.sum-cell:last-child { border-right:none; }
+.sum-lbl { font-size:7pt; color:#aaa; font-weight:700; margin-bottom:2px; }
+.sum-val { font-size:8pt; font-weight:800; color:#333; }
+/* 테이블 */
+table { width:100%; border-collapse:collapse; }
+th { background:#f5f5f5; font-size:7pt; font-weight:700; color:#555; padding:6px 8px; border-bottom:2px solid #ddd; text-align:center; white-space:nowrap; }
+td { font-size:7.5pt; padding:7px 8px; border-bottom:1px solid #f0f0f0; vertical-align:middle; text-align:center; }
+tr:last-child td { border-bottom:none; }
+tr.row-yong  { background:#f1f8e9; }
+tr.row-hui   { background:#e3f2fd; }
+tr.row-byeong{ background:#ffebee; }
+.oh-name { font-size:10pt; font-weight:900; }
+.oh-score { font-size:9pt; font-weight:700; }
+.bar-wrap { width:120px; margin:0 auto; }
+.bar-bg { height:10px; background:#eee; border-radius:5px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; }
+.role-yong   { background:#2e7d32; color:white; padding:2px 8px; border-radius:4px; font-size:6.5pt; font-weight:700; display:inline-block; white-space:nowrap; }
+.role-hui    { background:#1565c0; color:white; padding:2px 8px; border-radius:4px; font-size:6.5pt; font-weight:700; display:inline-block; white-space:nowrap; }
+.role-byeong { background:#c62828; color:white; padding:2px 8px; border-radius:4px; font-size:6.5pt; font-weight:700; display:inline-block; white-space:nowrap; }
+.role-han    { background:#888; color:white; padding:2px 8px; border-radius:4px; font-size:6.5pt; font-weight:700; display:inline-block; white-space:nowrap; }
+.role-neutral{ background:#bbb; color:white; padding:2px 8px; border-radius:4px; font-size:6.5pt; font-weight:700; display:inline-block; white-space:nowrap; }
+.grade-tag { font-size:6pt; color:#888; }
+.meaning-cell { font-size:6.5pt; color:#555; text-align:left; }
+.note { font-size:6pt; color:#999; padding:6px 10px; background:#fafafa; border-top:1px solid #eee; }
+/* 오행 속성 테이블 */
+.attr-table { width:100%; border-collapse:collapse; }
+.attr-table th { background:#f5f5f5; font-size:7pt; font-weight:700; color:#555; padding:6px 8px; border-bottom:2px solid #ddd; text-align:center; }
+.attr-table td { font-size:7.5pt; padding:6px 8px; border-bottom:1px solid #f0f0f0; text-align:center; vertical-align:middle; }
+.attr-table tr:last-child td { border-bottom:none; }
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+  <div>
+    <div class="banner-hdr-title">📊 오행(五行) 점수표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#ff6f00,#ff9800);">
+    <div class="card-hd-title">① 오행 점수 분석표</div>
+    <div class="card-hd-sub">점수·비율·강도 바·등급·용신분류·의미</div>
+  </div>
+  <!-- 요약 스트립 -->
+  <div class="sum-strip">
+    <div class="sum-cell"><div class="sum-lbl">용신(用神)</div><div class="sum-val" style="color:#2e7d32;">木(목)</div></div>
+    <div class="sum-cell"><div class="sum-lbl">희신(喜神)</div><div class="sum-val" style="color:#0d47a1;">水(수)</div></div>
+    <div class="sum-cell"><div class="sum-lbl">기신(忌神)</div><div class="sum-val" style="color:#e65100;">土(토)</div></div>
+    <div class="sum-cell"><div class="sum-lbl">태과 오행</div><div class="sum-val">木·土</div></div>
+    <div class="sum-cell"><div class="sum-lbl">불급 오행</div><div class="sum-val">火·金·水</div></div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>오행</th><th>점수</th><th>비율</th><th>강도</th><th>등급</th><th>용신분류</th><th>의미·에너지</th></tr>
+    </thead>
+    <tbody><tr class="row-yong">
+  <td><span class="oh-name" style="color:#2e7d32;">木(목)</span></td>
+  <td class="oh-score">7.39</td>
+  <td>51.0%</td>
+  <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:100%;background:#4caf50;"></div></div></div></td>
+  <td><span class="grade-tag">매우강</span></td>
+  <td><span class="role-yong">용신 ★</span></td>
+  <td class="meaning-cell">성장·창조·교육 에너지</td>
+</tr>
+<tr class="row-byeong">
+  <td><span class="oh-name" style="color:#e65100;">土(토)</span></td>
+  <td class="oh-score">6.05</td>
+  <td>41.7%</td>
+  <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:82%;background:#ff9800;"></div></div></div></td>
+  <td><span class="grade-tag">매우강</span></td>
+  <td><span class="role-byeong">기신 ✕</span></td>
+  <td class="meaning-cell">안정·중재·신뢰 에너지</td>
+</tr>
+<tr class="">
+  <td><span class="oh-name" style="color:#37474f;">金(금)</span></td>
+  <td class="oh-score">0.61</td>
+  <td>4.2%</td>
+  <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:8%;background:#9e9e9e;"></div></div></div></td>
+  <td><span class="grade-tag">매우약</span></td>
+  <td><span class="role-han">한신</span></td>
+  <td class="meaning-cell">결단·집중·완성 에너지</td>
+</tr>
+<tr class="">
+  <td><span class="oh-name" style="color:#c62828;">火(화)</span></td>
+  <td class="oh-score">0.32</td>
+  <td>2.2%</td>
+  <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:4%;background:#f44336;"></div></div></div></td>
+  <td><span class="grade-tag">매우약</span></td>
+  <td><span class="role-neutral">중립</span></td>
+  <td class="meaning-cell">열정·표현·명예 에너지</td>
+</tr>
+<tr class="row-hui">
+  <td><span class="oh-name" style="color:#0d47a1;">水(수)</span></td>
+  <td class="oh-score">0.13</td>
+  <td>0.9%</td>
+  <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:2%;background:#2196f3;"></div></div></div></td>
+  <td><span class="grade-tag">매우약</span></td>
+  <td><span class="role-hui">희신 ○</span></td>
+  <td class="meaning-cell">지혜·흐름·적응 에너지</td>
+</tr></tbody>
+  </table>
+  <div class="note">※ 점수: 위치별 가중치(월지 3.0·일지 2.0·일간 2.0·기타 1.0~1.5) + 지장간 30% + 투출 보정 반영</div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">② 오행 속성 일람</div>
+    <div class="card-hd-sub">의미·방위·색상·계절·용신분류 (점수 내림차순)</div>
+  </div>
+  <table class="attr-table">
+    <thead><tr><th>오행</th><th>점수</th><th>비율</th><th>의미·에너지</th><th>방위</th><th>색상</th><th>계절</th><th>분류</th></tr></thead>
+    <tbody><tr>
+  <td><span style="font-size:10pt;font-weight:900;color:#2e7d32;">木(목)</span></td>
+  <td>7.4</td>
+  <td>51.0%</td>
+  <td>성장·창조·교육 에너지</td>
+  <td>東(동)</td>
+  <td>청색·녹색</td>
+  <td>봄(2~4월)</td>
+  <td><span class="role-yong">용신</span></td>
+</tr>
+<tr>
+  <td><span style="font-size:10pt;font-weight:900;color:#e65100;">土(토)</span></td>
+  <td>6.0</td>
+  <td>41.7%</td>
+  <td>안정·중재·신뢰 에너지</td>
+  <td>中央</td>
+  <td>황색·갈색</td>
+  <td>환절기</td>
+  <td><span class="role-byeong">기신</span></td>
+</tr>
+<tr>
+  <td><span style="font-size:10pt;font-weight:900;color:#37474f;">金(금)</span></td>
+  <td>0.6</td>
+  <td>4.2%</td>
+  <td>결단·집중·완성 에너지</td>
+  <td>西(서)</td>
+  <td>흰색·금색</td>
+  <td>가을(8~10월)</td>
+  <td><span class="role-han">한신</span></td>
+</tr>
+<tr>
+  <td><span style="font-size:10pt;font-weight:900;color:#c62828;">火(화)</span></td>
+  <td>0.3</td>
+  <td>2.2%</td>
+  <td>열정·표현·명예 에너지</td>
+  <td>南(남)</td>
+  <td>적색·주황</td>
+  <td>여름(5~7월)</td>
+  <td><span class="role-neutral">중립</span></td>
+</tr>
+<tr>
+  <td><span style="font-size:10pt;font-weight:900;color:#0d47a1;">水(수)</span></td>
+  <td>0.1</td>
+  <td>0.9%</td>
+  <td>지혜·흐름·적응 에너지</td>
+  <td>北(북)</td>
+  <td>검정·청색</td>
+  <td>겨울(11~1월)</td>
+  <td><span class="role-hui">희신</span></td>
+</tr></tbody>
+  </table>
+</div>
+
+</div></body></html>

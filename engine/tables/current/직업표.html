@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>직업·재물(職業·財物) 분석표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:14px 20px; background:transparent; display:flex; flex-direction:column; gap:6px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #ccc;border-radius:10px;overflow:hidden; }
+.card-hd { padding:6px 14px;display:flex;align-items:center;justify-content:space-between; }
+.card-hd-title { font-size:9pt;font-weight:900;color:white; }
+.card-hd-sub { font-size:6.5pt;color:rgba(255,255,255,.85); }
+.card-body { padding:9px 14px;background:transparent; }
+.attr-grid { display:grid;grid-template-columns:1fr 1fr;gap:5px; }
+.attr-item { border-radius:6px;padding:6px 9px;border:1.5px solid #e0e0e0;background:#fafafa; }
+.attr-lbl  { font-size:6pt;font-weight:700;color:#888;margin-bottom:2px; }
+.attr-val  { font-size:7pt;font-weight:700;color:#333;line-height:1.5; }
+.chip-section { margin-bottom:7px; }
+.cs-lbl { font-size:6pt;font-weight:700;color:#888;margin-bottom:4px; }
+.cs-chips { display:flex;flex-wrap:wrap;gap:3px; }
+.biz-badge { display:inline-block;padding:3px 10px;border-radius:6px;font-size:8pt;font-weight:900;margin-right:6px; }
+.divider { border:none;border-top:1px solid #f0f0f0;margin:8px 0; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#00695c,#00897b);">
+  <div>
+    <div class="banner-hdr-title">💼 직업·재물(職業·財物) 분석표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+    <!-- ① 천직·직종 분석 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+        <div class="card-hd-title">① 천직(天職) · 적합 직종</div>
+        <div class="card-hd-sub">타고난 직업 적성 및 용신 직업군</div>
+      </div>
+      <div class="card-body">
+        <div class="chip-section"><div class="cs-lbl">천직(天職) 유형</div><div class="cs-chips"><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e8f5e9;color:#1b5e20;border:1.5px solid #1b5e2044;margin:1px;">리더십</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e8f5e9;color:#1b5e20;border:1.5px solid #1b5e2044;margin:1px;">도전형</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e8f5e9;color:#1b5e20;border:1.5px solid #1b5e2044;margin:1px;">재물은 부업</span></div></div>
+        <div class="chip-section"><div class="cs-lbl">적합 직종</div><div class="cs-chips"><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">부동산</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">건설</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">농업</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">식품</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">중재</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#e3f2fd;color:#1565c0;border:1.5px solid #1565c044;margin:1px;">관리직</span></div></div>
+        <div class="chip-section"><div class="cs-lbl">용신 직업군</div><div class="cs-chips"><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">창업</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">스타트업</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">코칭</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">멘토링</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">의사</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">한의사</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">경영컨설팅</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">영업</span><span style="display:inline-block;padding:2px 8px;border-radius:5px;font-size:6.5pt;font-weight:700;background:#fff3e0;color:#e65100;border:1.5px solid #e6510044;margin:1px;">세일즈</span></div></div>
+        
+        
+      </div>
+    </div>
+
+    <!-- ② 재물 구조 분석 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+        <div class="card-hd-title">② 재물(財物) 구조 분석</div>
+        <div class="card-hd-sub">재물 획득 패턴 · 주의 유형 · 사업 여부</div>
+      </div>
+      <div class="card-body">
+        <div class="attr-grid" style="margin-bottom:6px;">
+          <div class="attr-item" style="border-color:#4caf5044;"><div class="attr-lbl">재물 획득 유형</div><div class="attr-val">식상형</div></div>
+          <div class="attr-item" style="border-color:#ff980044;"><div class="attr-lbl">재물 출처</div><div class="attr-val">다양한 수입 경로·기회</div></div>
+          
+          
+          <div class="attr-item" style="grid-column:span 2;border-color:#f4433644;"><div class="attr-lbl">⚠️ 재물 주의</div><div class="attr-val" style="color:#c62828;">직접 재성 없음, 능력으로 버는 구조</div></div>
+        </div>
+        <div style="padding:8px 10px;background:#f3e5f5;border-radius:6px;border-left:3px solid #9c27b0;font-size:7pt;line-height:1.6;">
+          <span class="biz-badge" style="background:#9e9e9e;color:white;">조건부</span>
+          <strong style="color:#6a1b9a;">시기:</strong> 용신대운 진입 후 
+          용신대운이 열리는 시기가 가장 좋은 타이밍입니다
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

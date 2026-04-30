@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>세운대운교차표 》 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;
+     background:#f5f5f5;padding:40px 0;display:flex;justify-content:center;
+     align-items:flex-start;min-height:100vh;}
+.page{ border:1px solid #333;width:604px;max-height:840px;overflow:hidden;padding:6px 8px;background:transparent;display:flex;flex-direction:column;
+      gap:7px;border-radius:8px;}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{size:604px 840px;margin:0;}}
+
+/* banner-hdr */
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+
+/* card */
+.card{border:1.5px solid #333;border-radius:8px;overflow:hidden;}
+.card-hd{padding:4px 12px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:7.5pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:7pt;color:rgba(255,255,255,.85);}
+
+/* 세운·대운 그리드 */
+.sw-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.sw-box{padding:7px 10px;border-right:1px solid #e8e2d8;}
+.sw-box:last-child{border-right:none;}
+.sw-tag{font-size:6pt;font-weight:bold;color:#888;letter-spacing:.3px;margin-bottom:3px;}
+.sw-gj{font-size:12pt;font-weight:900;line-height:1.1;margin-bottom:3px;}
+.sw-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:2px;}
+.chip{display:inline-block;padding:1px 5px;border-radius:8px;font-size:6pt;font-weight:bold;}
+
+/* 교차 섹션 */
+.cross-tbl{width:100%;border-collapse:collapse;}
+.cross-tbl td{border:1px solid #333;padding:4px 7px;font-size:7pt;vertical-align:top;}
+.ct-lbl{background:#f0ebe0;font-weight:bold;font-size:6.5pt;color:#475569;width:56px;text-align:center;}
+.ct-yn{font-weight:900;font-size:7.5pt;}
+.ct-desc{font-size:6.5pt;color:#555;margin-top:1px;}
+
+/* 운세 등급 그리드 */
+.grade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px 8px;}
+.grade-item{text-align:center;padding:5px 3px;background:#fafaf8;border:1px solid #333;border-radius:6px;}
+.grade-label{font-size:6pt;color:#777;margin-bottom:3px;font-weight:bold;}
+.grade-value{font-size:9.5pt;font-weight:900;}
+
+/* 방위 섹션 */
+.dir-row{display:flex;gap:4px;align-items:center;padding:5px 8px;flex-wrap:wrap;}
+.dir-title{font-size:6.5pt;font-weight:bold;color:#555;margin-right:3px;}
+
+/* 10년 세운 표 */
+.sy-tbl{width:100%;border-collapse:collapse;font-size:6.5pt;}
+.sy-tbl th{background:#475569;color:white;padding:3px 3px;text-align:center;font-size:6pt;font-weight:bold;}
+.sy-tbl td{border:1px solid #333;padding:2px 3px;text-align:center;vertical-align:middle;}
+.sy-tbl tr.cur-row td{background:#fff9e6;font-weight:bold;}
+.sy-yr{font-weight:bold;font-size:6.5pt;}
+.sy-gj{font-size:7.5pt;font-weight:900;}
+.sy-ss{font-size:7pt;}
+.sy-un{font-size:7pt;color:#666;}
+.sy-sal{font-size:7pt;color:#888;}
+.sy-mark{font-size:7pt;font-weight:bold;color:#b92e27;}
+
+/* 월운 미니 격자 */
+.mw-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;padding:6px 8px;}
+.mw-cell{border-radius:5px;padding:3px 3px;text-align:center;border:1px solid #e0d8cc;}
+.mw-m{font-size:7pt;color:#888;margin-bottom:1px;font-weight:bold;}
+.mw-gj{font-size:7pt;font-weight:900;line-height:1.1;}
+.mw-ss{font-size:7pt;margin-top:1px;}
+.mw-un{font-size:7pt;color:#999;margin-top:1px;}
+</style>
+</head><body><div class="page"><div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">🔀 세운·대운 교차표 (歲運·大運)</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰 · 2026년</div>
+  </div>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#475569,#64748b);">
+    <div class="card-hd-title">① 세운·대운 기본 정보</div>
+    <div class="card-hd-sub">올해 세운 &amp; 현재 대운</div>
+  </div>
+  <div class="sw-grid">
+    <div class="sw-box">
+      <div class="sw-tag">올해 세운 (歲運)</div>
+      <div class="sw-gj" style="color:#b92e27;">丙午(병오)</div>
+      <div class="sw-row">
+        <span class="chip" style="background:#fdd9d7;color:#b92e27;border:1px solid #f5a9a5;">火(화)</span>
+        <span class="chip" style="background:#1a4e7a20;color:#1a4e7a;border:1px solid #1a4e7a60;">편인</span>
+        <span class="chip" style="background:#f3f4f6;color:#444;border:1px solid #d1d5db;">제왕</span>
+        <span class="chip" style="background:#55520;color:#555;border:1px solid #55560;">중립세운</span>
+      </div>
+    </div>
+    <div class="sw-box">
+      <div class="sw-tag">현재 대운 (大運)</div>
+      <div class="sw-gj" style="color:#475569;">戊申(무신) 대운</div>
+      <div class="sw-row">
+        <span class="chip" style="background:#f0ebe0;color:#475569;border:1px solid #3335b5;">58-67세</span>
+      </div>
+      <div style="margin-top:5px;padding-top:5px;border-top:1px dashed #ddd;">
+        <div style="font-size:7pt;color:#888;margin-bottom:2px;">다음 대운 (2036, 68세~)</div>
+        <div style="font-size:8pt;font-weight:800;color:#64748b;">丁未(정미)</div>
+      </div>
+    </div>
+  </div>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#7b3f00,#a0522d);">
+    <div class="card-hd-title">② 세운·대운 교차 관계 분석</div>
+    <div class="card-hd-sub">합·충 여부 및 해석</div>
+  </div>
+  <table class="cross-tbl">
+    <tr>
+      <td class="ct-lbl">합(合)</td>
+      <td>
+        <span class="ct-yn" style="color:#1a7a3c;">✓ 있음</span>
+        <div class="ct-desc">寅午 삼합(부분)→火</div>
+      </td>
+      <td class="ct-lbl">충(冲)</td>
+      <td>
+        <span class="ct-yn" style="color:#666;">✕ 없음</span>
+        
+      </td>
+    </tr>
+  </table>
+  <div style="padding:5px 8px;background:#faf8f3;border-top:1px solid #e8e2d8;font-size:6.5pt;color:#555;line-height:1.5;">
+    합이 있으면 안정적이며 협력이 활발해집니다. 충이 있으면 변화·이동·갈등의 기운이 강해집니다.
+    <strong>전환기</strong>로서 전환점, 인생 2막 준비가 주요 화두입니다.
+  </div>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#c65c00,#e87020);">
+    <div class="card-hd-title">③ 올해 운세 등급 &amp; 길방</div>
+    <div class="card-hd-sub">총운·재물·건강 / 용신 방위</div>
+  </div>
+  <div class="grade-grid">
+    <div class="grade-item">
+      <div class="grade-label">올해 총운</div>
+      <div class="grade-value" style="color:#2e7d32;">중상</div>
+    </div>
+    <div class="grade-item">
+      <div class="grade-label">재물운</div>
+      <div class="grade-value" style="color:#b92e27;">주의</div>
+    </div>
+    <div class="grade-item">
+      <div class="grade-label">건강운</div>
+      <div class="grade-value" style="color:#b92e27;">주의</div>
+    </div>
+  </div>
+  <div class="dir-row" style="border-top:1px solid #eee;">
+    <span class="dir-title">길방 ·</span>
+    <span style="display:inline-flex;align-items:center;gap:2px;padding:1px 6px;
+    border-radius:10px;background:#d4f0db;border:1px solid #a8dbb5;
+    font-size:6.5pt;font-weight:bold;color:#1e6b2a;margin:1px;">用神 동(東)</span>
+    <span style="display:inline-flex;align-items:center;gap:2px;padding:1px 6px;
+    border-radius:10px;background:#c8e0f4;border:1px solid #90bfe0;
+    font-size:6.5pt;font-weight:bold;color:#1a4e7a;margin:1px;">喜神 북(北)</span>
+    <span style="display:inline-flex;align-items:center;gap:2px;padding:1px 6px;border-radius:10px;background:#fde8e7;border:1px solid #f5a9a5;font-size:6.5pt;font-weight:bold;color:#b92e27;margin:1px;">忌神 중앙(中央)</span>
+    <span style="font-size:6pt;color:#888;margin-left:3px;">방향 참고</span>
+  </div>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1a3a60,#2c5282);">
+    <div class="card-hd-title">④ 향후 10년 세운 흐름</div>
+    <div class="card-hd-sub">연간 세운 천간·지지·십성·12운성</div>
+  </div>
+  <table class="sy-tbl">
+    <thead><tr>
+      <th>년도</th><th>나이</th><th>천간</th><th>지지</th><th>십성</th><th>12운성</th><th>신살</th>
+    </tr></thead>
+    <tbody><tr>
+      <td class="sy-yr">2024</td>
+      <td style="font-size:6pt;">56세</td>
+      <td><span class="sy-gj" style="color:#b92e27;">甲</span></td>
+      <td><span class="sy-gj" style="color:#5c6bc0;">辰</span></td>
+      <td><span class="sy-ss" style="color:#b92e27;">편관</span></td>
+      <td class="sy-un">관대</td>
+      <td class="sy-sal">반안살</td>
+    </tr><tr>
+      <td class="sy-yr">2025</td>
+      <td style="font-size:6pt;">57세</td>
+      <td><span class="sy-gj" style="color:#6a1313;">乙</span></td>
+      <td><span class="sy-gj" style="color:#1a4e7a;">巳</span></td>
+      <td><span class="sy-ss" style="color:#6a1313;">정관</span></td>
+      <td class="sy-un">건록</td>
+      <td class="sy-sal">역마살</td>
+    </tr><tr class="cur-row">
+      <td class="sy-yr">2026<br><span class="sy-mark">▶올해</span></td>
+      <td style="font-size:6pt;">58세</td>
+      <td><span class="sy-gj" style="color:#1a4e7a;">丙</span></td>
+      <td><span class="sy-gj" style="color:#004d40;">午</span></td>
+      <td><span class="sy-ss" style="color:#1a4e7a;">편인</span></td>
+      <td class="sy-un">제왕</td>
+      <td class="sy-sal">육해살</td>
+    </tr><tr>
+      <td class="sy-yr">2027</td>
+      <td style="font-size:6pt;">59세</td>
+      <td><span class="sy-gj" style="color:#004d40;">丁</span></td>
+      <td><span class="sy-gj" style="color:#7b1fa2;">未</span></td>
+      <td><span class="sy-ss" style="color:#004d40;">정인</span></td>
+      <td class="sy-un">쇠</td>
+      <td class="sy-sal">화개살</td>
+    </tr><tr>
+      <td class="sy-yr">2028</td>
+      <td style="font-size:6pt;">60세</td>
+      <td><span class="sy-gj" style="color:#5c6bc0;">戊</span></td>
+      <td><span class="sy-gj" style="color:#2e7d32;">申</span></td>
+      <td><span class="sy-ss" style="color:#5c6bc0;">비견</span></td>
+      <td class="sy-un">병</td>
+      <td class="sy-sal">겁살</td>
+    </tr><tr>
+      <td class="sy-yr">2029</td>
+      <td style="font-size:6pt;">61세</td>
+      <td><span class="sy-gj" style="color:#7b1fa2;">己</span></td>
+      <td><span class="sy-gj" style="color:#1565c0;">酉</span></td>
+      <td><span class="sy-ss" style="color:#7b1fa2;">겁재</span></td>
+      <td class="sy-un">사</td>
+      <td class="sy-sal">재살</td>
+    </tr><tr>
+      <td class="sy-yr">2030</td>
+      <td style="font-size:6pt;">62세</td>
+      <td><span class="sy-gj" style="color:#2e7d32;">庚</span></td>
+      <td><span class="sy-gj" style="color:#5c6bc0;">戌</span></td>
+      <td><span class="sy-ss" style="color:#2e7d32;">식신</span></td>
+      <td class="sy-un">묘</td>
+      <td class="sy-sal">천살</td>
+    </tr><tr>
+      <td class="sy-yr">2031</td>
+      <td style="font-size:6pt;">63세</td>
+      <td><span class="sy-gj" style="color:#1565c0;">辛</span></td>
+      <td><span class="sy-gj" style="color:#c65c00;">亥</span></td>
+      <td><span class="sy-ss" style="color:#1565c0;">상관</span></td>
+      <td class="sy-un">절</td>
+      <td class="sy-sal">지살</td>
+    </tr><tr>
+      <td class="sy-yr">2032</td>
+      <td style="font-size:6pt;">64세</td>
+      <td><span class="sy-gj" style="color:#c65c00;">壬</span></td>
+      <td><span class="sy-gj" style="color:#9b6f00;">子</span></td>
+      <td><span class="sy-ss" style="color:#c65c00;">편재</span></td>
+      <td class="sy-un">태</td>
+      <td class="sy-sal">년살</td>
+    </tr><tr>
+      <td class="sy-yr">2033</td>
+      <td style="font-size:6pt;">65세</td>
+      <td><span class="sy-gj" style="color:#9b6f00;">癸</span></td>
+      <td><span class="sy-gj" style="color:#7b1fa2;">丑</span></td>
+      <td><span class="sy-ss" style="color:#9b6f00;">정재</span></td>
+      <td class="sy-un">양</td>
+      <td class="sy-sal">월살</td>
+    </tr></tbody>
+  </table>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#2e7d32,#43a047);">
+    <div class="card-hd-title">⑤ 2026년 월운 요약</div>
+    <div class="card-hd-sub">월별 간지·십성·12운성 (★ = 용신월)</div>
+  </div>
+  <div class="mw-grid"><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">2월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">庚寅</div>
+      <div class="mw-ss" style="color:#2e7d32;">식신</div>
+      <div class="mw-un">장생</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">3월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">辛卯</div>
+      <div class="mw-ss" style="color:#1565c0;">상관</div>
+      <div class="mw-un">목욕</div>
+      
+    </div><div class="mw-cell" style="background:#f7f9fa;border-color:#b0c4d0;">
+      <div class="mw-m">4월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">壬辰</div>
+      <div class="mw-ss" style="color:#c65c00;">편재</div>
+      <div class="mw-un">관대</div>
+      <div style="font-size:7pt;color:#1e6b2a;font-weight:bold;">★용신월</div>
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">5월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">癸巳</div>
+      <div class="mw-ss" style="color:#9b6f00;">정재</div>
+      <div class="mw-un">건록</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">6월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">甲午</div>
+      <div class="mw-ss" style="color:#b92e27;">편관</div>
+      <div class="mw-un">제왕</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">7월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">乙未</div>
+      <div class="mw-ss" style="color:#6a1313;">정관</div>
+      <div class="mw-un">쇠</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">8월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">丙申</div>
+      <div class="mw-ss" style="color:#1a4e7a;">편인</div>
+      <div class="mw-un">병</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">9월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">丁酉</div>
+      <div class="mw-ss" style="color:#004d40;">정인</div>
+      <div class="mw-un">사</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">10월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">戊戌</div>
+      <div class="mw-ss" style="color:#5c6bc0;">비견</div>
+      <div class="mw-un">묘</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">11월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">己亥</div>
+      <div class="mw-ss" style="color:#7b1fa2;">겁재</div>
+      <div class="mw-un">절</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">12월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">庚子</div>
+      <div class="mw-ss" style="color:#2e7d32;">식신</div>
+      <div class="mw-un">태</div>
+      
+    </div><div class="mw-cell" style="background:#fafaf8;border-color:#e0d8cc;">
+      <div class="mw-m">익년1월</div>
+      <div class="mw-gj" style="color:#3d4f5c;">辛丑</div>
+      <div class="mw-ss" style="color:#1565c0;">상관</div>
+      <div class="mw-un">양</div>
+      
+    </div></div>
+</div></div></body></html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>건강(健康) 분석표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:14px 20px; background:transparent; display:flex; flex-direction:column; gap:6px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #ccc;border-radius:10px;overflow:hidden; }
+.card-hd { padding:6px 14px;display:flex;align-items:center;justify-content:space-between; }
+.card-hd-title { font-size:9pt;font-weight:900;color:white; }
+.card-hd-sub { font-size:6.5pt;color:rgba(255,255,255,.85); }
+.card-body { padding:9px 14px;background:transparent; }
+.attr-grid { display:grid;grid-template-columns:1fr 1fr;gap:5px; }
+.attr-grid-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px; }
+.attr-item { border-radius:6px;padding:6px 9px;border:1.5px solid #e0e0e0;background:#fafafa; }
+.attr-lbl  { font-size:6pt;font-weight:700;color:#888;margin-bottom:2px; }
+.attr-val  { font-size:7pt;font-weight:700;color:#333;line-height:1.5; }
+.risk-tbl { width:100%;border-collapse:collapse;font-size:6.5pt; }
+.risk-tbl th { background:#c62828;color:white;padding:4px 8px;font-size:6.5pt;font-weight:700; }
+.risk-tbl td { border-bottom:1px solid #f0f0f0;padding:4px 8px;vertical-align:top;line-height:1.5; }
+.risk-tbl tr:last-child td { border-bottom:none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#00695c,#00897b);">
+  <div>
+    <div class="banner-hdr-title">🏥 건강(健康) 분석표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+    <!-- ① 건강 체질 분석 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#1a237e,#283593);">
+        <div class="card-hd-title">① 건강 체질 분석</div>
+        <div class="card-hd-sub">土(토) 체질 · 선천적 강약 부위</div>
+      </div>
+      <div class="card-body">
+        <div class="attr-grid" style="margin-bottom:5px;">
+          <div class="attr-item" style="border-color:#1565c044;">
+            <div class="attr-lbl">체질 유형</div>
+            <div class="attr-val" style="font-size:9pt;color:#1565c0;">土(토) 체질</div>
+          </div>
+          <div class="attr-item" style="border-color:#f4433644;">
+            <div class="attr-lbl">⚠️ 취약 계절</div>
+            <div class="attr-val">겨울</div>
+          </div>
+        </div>
+        <div class="attr-grid-3" style="margin-bottom:5px;">
+          <div class="attr-item" style="border-color:#1565c022;">
+            <div class="attr-lbl">일간 관련 장기</div>
+            <div class="attr-val">비장(脾臟)·위장(胃臟)</div>
+          </div>
+          <div class="attr-item" style="border-color:#1565c022;">
+            <div class="attr-lbl">일간 관련 신체</div>
+            <div class="attr-val">근육·입술·소화계</div>
+          </div>
+          <div class="attr-item" style="border-color:#1565c022;">
+            <div class="attr-lbl">일간 감정</div>
+            <div class="attr-val">과도한 걱정</div>
+          </div>
+          <div class="attr-item" style="border-color:#f4433622;">
+            <div class="attr-lbl">취약 장기</div>
+            <div class="attr-val" style="color:#c62828;">신장(腎臟)·방광(膀胱)</div>
+          </div>
+          <div class="attr-item" style="border-color:#f4433622;">
+            <div class="attr-lbl">취약 신체</div>
+            <div class="attr-val" style="color:#c62828;">뼈·귀·치아·생식기</div>
+          </div>
+          <div class="attr-item" style="border-color:#f4433622;">
+            <div class="attr-lbl">취약 감정</div>
+            <div class="attr-val" style="color:#c62828;">공포·불안</div>
+          </div>
+        </div>
+        <div class="attr-grid" style="margin-bottom:5px;">
+          <div class="attr-item" style="border-color:#4caf5044;">
+            <div class="attr-lbl">✅ 양생 식품</div>
+            <div class="attr-val">검은 식품(검은콩·흑미·목이버섯), 짠맛 식품(미역·다시마·김), 해산물</div>
+          </div>
+          <div class="attr-item" style="border-color:#ff980044;">
+            <div class="attr-lbl">⚠️ 주의 식품</div>
+            <div class="attr-val">짠 음식 과다, 냉한 음식, 알코올, 카페인 과다</div>
+          </div>
+        </div>
+        <div class="attr-item" style="margin-bottom:5px;">
+          <div class="attr-lbl">🏃 운동 유형</div>
+          <div class="attr-val">따뜻한 실내 운동·온수 수영, 스트레칭·필라테스(척추·관절), 과격한 운동 자제</div>
+        </div>
+        <div style="padding:6px 10px;background:#fff3e0;border-radius:6px;border-left:3px solid #ff9800;font-size:7pt;color:#555;line-height:1.6;">
+          <strong style="color:#e65100;">나이대 주의사항:</strong> 갱년기 호르몬 변화, 골밀도·관절 관리, 위장·혈압 정기 검진
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 건강 위험 대운 -->
+    
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#b71c1c,#c62828);">
+        <div class="card-hd-title">② 건강 위험 대운 목록</div>
+        <div class="card-hd-sub">평생 건강 주의 계통 및 대운별 취약 부위</div>
+      </div>
+      <div class="card-body">
+        <div style="padding:6px 10px;background:#ffebee;border-radius:6px;border-left:3px solid #c62828;font-size:7pt;color:#555;margin-bottom:7px;">
+          <strong style="color:#c62828;">평생 건강 주의:</strong> 간담·근육통·눈 피로, 소화기·피부·알레르기
+        </div>
+        <div style="padding:6px 10px;background:#fff3e0;border-radius:6px;border-left:3px solid #ff9800;font-size:7pt;color:#555;margin-bottom:7px;">
+          <strong style="color:#e65100;">현재 대운 건강 영향 [주의 필요]:</strong> 간담·근육통·눈 피로(월지 충), 간담·근육통·눈 피로(시지 충)
+        </div>
+        
+        <table class="risk-tbl">
+          <thead><tr><th>대운</th><th>건강 위험 부위</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:#c62828;white-space:nowrap;">4기 庚戌(38-47세, 2006년~)</td><td>소화기·피부·알레르기(일지 충)</td></tr><tr><td style="font-weight:700;color:#c62828;white-space:nowrap;">6기 戊申(58-67세, 2026년~)</td><td>간담·근육통·눈 피로(월지 충), 간담·근육통·눈 피로(시지 충)</td></tr><tr><td style="font-weight:700;color:#c62828;white-space:nowrap;">9기 乙巳(88-97세, 2056년~)</td><td>폐·대장·피부·관절(년지 형·스트레스)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

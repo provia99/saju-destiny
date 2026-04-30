@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최원석님의 천명 설계도</title>
+
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 610px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0;
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding: 8px 12px;
+            background: white;
+            font-size: 20px;
+        }
+
+        /* 헤더 통합 박스 (제목 + 정보) */
+        .header-unified-box {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            margin-bottom: 30px;
+        }
+
+        /* 정보 섹션 - 내부 스타일 조정 */
+        .info-section {
+            display: flex;
+            gap: 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .character-wrapper {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            border-right: 1px solid #333;
+            border-radius: 0;
+            padding: 10px;
+        }
+
+        .character-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-size: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-circle::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            right: -20%;
+            bottom: -20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+        }
+
+        .info-table-container {
+            flex: 1;
+            border-collapse: collapse;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+        }
+
+        .info-table-container td {
+            padding: 5px 16px;
+            border-bottom: 1px solid #333;
+            border-right: 1px solid #333;
+            vertical-align: middle;
+        }
+
+        .info-table-container td:last-child {
+            border-right: none;
+        }
+
+        .info-table-container tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-cell.label {
+            width: 110px;
+            font-weight: 600;
+            color: #555;
+            background: #fafafa;
+            text-align: center;
+            font-size: 14px;
+            border-left: none;
+        }
+
+        .info-cell.value {
+            background: white;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .info-cell.value.highlight {
+            font-weight: 600;
+            color: #c9a227;
+        }
+
+        .manseoryeok-table-wrapper {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .manseoryeok-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: none;
+        }
+
+        .manseoryeok-table th,
+        .manseoryeok-table td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .manseoryeok-table td {
+            text-align: center !important;
+        }
+
+        .manseoryeok-table th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .label-cell {
+            background-color: #fafafa;
+            font-weight: 700;
+            color: #444;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .label-hanja {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* 천간/지지 둥근 박스 (입체 효과) - 인쇄 품질 개선 */
+        .ganji-box {
+            width: 68px;
+            height: 68px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif KR', serif;
+            font-weight: bold;
+            color: white;
+
+            /* 입체 효과 + 인쇄 품질 */
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.15),
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .ganji-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+            pointer-events: none;
+        }
+
+        .ganji-box:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 6px 12px rgba(0, 0, 0, 0.15),
+                0 3px 6px rgba(0, 0, 0, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .ganji-box .hanja {
+            font-size: 26px;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .ganji-box .hangul {
+            font-size: 12px;
+            margin-top: 3px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        /* 십성 텍스트 */
+        .sipseong {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .sipseong.primary {
+            color: #e91e63;
+        }
+
+        .sipseong.normal {
+            color: #2196f3;
+        }
+
+        .sipseong-hanja {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            margin-top: 0px;
+            line-height: 1;
+        }
+
+        /* 12운성 */
+        .unseong {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2196f3;
+            line-height: 1.2;
+        }
+
+        .unseong-hanja {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            margin-top: 0px;
+            line-height: 1;
+        }
+
+        /* 십성 상세 */
+        .sipseong-detail {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        /* 신살 */
+        .sinsal {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        /* 오행 색상 - 인쇄 품질 강화 */
+        .wood {
+            background: #4caf50;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .fire {
+            background: #f44336;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .earth {
+            background: #ffc107;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .metal {
+            background: #9e9e9e;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .water {
+            background: #2196f3;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* 인쇄 최적화 - A4 용지 기준 */
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm 25mm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+                border-radius: 0;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 15px;
+                page-break-after: avoid;
+            }
+
+            .manseoryeok-table {
+                page-break-inside: avoid;
+                width: 100%;
+                font-size: 13px;
+            }
+
+            .manseoryeok-table th,
+            .manseoryeok-table td {
+                padding: 6px 8px;
+            }
+
+            .ganji-box {
+                width: 58px;
+                height: 58px;
+                box-shadow:
+                    0 2px 4px rgba(0, 0, 0, 0.2),
+                    0 0 0 1px rgba(0, 0, 0, 0.1);
+            }
+
+            .ganji-box .hanja {
+                font-size: 22px;
+            }
+
+            .ganji-box .hangul {
+                font-size: 10px;
+            }
+
+            /* 색상 강제 출력 */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-unified-box">
+            <h1>{{ user_profile.name }}님의 천명 설계도 (天命 設計圖)</h1>
+
+            <!-- 정보 섹션 -->
+            <div class="info-section">
+                <div class="character-wrapper">
+                    <div class="character-circle">
+                        {{ saju_data.year_animal_emoji|default('🐉') }}
+                    </div>
+                </div>
+                <table class="info-table-container">
+                    <tr>
+                        <td class="info-cell label">기본정보</td>
+                        <td class="info-cell value" colspan="3">{{ user_profile.name }}, {{
+                            user_profile.gender_kr|default('남성') }}, {{ user_profile.age }}세<sup>*1</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="info-cell label">일주동물</td>
+                        <td class="info-cell value highlight" colspan="3">{{ saju_data.ilju_animal|default('황금용(黃金龍)')
+                            }}<sup>*2</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="info-cell label">양력</td>
+                        <td class="info-cell value" colspan="3">{{ user_profile.birth_solar|default('1964-01-20 09:30')
+                            }} / {{ saju_data.hour_name|default('사시(巳時)') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="info-cell label">음력</td>
+                        <td class="info-cell value" colspan="3">{{ user_profile.birth_lunar|default('1963-12-06 09:30')
+                            }} / {{ saju_data.hour_name|default('사시(巳時)') }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="manseoryeok-table-wrapper">
+            <table class="manseoryeok-table">
+                <colgroup>
+                    <col style="width: 100px;">
+                    <col style="width: 115px;">
+                    <col style="width: 115px;">
+                    <col style="width: 115px;">
+                    <col style="width: 115px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="label-cell">구분<span class="label-hanja">(區分)</span></th>
+                        <th>시주 (時柱)</th>
+                        <th>일주 (日柱)</th>
+                        <th>월주 (月柱)</th>
+                        <th>년주 (年柱)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- JavaScript로 동적 생성 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 테스트용 더미 데이터 (임오일주 예시)
+        const sajuData = {
+            hour: {
+                cheonganSipseong: { name: '정인', hanja: '正印', isPrimary: false },
+                cheongan: { hanja: '丁', hangul: '정', ohaeng: 'fire' },
+                jiji: { hanja: '巳', hangul: '사', ohaeng: 'fire' },
+                jijiSipseong: { name: '편인', hanja: '偏印', isPrimary: false },
+                sipseongDetail: ['戊(비견)', '庚(식신)', '丙(편인)'],
+                unseong: { name: '건록', hanja: '建祿' },
+                sinsal: ['지살(指殺)', '천주귀인']
+            },
+            day: {
+                cheonganSipseong: { name: '최원석', hanja: '일원(나)', isPrimary: true },
+                cheongan: { hanja: '戊', hangul: '무', ohaeng: 'earth' },
+                jiji: { hanja: '辰', hangul: '진', ohaeng: 'earth' },
+                jijiSipseong: { name: '비견', hanja: '比肩', isPrimary: false },
+                sipseongDetail: ['乙(정관)', '癸(정재)', '戊(비견)'],
+                unseong: { name: '관대', hanja: '冠帶' },
+                sinsal: ['화개살(華蓋)', '백호대살']
+            },
+            month: {
+                cheonganSipseong: { name: '정관', hanja: '正官', isPrimary: false },
+                cheongan: { hanja: '乙', hangul: '을', ohaeng: 'wood' },
+                jiji: { hanja: '丑', hangul: '축', ohaeng: 'earth' },
+                jijiSipseong: { name: '겁재', hanja: '劫財', isPrimary: false },
+                sipseongDetail: ['癸(정재)', '辛(상관)', '己(겁재)'],
+                unseong: { name: '양', hanja: '養' },
+                sinsal: ['천을귀인', '태극귀인']
+            },
+            year: {
+                cheonganSipseong: { name: '정재', hanja: '正財', isPrimary: false },
+                cheongan: { hanja: '癸', hangul: '계', ohaeng: 'water' },
+                jiji: { hanja: '卯', hangul: '묘', ohaeng: 'wood' },
+                jijiSipseong: { name: '정관', hanja: '正官', isPrimary: false },
+                sipseongDetail: ['甲(편관)', '乙(정관)'],
+                unseong: { name: '목욕', hanja: '沐浴' },
+                sinsal: ['도화살', '현침살']
+            }
+        };
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+
+            // 1. 천간십성
+            let row1 = '<tr><td class="label-cell">천간십성<span class="label-hanja">(天干十星)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const data = sajuData[ju].cheonganSipseong;
+                const cssClass = data.isPrimary ? 'sipseong primary' : 'sipseong normal';
+                row1 += `<td><div class="${cssClass}">${data.name}<span class="sipseong-hanja">${data.hanja}</span></div></td>`;
+            });
+            row1 += '</tr>';
+
+            // 2. 천간
+            let row2 = '<tr><td class="label-cell">천간<span class="label-hanja">(天干)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const data = sajuData[ju].cheongan;
+                row2 += `<td><div style="display:flex; justify-content:center; align-items:center;"><div class="ganji-box ${data.ohaeng}"><div class="hanja">${data.hanja}</div><div class="hangul">(${data.hangul})</div></div></div></td>`;
+            });
+            row2 += '</tr>';
+
+            // 3. 지지
+            let row3 = '<tr><td class="label-cell">지지<span class="label-hanja">(地支)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const data = sajuData[ju].jiji;
+                row3 += `<td><div style="display:flex; justify-content:center; align-items:center;"><div class="ganji-box ${data.ohaeng}"><div class="hanja">${data.hanja}</div><div class="hangul">(${data.hangul})</div></div></div></td>`;
+            });
+            row3 += '</tr>';
+
+            // 4. 지지십성
+            let row4 = '<tr><td class="label-cell">지지십성<span class="label-hanja">(地支十星)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const data = sajuData[ju].jijiSipseong;
+                const cssClass = data.isPrimary ? 'sipseong primary' : 'sipseong normal';
+                row4 += `<td><div class="${cssClass}">${data.name}<span class="sipseong-hanja">${data.hanja}</span></div></td>`;
+            });
+            row4 += '</tr>';
+
+            // 5. 십성 상세
+            let row5 = '<tr><td class="label-cell">십성<span class="label-hanja">(十星)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const details = sajuData[ju].sipseongDetail;
+                row5 += `<td><div class="sipseong-detail">${details.join('<br>')}</div></td>`;
+            });
+            row5 += '</tr>';
+
+            // 6. 12운성
+            let row6 = '<tr><td class="label-cell">12운성<span class="label-hanja">(十二運星)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const data = sajuData[ju].unseong;
+                row6 += `<td><div class="unseong">${data.name}<span class="unseong-hanja">(${data.hanja})</span></div></td>`;
+            });
+            row6 += '</tr>';
+
+            // 7. 신살
+            let row7 = '<tr><td class="label-cell">신살<span class="label-hanja">(神殺)</span></td>';
+            ['hour', 'day', 'month', 'year'].forEach(ju => {
+                const sinsals = sajuData[ju].sinsal;
+                row7 += `<td><div class="sinsal">${sinsals.join('<br>')}</div></td>`;
+            });
+            row7 += '</tr>';
+
+            tbody.innerHTML = row1 + row2 + row3 + row4 + row5 + row6 + row7;
+        }
+
+        renderTable();
+    </script>
+</body>
+
+</html>

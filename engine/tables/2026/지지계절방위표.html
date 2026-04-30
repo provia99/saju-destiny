@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>지지계절방위표 — 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;}
+.page{ border:1px solid #333;width:604px;padding:6px;margin:10px auto;background:transparent;}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{margin:0;}@page{ border:1px solid #333;size:604px 600px;margin:0;}}
+
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:3px 10px;border-radius:6px;background:linear-gradient(135deg,#1a237e,#283593);margin-bottom:4px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.7);margin-top:1px;}
+.banner-hdr-right{text-align:right;}
+.banner-hdr-name{font-size:9pt;font-weight:800;background:linear-gradient(90deg,#ffd54f,#fff176);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.season-row{display:flex;gap:3px;margin-bottom:2px;}
+.season-left{flex:0 0 100px;padding:3px 5px;border-radius:6px;display:flex;flex-direction:column;gap:0;align-items:center;text-align:center;}
+.season-name{font-size:14pt;font-weight:900;}
+.season-en{font-size:6pt;font-weight:700;letter-spacing:2px;}
+.season-oh{font-size:9pt;font-weight:800;padding:2px 10px;border-radius:10px;margin:2px 0;}
+.season-desc{font-size:7pt;color:#555;line-height:1.3;}
+.season-dir{font-size:8pt;font-weight:700;color:#555;}
+.dir-icon{font-size:10pt;font-weight:900;}
+
+.season-jiji{flex:1;display:flex;gap:4px;}
+.jj-cell{flex:1;background:#fafafa;border:1.5px solid #e0e0e0;border-radius:6px;padding:4px 3px;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;}
+.jj-animal{font-size:20pt;line-height:1;}
+.jj-char{font-size:22pt;font-weight:900;font-family:'Noto Serif KR',serif;line-height:1;}
+.jj-kr{font-size:8pt;color:#555;font-weight:600;}
+.jj-time{font-size:7.5pt;color:#888;font-weight:600;}
+.jj-note{font-size:7pt;color:#999;font-weight:500;}
+.my-badge{position:absolute;top:-8px;right:-6px;font-size:7pt;color:white;font-weight:800;padding:2px 7px;border-radius:8px;}
+.earth-badge{position:absolute;top:-7px;left:-5px;font-size:7.5pt;color:white;font-weight:800;background:#ff9800;padding:1px 6px;border-radius:6px;}
+</style>
+</head><body>
+<div class="page">
+  <div class="banner-hdr">
+    <div>
+      <div class="banner-hdr-title">지지(地支) 계절·방위표</div>
+      <div class="banner-hdr-sub">12지지 》 사계절 · 방위 · 시간대</div>
+    </div>
+    <div class="banner-hdr-right">
+      <div class="banner-hdr-name">임효원 님</div>
+    </div>
+  </div>
+  <div class="season-row">
+      <div class="season-left" style="background:#e8f5e9;border-left:4px solid #4caf50;">
+        <div class="season-name" style="color:#4caf50;">봄</div>
+        <div class="season-en" style="color:#4caf5088;">SPRING</div>
+        <div class="season-oh" style="background:#4caf50;color:white;">木(목)</div>
+        <div class="season-desc">생장(生長)의 기운<br>시작하고 뻗어나갑니다</div>
+        <div class="season-dir"><span class="dir-icon" style="color:#4caf50;">→</span> 동쪽</div>
+      </div>
+      <div class="season-jiji"><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐯</div>
+        <div class="jj-char" style="color:#4caf50">寅</div>
+        <div class="jj-kr">인 · 호랑이</div>
+        <div class="jj-time">03:30~05:29</div>
+        <div class="jj-note">이른 봄</div>
+      </div><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐰</div>
+        <div class="jj-char" style="color:#4caf50">卯</div>
+        <div class="jj-kr">묘 · 토끼</div>
+        <div class="jj-time">05:30~07:29</div>
+        <div class="jj-note">봄 절정</div>
+      </div><div class="jj-cell" style="border:2.5px solid #4caf50;">
+        <div class="my-badge" style="background:#4caf50;">내 일지</div><div class="earth-badge">土</div>
+        <div class="jj-animal">🐲</div>
+        <div class="jj-char" style="color:#ff9800">辰</div>
+        <div class="jj-kr">진 · 용</div>
+        <div class="jj-time">07:30~09:29</div>
+        <div class="jj-note">봄 끝 · 土</div>
+      </div></div>
+    </div><div class="season-row">
+      <div class="season-left" style="background:#ffebee;border-left:4px solid #f44336;">
+        <div class="season-name" style="color:#f44336;">여름</div>
+        <div class="season-en" style="color:#f4433688;">SUMMER</div>
+        <div class="season-oh" style="background:#f44336;color:white;">火(화)</div>
+        <div class="season-desc">성장(盛長)의 기운<br>가장 활발하게 활동해요</div>
+        <div class="season-dir"><span class="dir-icon" style="color:#f44336;">↓</span> 남쪽</div>
+      </div>
+      <div class="season-jiji"><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐍</div>
+        <div class="jj-char" style="color:#f44336">巳</div>
+        <div class="jj-kr">사 · 뱀</div>
+        <div class="jj-time">09:30~11:29</div>
+        <div class="jj-note">초여름</div>
+      </div><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐴</div>
+        <div class="jj-char" style="color:#f44336">午</div>
+        <div class="jj-kr">오 · 말</div>
+        <div class="jj-time">11:30~13:29</div>
+        <div class="jj-note">한여름</div>
+      </div><div class="jj-cell" style="">
+        <div class="earth-badge">土</div>
+        <div class="jj-animal">🐏</div>
+        <div class="jj-char" style="color:#ff9800">未</div>
+        <div class="jj-kr">미 · 양</div>
+        <div class="jj-time">13:30~15:29</div>
+        <div class="jj-note">늦여름 · 土</div>
+      </div></div>
+    </div><div class="season-row">
+      <div class="season-left" style="background:#f5f5f5;border-left:4px solid #9e9e9e;">
+        <div class="season-name" style="color:#9e9e9e;">가을</div>
+        <div class="season-en" style="color:#9e9e9e88;">AUTUMN</div>
+        <div class="season-oh" style="background:#9e9e9e;color:white;">金(금)</div>
+        <div class="season-desc">수렴(收斂)의 기운<br>결실을 맺고 정리해요</div>
+        <div class="season-dir"><span class="dir-icon" style="color:#9e9e9e;">←</span> 서쪽</div>
+      </div>
+      <div class="season-jiji"><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐵</div>
+        <div class="jj-char" style="color:#9e9e9e">申</div>
+        <div class="jj-kr">신 · 원숭이</div>
+        <div class="jj-time">15:30~17:29</div>
+        <div class="jj-note">초가을</div>
+      </div><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐔</div>
+        <div class="jj-char" style="color:#9e9e9e">酉</div>
+        <div class="jj-kr">유 · 닭</div>
+        <div class="jj-time">17:30~19:29</div>
+        <div class="jj-note">가을 절정</div>
+      </div><div class="jj-cell" style="">
+        <div class="earth-badge">土</div>
+        <div class="jj-animal">🐶</div>
+        <div class="jj-char" style="color:#ff9800">戌</div>
+        <div class="jj-kr">술 · 개</div>
+        <div class="jj-time">19:30~21:29</div>
+        <div class="jj-note">늦가을 · 土</div>
+      </div></div>
+    </div><div class="season-row">
+      <div class="season-left" style="background:#e3f2fd;border-left:4px solid #2196f3;">
+        <div class="season-name" style="color:#2196f3;">겨울</div>
+        <div class="season-en" style="color:#2196f388;">WINTER</div>
+        <div class="season-oh" style="background:#2196f3;color:white;">水(수)</div>
+        <div class="season-desc">저장(貯藏)의 기운<br>깊이 쌓고 다음을 준비해요</div>
+        <div class="season-dir"><span class="dir-icon" style="color:#2196f3;">↑</span> 북쪽</div>
+      </div>
+      <div class="season-jiji"><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐷</div>
+        <div class="jj-char" style="color:#2196f3">亥</div>
+        <div class="jj-kr">해 · 돼지</div>
+        <div class="jj-time">21:30~23:29</div>
+        <div class="jj-note">초겨울</div>
+      </div><div class="jj-cell" style="">
+        
+        <div class="jj-animal">🐭</div>
+        <div class="jj-char" style="color:#2196f3">子</div>
+        <div class="jj-kr">자 · 쥐</div>
+        <div class="jj-time">23:30~01:29</div>
+        <div class="jj-note">한겨울</div>
+      </div><div class="jj-cell" style="">
+        <div class="earth-badge">土</div>
+        <div class="jj-animal">🐮</div>
+        <div class="jj-char" style="color:#ff9800">丑</div>
+        <div class="jj-kr">축 · 소</div>
+        <div class="jj-time">01:30~03:29</div>
+        <div class="jj-note">늦겨울 · 土</div>
+      </div></div>
+    </div>
+</div>
+</body></html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="{{ brand_color }}">
+<title>{{ master.선생님이름 }} | {{ master.연구소명 or '사주 명리 연구소' }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: {{ brand_color }};
+    --gold: {{ gold_color }};
+    --dark: #1e1433;
+    --dark2: #271a45;
+    --dark3: #2f2055;
+    --text: #faf5ff;
+    --text-dim: #d4b8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── 별 배경 ── */
+  .stars-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 20% 50%, rgba({{ brand_rgb }}, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(200,184,96,0.06) 0%, transparent 50%),
+                var(--dark);
+  }
+  .star {
+    position: absolute; border-radius: 50%;
+    background: white; animation: twinkle var(--d, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--min-op, 0.2); transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* ── 헤더 ── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .logo span { color: var(--text-dim); font-size: 0.75rem; font-weight: 300; display: block; }
+  .header-btns { display: flex; gap: 8px; }
+  .btn-sm {
+    padding: 7px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .btn-outline {
+    border-color: rgba(255,255,255,0.2); color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-primary {
+    background: var(--gold); color: var(--dark); font-weight: 700;
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+
+  /* ── 히어로 섹션 ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 100px 24px 60px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid rgba(200,184,96,0.3);
+    background: rgba(200,184,96,0.08);
+    font-size: 0.75rem; color: var(--gold);
+    margin-bottom: 28px;
+    animation: fadeInDown 0.8s ease both;
+  }
+  .hero-badge::before { content: '✦'; font-size: 0.6rem; }
+  .hero-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease 0.1s both;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(135deg, var(--gold), #f5e070);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    color: var(--text-dim);
+    line-height: 1.8;
+    max-width: 340px;
+    margin: 0 auto 40px;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+  .hero-cta {
+    display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+  .btn-hero {
+    width: 100%; padding: 16px 24px; border-radius: 14px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: all 0.25s; text-decoration: none; display: block;
+    text-align: center; border: none;
+  }
+  .btn-hero-main {
+    background: linear-gradient(135deg, var(--gold), #d4a830);
+    color: var(--dark);
+    box-shadow: 0 8px 32px rgba(200,184,96,0.35);
+  }
+  .btn-hero-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,184,96,0.45); }
+  .btn-hero-sub {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .btn-hero-sub:hover { background: rgba(255,255,255,0.1); }
+
+  /* 스크롤 힌트 */
+  .scroll-hint {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    color: var(--text-dim); font-size: 0.7rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: ''; width: 1px; height: 32px;
+    background: linear-gradient(to bottom, var(--text-dim), transparent);
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── 마스터 소개 섹션 ── */
+  .section {
+    position: relative; z-index: 1;
+    padding: 72px 24px;
+  }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,184,96,0.3));
+  }
+  .section-label::after {
+    background: linear-gradient(to left, transparent, rgba(200,184,96,0.3));
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700; text-align: center;
+    margin-bottom: 48px; line-height: 1.4;
+  }
+
+  /* 마스터 카드 */
+  .master-card {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid rgba(200,184,96,0.15);
+    border-radius: 24px; padding: 32px 24px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .master-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 0%, rgba(200,184,96,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .master-avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--brand), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2rem; font-weight: 700; color: white;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 32px rgba(200,184,96,0.25);
+  }
+  .master-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .master-lab {
+    font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px;
+  }
+  .master-quote {
+    font-size: 0.95rem; line-height: 1.8;
+    color: var(--text); font-style: italic;
+    padding: 16px; background: rgba(255,255,255,0.04);
+    border-radius: 12px; border-left: 3px solid var(--gold);
+  }
+
+  /* ── 서비스 특징 ── */
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .feature-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px; padding: 22px 18px;
+    transition: all 0.3s;
+  }
+  .feature-card:hover {
+    border-color: rgba(200,184,96,0.25);
+    transform: translateY(-3px);
+  }
+  .feature-icon {
+    font-size: 1.8rem; margin-bottom: 12px;
+    display: block;
+  }
+  .feature-title {
+    font-size: 0.9rem; font-weight: 700;
+    margin-bottom: 6px; color: var(--text);
+  }
+  .feature-desc {
+    font-size: 0.75rem; color: var(--text-dim); line-height: 1.6;
+  }
+
+  /* ── 무료 서비스 섹션 ── */
+  .free-section {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border-radius: 24px; padding: 32px 24px;
+    border: 1px solid rgba(200,184,96,0.12);
+    margin: 0 24px;
+  }
+  .free-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    background: rgba(200,184,96,0.15); color: var(--gold);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+  .free-list {
+    list-style: none; display: flex; flex-direction: column; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .free-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.9rem; color: var(--text);
+  }
+  .free-list li::before {
+    content: '✓'; width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(200,184,96,0.15); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ── 상품 섹션 ── */
+  .products-grid {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .product-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px; padding: 22px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; transition: all 0.25s;
+    text-decoration: none; color: inherit;
+  }
+  .product-card:hover {
+    border-color: var(--gold);
+    background: var(--dark3);
+    transform: translateX(4px);
+  }
+  .product-card.featured {
+    border-color: rgba(200,184,96,0.4);
+    background: linear-gradient(135deg, rgba(200,184,96,0.06), var(--dark2));
+  }
+  .product-info { flex: 1; }
+  .product-tag {
+    font-size: 0.68rem; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.08em; margin-bottom: 6px;
+  }
+  .product-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; font-weight: 700; margin-bottom: 4px;
+  }
+  .product-desc { font-size: 0.78rem; color: var(--text-dim); }
+  .product-price {
+    text-align: right; flex-shrink: 0;
+  }
+  .price-amount {
+    font-size: 1.1rem; font-weight: 700; color: var(--gold);
+    display: block;
+  }
+  .price-label { font-size: 0.7rem; color: var(--text-dim); }
+
+  /* ── 이용 방법 ── */
+  .steps {
+    display: flex; flex-direction: column; gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: ''; position: absolute;
+    left: 22px; top: 28px; bottom: 28px; width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+  .step {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 20px 0;
+  }
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--brand), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; font-weight: 700; color: white;
+    position: relative; z-index: 1;
+    box-shadow: 0 4px 16px rgba(200,184,96,0.2);
+  }
+  .step-content { flex: 1; padding-top: 8px; }
+  .step-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── CTA 섹션 ── */
+  .cta-section {
+    position: relative; z-index: 1;
+    padding: 60px 24px 80px;
+    text-align: center;
+  }
+  .cta-box {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid rgba(200,184,96,0.2);
+    border-radius: 28px; padding: 40px 24px;
+    position: relative; overflow: hidden;
+  }
+  .cta-box::before {
+    content: '命'; position: absolute;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 12rem; font-weight: 700;
+    color: rgba(200,184,96,0.03);
+    right: -20px; bottom: -40px;
+    line-height: 1;
+  }
+  .cta-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    font-weight: 700; margin-bottom: 12px;
+  }
+  .cta-desc {
+    font-size: 0.9rem; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 32px;
+  }
+  .btn-cta {
+    display: block; width: 100%; max-width: 280px; margin: 0 auto;
+    padding: 16px 24px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold), #d4a830);
+    color: var(--dark); font-size: 1rem; font-weight: 700;
+    text-decoration: none; transition: all 0.25s;
+    box-shadow: 0 8px 32px rgba(200,184,96,0.3);
+  }
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,184,96,0.4); }
+
+  /* ── 푸터 ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; color: var(--gold); margin-bottom: 8px;
+  }
+  .footer-info {
+    font-size: 0.72rem; color: var(--text-dim); line-height: 1.8;
+  }
+  {% if master.카카오채널 %}
+  .kakao-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 24px;
+    background: #FEE500; color: #3A1D1D;
+    font-size: 0.85rem; font-weight: 700;
+    text-decoration: none; margin-top: 20px;
+    transition: all 0.2s;
+  }
+  .kakao-btn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+  {% endif %}
+
+  /* 애니메이션 */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* 구분선 */
+  .divider {
+    height: 1px; margin: 0 24px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+  }
+</style>
+</head>
+<body>
+
+<!-- 별 배경 -->
+<div class="stars-bg" id="starsContainer"></div>
+
+<!-- 헤더 -->
+<header>
+  <div class="logo">
+    {{ master.선생님이름 }}
+    <span>{{ master.연구소명 or '사주 명리 연구소' }}</span>
+  </div>
+  <div class="header-btns">
+    <a href="/expert/{{ master.master_id }}/login" class="btn-sm btn-outline">로그인</a>
+    <a href="/expert/{{ master.master_id }}/register" class="btn-sm btn-primary">무료가입</a>
+  </div>
+</header>
+
+<!-- 히어로 섹션 -->
+<section class="hero">
+  <div class="hero-badge">{{ master.연구소명 or '사주 명리 연구소' }}</div>
+  <h1 class="hero-title">
+    당신의 사주에<br>
+    <span class="highlight">숨겨진 운명</span>을<br>
+    읽어드립니다
+  </h1>
+  <p class="hero-subtitle">
+    {{ master.서명문구 or '사주 명리학의 깊은 통찰로\n당신의 과거, 현재, 미래를\n정확하게 분석해 드립니다.' }}
+  </p>
+  <div class="hero-cta">
+    <a href="/expert/{{ master.master_id }}/register" class="btn-hero btn-hero-main">
+      ✦ 무료로 시작하기
+    </a>
+    <a href="#services" class="btn-hero btn-hero-sub">
+      서비스 살펴보기
+    </a>
+  </div>
+  <div class="scroll-hint">스크롤</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 마스터 소개 -->
+<section class="section reveal">
+  <div class="section-label">MASTER</div>
+  <h2 class="section-title">{{ master.선생님이름 }}을 소개합니다</h2>
+  <div class="master-card">
+    <div class="master-avatar">{{ master.선생님이름[0] }}</div>
+    <div class="master-name">{{ master.선생님이름 }}</div>
+    <div class="master-lab">{{ master.연구소명 or '사주 명리 연구소' }}</div>
+    {% if master.서명문구 %}
+    <div class="master-quote">{{ master.서명문구 }}</div>
+    {% endif %}
+    {% if master.카카오채널 %}
+    <a href="{{ master.카카오채널 }}" class="kakao-btn" target="_blank">
+      💬 카카오 채널 상담
+    </a>
+    {% endif %}
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 무료 서비스 -->
+<section class="section reveal" id="services">
+  <div class="section-label">FREE SERVICE</div>
+  <h2 class="section-title">회원가입만 해도<br><span style="color:var(--gold)">무료</span>로 드립니다</h2>
+  <div class="free-section">
+    <div class="free-badge">✦ 무료 혜택</div>
+    <ul class="free-list">
+      <li>오늘의 운세 (매일 업데이트)</li>
+      <li>이달의 운세 분석</li>
+      <li>나의 사주 기본 정보</li>
+      <li>행운의 방향 & 색상</li>
+    </ul>
+    <a href="/expert/{{ master.master_id }}/register" class="btn-hero btn-hero-main">
+      지금 무료로 가입하기
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 서비스 특징 -->
+<section class="section reveal">
+  <div class="section-label">FEATURES</div>
+  <h2 class="section-title">왜 선택해야 할까요?</h2>
+  <div class="features">
+    <div class="feature-card">
+      <span class="feature-icon">🔮</span>
+      <div class="feature-title">정확한 분석</div>
+      <div class="feature-desc">수십 년 명리학 연구를 바탕으로 한 정밀 분석</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📱</span>
+      <div class="feature-title">모바일 최적화</div>
+      <div class="feature-desc">언제 어디서나 스마트폰으로 확인</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-title">개인정보 보호</div>
+      <div class="feature-desc">철저한 보안으로 소중한 정보 보호</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📄</span>
+      <div class="feature-title">상세 해석서</div>
+      <div class="feature-desc">PDF 형태의 전문 사주 해석서 제공</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 상품 목록 -->
+{% if products %}
+<section class="section reveal">
+  <div class="section-label">PRODUCTS</div>
+  <h2 class="section-title">프리미엄 사주 서비스</h2>
+  <div class="products-grid">
+    {% for product in products %}
+    <a href="/expert/{{ master.master_id }}/register" class="product-card {% if loop.first %}featured{% endif %}">
+      <div class="product-info">
+        {% if loop.first %}<div class="product-tag">✦ BEST</div>{% endif %}
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-desc">전문 사주 해석서 PDF 제공</div>
+      </div>
+      <div class="product-price">
+        <span class="price-amount">{{ "{:,}".format(product.price) }}원</span>
+        <span class="price-label">1회</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<div class="divider"></div>
+{% endif %}
+
+<!-- 이용 방법 -->
+<section class="section reveal">
+  <div class="section-label">HOW TO USE</div>
+  <h2 class="section-title">이용 방법</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">一</div>
+      <div class="step-content">
+        <div class="step-title">무료 회원가입</div>
+        <div class="step-desc">이름, 생년월일, 태어난 시간을 입력하고 가입하세요. 즉시 무료 서비스를 이용할 수 있습니다.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">二</div>
+      <div class="step-content">
+        <div class="step-title">무료 운세 확인</div>
+        <div class="step-desc">오늘의 운세, 이달의 운세를 매일 무료로 확인하세요.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">三</div>
+      <div class="step-content">
+        <div class="step-title">프리미엄 상품 구매</div>
+        <div class="step-desc">더 깊은 분석이 필요하다면 사주 해석서를 구매하세요. 안전한 카드 결제를 지원합니다.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">四</div>
+      <div class="step-content">
+        <div class="step-title">해석서 수령</div>
+        <div class="step-desc">전문가가 작성한 상세 사주 해석서를 PDF로 다운로드하세요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="cta-box">
+    <h2 class="cta-title">
+      지금 바로 시작하세요<br>
+      <span style="color:var(--gold)">무료입니다</span>
+    </h2>
+    <p class="cta-desc">
+      회원가입 후 오늘의 운세를<br>
+      바로 확인할 수 있습니다
+    </p>
+    <a href="/expert/{{ master.master_id }}/register" class="btn-cta">
+      ✦ 무료로 시작하기
+    </a>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-logo">{{ master.선생님이름 }}</div>
+  <div class="footer-info">
+    {{ master.연구소명 or '사주 명리 연구소' }}<br>
+    {% if master.연락처 %}연락처: {{ master.연락처 }}<br>{% endif %}
+    {% if master.이메일 %}이메일: {{ master.이메일 }}<br>{% endif %}
+    <br>
+    <a href="/expert/{{ master.master_id }}/login" style="color:var(--text-dim); text-decoration:none;">로그인</a>
+    &nbsp;·&nbsp;
+    <a href="/expert/{{ master.master_id }}/register" style="color:var(--text-dim); text-decoration:none;">회원가입</a>
+  </div>
+</footer>
+
+<script>
+// 별 생성
+(function() {
+  const container = document.getElementById('starsContainer');
+  const count = 80;
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    star.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --d: ${Math.random() * 4 + 2}s;
+      --delay: ${Math.random() * 5}s;
+      --min-op: ${Math.random() * 0.3 + 0.1};
+    `;
+    container.appendChild(star);
+  }
+})();
+
+// 스크롤 reveal 애니메이션
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

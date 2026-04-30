@@ -1,0 +1,793 @@
+{% extends "brand/_brand_chrome.html" %}
+{% set page = 'profile' %}
+{% block title %}내 정보 수정 | {{ master.선생님이름 }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  .pf-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px;
+  }
+  .pf-back {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(155,89,182,0.15);
+    border: 1px solid var(--border);
+    color: var(--lav-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .pf-back:hover { background: rgba(155,89,182,0.3); }
+  .pf-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px; font-weight: 800;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .alert-success {
+    padding: 10px 14px; border-radius: 12px;
+    background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.4);
+    color: #4ade80; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px; text-align: center;
+  }
+  .alert-error {
+    padding: 10px 14px; border-radius: 12px;
+    background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.4);
+    color: #fca5a5; font-size: 12.5px; margin-bottom: 14px;
+  }
+  .alert-error ul { padding-left: 16px; margin: 0; }
+
+  /* ===== 카드형 아코디언 섹션 ===== */
+  .pf-card {
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(155,89,182,0.3);
+    border-radius: 14px;
+    margin-bottom: 11px;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .pf-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,132,252,0.4), transparent);
+  }
+  .pf-card.open {
+    border-color: rgba(245,200,66,0.4);
+    box-shadow: 0 8px 22px rgba(155,89,182,0.22);
+  }
+  .pf-card-head {
+    width: 100%;
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+  .pf-card-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    background: linear-gradient(135deg, rgba(155,89,182,0.25), rgba(245,200,66,0.18));
+    border: 1px solid rgba(245,200,66,0.3);
+  }
+  .pf-card-info {
+    flex: 1; min-width: 0;
+  }
+  .pf-card-title {
+    font-size: 12.5px; font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+  }
+  .pf-card-summary {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .pf-card-summary .empty { color: var(--text-muted); font-style: italic; }
+  .pf-card-arrow {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(155,89,182,0.35);
+    background: rgba(155,89,182,0.12);
+    color: var(--lav-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .pf-card.open .pf-card-arrow {
+    transform: rotate(180deg);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #1e1433;
+    border-color: rgba(245,200,66,0.6);
+  }
+
+  .pf-card-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 14px;
+    border-top: 1px solid transparent;
+    transition: max-height 0.4s ease, opacity 0.25s ease, padding 0.3s ease;
+  }
+  .pf-card.open .pf-card-body {
+    max-height: 1200px;
+    opacity: 1;
+    padding: 14px 14px 16px;
+    border-top-color: rgba(155,89,182,0.25);
+  }
+
+  .pf-card-note {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  /* 폼 필드 (기존과 동일 톤) */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .form-row:last-child { margin-bottom: 0; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-label {
+    font-size: 11px; font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+  .required { color: #f87171; margin-left: 2px; }
+  .optional { font-size: 10px; color: var(--text-muted); font-weight: 400; margin-left: 4px; }
+  .form-input, .form-select {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(155,89,182,0.3);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none; outline: none;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--gold);
+    background: rgba(0,0,0,0.35);
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input.is-invalid { border-color: #f87171; }
+  .form-select option { background: var(--bg-card); color: var(--text-primary); }
+
+  .radio-group { display: flex; gap: 12px; align-items: center; padding: 6px 0; flex-wrap: wrap; }
+  .radio-item { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .radio-item input[type="radio"] { accent-color: var(--lav-main); width: 15px; height: 15px; }
+  .radio-item label { font-size: 12.5px; color: var(--text-secondary); cursor: pointer; }
+
+  .lunar-wrap {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 18px;
+    background: rgba(155,89,182,0.12); border: 1px solid var(--border);
+    margin-left: 4px;
+  }
+  .lunar-wrap input[type="checkbox"] { accent-color: var(--gold); width: 14px; height: 14px; }
+  .lunar-wrap label { font-size: 11.5px; color: var(--gold-light); cursor: pointer; font-weight: 700; }
+
+  .error-text { font-size: 11px; color: #f87171; margin-top: 3px; display: none; }
+
+  .submit-btn {
+    width: 100%; padding: 14px;
+    border: none; border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), #fde68a);
+    color: #1e1433;
+    font-size: 15px; font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(245,200,66,0.35);
+    transition: transform 0.2s;
+    margin-top: 8px;
+    margin-bottom: 18px;
+  }
+  .submit-btn:hover { transform: translateY(-1px); }
+
+  /* ===== 회원탈퇴 영역 ===== */
+  .pf-danger-zone {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(248,113,113,0.35);
+    text-align: center;
+  }
+  .pf-danger-title {
+    font-size: 11px; font-weight: 700;
+    color: #fca5a5;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .pf-danger-desc {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+  .pf-leave-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(248,113,113,0.45);
+    color: #fca5a5;
+    font-size: 12px; font-weight: 700;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+  }
+  .pf-leave-btn:hover {
+    background: rgba(248,113,113,0.12);
+    border-color: rgba(248,113,113,0.7);
+  }
+
+  /* 모달 */
+  .pf-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15,8,30,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    align-items: center; justify-content: center;
+  }
+  .pf-modal-overlay.open { display: flex; }
+  .pf-modal {
+    width: 88%; max-width: 340px;
+    border-radius: 18px;
+    background: linear-gradient(160deg, #2a1b4a, #3a2560);
+    border: 1px solid rgba(248,113,113,0.5);
+    padding: 22px 20px 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    text-align: center;
+    animation: pf-modal-pop 0.25s cubic-bezier(0.18,0.89,0.32,1.28);
+  }
+  @keyframes pf-modal-pop {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .pf-modal-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    background: linear-gradient(135deg, rgba(248,113,113,0.25), rgba(248,113,113,0.1));
+    border: 1px solid rgba(248,113,113,0.5);
+    color: #fca5a5;
+  }
+  .pf-modal-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .pf-modal-msg {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .pf-modal-msg strong { color: #fca5a5; font-weight: 800; }
+  .pf-modal-confirm-input {
+    width: 100%;
+    padding: 9px 11px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(248,113,113,0.45);
+    border-radius: 9px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    text-align: center;
+    margin-bottom: 14px;
+    outline: none;
+  }
+  .pf-modal-actions { display: flex; gap: 8px; }
+  .pf-modal-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 11px;
+    border: 1px solid;
+    font-size: 13px; font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .pf-modal-btn.cancel {
+    background: rgba(155,89,182,0.12);
+    border-color: rgba(155,89,182,0.3);
+    color: var(--text-secondary);
+  }
+  .pf-modal-btn.confirm {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-color: #b91c1c;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(239,68,68,0.4);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .pf-modal-btn.confirm.enabled {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="pf-header">
+  <a href="{{ base_url }}/home" class="pf-back">‹</a>
+  <div class="pf-title">내 정보 수정</div>
+</div>
+
+{% if msg %}
+<div class="alert-success">✦ {{ msg }}</div>
+{% endif %}
+
+{% if errors %}
+<div class="alert-error">
+  <ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+
+{# ===== 요약값 미리 계산 ===== #}
+{% set _by = client.birth_year|default(0)|int %}
+{% set _bm = client.birth_month|default(0)|int %}
+{% set _bd = client.birth_day|default(0)|int %}
+{% set _birth_str = (_by ~ '.' ~ '%02d'|format(_bm) ~ '.' ~ '%02d'|format(_bd)) if (_by and _bm and _bd) else '미입력' %}
+{% set _ll = '음력' if client.lunar_yn else '양력' %}
+{% if client.leap_month_yn %}{% set _ll = _ll ~ '·윤달' %}{% endif %}
+{% set _gender = '여' if client.gender == '여' else '남' %}
+
+<form method="post" action="{{ base_url }}/profile" id="profileForm">
+
+  <!-- ① 기본 정보 -->
+  <div class="pf-card" data-card="basic">
+    <button type="button" class="pf-card-head" aria-expanded="false">
+      <div class="pf-card-icon">👤</div>
+      <div class="pf-card-info">
+        <div class="pf-card-title">기본 정보</div>
+        <div class="pf-card-summary">
+          {{ client.name|default('이름 미입력') }} · {{ client.email|default('이메일 미입력') }}
+        </div>
+      </div>
+      <span class="pf-card-arrow" aria-hidden="true">▾</span>
+    </button>
+    <div class="pf-card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">이름 <span class="required">*</span></label>
+          <input type="text" name="name" class="form-input" value="{{ client.name|default('') }}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일 <span class="required">*</span></label>
+          <input type="email" name="email" id="emailInput" class="form-input"
+                 value="{{ client.email|default('') }}" required
+                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+          <div class="error-text" id="emailError">올바른 이메일 형식이 아닙니다.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">새 비밀번호 <span class="optional">(변경 시에만)</span></label>
+          <input type="password" name="password" id="pw" class="form-input" placeholder="6자 이상" minlength="6">
+        </div>
+        <div class="form-group">
+          <label class="form-label">새 비밀번호 확인</label>
+          <input type="password" name="password_confirm" id="pw2" class="form-input" placeholder="한 번 더 입력" minlength="6">
+          <div class="error-text" id="pwError">비밀번호가 일치하지 않습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 명리 정보 -->
+  <div class="pf-card" data-card="saju">
+    <button type="button" class="pf-card-head" aria-expanded="false">
+      <div class="pf-card-icon">🌌</div>
+      <div class="pf-card-info">
+        <div class="pf-card-title">명리 정보</div>
+        <div class="pf-card-summary">
+          {{ _birth_str }} ({{ _ll }}) · {{ client.birth_time|default('생시 모름') }} · {{ _gender }}
+        </div>
+      </div>
+      <span class="pf-card-arrow" aria-hidden="true">▾</span>
+    </button>
+    <div class="pf-card-body">
+      <div class="form-row triple">
+        <div class="form-group">
+          <label class="form-label">생년 <span class="required">*</span></label>
+          <input type="number" name="birth_year" class="form-input" min="1900" max="2100" value="{{ client.birth_year|default('1990') }}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생월 <span class="required">*</span></label>
+          <select name="birth_month" class="form-select" required>
+            {% for i in range(1, 13) %}
+            <option value="{{ i }}" {% if client.birth_month|string == i|string %}selected{% endif %}>{{ i }}월</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생일 <span class="required">*</span></label>
+          <select name="birth_day" class="form-select" required>
+            {% for i in range(1, 32) %}
+            <option value="{{ i }}" {% if client.birth_day|string == i|string %}selected{% endif %}>{{ i }}일</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">양력 / 음력</label>
+          <div class="radio-group">
+            <div class="radio-item">
+              <input type="radio" name="lunar_yn" id="lunar0" value="0" {% if not client.lunar_yn %}checked{% endif %}
+                     onclick="document.getElementById('leap_wrap').style.display='none'">
+              <label for="lunar0">양력</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="lunar_yn" id="lunar1" value="1" {% if client.lunar_yn %}checked{% endif %}
+                     onclick="document.getElementById('leap_wrap').style.display='inline-flex'">
+              <label for="lunar1">음력</label>
+            </div>
+            <div class="lunar-wrap" id="leap_wrap"
+                 style="display: {% if client.lunar_yn %}inline-flex{% else %}none{% endif %};">
+              <input type="checkbox" name="leap_month_yn" id="leap_month_yn" value="1" {% if client.leap_month_yn %}checked{% endif %}>
+              <label for="leap_month_yn">🌙 윤달</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생시 <span class="required">*</span></label>
+          <select name="birth_time" class="form-select" required>
+            {% set times = [
+              ('모름','모름'), ('자시','자시 (23:30~01:29)'), ('축시','축시 (01:30~03:29)'),
+              ('인시','인시 (03:30~05:29)'), ('묘시','묘시 (05:30~07:29)'), ('진시','진시 (07:30~09:29)'),
+              ('사시','사시 (09:30~11:29)'), ('오시','오시 (11:30~13:29)'), ('미시','미시 (13:30~15:29)'),
+              ('신시','신시 (15:30~17:29)'), ('유시','유시 (17:30~19:29)'), ('술시','술시 (19:30~21:29)'),
+              ('해시','해시 (21:30~23:29)')
+            ] %}
+            {% for val, label in times %}
+            <option value="{{ val }}" {% if (client.birth_time|default('모름')) == val %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">성별 <span class="required">*</span></label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" name="gender" id="genderM" value="남" {% if client.gender != '여' %}checked{% endif %} required>
+            <label for="genderM">남성</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" name="gender" id="genderF" value="여" {% if client.gender == '여' %}checked{% endif %} required>
+            <label for="genderF">여성</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 활동 · 가족 -->
+  <div class="pf-card" data-card="family">
+    <button type="button" class="pf-card-head" aria-expanded="false">
+      <div class="pf-card-icon">🏠</div>
+      <div class="pf-card-info">
+        <div class="pf-card-title">활동 · 가족</div>
+        <div class="pf-card-summary">
+          {{ client.activity_type|default('직장인') }} · {{ client.marital_status|default('미혼') }} ·
+          {{ '자녀 있음' if (client.has_children|default('없음')) == '있음' else '자녀 없음' }} ·
+          {{ '형제 있음' if (client.has_siblings|default('있음')) == '있음' else '외동' }} ·
+          {% if (client.parent_status|default('양친')) == '양친' %}부모 두 분 생존
+          {% elif client.parent_status == '편친' %}한 분 별세
+          {% else %}두 분 별세{% endif %}
+        </div>
+      </div>
+      <span class="pf-card-arrow" aria-hidden="true">▾</span>
+    </button>
+    <div class="pf-card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">활동 상태</label>
+          <select name="activity_type" class="form-select">
+            {% for st in ['직장인','사업가','프리랜서','학생','은퇴','주부','무직'] %}
+            <option value="{{ st }}" {% if (client.activity_type|default('직장인')) == st %}selected{% endif %}>{{ st }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">부모님은?</label>
+          <select name="parent_status" class="form-select">
+            {% for v,l in [('양친','두 분 다 생존'),('편친','한 분 별세'),('없음','두 분 다 별세')] %}
+            <option value="{{ v }}" {% if (client.parent_status|default('양친')) == v %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">가족 (결혼·자녀·형제)</label>
+        <div class="form-row triple">
+          <select name="marital_status" class="form-select">
+            {% for ms in ['미혼','기혼','이혼','사별','재혼'] %}
+            <option value="{{ ms }}" {% if (client.marital_status|default('미혼')) == ms %}selected{% endif %}>{{ ms }}</option>
+            {% endfor %}
+          </select>
+          <select name="has_children" class="form-select">
+            {% for v,l in [('없음','자녀 없음'),('있음','자녀 있음')] %}
+            <option value="{{ v }}" {% if (client.has_children|default('없음')) == v %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+          </select>
+          <select name="has_siblings" class="form-select">
+            {% for v,l in [('있음','형제 있음'),('없음','외동')] %}
+            <option value="{{ v }}" {% if (client.has_siblings|default('있음')) == v %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 자가응답 -->
+  {% set _q1 = client.self_q1|default('') %}
+  {% set _q2 = client.self_q2|default('') %}
+  {% set _q3 = client.self_q3|default('') %}
+  {% set _q5 = client.self_q5|default('') %}
+  {% set _q6 = client.self_q6|default('') %}
+  {% set _q7 = client.self_q7|default('') %}
+  {% set _ans_count = ([_q1,_q2,_q3,_q5,_q6,_q7] | select | list | length) %}
+  <div class="pf-card" data-card="self-q">
+    <button type="button" class="pf-card-head" aria-expanded="false">
+      <div class="pf-card-icon">📋</div>
+      <div class="pf-card-info">
+        <div class="pf-card-title">자가응답 <span class="optional">(용신 정확도)</span></div>
+        <div class="pf-card-summary">
+          {% if _ans_count %}
+            7문항 중 <strong style="color:var(--gold-light);">{{ _ans_count }}개 응답</strong>
+          {% else %}
+            <span class="empty">미입력 — 답하면 사주 풀이가 더 정확해집니다</span>
+          {% endif %}
+        </div>
+      </div>
+      <span class="pf-card-arrow" aria-hidden="true">▾</span>
+    </button>
+    <div class="pf-card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Q1. 가장 잘 풀렸던 시기는?</label>
+          <select name="self_q1" class="form-select">
+            {% set q1_opts = [('','선택하세요'),('10대','10대'),('20대','20대'),('30대','30대'),('40대','40대'),('50대','50대'),('60대+','60대 이상'),('없음','특별히 없음')] %}
+            {% for v,l in q1_opts %}<option value="{{ v }}" {% if _q1 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Q2. 가장 힘들었던 시기는?</label>
+          <select name="self_q2" class="form-select">
+            {% for v,l in q1_opts %}<option value="{{ v }}" {% if _q2 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Q3. 평생 가장 약한 신체 부위?</label>
+          <select name="self_q6" class="form-select">
+            {% set q3_opts = [('','선택하세요'),('간담','간·근육·눈'),('심혈관','심장·혈관·정신'),('소화기','위·비장·소화'),('호흡기','폐·기관지·대장·피부'),('신장','신장·방광·생식기·허리'),('없음','특별히 없음')] %}
+            {% for v,l in q3_opts %}<option value="{{ v }}" {% if _q6 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Q4. 요즘(최근 1~2년) 어떠세요?</label>
+          <select name="self_q3" class="form-select">
+            {% set qq_opts = [('','선택하세요'),('잘풀림','요즘 잘 풀려요'),('보통','그냥 보통'),('막힘','요즘 너무 힘들어요')] %}
+            {% for v,l in qq_opts %}<option value="{{ v }}" {% if _q3 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Q5. 더위·추위 중 어느 쪽이 더 힘드세요?</label>
+          <select name="self_q5" class="form-select">
+            {% set qhr_opts = [('','선택하세요'),('추위','추위에 더 약함'),('더위','더위에 더 약함'),('비슷','비슷')] %}
+            {% for v,l in qhr_opts %}<option value="{{ v }}" {% if _q5 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Q7. 스트레스 후 회복은?</label>
+          <select name="self_q7" class="form-select">
+            {% set q7_opts = [('','선택하세요'),('빠름','금방 회복'),('느림','오래 끔'),('중간','중간')] %}
+            {% for v,l in q7_opts %}<option value="{{ v }}" {% if _q7 == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Q6. 본능적으로 끌리는 것은? (색상·계절·여행지)</label>
+        {% set q4_parts = (client.self_q4|default('')).split(',') %}
+        <div class="form-row triple">
+          <div class="form-group">
+            <select class="form-select q4-part" data-pos="0">
+              {% set q4c = [('','색상'),('빨강','빨강·주황'),('노랑','노랑·황토'),('초록','초록·연두'),('흰색','흰색·은색'),('검정','검정·짙은파랑')] %}
+              {% for v,l in q4c %}<option value="{{ v }}" {% if (q4_parts[0]|default('')) == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-select q4-part" data-pos="1">
+              {% set q4s = [('','계절'),('봄','봄'),('여름','여름'),('환절기','늦여름·환절기'),('가을','가을'),('겨울','겨울')] %}
+              {% for v,l in q4s %}<option value="{{ v }}" {% if (q4_parts[1]|default('')) == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-select q4-part" data-pos="2">
+              {% set q4t = [('','여행지'),('바다','🌊 바다·해변·호수'),('산숲','⛰️ 산·숲·계곡'),('바위산','🏔️ 바위산·암벽·동굴'),('시골','🏡 시골·평야·전원'),('도시','🌃 도시·축제·번화가'),('집콕','🛌 집콕·동네 산책'),('온천','♨️ 온천·휴양지'),('사찰','🛕 사찰·고요한 곳')] %}
+              {% for v,l in q4t %}<option value="{{ v }}" {% if (q4_parts[2]|default('')) == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <input type="hidden" name="self_q4" id="selfQ4Hidden" value="{{ client.self_q4|default('') }}">
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="submit-btn" id="submitBtn">
+    ✦ 변경 사항 저장
+  </button>
+</form>
+
+<!-- ===== 회원탈퇴 영역 ===== -->
+<div class="pf-danger-zone">
+  <div class="pf-danger-title">DANGER ZONE</div>
+  <div class="pf-danger-desc">
+    탈퇴하시면 등록된 사주·지인·결제 내역·구입한 풀이가 모두 비활성화됩니다.<br>
+    이 작업은 되돌릴 수 없습니다.
+  </div>
+  <button type="button" class="pf-leave-btn" id="pfLeaveBtn">회원 탈퇴</button>
+</div>
+
+<!-- 탈퇴 확인 모달 -->
+<div class="pf-modal-overlay" id="pfLeaveModal">
+  <div class="pf-modal" onclick="event.stopPropagation()">
+    <div class="pf-modal-icon">⚠️</div>
+    <div class="pf-modal-title">정말 탈퇴하시겠습니까?</div>
+    <div class="pf-modal-msg">
+      탈퇴를 진행하시려면 아래에 <strong>탈퇴</strong>를 정확히 입력해 주세요.
+    </div>
+    <input type="text" class="pf-modal-confirm-input" id="pfLeaveConfirmInput" placeholder='"탈퇴" 입력' autocomplete="off">
+    <form method="post" action="{{ base_url }}/profile/leave" id="pfLeaveForm">
+      <div class="pf-modal-actions">
+        <button type="button" class="pf-modal-btn cancel" id="pfLeaveCancel">취소</button>
+        <button type="submit" class="pf-modal-btn confirm" id="pfLeaveConfirm">탈퇴</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+/* 전체를 IIFE 로 감싸 const 재선언 충돌 방지 (SPA 재진입 시 안전) */
+(function () {
+  /* 카드 아코디언 토글 — data-bound 마커로 중복 부착 방지 */
+  const heads = document.querySelectorAll('.pf-card .pf-card-head');
+  heads.forEach(head => {
+    if (head.dataset.bound === '1') return;
+    head.dataset.bound = '1';
+    head.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const card = head.closest('.pf-card');
+      if (!card) return;
+      const opened = card.classList.toggle('open');
+      head.setAttribute('aria-expanded', opened ? 'true' : 'false');
+    });
+  });
+  console.debug('[profile] card heads bound:', heads.length);
+
+  /* 에러 발생 시 첫 카드 자동 펼침 */
+  {% if errors %}
+  document.querySelector('.pf-card[data-card="basic"]')?.classList.add('open');
+  {% endif %}
+
+  /* 이메일 검증 */
+  const EMAIL_RE = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  const emailInput = document.getElementById('emailInput');
+  const emailErr = document.getElementById('emailError');
+  function checkEmail() {
+    if (!emailInput) return false;
+    const v = emailInput.value.trim();
+    if (!v) { emailErr.style.display='none'; emailInput.classList.remove('is-invalid'); return false; }
+    if (!EMAIL_RE.test(v)) { emailErr.style.display='block'; emailInput.classList.add('is-invalid'); return false; }
+    emailErr.style.display='none'; emailInput.classList.remove('is-invalid'); return true;
+  }
+  emailInput?.addEventListener('input', checkEmail);
+  emailInput?.addEventListener('blur', checkEmail);
+
+  /* 비번 일치 검증 */
+  const pw  = document.getElementById('pw');
+  const pw2 = document.getElementById('pw2');
+  const pwErr = document.getElementById('pwError');
+  function checkPw() {
+    if (!pw || !pw2) return true;
+    if (pw2.value && pw.value !== pw2.value) { pwErr.style.display='block'; pw2.classList.add('is-invalid'); return false; }
+    pwErr.style.display='none'; pw2.classList.remove('is-invalid'); return true;
+  }
+  pw2?.addEventListener('input', checkPw);
+  pw?.addEventListener('input', checkPw);
+
+  /* Q6: 색상·계절·여행지 합성 */
+  function syncQ4() {
+    const parts = ['', '', ''];
+    document.querySelectorAll('.q4-part').forEach(el => {
+      const pos = parseInt(el.dataset.pos, 10);
+      parts[pos] = el.value || '';
+    });
+    const hidden = document.getElementById('selfQ4Hidden');
+    if (hidden) hidden.value = parts.join(',');
+  }
+  document.querySelectorAll('.q4-part').forEach(el => el.addEventListener('change', syncQ4));
+  syncQ4();
+
+  /* 폼 제출 검증 */
+  document.getElementById('profileForm')?.addEventListener('submit', function(e) {
+    if (!emailInput || !emailInput.value.trim() || !EMAIL_RE.test(emailInput.value.trim())) {
+      e.preventDefault();
+      document.querySelector('.pf-card[data-card="basic"]')?.classList.add('open');
+      if (emailErr) emailErr.style.display='block';
+      if (emailInput) { emailInput.classList.add('is-invalid'); emailInput.focus(); }
+      return;
+    }
+    if (pw && (pw.value || pw2.value)) {
+      if (pw.value.length < 6) { e.preventDefault(); alert('비밀번호는 6자 이상이어야 합니다.'); pw.focus(); return; }
+      if (!checkPw()) { e.preventDefault(); pw2.focus(); return; }
+    }
+    syncQ4();
+  });
+
+  /* 회원 탈퇴 모달 */
+  const leaveBtn   = document.getElementById('pfLeaveBtn');
+  const leaveModal = document.getElementById('pfLeaveModal');
+  const leaveInput = document.getElementById('pfLeaveConfirmInput');
+  const leaveCfm   = document.getElementById('pfLeaveConfirm');
+  const leaveCancel= document.getElementById('pfLeaveCancel');
+  function closeLeaveModal() {
+    if (!leaveModal) return;
+    leaveModal.classList.remove('open');
+    if (leaveInput) leaveInput.value = '';
+    if (leaveCfm) leaveCfm.classList.remove('enabled');
+  }
+  leaveBtn?.addEventListener('click', () => {
+    if (!leaveModal) return;
+    leaveModal.classList.add('open');
+    setTimeout(() => leaveInput?.focus(), 100);
+  });
+  leaveCancel?.addEventListener('click', closeLeaveModal);
+  leaveModal?.addEventListener('click', (e) => {
+    if (e.target === leaveModal) closeLeaveModal();
+  });
+  leaveInput?.addEventListener('input', () => {
+    if (!leaveCfm) return;
+    if (leaveInput.value.trim() === '탈퇴') leaveCfm.classList.add('enabled');
+    else leaveCfm.classList.remove('enabled');
+  });
+  document.getElementById('pfLeaveForm')?.addEventListener('submit', (e) => {
+    if (leaveInput && leaveInput.value.trim() !== '탈퇴') e.preventDefault();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && leaveModal && leaveModal.classList.contains('open')) {
+      closeLeaveModal();
+    }
+  });
+})();
+</script>
+{% endblock %}

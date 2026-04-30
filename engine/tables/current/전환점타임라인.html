@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>전환점 타임라인 》 임효원님</title>
+    <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; max-height:840px; overflow:hidden; padding:6px 8px; background:transparent; display:flex; flex-direction:column; gap:7px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 840px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:1.5px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0; }
+.card-hd { padding:5px 13px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:7.5pt; font-weight:900; color:white; }
+.card-hd-sub { font-size:7pt; color:rgba(255,255,255,.85); }
+/* 대운 전환 */
+.dw-transfer { display:flex; align-items:stretch; gap:8px; padding:8px 13px; background:transparent; }
+.dw-box { flex:1; border-radius:8px; padding:8px 11px; border:2px solid; }
+.dw-label { font-size:7pt; font-weight:700; color:#888; margin-bottom:4px; }
+.dw-gangi { font-family:'Noto Serif KR',serif; font-size:19pt; font-weight:800; line-height:1; letter-spacing:-1px; }
+.dw-seong-badge { display:inline-block; padding:2px 8px; border-radius:8px; font-size:6.5pt; font-weight:700; margin-top:4px; }
+.dw-range { font-size:6pt; color:#777; margin-top:4px; }
+.dw-arrow-col { display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.dw-arrow { font-size:21pt; color:#bbb; }
+/* 전반/후반 */
+.half-section { background:#f8f9fa; border-top:1px solid #eee; padding:6px 13px; display:flex; gap:5px; }
+.half-box { flex:1; padding:5px 8px; border-radius:6px; border:1.5px solid #e0e0e0; background:transparent; }
+.half-period { font-size:7pt; color:#aaa; margin-bottom:2px; }
+.half-label { font-size:6pt; font-weight:700; color:#333; margin-bottom:2px; }
+/* 교차 현상 */
+.cross-list { padding:6px 11px; background:transparent; display:flex; flex-direction:column; gap:4px; }
+.cross-row { display:flex; align-items:flex-start; gap:8px; padding:5px 10px; border-radius:6px; }
+.cross-src-chung { background:#fff8e1; border-left:3px solid #f9a825; }
+.cross-src-hap   { background:#e8f5e9; border-left:3px solid #43a047; }
+.cross-badge { display:flex; flex-direction:column; align-items:center; gap:1px; flex-shrink:0; }
+.cross-src  { font-size:7pt; font-weight:700; color:#888; }
+.cross-type { font-size:7pt; font-weight:900; }
+.cross-desc { font-size:6.5pt; color:#444; line-height:1.5; padding-top:1px; }
+/* 교차 평가 */
+.grade-box { margin:0 11px 8px; padding:6px 10px; background:#f3e5f5; border-radius:6px; border-left:3px solid #9c27b0; }
+.grade-row { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
+.grade-chip { padding:2px 8px; border-radius:5px; font-size:7pt; font-weight:900; background:#7b1fa2; color:white; }
+.grade-desc { font-size:6.5pt; color:#444; line-height:1.5; }
+/* 월운 */
+.month-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; background:transparent; }
+.month-col { padding:8px 13px; }
+.month-title { font-size:6.5pt; font-weight:700; margin-bottom:4px; }
+.month-pills { display:flex; flex-wrap:wrap; gap:4px; }
+.pill-good { display:inline-block; padding:3px 8px; border-radius:10px; font-size:6.5pt; font-weight:700; background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.pill-care { display:inline-block; padding:3px 8px; border-radius:10px; font-size:6.5pt; font-weight:700; background:#fff3e0; color:#e65100; border:1px solid #ffcc80; }
+/* 주의사항 */
+.note-body { padding:8px 13px; background:transparent; display:flex; flex-direction:column; gap:5px; }
+.note-row { display:flex; align-items:flex-start; gap:8px; padding:6px 10px; border-radius:6px; border:1.5px solid #e0e0e0; }
+.note-icon { font-size:10pt; flex-shrink:0; margin-top:1px; }
+.note-inner {}
+.note-lbl { font-size:7pt; font-weight:700; color:#888; margin-bottom:2px; }
+.note-val { font-size:7pt; font-weight:700; color:#333; line-height:1.5; }
+.health-box { padding:6px 10px; background:#fff3e0; border-radius:6px; border-left:3px solid #ff9800; }
+.health-title { font-size:7pt; font-weight:700; color:#e65100; margin-bottom:4px; }
+.health-item { font-size:6.5pt; color:#555; line-height:1.5; padding-left:11px; position:relative; }
+.health-item::before { content:'•'; position:absolute; left:2px; color:#e53935; }
+.young-box { padding:6px 10px; background:#e8eaf6; border-radius:6px; border-left:3px solid #5c6bc0; }
+  </style>
+</head>
+<body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+  <div>
+    <div class="banner-hdr-title">⏱️ 전환점(轉換點) 타임라인</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 대운 戊申(무신)</div>
+  </div>
+</div>
+
+<!-- ① 대운 전환 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+    <div class="card-hd-title">① 대운(大運) 전환</div>
+    <div class="card-hd-sub">현재 대운 → 다음 대운 교체 정보</div>
+  </div>
+  <div class="dw-transfer">
+    <!-- 현재 대운 -->
+    <div class="dw-box" style="border-color:#e53935;background:#ffebee;">
+      <div class="dw-label">현재 대운</div>
+      <div class="dw-gangi" style="color:#c62828;">戊申(무신)</div>
+      <div><span class="dw-seong-badge" style="background:#c6282815;color:#c62828;border:1px solid #c6282855;">기신대운</span></div>
+      <div class="dw-range">58-67세</div>
+    </div>
+    <div class="dw-arrow-col"><div class="dw-arrow">→</div></div>
+    <!-- 다음 대운 -->
+    <div class="dw-box" style="border-color:#e53935;background:#ffebee;">
+      <div class="dw-label">다음 대운</div>
+      <div class="dw-gangi" style="color:#c62828;">丁未(정미)</div>
+      <div><span class="dw-seong-badge" style="background:#c6282815;color:#c62828;border:1px solid #c6282855;">기신대운</span></div>
+      <div class="dw-range">2036년 (만 68세)</div>
+    </div>
+  </div>
+  <!-- 전반·후반 분절 -->
+  
+  <div class="half-section">
+    <div class="half-box">
+      <div class="half-period">전반 2026~</div>
+      <div class="half-label">전반 운세</div>
+      <span style="display:inline-block;padding:1px 6px;border-radius:8px;font-size:6pt;font-weight:700;background:#ffebee;color:#c62828;border:1px solid #c6282833;">기신대운</span>
+    </div>
+    <div class="half-box">
+      <div class="half-period">후반 2031~</div>
+      <div class="half-label">후반 운세</div>
+      <span style="display:inline-block;padding:1px 6px;border-radius:8px;font-size:6pt;font-weight:700;background:#f5f5f5;color:#555;border:1px solid #55533;">중립대운</span>
+    </div>
+    <div style="flex:2;padding:4px 8px;background:transparent;border-radius:6px;border:1.5px solid #e0e0e0;font-size:6.5pt;color:#555;line-height:1.4;display:flex;align-items:center;">戊 기운 주도 (58~62세)</div>
+  </div>
+</div>
+
+<!-- ② 교차 현상 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+    <div class="card-hd-title">② 교차(交叉) 현상</div>
+    <div class="card-hd-sub">대운·세운과 원국의 합충 작용</div>
+  </div>
+  <div class="cross-list">
+    <div class="cross-row cross-src-chung">
+  <div class="cross-badge">
+    <span class="cross-src" style="color:#e65100;">대운</span>
+    <span class="cross-type" style="color:#e65100;">충(沖)</span>
+  </div>
+  <div class="cross-desc">寅(인) 월지(月支) ↔ 申(신) 대운지지 / 寅(인) 시지(時支) ↔ 申(신) 대운지지</div>
+</div><div class="cross-row cross-src-hap">
+  <div class="cross-badge">
+    <span class="cross-src" style="color:#2e7d32;">세운</span>
+    <span class="cross-type" style="color:#2e7d32;">합(合)</span>
+  </div>
+  <div class="cross-desc">寅午 삼합(부분)→火</div>
+</div>
+  </div>
+  
+  <div class="grade-box">
+    <div class="grade-row">
+      <span class="grade-chip">★★★</span>
+      <span style="font-size:6.5pt;color:#555;font-weight:700;">대운·세운 교차 평가</span>
+    </div>
+    <div class="grade-desc">중립적 흐름이에요. 노력한 만큼 결과가 나오는 공정한 시기이에요.</div>
+  </div>
+</div>
+
+<!-- ③ 올해 월운 흐름 -->
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#0288d1);">
+    <div class="card-hd-title">③ 2026년 월운(月運) 흐름</div>
+    <div class="card-hd-sub">올해 용신·희신 강한 달 / 주의 달 구분</div>
+  </div>
+  <div class="month-grid">
+    <div class="month-col" style="border-right:1px solid #f0f0f0;">
+      <div class="month-title" style="color:#2e7d32;">좋은 달</div>
+      <div class="month-pills">
+        <span class="pill-good">2월</span><span class="pill-good">3월</span><span class="pill-good">4월</span><span class="pill-good">5월</span><span class="pill-good">6월</span><span class="pill-good">7월</span><span class="pill-good">10월</span><span class="pill-good">11월</span><span class="pill-good">12월</span><span class="pill-good">1월</span>
+      </div>
+    </div>
+    <div class="month-col">
+      <div class="month-title" style="color:#e65100;">조심 달</div>
+      <div class="month-pills">
+        <span class="pill-care">8월</span><span class="pill-care">9월</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 주의 사항 -->
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#b71c1c,#e53935);">
+    <div class="card-hd-title">④ 이 대운의 핵심 주의 사항</div>
+    <div class="card-hd-sub">주의할 해·최흉해·건강 위험 대운·초년 어려운 대운</div>
+  </div>
+  <div class="note-body">
+    <div class="note-row" style="border-color:#f9a825;background:#fffde7;">
+      <div class="note-icon">⚠️</div>
+      <div class="note-inner"><div class="note-lbl">주의할 해</div><div class="note-val">없음</div></div>
+    </div>
+    <div style="display:flex;gap:5px;">
+      
+      
+      
+    </div>
+    <div class="health-box">
+      <div class="health-title">건강 주의 대운 목록</div>
+      <div class="health-item">4기 庚戌(38-47세): 소화기·피부·알레르기(일지 충)</div><div class="health-item">6기 戊申(58-67세): 간담·근육통·눈 피로(월지 충), 간담·근육통·눈 피로(시지 충)</div>
+    </div>
+    <div class="young-box">
+      <div style="font-size:7pt;font-weight:700;color:#3949ab;margin-bottom:3px;">초년 어려운 대운</div>
+      <div style="font-size:6.5pt;color:#444;line-height:1.5;">癸丑(8-17세)</div>
+    </div>
+  </div>
+</div>
+
+</div></body></html>

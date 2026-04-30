@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>신강약 직업 추천표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; margin:0 auto; padding:14px 20px; background:transparent; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px auto; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+table { width:100%; border-collapse:collapse; }
+th { background:#1a3a6a; color:white; font-size:11px; font-weight:700; padding:5px 6px; text-align:center; }
+th:first-child { text-align:center; }
+td { font-size:10px; padding:5px 6px; border-bottom:1px solid #e8e8e8; vertical-align:top; line-height:1.4; }
+tr:nth-child(even) td { background:#f8f9fc; }
+tr:nth-child(odd) td { background:#ffffff; }
+.hl-row td { background:#e3f2fd !important; border-top:2px solid #1565c0; border-bottom:2px solid #1565c0; }
+.hl-row td:first-child { border-left:3px solid #1565c0; }
+.hl-row td:last-child { border-right:3px solid #1565c0; }
+.level-col { font-weight:900; color:#1a3a6a; text-align:center; white-space:nowrap; font-size:10px; }
+.warn-col { color:#c62828; font-size:10px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+      <div>
+        <div class="banner-hdr-title">신강약별 직업 추천표</div>
+        <div class="banner-hdr-sub">신강약 단계별 적합 환경 · 직업군 · 주의사항</div>
+      </div>
+      <div>
+        <div class="banner-hdr-name">임효원 님</div>
+        <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강 · 편관격(偏官格) · 단계 신강</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:13%;">구분</th>
+          <th style="width:22%;">적합 환경</th>
+          <th style="width:38%;">추천 직업군</th>
+          <th style="width:27%;">주의사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="level-col">극신강</td>
+          <td>독립적·자율적 환경</td>
+          <td>사업가·리더·전문직·독립 컨설턴트·프리랜서</td>
+          <td class="warn-col">에너지 분산 주의, 팀과의 소통 필수</td>
+        </tr>
+        <tr class="hl-row">
+          <td class="level-col">신강 ★</td>
+          <td>자율적·재량권 있는 환경</td>
+          <td>관리직·기획·영업·마케팅·스타트업</td>
+          <td class="warn-col">고집으로 인한 마찰 주의, 경청 필요</td>
+        </tr>
+        <tr>
+          <td class="level-col">중화</td>
+          <td>유연한·균형 잡힌 환경</td>
+          <td>전천후 가능 — 상황에 맞는 역할 수행</td>
+          <td class="warn-col">방향 설정이 가장 중요, 우유부단 주의</td>
+        </tr>
+        <tr>
+          <td class="level-col">신약</td>
+          <td>협력적·팀 기반 환경</td>
+          <td>보좌역·전문기술직·상담·교육·연구</td>
+          <td class="warn-col">과로 주의, 체력 관리와 스트레스 조절 필수</td>
+        </tr>
+        <tr>
+          <td class="level-col">극신약</td>
+          <td>보호적·안정적 환경</td>
+          <td>예술·연구·교육·심리상담·문화 콘텐츠</td>
+          <td class="warn-col">체력 관리 필수, 무리한 경쟁 환경 피할 것</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

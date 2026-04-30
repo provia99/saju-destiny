@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{width:604px;max-height:860px;overflow:hidden;padding:4px 6px;display:flex;flex-direction:column;gap:1px;font-size:84%;}
+@media print{body{background:transparent;margin:0;padding:0;}.page{margin:0;border:none;}@page{size:604px 860px;margin:0;}}
+
+.hdr{background:linear-gradient(135deg,#4caf50,#4caf50dd);padding:4px 10px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;}
+.hdr-title{font-size:9pt;font-weight:900;color:white;}
+.hdr-sub{font-size:6pt;color:rgba(255,255,255,0.85);}
+
+.summary{display:flex;gap:3px;margin:2px 0;}
+.sum-card{flex:1;border-radius:4px;padding:2px 4px;text-align:center;border:1px solid #ddd;}
+.sum-label{font-size:5pt;color:#888;margin-bottom:0;}
+.sum-value{font-size:7pt;font-weight:800;}
+.sum-sub{font-size:5pt;color:#666;margin-top:0;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:6pt;margin:1px 0;}
+.tbl th{background:#f5f0e6;padding:2px;font-weight:800;border:1px solid #ddd;font-size:5.5pt;color:#5a4e3c;}
+.tbl td{padding:2px;border:1px solid #eee;vertical-align:top;line-height:1.25;}
+.tbl tr:nth-child(even){background:#fafafa;}
+
+.oh-badge{display:inline-block;padding:1px 6px;border-radius:10px;font-weight:800;font-size:8pt;color:white;min-width:42px;text-align:center;}
+.role-badge{display:inline-block;padding:1px 5px;border-radius:4px;font-size:6.5pt;font-weight:700;}
+.role-yong{background:rgba(46,125,50,0.15);color:#2e7d32;}
+.role-hui{background:rgba(21,101,192,0.15);color:#1565c0;}
+.role-gi{background:rgba(198,40,40,0.15);color:#c62828;}
+.role-gu{background:rgba(230,81,0,0.15);color:#e65100;}
+.role-han{background:rgba(117,117,117,0.1);color:#757575;}
+
+.grade{font-weight:800;font-size:8pt;}
+.grade-best{color:#2e7d32;}
+.grade-good{color:#1565c0;}
+.grade-warn{color:#c62828;}
+.grade-caution{color:#e65100;}
+.grade-neutral{color:#757575;}
+
+.sect{margin:2px 0 1px;font-size:7pt;font-weight:800;color:#5a4e3c;border-bottom:1px solid #d4af37;padding-bottom:1px;}
+
+.chun-tbl{width:100%;border-collapse:collapse;font-size:6pt;}
+.chun-tbl th{background:#f5f0e6;padding:2px;font-weight:700;border:1px solid #ddd;font-size:5.5pt;}
+.chun-tbl td{padding:1.5px 2px;border:1px solid #eee;text-align:center;line-height:1.2;}
+
+.tip{background:rgba(212,175,55,0.08);border-left:2px solid #d4af37;padding:3px 5px;border-radius:3px;font-size:5.5pt;margin-top:2px;line-height:1.3;}
+.tip b{color:#8b6914;}
+</style></head><body>
+<div class="page">
+
+<!-- 헤더 -->
+<div class="hdr">
+  <div>
+    <div class="hdr-title">인간관계 궁합표 · 임효원 님</div>
+    <div class="hdr-sub">일간 戊(土) · 중화형신강 · 용신 木(목)</div>
+  </div>
+  <div style="font-size:6pt;color:rgba(255,255,255,0.8);text-align:right;">나의 기준: 용신(5신)<br>상대 기준: 일간 오행</div>
+</div>
+
+<!-- 대조 기준 안내 -->
+<div style="display:flex;align-items:stretch;gap:0;margin:2px 0;border:2px solid #d4af37;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(212,175,55,0.15);">
+  <div style="flex:1;text-align:center;padding:4px 8px;background:linear-gradient(135deg,#e8f5e9,#e8f5e9ee);">
+    <div style="font-size:6.5pt;color:#666;font-weight:700;">나 · 임효원</div>
+    <div style="font-size:11pt;font-weight:900;color:#4caf50;margin:1px 0;">용신 <span style="font-size:14pt;">木</span><span style="font-size:8pt;color:#888;">(목)</span></div>
+    <div style="display:flex;justify-content:center;gap:3px;margin-top:1px;">
+      <span style="background:#4caf50;color:white;padding:1px 6px;border-radius:8px;font-size:5.5pt;font-weight:700;">내가 필요한 기운</span>
+    </div>
+  </div>
+  <div style="background:linear-gradient(180deg,#d4af37,#c9a227);color:white;padding:4px 4px;font-size:9pt;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;">
+    <span style="font-size:6pt;">대조</span>
+    <span style="font-size:11pt;">⟷</span>
+  </div>
+  <div style="flex:1;text-align:center;padding:4px 8px;background:linear-gradient(135deg,#f8f8f8,#f0f0f0);">
+    <div style="font-size:6.5pt;color:#666;font-weight:700;">상대방</div>
+    <div style="font-size:11pt;font-weight:900;color:#333;margin:1px 0;">일간 <span style="font-size:9pt;color:#555;">오행</span></div>
+    <div style="display:flex;justify-content:center;gap:2px;margin-top:1px;">
+      <span style="background:#4caf50;color:white;padding:0 3px;border-radius:6px;font-size:6pt;font-weight:800;">木</span><span style="background:#f44336;color:white;padding:0 3px;border-radius:6px;font-size:6pt;font-weight:800;">火</span><span style="background:#ff9800;color:white;padding:0 3px;border-radius:6px;font-size:6pt;font-weight:800;">土</span><span style="background:#9e9e9e;color:white;padding:0 3px;border-radius:6px;font-size:6pt;font-weight:800;">金</span><span style="background:#2196f3;color:white;padding:0 3px;border-radius:6px;font-size:6pt;font-weight:800;">水</span>
+    </div>
+    <div style="font-size:5.5pt;color:#999;margin-top:1px;">그 사람의 본질 오행</div>
+  </div>
+</div>
+
+<!-- 요약 카드 -->
+<div class="summary">
+  <div class="sum-card" style="border-color:#4caf50;background:#e8f5e9">
+    <div class="sum-label">가장 좋은 인연</div>
+    <div class="sum-value" style="color:#4caf50">木(목)</div>
+    <div class="sum-sub">추진력·개척·성장</div>
+  </div>
+  <div class="sum-card" style="border-color:#2196f3;background:#e3f2fd">
+    <div class="sum-label">도움 되는 인연</div>
+    <div class="sum-value" style="color:#2196f3">水(수)</div>
+    <div class="sum-sub">전략·유연·지혜</div>
+  </div>
+  <div class="sum-card" style="border-color:#ff9800;background:rgba(198,40,40,0.05)">
+    <div class="sum-label">주의할 인연</div>
+    <div class="sum-value" style="color:#ff9800">土(토)</div>
+    <div class="sum-sub">안정·신뢰·포용</div>
+  </div>
+  <div class="sum-card" style="border-color:#f44336;background:#fff3e0">
+    <div class="sum-label">간접 방해</div>
+    <div class="sum-value" style="color:#f44336">火(화)</div>
+    <div class="sum-sub">열정·표현·사교</div>
+  </div>
+  <div class="sum-card" style="border-color:#bbb">
+    <div class="sum-label">중립</div>
+    <div class="sum-value" style="color:#9e9e9e">金(금)</div>
+    <div class="sum-sub">결단·원칙·냉철</div>
+  </div>
+</div>
+
+<!-- 오행별 관계 상세표 -->
+<div class="sect">상대방의 일간(日干) 오행별 나와의 관계</div>
+<table class="tbl" style="table-layout:fixed;width:100%;">
+<tr>
+  <th style="width:50px;">상대<br>일간</th>
+  <th style="width:60px;">5신 역할</th>
+  <th style="width:28px;">판정</th>
+  <th style="width:120px;">관계·판단</th>
+  <th>실전 조언</th>
+</tr>
+<tr>
+  <td style="text-align:center;"><span class="oh-badge" style="background:#4caf50">木</span><br><span style="font-size:6pt;color:#888;">추진력·개척·성장</span></td>
+  <td><span class="role-badge role-yong">용신(用神)</span></td>
+  <td style="text-align:center;"><span style="font-size:10pt;">🟢</span></td>
+  <td style="font-size:6.5pt;word-break:keep-all;"><span class="grade grade-best" style="font-size:7pt;">내가 크게 덕봅니다</span><br><span style="color:#888;">木→土 상극 (상대가 나를 극)</span></td>
+  <td style="font-size:7pt;line-height:1.55;word-break:keep-all;padding:4px 6px;">이 오행이 강한 사람을 가까이 하십시오. 임효원 님의 에너지가 살아납니다. 동업·파트너·멘토로 최적입니다.</td>
+</tr>
+<tr>
+  <td style="text-align:center;"><span class="oh-badge" style="background:#f44336">火</span><br><span style="font-size:6pt;color:#888;">열정·표현·사교</span></td>
+  <td><span class="role-badge role-gu">구신(仇神)</span></td>
+  <td style="text-align:center;"><span style="font-size:10pt;">🟠</span></td>
+  <td style="font-size:6.5pt;word-break:keep-all;"><span class="grade grade-caution" style="font-size:7pt;">간접적으로 해롭습니다</span><br><span style="color:#888;">火→土 상생 (상대가 나를 생)</span></td>
+  <td style="font-size:7pt;line-height:1.55;word-break:keep-all;padding:4px 6px;">겉으로는 무해해 보이지만, 기신을 강화하는 간접 방해자입니다. 큰 결정에서 이 유형의 조언은 한 번 더 검토하십시오.</td>
+</tr>
+<tr>
+  <td style="text-align:center;"><span class="oh-badge" style="background:#ff9800">土</span><br><span style="font-size:6pt;color:#888;">안정·신뢰·포용</span></td>
+  <td><span class="role-badge role-gi">기신(忌神)</span></td>
+  <td style="text-align:center;"><span style="font-size:10pt;">🔴</span></td>
+  <td style="font-size:6.5pt;word-break:keep-all;"><span class="grade grade-warn" style="font-size:7pt;">내가 손해봅니다</span><br><span style="color:#888;">동류(同類) — 같은 기운</span></td>
+  <td style="font-size:7pt;line-height:1.55;word-break:keep-all;padding:4px 6px;">이 오행이 강한 사람과의 관계에서 에너지 소모가 큽니다. 깊은 동업이나 금전 거래는 신중하십시오.</td>
+</tr>
+<tr>
+  <td style="text-align:center;"><span class="oh-badge" style="background:#9e9e9e">金</span><br><span style="font-size:6pt;color:#888;">결단·원칙·냉철</span></td>
+  <td><span class="role-badge role-han">한신(閑神)</span></td>
+  <td style="text-align:center;"><span style="font-size:10pt;">⚪</span></td>
+  <td style="font-size:6.5pt;word-break:keep-all;"><span class="grade grade-neutral" style="font-size:7pt;">큰 영향 없습니다</span><br><span style="color:#888;">土→金 상생 (내가 상대를 생)</span></td>
+  <td style="font-size:7pt;line-height:1.55;word-break:keep-all;padding:4px 6px;">특별한 득실은 없습니다. 편안하지만 큰 변화를 주지 않는 관계입니다.</td>
+</tr>
+<tr>
+  <td style="text-align:center;"><span class="oh-badge" style="background:#2196f3">水</span><br><span style="font-size:6pt;color:#888;">전략·유연·지혜</span></td>
+  <td><span class="role-badge role-hui">희신(喜神)</span></td>
+  <td style="text-align:center;"><span style="font-size:10pt;">🔵</span></td>
+  <td style="font-size:6.5pt;word-break:keep-all;"><span class="grade grade-good" style="font-size:7pt;">내게 도움이 됩니다</span><br><span style="color:#888;">土→水 상극 (내가 상대를 극)</span></td>
+  <td style="font-size:7pt;line-height:1.55;word-break:keep-all;padding:4px 6px;">좋은 인연입니다. 자연스럽게 시너지가 납니다. 팀원·친구·조력자로 좋습니다.</td>
+</tr>
+</table>
+
+<!-- 천간별(10종) 상세 궁합 -->
+<div class="sect">천간(天干) 10종 상세 궁합</div>
+<table class="chun-tbl">
+<tr>
+  <th>천간</th><th>오행</th><th>유형</th><th>5신</th><th>판정</th><th>동업</th><th>친구</th><th>배우자</th>
+</tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">甲</td>
+    <td><span class="oh-badge" style="background:#4caf50;font-size:6pt;min-width:26px;">木</span></td>
+    <td style="font-size:6pt;">큰 나무형 리더</td>
+    <td><span class="role-badge role-yong" style="font-size:5pt;">용신用神</span></td>
+    <td style="font-weight:700;color:#2e7d32;font-size:7pt;">🟢</td>
+    <td style="font-size:6pt;">◎ 최적</td>
+    <td style="font-size:6pt;">◎ 에너지↑</td>
+    <td style="font-size:6pt;">◎ 천생연분</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">乙</td>
+    <td><span class="oh-badge" style="background:#4caf50;font-size:6pt;min-width:26px;">木</span></td>
+    <td style="font-size:6pt;">유연한 덩굴형</td>
+    <td><span class="role-badge role-yong" style="font-size:5pt;">용신用神</span></td>
+    <td style="font-weight:700;color:#2e7d32;font-size:7pt;">🟢</td>
+    <td style="font-size:6pt;">◎ 최적</td>
+    <td style="font-size:6pt;">◎ 에너지↑</td>
+    <td style="font-size:6pt;">◎ 천생연분</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">丙</td>
+    <td><span class="oh-badge" style="background:#f44336;font-size:6pt;min-width:26px;">火</span></td>
+    <td style="font-size:6pt;">태양형 열정가</td>
+    <td><span class="role-badge role-gu" style="font-size:5pt;">구신仇神</span></td>
+    <td style="font-weight:700;color:#e65100;font-size:7pt;">🟠</td>
+    <td style="font-size:6pt;">△ 주의</td>
+    <td style="font-size:6pt;">△ 경계</td>
+    <td style="font-size:6pt;">△ 긴장</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">丁</td>
+    <td><span class="oh-badge" style="background:#f44336;font-size:6pt;min-width:26px;">火</span></td>
+    <td style="font-size:6pt;">촛불형 전문가</td>
+    <td><span class="role-badge role-gu" style="font-size:5pt;">구신仇神</span></td>
+    <td style="font-weight:700;color:#e65100;font-size:7pt;">🟠</td>
+    <td style="font-size:6pt;">△ 주의</td>
+    <td style="font-size:6pt;">△ 경계</td>
+    <td style="font-size:6pt;">△ 긴장</td>
+  </tr>
+<tr style="background:#fff8e1;">
+    <td style="font-weight:800;font-size:7pt;">戊 ←나</td>
+    <td><span class="oh-badge" style="background:#ff9800;font-size:6pt;min-width:26px;">土</span></td>
+    <td style="font-size:6pt;">큰 산형 중심축</td>
+    <td><span class="role-badge role-gi" style="font-size:5pt;">기신忌神</span></td>
+    <td style="font-weight:700;color:#c62828;font-size:7pt;">🔴</td>
+    <td style="font-size:6pt;">✕ 위험</td>
+    <td style="font-size:6pt;">△ 소모</td>
+    <td style="font-size:6pt;">✕ 갈등多</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">己</td>
+    <td><span class="oh-badge" style="background:#ff9800;font-size:6pt;min-width:26px;">土</span></td>
+    <td style="font-size:6pt;">논밭형 포용자</td>
+    <td><span class="role-badge role-gi" style="font-size:5pt;">기신忌神</span></td>
+    <td style="font-weight:700;color:#c62828;font-size:7pt;">🔴</td>
+    <td style="font-size:6pt;">✕ 위험</td>
+    <td style="font-size:6pt;">△ 소모</td>
+    <td style="font-size:6pt;">✕ 갈등多</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">庚</td>
+    <td><span class="oh-badge" style="background:#9e9e9e;font-size:6pt;min-width:26px;">金</span></td>
+    <td style="font-size:6pt;">강철형 실행가</td>
+    <td><span class="role-badge role-han" style="font-size:5pt;">한신閑神</span></td>
+    <td style="font-weight:700;color:#757575;font-size:7pt;">⚪</td>
+    <td style="font-size:6pt;">- 무난</td>
+    <td style="font-size:6pt;">- 보통</td>
+    <td style="font-size:6pt;">- 무난</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">辛</td>
+    <td><span class="oh-badge" style="background:#9e9e9e;font-size:6pt;min-width:26px;">金</span></td>
+    <td style="font-size:6pt;">보석형 감각파</td>
+    <td><span class="role-badge role-han" style="font-size:5pt;">한신閑神</span></td>
+    <td style="font-weight:700;color:#757575;font-size:7pt;">⚪</td>
+    <td style="font-size:6pt;">- 무난</td>
+    <td style="font-size:6pt;">- 보통</td>
+    <td style="font-size:6pt;">- 무난</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">壬</td>
+    <td><span class="oh-badge" style="background:#2196f3;font-size:6pt;min-width:26px;">水</span></td>
+    <td style="font-size:6pt;">바다형 전략가</td>
+    <td><span class="role-badge role-hui" style="font-size:5pt;">희신喜神</span></td>
+    <td style="font-weight:700;color:#1565c0;font-size:7pt;">🔵</td>
+    <td style="font-size:6pt;">○ 좋음</td>
+    <td style="font-size:6pt;">○ 편안</td>
+    <td style="font-size:6pt;">○ 안정적</td>
+  </tr>
+<tr style="">
+    <td style="font-weight:800;font-size:7pt;">癸</td>
+    <td><span class="oh-badge" style="background:#2196f3;font-size:6pt;min-width:26px;">水</span></td>
+    <td style="font-size:6pt;">이슬형 직관파</td>
+    <td><span class="role-badge role-hui" style="font-size:5pt;">희신喜神</span></td>
+    <td style="font-weight:700;color:#1565c0;font-size:7pt;">🔵</td>
+    <td style="font-size:6pt;">○ 좋음</td>
+    <td style="font-size:6pt;">○ 편안</td>
+    <td style="font-size:6pt;">○ 안정적</td>
+  </tr>
+</table>
+
+<!-- TIP -->
+<div class="tip">
+  <b>TIP</b> 이 표는 <b>상대방의 일간(日干) 오행</b>을 기준으로 합니다. 일간은 그 사람 자체의 본질 오행이며, 용신과는 다릅니다. 상대의 생년월일을 알면 일간을 구할 수 있고, 모르면 아래 성격 유형으로 짐작할 수 있습니다.
+  <div style="margin-top:4px;display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;font-size:6pt;line-height:1.4;">
+    <div><span style="color:#4caf50;font-weight:800;">木 추진형</span> — 아이디어가 넘치고 "해보자!"가 먼저 나오는 사람</div>
+    <div><span style="color:#f44336;font-weight:800;">火 열정형</span> — 분위기 메이커, 사람 모이는 곳에 항상 있는 사람</div>
+    <div><span style="color:#ff9800;font-weight:800;">土 안정형</span> — 묵직하고 믿음직한 "저 사람이면 괜찮아" 타입</div>
+    <div><span style="color:#9e9e9e;font-weight:800;">金 원칙형</span> — 칼같이 정확하고 원칙을 지키는 사람</div>
+    <div><span style="color:#2196f3;font-weight:800;">水 전략형</span> — 조용하지만 깊이 있고 큰 그림을 보는 사람</div>
+    <div style="font-weight:700;color:#8b6914;">→ <b>임효원 님에게 최고의 인연: 木(목)</b></div>
+  </div>
+</div>
+
+</div>
+</body></html>

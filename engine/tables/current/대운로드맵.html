@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>대운 로드맵 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; overflow:visible; padding:4px 6px; background:transparent; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; overflow:visible; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 840px; margin:0; }
+}
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:1.5px solid #333; border-radius:8px; overflow:hidden; margin-top:3px; }
+.card-hd { padding:3px 8px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:7.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+/* 대운 10기 표 */
+.dw-table { width:100%; border-collapse:collapse; background:transparent; }
+.dw-table th { font-size:7pt; font-weight:700; color:white; background:#475569; padding:2px 4px; text-align:center; border-right:1px solid #566778; }
+.dw-table th:last-child { border-right:none; }
+.dw-row td { font-size:7pt; color:#333; padding:2px 3px; border-bottom:1px solid #f0f0f0; border-right:1px solid #f0f0f0; vertical-align:middle; }
+.dw-row td:last-child { border-right:none; }
+.dw-row.cur-row td { background:#fff9f0 !important; }
+.dw-row.past-row td { color:#bbb; }
+.dw-ganji { font-weight:800; font-size:6.5pt; }
+.dw-age   { font-size:7pt; color:#888; }
+.dw-yr    { font-size:7pt; color:#aaa; }
+.un12-chip { font-size:7pt; padding:1px 3px; border-radius:3px; background:#eee; color:#555; font-weight:700; }
+.ss-chip  { font-size:7pt; padding:1px 3px; border-radius:3px; background:#e3f2fd; color:#1565c0; font-weight:700; display:inline-block; }
+.hachung  { font-size:6.5pt; color:#e65100; line-height:1.4; }
+/* 현재 대운 카드 */
+.cur-section { padding:4px 8px; background:transparent; }
+.sec-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:3px; display:flex; align-items:center; gap:4px; }
+.sec-title::before { content:''; display:inline-block; width:2px; height:9px; border-radius:2px; background:currentColor; }
+.cur-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.cur-box { border:1.5px solid #e0e0e0; border-radius:5px; padding:4px 6px; }
+.cur-lbl { font-size:7pt; color:#aaa; font-weight:700; margin-bottom:2px; }
+.cur-val { font-size:6.5pt; color:#333; font-weight:700; }
+.half-row { display:flex; gap:4px; margin-top:3px; }
+.half-item { flex:1; border-radius:3px; padding:2px 4px; text-align:center; }
+.half-lbl { font-size:6.5pt; color:#888; }
+.half-char { font-size:7pt; font-weight:700; }
+.seun-row { display:flex; gap:3px; flex-wrap:wrap; margin-top:2px; }
+.seun-chip { font-size:7pt; padding:1px 4px; border-radius:3px; color:white; font-weight:700; display:inline-block; }
+/* 건강·교체기 */
+.info-section { padding:4px 8px; background:transparent; }
+.health-item { font-size:7pt; color:#333; padding:2px 0; border-bottom:1px solid #f5f5f5; display:flex; gap:4px; align-items:flex-start; }
+.health-item:last-child { border-bottom:none; }
+.health-lbl { font-size:7pt; font-weight:700; color:#c62828; min-width:64px; flex-shrink:0; }
+.health-desc { font-size:7pt; color:#555; line-height:1.4; }
+.gyoche-item { font-size:7pt; padding:2px 0; border-bottom:1px solid #f5f5f5; }
+.gyoche-item:last-child { border-bottom:none; }
+</style>
+</head><body><div class="page"><div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">🗺️ 대운 로드맵 》 평생의 길</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">현재 戊申(무신) · 기신대운</div>
+  </div>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#475569,#64748b);">
+    <div class="card-hd-title">① 10기 대운 전체 흐름</div>
+    <div class="card-hd-sub">기수 · 간지 · 12운성 · 운세성격 · 전후반 · 십성 · 합충</div>
+  </div>
+  <table class="dw-table">
+    <thead><tr>
+      <th>기</th><th>간지 / 나이 / 년도</th><th>12운성</th><th>성격</th><th>전반 / 후반</th><th>천간 / 지지 십성</th><th>원국 합충</th>
+    </tr></thead>
+    <tbody><tr class="dw-row past-row" style="opacity:.5;">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#bbb;">1기</td>
+      <td style="border-left:3px solid #ddd;">
+        <div class="dw-ganji" style="color:#bbb;">癸丑(계축)</div>
+        <div class="dw-age">8-17세</div>
+        <div class="dw-yr">1976년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">양</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#1565c0;background:#e3f2fd;padding:1px 3px;border-radius:3px;">희신</span><br><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">정재</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">겁재</span></div>
+      </td>
+      <td></td>
+    </tr><tr class="dw-row past-row" style="opacity:.5;">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#bbb;">2기</td>
+      <td style="border-left:3px solid #ddd;">
+        <div class="dw-ganji" style="color:#bbb;">壬子(임자)</div>
+        <div class="dw-age">18-27세</div>
+        <div class="dw-yr">1986년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">태</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#1565c0;background:#e3f2fd;border:1px solid #1565c044;padding:1px 3px;border-radius:3px;">희신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#1565c0;background:#e3f2fd;padding:1px 3px;border-radius:3px;">희신</span><br><span style="font-size:6.5pt;font-weight:700;color:#1565c0;background:#e3f2fd;padding:1px 3px;border-radius:3px;">희신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">편재</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">정재</span></div>
+      </td>
+      <td><div class="hachung">년지(申)와 합</div></td>
+    </tr><tr class="dw-row past-row" style="opacity:.5;">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#bbb;">3기</td>
+      <td style="border-left:3px solid #ddd;">
+        <div class="dw-ganji" style="color:#bbb;">辛亥(신해)</div>
+        <div class="dw-age">28-37세</div>
+        <div class="dw-yr">1996년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">절</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#666;background:#f5f5f5;border:1px solid #66644;padding:1px 3px;border-radius:3px;">중립대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#666;background:#f5f5f5;padding:1px 3px;border-radius:3px;">중립</span><br><span style="font-size:6.5pt;font-weight:700;color:#1565c0;background:#e3f2fd;padding:1px 3px;border-radius:3px;">희신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">상관</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">편재</span></div>
+      </td>
+      <td><div class="hachung">월지(寅)와 합, 시지(寅)와 합</div></td>
+    </tr><tr class="dw-row past-row" style="opacity:.5;">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#bbb;">4기</td>
+      <td style="border-left:3px solid #ddd;">
+        <div class="dw-ganji" style="color:#bbb;">庚戌(경술)</div>
+        <div class="dw-age">38-47세</div>
+        <div class="dw-yr">2006년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">묘</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#666;background:#f5f5f5;padding:1px 3px;border-radius:3px;">중립</span><br><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">식신</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">비견</span></div>
+      </td>
+      <td><div class="hachung">월지(寅)와 합, 시지(寅)와 합, 일지(辰)와 충</div></td>
+    </tr><tr class="dw-row past-row" style="opacity:.5;">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#bbb;">5기</td>
+      <td style="border-left:3px solid #ddd;">
+        <div class="dw-ganji" style="color:#bbb;">己酉(기유)</div>
+        <div class="dw-age">48-57세</div>
+        <div class="dw-yr">2016년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">사</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span><br><span style="font-size:6.5pt;font-weight:700;color:#666;background:#f5f5f5;padding:1px 3px;border-radius:3px;">중립</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">겁재</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">상관</span></div>
+      </td>
+      <td><div class="hachung">일지(辰)와 합</div></td>
+    </tr><tr class="dw-row cur-row" style="">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#555;">6기</td>
+      <td style="border-left:3px solid #c62828;">
+        <div class="dw-ganji" style="color:#c62828;">▶ 戊申(무신)</div>
+        <div class="dw-age">58-67세</div>
+        <div class="dw-yr">2026년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">병</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span><br><span style="font-size:6.5pt;font-weight:700;color:#666;background:#f5f5f5;padding:1px 3px;border-radius:3px;">중립</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">비견</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">식신</span></div>
+      </td>
+      <td><div class="hachung">일지(辰)와 합, 월지(寅)와 충, 시지(寅)와 충</div></td>
+    </tr><tr class="dw-row" style="">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#555;">7기</td>
+      <td style="border-left:3px solid #c62828;">
+        <div class="dw-ganji" style="color:#c62828;">丁未(정미)</div>
+        <div class="dw-age">68-77세</div>
+        <div class="dw-yr">2036년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">쇠</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#888;background:#fafafa;padding:1px 3px;border-radius:3px;">구신</span><br><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">정인</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">겁재</span></div>
+      </td>
+      <td></td>
+    </tr><tr class="dw-row" style="">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#555;">8기</td>
+      <td style="border-left:3px solid #c62828;">
+        <div class="dw-ganji" style="color:#c62828;">丙午(병오)</div>
+        <div class="dw-age">78-87세</div>
+        <div class="dw-yr">2046년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">제왕</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#c62828;background:#ffebee;border:1px solid #c6282844;padding:1px 3px;border-radius:3px;">기신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#888;background:#fafafa;padding:1px 3px;border-radius:3px;">구신</span><br><span style="font-size:6.5pt;font-weight:700;color:#888;background:#fafafa;padding:1px 3px;border-radius:3px;">구신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">편인</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">정인</span></div>
+      </td>
+      <td><div class="hachung">월지(寅)와 합, 시지(寅)와 합</div></td>
+    </tr><tr class="dw-row" style="">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#555;">9기</td>
+      <td style="border-left:3px solid #1565c0;">
+        <div class="dw-ganji" style="color:#1565c0;">乙巳(을사)</div>
+        <div class="dw-age">88-97세</div>
+        <div class="dw-yr">2056년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">건록</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#1565c0;background:#e3f2fd;border:1px solid #1565c044;padding:1px 3px;border-radius:3px;">희신대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#2e7d32;background:#e8f5e9;padding:1px 3px;border-radius:3px;">용신</span><br><span style="font-size:6.5pt;font-weight:700;color:#888;background:#fafafa;padding:1px 3px;border-radius:3px;">구신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">정관</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">편인</span></div>
+      </td>
+      <td><div class="hachung">년지(申)와 합</div></td>
+    </tr><tr class="dw-row" style="">
+      <td style="text-align:center;width:18px;font-size:7pt;font-weight:700;color:#555;">10기</td>
+      <td style="border-left:3px solid #666;">
+        <div class="dw-ganji" style="color:#666;">甲辰(갑진)</div>
+        <div class="dw-age">98-107세</div>
+        <div class="dw-yr">2066년~</div>
+      </td>
+      <td style="text-align:center;"><span class="un12-chip">관대</span></td>
+      <td style="text-align:center;"><span style="font-size:7pt;font-weight:700;color:#666;background:#f5f5f5;border:1px solid #66644;padding:1px 3px;border-radius:3px;">중립대운</span></td>
+      <td style="text-align:center;"><span style="font-size:6.5pt;font-weight:700;color:#2e7d32;background:#e8f5e9;padding:1px 3px;border-radius:3px;">용신</span><br><span style="font-size:6.5pt;font-weight:700;color:#c62828;background:#ffebee;padding:1px 3px;border-radius:3px;">기신</span></td>
+      <td style="text-align:center;">
+        <div><span class="ss-chip" style="background:#7b1fa2;color:white;">편관</span></div>
+        <div style="margin-top:2px;"><span class="ss-chip" style="background:#e65100;color:white;">비견</span></div>
+      </td>
+      <td><div class="hachung">년지(申)와 합</div></td>
+    </tr></tbody>
+  </table>
+</div><div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#c62828,#e53935);">
+    <div class="card-hd-title">② 현재 대운 집중 분석</div>
+    <div class="card-hd-sub">戊申(무신) 58-67세 (2026~2035) · 기신대운</div>
+  </div>
+  <div class="cur-section">
+    <div class="cur-grid">
+      <div class="cur-box">
+        <div class="cur-lbl">기본 정보</div>
+        <div class="cur-val" style="color:#c62828;">戊申(무신)</div>
+        <div style="font-size:7pt;color:#555;margin-top:2px;">12운성: <strong>병</strong> · 천간: <strong>비견</strong> · 지지: <strong>식신</strong></div>
+        <div style="font-size:7pt;color:#e65100;margin-top:2px;">합충: 일지(辰)와 합, 월지(寅)와 충, 시지(寅)와 충</div>
+        <div class="half-row">
+          <div class="half-item" style="background:#ffebee;border:1px solid #c6282833;">
+            <div class="half-lbl">전반 (2026~)</div>
+            <div class="half-char" style="color:#c62828;">기신</div>
+          </div>
+          <div class="half-item" style="background:#f5f5f5;border:1px solid #66633;">
+            <div class="half-lbl">후반 (2031~)</div>
+            <div class="half-char" style="color:#666;">중립</div>
+          </div>
+        </div>
+      </div>
+      <div class="cur-box">
+        <div class="cur-lbl">현재 대운 내 세운 분류</div>
+        <div style="margin-bottom:3px;">
+          <div style="font-size:7pt;font-weight:700;color:#2e7d32;margin-bottom:1px;">用神 세운</div>
+          <div class="seun-row"><span class="seun-chip" style="background:#2e7d32;">2034년(甲寅(갑인년))</span><span class="seun-chip" style="background:#2e7d32;">2035년(乙卯(을묘년))</span></div>
+        </div>
+        <div style="margin-bottom:3px;">
+          <div style="font-size:7pt;font-weight:700;color:#1565c0;margin-bottom:1px;">喜神 세운</div>
+          <div class="seun-row"><span class="seun-chip" style="background:#1565c0;">2031년(辛亥(신해년))</span><span class="seun-chip" style="background:#1565c0;">2032년(壬子(임자년))</span></div>
+        </div>
+        <div>
+          <div style="font-size:7pt;font-weight:700;color:#c62828;margin-bottom:1px;">忌神 세운</div>
+          <div class="seun-row"><span class="seun-chip" style="background:#c62828;">2027년</span><span class="seun-chip" style="background:#c62828;">2028년</span><span class="seun-chip" style="background:#c62828;">2029년</span><span class="seun-chip" style="background:#c62828;">2030년</span><span class="seun-chip" style="background:#c62828;">2033년</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;margin-top:3px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:96px;padding:2px 5px;border-radius:4px;background:#e8f5e9;border:1px solid #a5d6a7;">
+        <div style="font-size:7pt;color:#2e7d32;font-weight:700;margin-bottom:1px;">✨ 최적의 해</div>
+        <div style="font-size:7pt;font-weight:700;color:#1b5e20;">2034년(甲寅(갑인년))</div>
+      </div>
+      <div style="flex:1;min-width:96px;padding:2px 5px;border-radius:4px;background:#e3f2fd;border:1px solid #90caf9;">
+        <div style="font-size:7pt;color:#1565c0;font-weight:700;margin-bottom:1px;">🌊 구원의 해</div>
+        <div style="font-size:7pt;font-weight:700;color:#0d47a1;">2034년 甲寅(갑인), 2035년 乙卯(을묘)</div>
+      </div>
+      <div style="flex:1;min-width:96px;padding:2px 5px;border-radius:4px;background:#ffebee;border:1px solid #ef9a9a;">
+        <div style="font-size:7pt;color:#c62828;font-weight:700;margin-bottom:1px;">⚠️ 주의의 해</div>
+        <div style="font-size:7pt;font-weight:700;color:#b71c1c;">2027년 丁未, 2028년 戊申, 2029년 己酉, 2030년 庚戌, 2033년 癸丑</div>
+      </div>
+    </div>
+    <div style="margin-top:3px;padding:2px 5px;background:#fff3e0;border-radius:3px;border-left:2px solid #ff6f00;">
+      <div style="font-size:7pt;font-weight:700;color:#e65100;margin-bottom:1px;">🩺 현재 대운 건강 주의</div>
+      <div style="font-size:7pt;color:#555;">간담·근육통·눈 피로(월지 충), 간담·근육통·눈 피로(시지 충)</div>
+    </div>
+  </div>
+</div></div></body></html>

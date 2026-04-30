@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>오행 생극 관계도 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:18px 22px; background:transparent; display:flex; flex-direction:column; gap:8px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0; }
+.card-hd { padding:7px 14px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:9pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+/* 2-col 레이아웃 */
+.two-col { display:flex; gap:0; background:transparent; }
+.col-svg { flex:0 0 240px; display:flex; align-items:center; justify-content:center; padding:12px; border-right:1px solid #eee; }
+.col-legend { flex:1; padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+.legend-row { display:flex; align-items:center; gap:6px; font-size:7pt; color:#555; }
+.legend-line { width:22px; height:2px; flex-shrink:0; }
+.role-y  { background:#2e7d32; color:white; padding:1px 5px; border-radius:3px; font-size:7pt; }
+.role-h  { background:#1565c0; color:white; padding:1px 5px; border-radius:3px; font-size:7pt; }
+.role-b  { background:#c62828; color:white; padding:1px 5px; border-radius:3px; font-size:7pt; }
+/* 생극 관계표 */
+table { width:100%; border-collapse:collapse; }
+th { background:#f5f5f5; font-size:6.5pt; font-weight:700; color:#555; padding:5px 6px; border-bottom:2px solid #ddd; text-align:center; }
+td { font-size:7pt; padding:5px 6px; border-bottom:1px solid #f0f0f0; vertical-align:middle; text-align:center; }
+tr:last-child td { border-bottom:none; }
+/* 용신 박스 */
+.yong-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:transparent; }
+.yong-cell { padding:8px 10px; border-right:1px solid #eee; }
+.yong-cell:last-child { border-right:none; }
+.yong-lbl  { font-size:7pt; color:#aaa; font-weight:700; margin-bottom:3px; }
+.yong-oh   { font-size:12pt; font-weight:900; }
+.yong-attr { font-size:6pt; color:#666; line-height:1.6; margin-top:2px; }
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+  <div>
+    <div class="banner-hdr-title">🔄 오행(五行) 생극(生剋) 관계도</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+<!-- ① 생극 다이어그램 + 용신 요약 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#0d47a1);">
+    <div class="card-hd-title">① 오행 생극(生剋) 배치도</div>
+    <div class="card-hd-sub">상생(점선 녹색) · 상극(실선 적색) / 금테두리=용신 청테두리=희신</div>
+  </div>
+  <div class="two-col">
+    <div class="col-svg"><svg width="230" height="230" viewBox="0 0 230 230" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="arr2e7d32" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#2e7d32" opacity="0.7"/>
+    </marker>
+<marker id="arrc62828" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#c62828" opacity="0.7"/>
+    </marker></defs>
+  <line x1="128.1" y1="47.6" x2="160.9" y2="70.4"
+      stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"
+      marker-end="url(#arr2e7d32)"/>
+<line x1="172.2" y1="103.9" x2="159.8" y2="142.1"
+      stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"
+      marker-end="url(#arr2e7d32)"/>
+<line x1="131.0" y1="163.0" x2="89.0" y2="163.0"
+      stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"
+      marker-end="url(#arr2e7d32)"/>
+<line x1="60.2" y1="142.1" x2="47.8" y2="103.9"
+      stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"
+      marker-end="url(#arr2e7d32)"/>
+<line x1="59.1" y1="70.4" x2="91.9" y2="47.6"
+      stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"
+      marker-end="url(#arr2e7d32)"/>
+  <line x1="117.0" y1="55.9" x2="146.0" y2="142.1"
+      stroke="#c62828" stroke-width="1.5"  opacity="0.7"
+      marker-end="url(#arrc62828)"/>
+<line x1="161.1" y1="95.8" x2="84.9" y2="150.2"
+      stroke="#c62828" stroke-width="1.5"  opacity="0.7"
+      marker-end="url(#arrc62828)"/>
+<line x1="135.1" y1="150.2" x2="58.9" y2="95.8"
+      stroke="#c62828" stroke-width="1.5"  opacity="0.7"
+      marker-end="url(#arrc62828)"/>
+<line x1="74.0" y1="142.1" x2="103.0" y2="55.9"
+      stroke="#c62828" stroke-width="1.5"  opacity="0.7"
+      marker-end="url(#arrc62828)"/>
+<line x1="63.0" y1="83.0" x2="157.0" y2="83.0"
+      stroke="#c62828" stroke-width="1.5"  opacity="0.7"
+      marker-end="url(#arrc62828)"/>
+  <circle cx="110" cy="35" r="22" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+<circle cx="110" cy="35" r="25.5" fill="none" stroke="#c9a227" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.9"/>
+<text x="110" y="42" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#2e7d32" font-family="'Noto Serif KR',serif">木</text>
+<text x="110" y="65" text-anchor="middle" font-size="6.5" fill="#777">7.4pt</text>
+<rect x="97" y="72" width="26" height="11" rx="3" fill="#c9a227" opacity="0.9"/>
+<text x="110" y="79" text-anchor="middle" dominant-baseline="middle" font-size="6.5" fill="white" font-weight="bold">용신</text>
+<circle cx="179" cy="83" r="22" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
+
+<text x="179" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#c62828" font-family="'Noto Serif KR',serif">火</text>
+<text x="179" y="113" text-anchor="middle" font-size="6.5" fill="#777">0.3pt</text>
+
+<circle cx="153" cy="163" r="22" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+<circle cx="153" cy="163" r="25.5" fill="none" stroke="#c62828" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.9"/>
+<text x="153" y="170" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#e65100" font-family="'Noto Serif KR',serif">土</text>
+<text x="153" y="193" text-anchor="middle" font-size="6.5" fill="#777">6.0pt</text>
+<rect x="140" y="200" width="26" height="11" rx="3" fill="#c62828" opacity="0.9"/>
+<text x="153" y="207" text-anchor="middle" dominant-baseline="middle" font-size="6.5" fill="white" font-weight="bold">기신</text>
+<circle cx="67" cy="163" r="22" fill="#eceff1" stroke="#37474f" stroke-width="2"/>
+
+<text x="67" y="170" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#37474f" font-family="'Noto Serif KR',serif">金</text>
+<text x="67" y="193" text-anchor="middle" font-size="6.5" fill="#777">0.6pt</text>
+
+<circle cx="41" cy="83" r="22" fill="#e3f2fd" stroke="#0d47a1" stroke-width="2"/>
+<circle cx="41" cy="83" r="25.5" fill="none" stroke="#1565c0" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.9"/>
+<text x="41" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold" fill="#0d47a1" font-family="'Noto Serif KR',serif">水</text>
+<text x="41" y="113" text-anchor="middle" font-size="6.5" fill="#777">0.1pt</text>
+<rect x="28" y="120" width="26" height="11" rx="3" fill="#1565c0" opacity="0.9"/>
+<text x="41" y="127" text-anchor="middle" dominant-baseline="middle" font-size="6.5" fill="white" font-weight="bold">희신</text>
+</svg></div>
+    <div class="col-legend">
+      <div style="font-size:7.5pt;font-weight:700;color:#333;margin-bottom:4px;">범례</div>
+      <div class="legend-row"><div class="legend-line" style="border-top:2px dashed #2e7d32;"></div><span>상생(生) 》 생해주는 관계</span></div>
+      <div class="legend-row"><div class="legend-line" style="border-top:2px solid #c62828;"></div><span>상극(剋) 》 제어·억제 관계</span></div>
+      <div class="legend-row"><div class="legend-line" style="border-top:2px dashed #ffd700;"></div><span>금테두리 》 용신 오행</span></div>
+      <div class="legend-row"><div class="legend-line" style="border-top:2px dashed #42a5f5;"></div><span>청테두리 》 희신 오행</span></div>
+      <div style="margin-top:8px;font-size:7pt;color:#555;font-weight:700;">상생 순서</div>
+      <div style="font-size:6.5pt;color:#2e7d32;line-height:1.8;">木→火→土→金→水→木</div>
+      <div style="font-size:7pt;color:#555;font-weight:700;margin-top:4px;">상극 순서</div>
+      <div style="font-size:6.5pt;color:#c62828;line-height:1.8;">木克土 · 火克金 · 土克水 · 金克木 · 水克火</div>
+    </div>
+  </div>
+  <!-- 용신·희신·기신 박스 -->
+  <div class="yong-grid">
+    <div class="yong-cell" style="background:#e8f5e9;">
+      <div class="yong-lbl">用神 (용신)</div>
+      <div class="yong-oh" style="color:#2e7d32;">木(목)</div>
+      <div class="yong-attr">방위: 東(동)<br>색상: 청색·녹색<br>계절: 봄</div>
+    </div>
+    <div class="yong-cell" style="background:#e3f2fd;">
+      <div class="yong-lbl">喜神 (희신)</div>
+      <div class="yong-oh" style="color:#0d47a1;">水(수)</div>
+      <div class="yong-attr">방위: 北(북)<br>색상: 검정·청색<br>계절: 겨울</div>
+    </div>
+    <div class="yong-cell" style="background:#fff3e0;">
+      <div class="yong-lbl">忌神 (기신)</div>
+      <div class="yong-oh" style="color:#e65100;">土(토)</div>
+      <div class="yong-attr">방위: 中央<br>색상: 황색·갈색<br>계절: 환절기</div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 생극 관계 상세표 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">② 오행별 생극 관계 상세표</div>
+    <div class="card-hd-sub">각 오행의 점수·등급 및 상생·상극 관계 일람</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>오행</th><th>점수·비율</th><th>등급</th>
+        <th>내가 생함(→)</th><th>나를 생함(→)</th>
+        <th>내가 극함(→)</th><th>나를 극함(→)</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+  <td style="background:#e8f5e9;"><span style="color:#2e7d32;font-size:10pt;font-weight:900;">木</span> 목 <span class="role-y">용신</span></td>
+  <td>7.39 <small style="color:#aaa;">51%</small></td>
+  <td style="color:#888;">매우강</td>
+  <td style="color:#2e7d32;">→ <strong>火</strong></td>
+  <td style="color:#2e7d32;"><strong>水</strong> →</td>
+  <td style="color:#c62828;">→ <strong>土</strong></td>
+  <td style="color:#c62828;"><strong>金</strong> →</td>
+</tr>
+<tr>
+  <td style="background:#ffebee;"><span style="color:#c62828;font-size:10pt;font-weight:900;">火</span> 화 </td>
+  <td>0.32 <small style="color:#aaa;">2%</small></td>
+  <td style="color:#888;">매우약</td>
+  <td style="color:#2e7d32;">→ <strong>土</strong></td>
+  <td style="color:#2e7d32;"><strong>木</strong> →</td>
+  <td style="color:#c62828;">→ <strong>金</strong></td>
+  <td style="color:#c62828;"><strong>水</strong> →</td>
+</tr>
+<tr>
+  <td style="background:#fff3e0;"><span style="color:#e65100;font-size:10pt;font-weight:900;">土</span> 토 <span class="role-b">기신</span></td>
+  <td>6.05 <small style="color:#aaa;">42%</small></td>
+  <td style="color:#888;">매우강</td>
+  <td style="color:#2e7d32;">→ <strong>金</strong></td>
+  <td style="color:#2e7d32;"><strong>火</strong> →</td>
+  <td style="color:#c62828;">→ <strong>水</strong></td>
+  <td style="color:#c62828;"><strong>木</strong> →</td>
+</tr>
+<tr>
+  <td style="background:#eceff1;"><span style="color:#37474f;font-size:10pt;font-weight:900;">金</span> 금 </td>
+  <td>0.61 <small style="color:#aaa;">4%</small></td>
+  <td style="color:#888;">매우약</td>
+  <td style="color:#2e7d32;">→ <strong>水</strong></td>
+  <td style="color:#2e7d32;"><strong>土</strong> →</td>
+  <td style="color:#c62828;">→ <strong>木</strong></td>
+  <td style="color:#c62828;"><strong>火</strong> →</td>
+</tr>
+<tr>
+  <td style="background:#e3f2fd;"><span style="color:#0d47a1;font-size:10pt;font-weight:900;">水</span> 수 <span class="role-h">희신</span></td>
+  <td>0.13 <small style="color:#aaa;">1%</small></td>
+  <td style="color:#888;">매우약</td>
+  <td style="color:#2e7d32;">→ <strong>木</strong></td>
+  <td style="color:#2e7d32;"><strong>金</strong> →</td>
+  <td style="color:#c62828;">→ <strong>火</strong></td>
+  <td style="color:#c62828;"><strong>土</strong> →</td>
+</tr></tbody>
+  </table>
+</div>
+
+</div></body></html>

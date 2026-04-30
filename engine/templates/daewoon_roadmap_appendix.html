@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>대운 로드맵 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:6px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:8px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:20pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:8pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:14pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:7pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 현재 위치 배너 ── */
+.now-banner {
+  background:#fff8e1; border:1.5px solid #333; border-radius:8px;
+  padding:6px 14px; display:flex; align-items:center; gap:12px;
+  flex-shrink:0;
+}
+.nb-item { display:flex; flex-direction:column; gap:1px; }
+.nb-label { font-size:6pt; color:#aaa; font-weight:700; }
+.nb-val   { font-size:8pt; font-weight:900; }
+.nb-div   { width:1px; height:28px; background:#e0e0e0; flex-shrink:0; }
+
+/* ── 메인 로드맵 카드 ── */
+.roadmap-card {
+  border:2px solid #333;
+  border-radius:14px;
+  overflow:hidden;
+  flex:1;
+}
+.card-hd {
+  padding:6px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:10pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+
+/* ── 로드맵 테이블 ── */
+.rm-table { width:100%; border-collapse:collapse; }
+
+.rm-table th {
+  font-size:6.5pt; font-weight:700; color:#555;
+  background:#f5f5f5; padding:4px 6px;
+  border:1px solid #333; text-align:center;
+  letter-spacing:.3px;
+}
+.rm-table th:first-child { border-left:none; }
+.rm-table th:last-child  { border-right:none; }
+.rm-table thead tr th    { border-top:none; }
+
+.rm-table td {
+  border:1px solid #ddd;
+  padding:0; vertical-align:middle;
+}
+.rm-table td:first-child { border-left:none; }
+.rm-table td:last-child  { border-right:none; }
+.rm-table tbody tr:last-child td { border-bottom:none; }
+
+.cell { padding:5px 7px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; text-align:center; height:100%; }
+.cell-left { align-items:flex-start; text-align:left; }
+
+/* 기(期) 번호 */
+.ki-num {
+  font-size:8pt; font-weight:900; color:white;
+  width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* 나이/년도 */
+.age-big { font-family:'DM Serif Display',serif; font-size:13pt; font-weight:700; line-height:1; }
+.age-range { font-size:6pt; color:#888; }
+.year-txt  { font-size:6pt; color:#aaa; }
+
+/* 간지 */
+.ganji-hanja { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; line-height:1.2; }
+.ganji-kr    { font-size:6pt; color:#888; }
+
+/* 성격 배지 */
+.grade-badge {
+  font-size:6.5pt; font-weight:700; color:white;
+  padding:2px 9px; border-radius:8px;
+}
+
+/* 12운성 */
+.unsung-chip {
+  font-size:6.5pt; font-weight:700;
+  padding:2px 7px; border-radius:6px;
+  color:white;
+}
+
+/* 십성 */
+.sipseong-wrap { display:flex; flex-direction:column; gap:2px; }
+.ss-row { display:flex; align-items:center; gap:3px; font-size:6.5pt; }
+.ss-label { font-size:5.5pt; color:#aaa; width:18px; flex-shrink:0; }
+.ss-val   { font-weight:700; }
+
+/* 활동 전략 */
+.strategy { font-size:6.5pt; color:#444; line-height:1.5; }
+.strategy strong { color:#f44336; }
+
+/* 운세 게이지 바 */
+.gauge-wrap { width:100%; height:6px; background:#eee; border-radius:3px; overflow:hidden; margin-top:3px; }
+.gauge-bar  { height:100%; border-radius:3px; }
+
+/* 행 테마 */
+.row-past     { background:rgba(158,158,158,0.04); }
+.row-neutral  { background:white; }
+.row-now      { background:rgba(255,152,0,0.06); }
+.row-future   { background:rgba(255,152,0,0.04); }
+.row-yongshin { background:rgba(244,67,54,0.05); }
+
+/* 현재 행 강조 */
+.now-marker {
+  font-size:5.5pt; font-weight:900; color:white;
+  background:#f44336; padding:1px 5px; border-radius:3px;
+  display:inline-block; margin-bottom:2px;
+}
+
+/* ── 하단 범례 + 통계 ── */
+.legend-bar {
+  display:flex; align-items:center; gap:0;
+  border-top:1px solid #e0e0e0; flex-shrink:0;
+}
+.lg-section {
+  flex:1; padding:8px 12px;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:3px;
+  padding:6px 10px;
+}
+.lg-section:last-child { border-right:none; }
+.lg-title { font-size:6.5pt; font-weight:700; color:#555; margin-bottom:3px; }
+.lg-items { display:flex; gap:8px; flex-wrap:wrap; }
+.lg-item  { display:flex; align-items:center; gap:3px; font-size:6pt; color:#666; }
+.lg-dot   { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+
+/* 통계 수치 */
+.stat-grid { display:flex; gap:0; }
+.stat-item { flex:1; text-align:center; border-right:1px solid #e0e0e0; padding:0 8px; }
+.stat-item:last-child { border-right:none; }
+.stat-v { font-family:'DM Serif Display',serif; font-size:12pt; font-weight:700; line-height:1; }
+.stat-l { font-size:6pt; color:#aaa; margin-top:1px; }
+
+/* ── 하단 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:7px 12px;
+  font-size:6.5pt; color:#555; line-height:1.8;
+  flex-shrink:0;
+}
+
+/* 컬러 */
+.c-희신  { background:#4caf50; }
+.c-병신  { background:#2196f3; }
+.c-중립  { background:#9e9e9e; }
+.c-용신  { background:#f44336; }
+.c-현재  { background:#ff9800; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">대운(大運) 로드맵</div>
+    <div class="pt-sub">大運 Road Map · Appendix — 4세부터 103세까지 10기 전체</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 2026년</div>
+  </div>
+</div>
+
+<!-- 현재 위치 배너 -->
+<div class="now-banner">
+  <div class="nb-item"><div class="nb-label">현재 나이</div><div class="nb-val" style="color:#f44336;">만 62세</div></div>
+  <div class="nb-div"></div>
+  <div class="nb-item"><div class="nb-label">현재 대운</div><div class="nb-val" style="color:#ff9800;">庚申(경신) 6기</div></div>
+  <div class="nb-div"></div>
+  <div class="nb-item"><div class="nb-label">현재 대운 기간</div><div class="nb-val">54~63세 / 2018~2027년</div></div>
+  <div class="nb-div"></div>
+  <div class="nb-item"><div class="nb-label">다음 전환점</div><div class="nb-val" style="color:#ff9800;">64세 (2028년, 2년 후)</div></div>
+  <div class="nb-div"></div>
+  <div class="nb-item"><div class="nb-label">황금 대운</div><div class="nb-val" style="color:#f44336;">74세 戊午 🌟</div></div>
+</div>
+
+<!-- 로드맵 카드 -->
+<div class="roadmap-card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#b71c1c,#f44336);">
+    <div class="card-hd-title">🗺️ 대운(大運) 10기 로드맵 — 평생 운세 지도</div>
+    <div class="card-hd-sub">만나이 기준 · 역행(逆行) · 용신 火(화) 기준</div>
+  </div>
+
+  <table class="rm-table">
+    <thead>
+      <tr>
+        <th style="width:9mm;">기</th>
+        <th style="width:20mm;">나이</th>
+        <th style="width:22mm;">간지</th>
+        <th style="width:20mm;">성격</th>
+        <th style="width:14mm;">12운성</th>
+        <th style="width:26mm;">십성</th>
+        <th>활동 전략 · 핵심 포인트</th>
+        <th style="width:16mm;">운세 강도</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 1기: 乙丑 희신 -->
+      <tr class="row-past">
+        <td><div class="cell"><div class="ki-num c-희신">1</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#9e9e9e;">4</div>
+          <div class="age-range" style="color:#9e9e9e;">~13세</div>
+          <div class="year-txt">1968~1977</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#9e9e9e;">乙丑<br>(을축)</div>
+          <div class="ganji-kr">木天干·土地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-희신">희신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-희신">양(養)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#9e9e9e;">정관</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">겁재</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">희신 木이 들어오는 초년. 가정 환경의 지원 속에 성장. 학업·기초 능력 형성기. 규칙적 학습 습관이 이후 자산.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#4caf50;">65%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-희신" style="width:65%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">양호</div>
+        </div></td>
+      </tr>
+
+      <!-- 2기: 甲子 병신 -->
+      <tr class="row-past">
+        <td><div class="cell"><div class="ki-num c-병신">2</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#9e9e9e;">14</div>
+          <div class="age-range" style="color:#9e9e9e;">~23세</div>
+          <div class="year-txt">1978~1987</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#9e9e9e;">甲子<br>(갑자)</div>
+          <div class="ganji-kr">木天干·水地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-병신">병신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-병신">태(胎)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#9e9e9e;">편관</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">정재</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">子水 병신이 용신 火를 극. 청년기 어려움. 편관 압박 강해 사회 진출 과정에서 장애. 무리하지 않고 실력 쌓기에 집중.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#2196f3;">40%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:40%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">주의</div>
+        </div></td>
+      </tr>
+
+      <!-- 3기: 癸亥 병신 -->
+      <tr class="row-past">
+        <td><div class="cell"><div class="ki-num c-병신">3</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#9e9e9e;">24</div>
+          <div class="age-range" style="color:#9e9e9e;">~33세</div>
+          <div class="year-txt">1988~1997</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#9e9e9e;">癸亥<br>(계해)</div>
+          <div class="ganji-kr">水天干·水地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-병신">병신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-병신">절(絶)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#9e9e9e;">정재</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">편재</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">水水 — 병신 극성. 재성(재물)은 보이나 손에 잡히지 않는 구간. 재물 기복 큼. 안정적 직업 유지가 최선 전략.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#2196f3;">38%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:38%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">주의</div>
+        </div></td>
+      </tr>
+
+      <!-- 4기: 壬戌 병신 -->
+      <tr class="row-past">
+        <td><div class="cell"><div class="ki-num c-병신">4</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#9e9e9e;">34</div>
+          <div class="age-range" style="color:#9e9e9e;">~43세</div>
+          <div class="year-txt">1998~2007</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#9e9e9e;">壬戌<br>(임술)</div>
+          <div class="ganji-kr">水天干·土地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-병신">병신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-병신">묘(墓)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#9e9e9e;">편재</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">비견</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">壬水 병신 + 묘(墓) — 가장 어려운 전환점. 확장보다 버티기가 최선. 사회 활동 기반 유지에 집중. 무리한 투자·확장 금물.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#2196f3;">35%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:35%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">최저</div>
+        </div></td>
+      </tr>
+
+      <!-- 5기: 辛酉 중립 -->
+      <tr class="row-neutral">
+        <td><div class="cell"><div class="ki-num c-중립">5</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#9e9e9e;">44</div>
+          <div class="age-range" style="color:#9e9e9e;">~53세</div>
+          <div class="year-txt">2008~2017</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#9e9e9e;">辛酉<br>(신유)</div>
+          <div class="ganji-kr">金天干·金地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-중립">중립대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-중립">사(死)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#9e9e9e;">상관</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">상관</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">병신 이후 회복기. 金 대운이나 직접 用神을 극하지 않음. 노력한 만큼 결과. 상관 기운으로 표현력·전문성 발휘 가능.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#9e9e9e;">55%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:55%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">보통</div>
+        </div></td>
+      </tr>
+
+      <!-- 6기: 庚申 중립 ★현재 -->
+      <tr class="row-now">
+        <td><div class="cell"><div class="ki-num c-현재">6</div></div></td>
+        <td><div class="cell">
+          <div class="now-marker">▶현재</div>
+          <div class="age-big" style="color:#ff9800;">54</div>
+          <div class="age-range" style="color:#ff9800;">~63세</div>
+          <div class="year-txt">2018~2027</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#ff9800;">庚申<br>(경신)</div>
+          <div class="ganji-kr">金天干·金地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-중립">중립대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-중립">병(病)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#ff9800;">식신</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#ff9800;">식신</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy"><strong>▶ 현재 대운.</strong> 金金 식신 — 재능 표현·창작 활동 좋음. 희신 木 약화 주의. 내실 다지기·건강 관리·2028년 전환점 준비가 핵심.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#ff9800;">58%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-현재" style="width:58%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">보통</div>
+        </div></td>
+      </tr>
+
+      <!-- 7기: 己未 중립 -->
+      <tr class="row-future">
+        <td><div class="cell"><div class="ki-num c-중립">7</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#ff9800;">64</div>
+          <div class="age-range" style="color:#ff9800;">~73세</div>
+          <div class="year-txt">2028~2037</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#ff9800;">己未<br>(기미)</div>
+          <div class="ganji-kr">土天干·土地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-중립">중립대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-중립">쇠(衰)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#ff9800;">겁재</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#ff9800;">겁재</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">다음 전환점(64세). 土土 겁재 — 안정적 중립. 지장간 丁火 활성화 시작. 사회 활동 재정비·봉사·취미 확장 좋은 시기. 74세 황금기 준비.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#ff9800;">60%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:60%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">안정</div>
+        </div></td>
+      </tr>
+
+      <!-- 8기: 戊午 용신 🌟 -->
+      <tr class="row-yongshin">
+        <td><div class="cell"><div class="ki-num c-용신">8</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#f44336;">74</div>
+          <div class="age-range" style="color:#f44336;">~83세</div>
+          <div class="year-txt">2038~2047</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#f44336;">戊午<br>(무오)</div>
+          <div class="ganji-kr">土天干·火地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-용신">🌟 용신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-용신">제왕(帝旺)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#f44336;">비견</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#f44336;">정인</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy"><strong>🌟 황금 전환점. 용신 午火 제왕(帝旺) — 역대 최고 에너지.</strong> 인생의 진짜 전성기. 健康이 전제 조건. 하고 싶은 것 모두 도전. 귀인·인정·성취 극대화.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#f44336;">92%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:92%;"></div></div>
+          <div style="font-size:5.5pt;color:#f44336;">최고</div>
+        </div></td>
+      </tr>
+
+      <!-- 9기: 丁巳 용신 -->
+      <tr class="row-yongshin">
+        <td><div class="cell"><div class="ki-num c-용신">9</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#f44336;">84</div>
+          <div class="age-range" style="color:#f44336;">~93세</div>
+          <div class="year-txt">2048~2057</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#f44336;">丁巳<br>(정사)</div>
+          <div class="ganji-kr">火天干·火地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-용신">용신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-용신">건록(建祿)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#f44336;">정인</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#f44336;">편인</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">火火 용신 연속. 정인·편인 — 학문·지혜·직관력 최고조. 건록(建祿)으로 자립 에너지 강함. 경험과 지혜를 나누는 삶의 완성기.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#f44336;">88%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:88%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">최고</div>
+        </div></td>
+      </tr>
+
+      <!-- 10기: 丙辰 용신 -->
+      <tr class="row-yongshin">
+        <td><div class="cell"><div class="ki-num c-용신">10</div></div></td>
+        <td><div class="cell">
+          <div class="age-big" style="color:#f44336;">94</div>
+          <div class="age-range" style="color:#f44336;">~103세</div>
+          <div class="year-txt">2058~</div>
+        </div></td>
+        <td><div class="cell">
+          <div class="ganji-hanja" style="color:#f44336;">丙辰<br>(병진)</div>
+          <div class="ganji-kr">火天干·土地支</div>
+        </div></td>
+        <td><div class="cell"><span class="grade-badge c-용신">용신대운</span></div></td>
+        <td><div class="cell"><span class="unsung-chip c-용신">관대(冠帶)</span></div></td>
+        <td><div class="cell">
+          <div class="sipseong-wrap">
+            <div class="ss-row"><span class="ss-label">천간</span><span class="ss-val" style="color:#f44336;">편인</span></div>
+            <div class="ss-row"><span class="ss-label">지지</span><span class="ss-val" style="color:#9e9e9e;">비견</span></div>
+          </div>
+        </div></td>
+        <td><div class="cell cell-left">
+          <div class="strategy">丙火 용신 천간 — 빛과 따뜻함의 완성. 관대(冠帶)로 품위 있는 노년. 편인의 직관력으로 삶을 깊이 통찰하는 원숙의 시기.</div>
+        </div></td>
+        <td><div class="cell">
+          <div style="font-size:7pt;font-weight:700;color:#f44336;">82%</div>
+          <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:82%;"></div></div>
+          <div style="font-size:5.5pt;color:#aaa;">양호</div>
+        </div></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- 범례 + 통계 -->
+  <div class="legend-bar">
+    <div class="lg-section">
+      <div class="lg-title">성격 범례</div>
+      <div class="lg-items">
+        <div class="lg-item"><div class="lg-dot" style="background:#f44336;"></div>용신대운 (3기)</div>
+        <div class="lg-item"><div class="lg-dot" style="background:#4caf50;"></div>희신대운 (1기)</div>
+        <div class="lg-item"><div class="lg-dot" style="background:#9e9e9e;"></div>중립대운 (3기)</div>
+        <div class="lg-item"><div class="lg-dot" style="background:#2196f3;"></div>병신대운 (3기)</div>
+        <div class="lg-item"><div class="lg-dot" style="background:#ff9800;"></div>현재 대운</div>
+      </div>
+    </div>
+    <div class="lg-section">
+      <div class="lg-title">운세 통계</div>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="stat-v" style="color:#f44336;">3기</div><div class="stat-l">용신대운</div></div>
+        <div class="stat-item"><div class="stat-v" style="color:#2196f3;">3기</div><div class="stat-l">병신대운</div></div>
+        <div class="stat-item"><div class="stat-v" style="color:#9e9e9e;">3기</div><div class="stat-l">중립대운</div></div>
+        <div class="stat-item"><div class="stat-v" style="color:#4caf50;">1기</div><div class="stat-l">희신대운</div></div>
+        <div class="stat-item"><div class="stat-v" style="color:#f44336;">74세~</div><div class="stat-l">황금기 시작</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- roadmap-card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#b71c1c;">📌 반야선생의 대운 로드맵 핵심 요약</strong><br>
+  최원석 님의 대운은 <strong>초중년 병신 → 중년 중립 → 노년 용신</strong>으로 흐르는 <strong style="color:#f44336;">후천개화(後天開花) 구조</strong>입니다.
+  힘들었던 시기가 있었던 것은 사주의 흐름이었고, 반대로 <strong style="color:#f44336;">74세부터 戊午·丁巳·丙辰 용신 3연속 대운 30년</strong>이 기다리고 있습니다.
+  이 황금기를 온전히 누리기 위한 전제 조건은 단 하나 — <strong>건강 관리</strong>입니다. 지금부터 준비하는 것이 그 30년의 질을 결정합니다.
+</div>
+
+<!-- 하단 주석 -->
+<div style="margin-top:4px;font-size:6pt;color:#bbb;display:flex;justify-content:space-between;">
+  <span>※ 만나이 기준 · 역행(逆行) · 대운 시작나이 4세 · 용신 火(화) 기준 운세 강도 산출</span>
+  <span>반야 백년 사주 연구소 · 반야선생 · 2026년</span>
+</div>
+
+</div>
+</body>
+</html>

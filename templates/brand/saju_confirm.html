@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>{{ master.선생님이름 }} - 입력 확인</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root { --brand: {{ brand_color|default('#1A3A6A') }}; --gold: {{ gold|default('#C8B860') }}; }
+    body { background-color: #1e1433; font-family: 'Noto Sans KR', sans-serif; margin: 0; display: flex; justify-content: center; }
+    .mobile-wrapper { background-color: #271a45; max-width: 480px; width: 100%; min-height: 100vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+    .top-bar { padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(155,89,182,0.25); position: sticky; top: 0; background: #271a45; z-index: 10; }
+    .top-bar a { color: #faf5ff; text-decoration: none; font-size: 1.4rem; }
+    .top-bar .title { flex: 1; text-align: center; font-weight: 700; font-size: 1.1rem; margin-right: 28px; }
+    
+    .confirm-container { flex: 1; padding: 1.5rem 1.25rem; overflow-y: auto; padding-bottom: 100px; }
+    .confirm-card { background: #271a45; border-radius: 16px; padding: 1.5rem; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
+    
+    .info-row { border-bottom: 1px dashed #eee; padding: 14px 0; display: flex; justify-content: space-between; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #9b82c0; font-size: 0.95rem; font-weight: 600; }
+    .info-value { font-weight: 700; color: #faf5ff; text-align: right; }
+    
+    .bottom-buttons { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; background: #271a45; border-top: 1px solid rgba(155,89,182,0.25); z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.02); display: flex; gap: 10px; }
+    .btn-brand { background-color: var(--brand); color: white; border-radius: 14px; font-weight: 700; padding: 16px; border: none; flex: 2; font-size: 1.1rem; }
+    .btn-light-custom { background-color: #2f2055; color: #555; border: 1px solid #ddd; border-radius: 14px; font-weight: 700; padding: 16px; flex: 1; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <div class="top-bar">
+      <a href="/expert/{{ master.master_id }}/saju/new"><i class="bi bi-chevron-left"></i></a>
+      <div class="title">신청 전 확인</div>
+    </div>
+    
+    <div class="confirm-container">
+      
+      <div class="text-center mb-4">
+        <h4 class="fw-bold mb-2">제출 전 확인해 주세요</h4>
+        <p class="text-muted small px-2">입력하신 정보가 맞는지 다시 한 번 확인해 주세요.<br>제출 후에는 수정이 어렵습니다.</p>
+      </div>
+
+      <div class="confirm-card">
+        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom" style="border-color: var(--brand) !important;">
+          <h5 class="fw-bold mb-0" style="color: var(--brand);">사주 정보</h5>
+          <a href="/expert/{{ master.master_id }}/saju/new" class="text-muted small text-decoration-none"><i class="bi bi-pencil-square me-1"></i>수정</a>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">이름/성별</div>
+          <div class="info-value">{{ client.name }} <span class="badge bg-light text-dark border ms-1">{{ member.gender }}</span></div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">생년월일</div>
+          <div class="info-value">
+            {{ member.birth_year }}년 {{ member.birth_month }}월 {{ member.birth_day }}일<br>
+            <span class="badge bg-light text-dark border mt-1">
+              {% if member.lunar_yn %}음력{% if member.leap_month_yn %} (윤달){% endif %}{% else %}양력{% endif %}
+            </span>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">태어난 시</div>
+          <div class="info-value text-primary fs-5">{{ member.birth_time }}</div>
+        </div>
+        
+        <div class="info-row mt-3 border-top pt-3">
+          <div class="info-label">현재 활동</div>
+          <div class="info-value">{{ member.activity_type }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">가족 상황</div>
+          <div class="info-value">{{ member.marital_status }} / 자녀 {{ member.has_children }} / 형제 {{ member.has_siblings }}</div>
+        </div>
+        <div class="info-row border-bottom-0 pb-0">
+          <div class="info-label">가장 큰 고민</div>
+          <div class="info-value text-danger">{{ member.concern_area }}</div>
+        </div>
+      </div>
+
+      <!-- 안내 -->
+      <div class="alert alert-warning border-0 rounded-4 p-3 small d-flex" style="background-color: rgba(200,184,96,0.15);">
+        <i class="bi bi-info-circle-fill me-2 fs-5" style="color: var(--gold);"></i>
+        <div class="text-dark line-height-base mt-1">
+          신청이 완료되면 담당 선생님({{ master.선생님이름 }})의 <strong>검토 후 사주 해석이 시작</strong>됩니다. 완성된 해석서는 마이페이지에서 확인 가능합니다.
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="bottom-buttons">
+      <a href="/expert/{{ master.master_id }}/saju/new" class="btn btn-light-custom text-center text-decoration-none">수정</a>
+      <form method="post" action="/expert/{{ master.master_id }}/saju/request" class="m-0" style="flex: 2;">
+        <button type="submit" class="btn btn-brand w-100 shadow-sm">집필 신청하기</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

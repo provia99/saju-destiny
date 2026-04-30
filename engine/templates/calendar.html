@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>월별 운세 달력</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 210mm;
+            /* A4 Width approximation for screen */
+            margin: 0 auto;
+            background: white;
+            padding: 10mm;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #3f51b5;
+            margin-bottom: 20px;
+        }
+
+        /* Controls - Hidden on Print */
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* A4 Print Styles */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .container {
+                width: 210mm;
+                height: 297mm;
+                /* Full A4 Height */
+                max-width: none;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 10mm;
+                margin: 0;
+            }
+
+            .controls,
+            .btn-back,
+            #dashboardBtn,
+            .back-btn {
+                display: none !important;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-top: 0;
+            }
+
+            /* Adjust Grid for Print Height */
+            .calendar-grid {
+                height: calc(297mm - 60mm);
+                /* Approximate available space */
+            }
+        }
+
+        select,
+        button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        button {
+            background: #3f51b5;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            /* For Print: Ensure it stretches */
+        }
+
+        .day-header {
+            background: #f8f9fa;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .day-header.sun {
+            color: red;
+        }
+
+        .day-header.sat {
+            color: blue;
+        }
+
+        .day-cell {
+            background: white;
+            /* Dynamic height or minimum height to fill space */
+            min-height: 100px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* Align to top */
+            position: relative;
+        }
+
+        @media print {
+            .day-cell {
+                min-height: 0;
+                /* Let grid handle height */
+            }
+        }
+
+        .empty-cell {
+            background: #fafafa;
+        }
+
+        /* Date Number Layout */
+        .date-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+
+        .date-num {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .lunar-date {
+            font-size: 0.7rem;
+            color: #999;
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .is-today {
+            border: 2px solid #3f51b5;
+            background-color: #f8faff;
+        }
+
+        .holiday-badge {
+            font-size: 0.7rem;
+            background: #ffebee;
+            color: #d32f2f;
+            padding: 1px 3px;
+            border-radius: 4px;
+            margin-top: 1px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Content Centering */
+        .content-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon {
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .score {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .high-score .score {
+            color: #d32f2f;
+        }
+
+        .good-score .score {
+            color: #f57c00;
+        }
+
+        .low-score .score {
+            color: #1976d2;
+        }
+
+        /* Modal Styles (Hidden on Print) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        @media print {
+            .modal-overlay {
+                display: none !important;
+            }
+        }
+
+        /* Time Guide CSS (for Modal) */
+        .time-guide-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .time-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .time-col h4 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            font-weight: bold;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .time-box {
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .time-box.golden {
+            background-color: #f0f7ff;
+            border-left: 5px solid #2196f3;
+            color: #1565c0;
+        }
+
+        .time-box.caution {
+            background-color: #fff5f5;
+            border-left: 5px solid #ef5350;
+            color: #c62828;
+        }
+
+        .time-box.safe {
+            background-color: #f5f5f5;
+            border-left: 5px solid #9e9e9e;
+            color: #555;
+            text-align: center;
+        }
+
+        .time-keywords {
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .time-quote {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-style: italic;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🗓️ {{ target_year }}년 {{ target_month }}월 운세 달력</h1>
+
+        <div class="controls">
+            <form method="POST" action="/calendar" style="display:inline-flex; gap:10px;">
+                <input type="hidden" name="user_name" value="{{ member_info.name }}">
+                <input type="hidden" name="birth_date" value="{{ member_info.birth_date }}">
+                <input type="hidden" name="mbti" value="{{ member_info.mbti }}">
+                <input type="hidden" name="blood_type" value="{{ member_info.blood_type }}">
+                <input type="hidden" name="gender" value="{{ member_info.gender }}">
+
+                <select name="year">
+                    {% for y in range(current_year - 1, current_year + 2) %}
+                    <option value="{{ y }}" {% if y==target_year %}selected{% endif %}>{{ y }}년</option>
+                    {% endfor %}
+                </select>
+                <select name="month">
+                    {% for m in range(1, 13) %}
+                    <option value="{{ m }}" {% if m==target_month %}selected{% endif %}>{{ m }}월</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">조회</button>
+            </form>
+            <button onclick="window.print()" style="background:#555;">🖨️ 인쇄</button>
+        </div>
+
+        <div class="calendar-grid">
+            <!-- Headers -->
+            <div class="day-header sun">일</div>
+            <div class="day-header">월</div>
+            <div class="day-header">화</div>
+            <div class="day-header">수</div>
+            <div class="day-header">목</div>
+            <div class="day-header">금</div>
+            <div class="day-header sat">토</div>
+
+            <!-- Days -->
+            {% for week in calendar_data %}
+            {% for day in week %}
+            {% if day %}
+            <div class="day-cell {% if day.is_today %}is-today{% endif %} 
+                             {% if day.score >= 80 %}high-score{% elif day.score < 30 %}low-score{% elif day.score >= 70 %}good-score{% endif %}"
+                onclick="openAdvice({{ target_year }}, {{ target_month }}, {{ day.day }})" style="cursor: pointer;">
+
+                <!-- Date Row: Solar Left, Lunar Right -->
+                <div class="date-row">
+                    <span class="date-num"
+                        style="{% if (day.holiday and day.holiday.is_red) or day.day_of_week == 6 %}color:red;{% endif %}">{{
+                        day.day }}</span>
+                    {% if day.lunar_date %}
+                    <span class="lunar-date">{{ day.lunar_date }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Holiday Badge if exists -->
+                {% if day.holiday %}
+                <div style="text-align:left;">
+                    <span class="holiday-badge">{{ day.holiday.badge }}</span>
+                </div>
+                {% endif %}
+
+                <!-- Content: Icon & Score -->
+                <div class="content-box">
+                    <span class="icon">{{ day.icon }}</span>
+                    <span class="score">{{ day.score }}점</span>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-cell"></div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div style="text-align:center; margin-top:20px;" id="dashboardBtn">
+            <button onclick="submitYearlyDashboard()"
+                style="background:#333; color:white; padding:10px 20px; border:none; border-radius:20px; cursor:pointer; font-weight:bold;">
+                📊 2026년 전체 대시보드 보기
+            </button>
+        </div>
+
+        <!-- Hidden form for Dashboard Navigation -->
+        <form id="dashboardForm" action="/yearly_2026" method="POST" style="display:none;">
+            <input type="hidden" name="user_name" value="">
+            <input type="hidden" name="birth_date" value="">
+            <input type="hidden" name="mbti" value="">
+            <input type="hidden" name="blood_type" value="">
+        </form>
+
+        <a href="#" onclick="history.back()" class="back-btn">⬅️ 뒤로 가기</a>
+
+        <!-- Modal -->
+        <div class="modal-overlay" id="adviceModal">
+            <div class="modal">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h3 id="modalDate" style="color:#3f51b5; margin-top:0;">날짜 선택</h3>
+                <div id="modalContent">
+                    <div class="loading-spinner"></div>
+                    <p>AI가 오늘의 운세를 분석 중입니다...</p>
+                </div>
+                <div id="modalAdvice" style="display:none;">
+                    <!-- Time Guide Section -->
+                    <div class="time-guide-container" id="timeGuideContainer" style="display:none;">
+                        <!-- Left: Golden Time -->
+                        <div class="time-col" id="goldenCol">
+                            <h4 style="color: #1976d2;">✨ Best Time (기회)</h4>
+                            <div id="goldenList"></div>
+                        </div>
+                        <!-- Right: Caution Time -->
+                        <div class="time-col" id="cautionCol">
+                            <h4 style="color: #d32f2f;">🔥 Caution (주의)</h4>
+                            <div id="cautionList"></div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px dashed #ddd; margin: 20px 0;">
+
+                    <p class="advice-text" id="adviceText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('adviceModal');
+        const modalDate = document.getElementById('modalDate');
+        const modalContent = document.getElementById('modalContent');
+        const modalAdvice = document.getElementById('modalAdvice');
+        const adviceText = document.getElementById('adviceText');
+
+        // User Data from hidden fields
+        const userName = document.querySelector('input[name="user_name"]').value;
+        const mbti = document.querySelector('input[name="mbti"]').value;
+        const bloodType = document.querySelector('input[name="blood_type"]') ? document.querySelector('input[name="blood_type"]').value : "Unknown";
+        const birthDate = document.querySelector('input[name="birth_date"]').value;
+
+        function openAdvice(year, month, day) {
+            modal.style.display = 'flex';
+            modalDate.textContent = `${year}년 ${month}월 ${day}일 에너지 분석`;
+
+            // Reset state
+            modalContent.style.display = 'block';
+            modalAdvice.style.display = 'none';
+
+            const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            // Call API
+            fetch('/api/daily_advice', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    date: dateStr,
+                    name: userName,
+                    mbti: mbti,
+                    blood_type: bloodType,
+                    birth_date: birthDate
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    modalContent.style.display = 'none';
+                    modalAdvice.style.display = 'block';
+                    if (data.advice) {
+                        adviceText.innerHTML = marked.parse(data.advice);
+
+                        // Render Time Guide
+                        const timeGuideContainer = document.getElementById('timeGuideContainer');
+                        const goldenList = document.getElementById('goldenList');
+                        const cautionList = document.getElementById('cautionList');
+
+                        timeGuideContainer.style.display = 'flex';
+                        goldenList.innerHTML = '';
+                        cautionList.innerHTML = '';
+
+                        // 1. Golden Time (Blue/Gold)
+                        if (data.golden_times && data.golden_times.length > 0) {
+                            data.golden_times.forEach(item => {
+                                const div = document.createElement('div');
+                                div.className = 'time-box golden';
+                                const parsedTime = item.time.replace('~', ' ~ ');
+                                div.innerHTML = `
+                                    <div class="time-range">[ ${parsedTime} ]</div>
+                                    <div class="time-keywords">👍 추천: ${item.recommend || '휴식, 명상'}</div>
+                                    <div class="time-quote">"${item.msg}"</div>
+                                `;
+                                goldenList.appendChild(div);
+                            });
+                        }
+
+                        // 2. Caution Time (Red/Mobile)
+                        if (data.caution_times && data.caution_times.length > 0) {
+                            cautionList.innerHTML = ''; // Clear fallback
+                            data.caution_times.forEach(item => {
+                                const div = document.createElement('div');
+                                div.className = 'time-box caution';
+                                const parsedTime = item.time.replace('~', ' ~ ');
+                                div.innerHTML = `
+                                    <div class="time-range">[ ${parsedTime} ]</div>
+                                    <div class="time-keywords">👎 주의: ${item.caution || '안전운전, 언행조심'}</div>
+                                    <div class="time-quote">"${item.msg}"</div>
+                                `;
+                                cautionList.appendChild(div);
+                            });
+                        } else {
+                            // Fallback Positive Message
+                            const div = document.createElement('div');
+                            div.className = 'time-box safe';
+                            div.innerHTML = `
+                                <div class="time-keywords">🌈 오늘은 평온한 하루입니다!</div>
+                            `;
+                            cautionList.appendChild(div);
+                        }
+
+                    } else {
+                        adviceText.innerText = "분석에 실패했습니다.";
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    modalContent.style.display = 'none';
+                    modalAdvice.style.display = 'block';
+                    adviceText.innerText = "오류가 발생했습니다.";
+                });
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close on outside click
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function submitYearlyDashboard() {
+            const form = document.getElementById('dashboardForm');
+            form.querySelector('input[name="user_name"]').value = userName;
+            form.querySelector('input[name="birth_date"]').value = birthDate;
+            form.querySelector('input[name="mbti"]').value = mbti;
+            form.querySelector('input[name="blood_type"]').value = bloodType;
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>지지비교표 - 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:30px 0;}
+.page{ border:1px solid #333;width:604px;margin:0 auto;background:transparent;border-radius:8px;padding:12px 16px;}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+table{width:100%;border-collapse:collapse;}
+th{background:#1a3a6a;color:white;font-family:'Noto Serif KR',serif;font-size:10px;font-weight:700;padding:4px 4px;border:1px solid #1a3a6a;text-align:center;}
+td{font-size:9px;padding:4px 4px;border:1px solid #333;text-align:center;vertical-align:middle;}
+tr:nth-child(even) td{background:#fafafa;}
+tr:nth-child(odd) td{background:transparent;}
+.han{font-family:'Noto Serif KR',serif;font-size:13px;font-weight:800;}
+.oh-badge{display:inline-block;padding:1px 4px;border-radius:3px;color:white;font-size:9px;font-weight:700;}
+.pos-tag{display:inline-block;padding:0 3px;border-radius:3px;font-size:8px;font-weight:700;margin:1px;}
+.trait{font-size:9px;color:#333;text-align:left;}
+.legend{margin-top:8px;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:8pt;color:#555;}
+.legend-dot{width:10px;height:10px;border-radius:2px;}
+@media print{body{background:transparent;padding:0;display:block;}.page{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{ border:1px solid #333;size:604px auto;margin:0;}}
+</style></head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">地支 비교표 (십이지지 일람)</div>
+    <div class="banner-hdr-sub">12개 지지의 오행 · 계절 · 시간대 · 핵심 기질 비교</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진)</div>
+  </div>
+</div>
+
+<table>
+<thead><tr>
+  <th style="width:44px;">지지</th>
+  <th style="width:72px;">띠</th>
+  <th style="width:38px;">오행</th>
+  <th style="width:62px;">계절</th>
+  <th style="width:72px;">시간대</th>
+  <th>핵심 기질</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><span class="han" style="color:#1a4e7a;">子</span></td>
+  <td style="font-size:10px;">쥐(鼠)</td>
+  <td><span class="oh-badge" style="background:#1a4e7a;">水</span></td>
+  <td style="font-size:10px;">겨울</td>
+  <td style="font-size:10px;">23:30~01:29</td>
+  <td class="trait">지혜, 재치, 민첩함</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#9b6f00;">丑</span></td>
+  <td style="font-size:10px;">소(牛)</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td style="font-size:10px;">겨울→봄</td>
+  <td style="font-size:10px;">01:30~03:29</td>
+  <td class="trait">성실, 인내, 묵직함</td>
+</tr>
+<tr style="background:#dbeafe;border-left:3px solid #60a5fa;">
+  <td><span class="han" style="color:#1e6b2a;">寅</span> <br><span class="pos-tag" style="background:#60a5fa;color:white;">월지</span><span class="pos-tag" style="background:#f472b6;color:white;">시지</span></td>
+  <td style="font-size:10px;">호랑이(虎)</td>
+  <td><span class="oh-badge" style="background:#1e6b2a;">木</span></td>
+  <td style="font-size:10px;">봄</td>
+  <td style="font-size:10px;">03:30~05:29</td>
+  <td class="trait">용맹, 진취, 리더십</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#1e6b2a;">卯</span></td>
+  <td style="font-size:10px;">토끼(兎)</td>
+  <td><span class="oh-badge" style="background:#1e6b2a;">木</span></td>
+  <td style="font-size:10px;">봄</td>
+  <td style="font-size:10px;">05:30~07:29</td>
+  <td class="trait">온화, 예술성, 감수성</td>
+</tr>
+<tr style="background:#dcfce7;border-left:3px solid #4ade80;">
+  <td><span class="han" style="color:#9b6f00;">辰</span> <br><span class="pos-tag" style="background:#4ade80;color:white;">일지</span></td>
+  <td style="font-size:10px;">용(龍)</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td style="font-size:10px;">봄→여름</td>
+  <td style="font-size:10px;">07:30~09:29</td>
+  <td class="trait">권위, 변화, 신비</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#b92e27;">巳</span></td>
+  <td style="font-size:10px;">뱀(蛇)</td>
+  <td><span class="oh-badge" style="background:#b92e27;">火</span></td>
+  <td style="font-size:10px;">여름</td>
+  <td style="font-size:10px;">09:30~11:29</td>
+  <td class="trait">지혜, 통찰, 전략</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#b92e27;">午</span></td>
+  <td style="font-size:10px;">말(馬)</td>
+  <td><span class="oh-badge" style="background:#b92e27;">火</span></td>
+  <td style="font-size:10px;">여름</td>
+  <td style="font-size:10px;">11:30~13:29</td>
+  <td class="trait">열정, 활동, 자유</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#9b6f00;">未</span></td>
+  <td style="font-size:10px;">양(羊)</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td style="font-size:10px;">여름→가을</td>
+  <td style="font-size:10px;">13:30~15:29</td>
+  <td class="trait">온순, 예술, 감성</td>
+</tr>
+<tr style="background:#fef3c7;border-left:3px solid #fbbf24;">
+  <td><span class="han" style="color:#3d4f5c;">申</span> <br><span class="pos-tag" style="background:#fbbf24;color:white;">년지</span></td>
+  <td style="font-size:10px;">원숭이(猴)</td>
+  <td><span class="oh-badge" style="background:#3d4f5c;">金</span></td>
+  <td style="font-size:10px;">가을</td>
+  <td style="font-size:10px;">15:30~17:29</td>
+  <td class="trait">재치, 다재, 변통</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#3d4f5c;">酉</span></td>
+  <td style="font-size:10px;">닭(鷄)</td>
+  <td><span class="oh-badge" style="background:#3d4f5c;">金</span></td>
+  <td style="font-size:10px;">가을</td>
+  <td style="font-size:10px;">17:30~19:29</td>
+  <td class="trait">정밀, 심미, 완벽</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#9b6f00;">戌</span></td>
+  <td style="font-size:10px;">개(犬)</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td style="font-size:10px;">가을→겨울</td>
+  <td style="font-size:10px;">19:30~21:29</td>
+  <td class="trait">충직, 의리, 수호</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#1a4e7a;">亥</span></td>
+  <td style="font-size:10px;">돼지(豬)</td>
+  <td><span class="oh-badge" style="background:#1a4e7a;">水</span></td>
+  <td style="font-size:10px;">겨울</td>
+  <td style="font-size:10px;">21:30~23:29</td>
+  <td class="trait">복덕, 낙천, 포용</td>
+</tr>
+</tbody></table>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#fbbf24;"></div>년지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa;"></div>월지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4ade80;"></div>일지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f472b6;"></div>시지</div>
+</div>
+</div></body></html>

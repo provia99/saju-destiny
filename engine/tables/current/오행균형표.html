@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>오행 균형 요약표 》 임효원님</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{ border:1px solid #333;width:604px;overflow:visible;padding:6px 8px;background:transparent;display:flex;flex-direction:column;gap:7px;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;background:transparent;border-radius:4px;}}
+@media print{body{background:transparent;margin:0;padding:0;}.page{margin:0;background:transparent;width:604px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;flex-shrink:0;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card{border:1.5px solid #333;border-radius:10px;overflow:hidden;flex-shrink:0;}
+.card-hd{padding:4px 12px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:8pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:7pt;color:rgba(255,255,255,.85);}
+.pillar-ohaeng{display:grid;grid-template-columns:repeat(8,1fr);gap:0;background:transparent;border-bottom:1px solid #e0e0e0;}
+.po-col{display:flex;flex-direction:column;align-items:center;padding:5px 3px;border-right:1px solid #e0e0e0;gap:2px;}
+.po-col:last-child{border-right:none;}
+.po-label{font-size:6.5pt;color:#aaa;font-weight:700;}
+.po-hanja{font-family:'Noto Serif KR',serif;font-size:14pt;font-weight:800;line-height:1;}
+.po-kr{font-size:7pt;color:#888;}
+.po-pillar-label{font-size:6.5pt;font-weight:700;color:#aaa;text-align:center;padding:3px 0 1px;border-top:1px solid #f0f0f0;width:100%;margin-top:1px;}
+.balance-section{padding:8px 10px;background:transparent;border-bottom:1px solid #e0e0e0;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.oh-bars{display:flex;flex-direction:column;gap:4px;}
+.oh-row{display:flex;align-items:center;gap:6px;}
+.oh-icon{font-family:'Noto Serif KR',serif;font-size:9pt;font-weight:800;width:18px;text-align:center;flex-shrink:0;}
+.oh-label{font-size:6pt;font-weight:700;width:22px;flex-shrink:0;}
+.oh-bar-wrap{flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden;position:relative;}
+.oh-bar{height:100%;border-radius:4px;}
+.oh-ideal-marker{position:absolute;top:0;height:100%;width:2px;background:rgba(0,0,0,.2);}
+.oh-grade{font-size:7pt;font-weight:700;width:28px;flex-shrink:0;}
+.oh-role{font-size:7pt;color:#888;}
+.cycle-section{padding:6px 10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:transparent;}
+.cycle-title{font-size:6pt;font-weight:700;color:#555;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.cycle-flow{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-bottom:5px;}
+.cf-item{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.cf-circle{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:8pt;font-weight:800;color:white;}
+.cf-kr{font-size:6.5pt;color:#888;}
+.cf-arrow{font-size:8pt;color:#bbb;padding:0 1px;}
+.clash-list{display:flex;flex-direction:column;gap:3px;}
+.cl-row{display:flex;align-items:center;gap:5px;font-size:7pt;}
+.cl-from,.cl-to{font-family:'Noto Serif KR',serif;font-size:9pt;font-weight:800;}
+.cl-arrow{font-size:6pt;color:#aaa;}
+.cl-note{font-size:7pt;color:#555;}
+.eval-table{width:100%;border-collapse:collapse;font-size:6pt;}
+.eval-table th{background:#424242;color:white;padding:3px 5px;font-size:6pt;font-weight:700;}
+.eval-table td{border:1px solid #333;padding:3px 5px;vertical-align:middle;}
+.eval-table td.left{text-align:left;}
+.t-목{color:#4caf50;} .t-화{color:#f44336;} .t-토{color:#ff9800;} .t-금{color:#9e9e9e;} .t-수{color:#2196f3;}
+.oh-목{background:#4caf50;} .oh-화{background:#f44336;} .oh-토{background:#ff9800;} .oh-금{background:#9e9e9e;} .oh-수{background:#2196f3;}
+</style></head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+  <div>
+    <div class="banner-hdr-title">⚖️ 오행(五行) 균형 요약표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 일간 戊(토)</div>
+  </div>
+</div>
+
+<!-- ① 원국 8글자 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#475569,#64748b);">
+    <div class="card-hd-title">① 사주 원국 》 8글자 오행 배치</div>
+    <div class="card-hd-sub">戊申(무신)-甲寅(갑인)-戊辰(무진)-甲寅(갑인) · 각 글자의 오행</div>
+  </div>
+  <div class="pillar-ohaeng"><div class="po-col" style="">
+  <div class="po-label" style="">년간</div>
+  <div class="po-hanja t-토">戊</div>
+  <div class="po-kr">무</div>
+  <div class="po-oh" style="background:#ff9800;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">土</div>
+  <div class="po-pillar-label">년주(년주)</div>
+</div><div class="po-col" style="">
+  <div class="po-label" style="">년지</div>
+  <div class="po-hanja t-금">申</div>
+  <div class="po-kr">신</div>
+  <div class="po-oh" style="background:#9e9e9e;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">金</div>
+  <div class="po-pillar-label"></div>
+</div>
+<div class="po-col" style="">
+  <div class="po-label" style="">월간</div>
+  <div class="po-hanja t-목">甲</div>
+  <div class="po-kr">갑←用</div>
+  <div class="po-oh" style="background:#4caf50;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">木</div>
+  <div class="po-pillar-label">월주(월주)</div>
+</div><div class="po-col" style="">
+  <div class="po-label" style="">월지</div>
+  <div class="po-hanja t-목">寅</div>
+  <div class="po-kr">인←用</div>
+  <div class="po-oh" style="background:#4caf50;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">木</div>
+  <div class="po-pillar-label"></div>
+</div>
+<div class="po-col" style="background:rgba(255,152,0,0.08);border:1px solid #ff9800;border-radius:0;">
+  <div class="po-label" style="color:#ff9800;">일간★</div>
+  <div class="po-hanja t-토">戊</div>
+  <div class="po-kr">무(나)</div>
+  <div class="po-oh" style="background:#ff9800;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">土</div>
+  <div class="po-pillar-label">일주(일주)</div>
+</div><div class="po-col" style="">
+  <div class="po-label" style="">일지</div>
+  <div class="po-hanja t-토">辰</div>
+  <div class="po-kr">진</div>
+  <div class="po-oh" style="background:#ff9800;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">土</div>
+  <div class="po-pillar-label"></div>
+</div>
+<div class="po-col" style="">
+  <div class="po-label" style="">시간</div>
+  <div class="po-hanja t-목">甲</div>
+  <div class="po-kr">갑←用</div>
+  <div class="po-oh" style="background:#4caf50;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">木</div>
+  <div class="po-pillar-label">시주(시주)</div>
+</div><div class="po-col" style="">
+  <div class="po-label" style="">시지</div>
+  <div class="po-hanja t-목">寅</div>
+  <div class="po-kr">인←用</div>
+  <div class="po-oh" style="background:#4caf50;color:white;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;">木</div>
+  <div class="po-pillar-label"></div>
+</div></div>
+</div>
+
+<!-- ② 오행 강약 분포 + 도넛 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#0288d1);">
+    <div class="card-hd-title">② 오행 강약 분포 》 이상적 균형 대비</div>
+    <div class="card-hd-sub">이상 균형(각 20%) 대비 실제 분포</div>
+  </div>
+  <div class="balance-section">
+    <div>
+      <div style="font-size:6pt;font-weight:700;color:#555;margin-bottom:5px;">오행별 강약 (점선=이상 20%)</div>
+      <div class="oh-bars">
+        <div class="oh-row">
+  <div class="oh-icon t-목">木</div>
+  <div class="oh-label t-목">목(木)</div>
+  <div class="oh-bar-wrap">
+    <div class="oh-bar oh-목" style="width:95%;"></div>
+    <div class="oh-ideal-marker" style="left:20%;"></div>
+  </div>
+  <div class="oh-grade t-목">매우강</div>
+  <div class="oh-role"><span style="color:#4caf50;font-weight:700;">① 용신(用神)</span></div>
+</div>
+<div class="oh-row">
+  <div class="oh-icon t-화">火</div>
+  <div class="oh-label t-화">화(火)</div>
+  <div class="oh-bar-wrap">
+    <div class="oh-bar oh-화" style="width:28%;"></div>
+    <div class="oh-ideal-marker" style="left:20%;"></div>
+  </div>
+  <div class="oh-grade t-화">매우약</div>
+  <div class="oh-role">0.3pt</div>
+</div>
+<div class="oh-row">
+  <div class="oh-icon t-토">土</div>
+  <div class="oh-label t-토">토(土)</div>
+  <div class="oh-bar-wrap">
+    <div class="oh-bar oh-토" style="width:95%;"></div>
+    <div class="oh-ideal-marker" style="left:20%;"></div>
+  </div>
+  <div class="oh-grade t-토">매우강</div>
+  <div class="oh-role"><span style="color:#ff9800;font-weight:700;">③ 기신(忌神)</span></div>
+</div>
+<div class="oh-row">
+  <div class="oh-icon t-금">金</div>
+  <div class="oh-label t-금">금(金)</div>
+  <div class="oh-bar-wrap">
+    <div class="oh-bar oh-금" style="width:28%;"></div>
+    <div class="oh-ideal-marker" style="left:20%;"></div>
+  </div>
+  <div class="oh-grade t-금">매우약</div>
+  <div class="oh-role"><span style="color:#9e9e9e;font-weight:700;">④ 한신(閑神)</span></div>
+</div>
+<div class="oh-row">
+  <div class="oh-icon t-수">水</div>
+  <div class="oh-label t-수">수(水)</div>
+  <div class="oh-bar-wrap">
+    <div class="oh-bar oh-수" style="width:28%;"></div>
+    <div class="oh-ideal-marker" style="left:20%;"></div>
+  </div>
+  <div class="oh-grade t-수">매우약</div>
+  <div class="oh-role"><span style="color:#2196f3;font-weight:700;">② 희신(喜神)</span></div>
+</div>
+        <div style="margin-top:4px;font-size:7pt;color:#aaa;">점선 = 이상 균형점 (각 20%)</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:6pt;font-weight:700;color:#555;">오행 분포 비율</div>
+      <div style="position:relative;width:90px;height:90px;">
+        <canvas id="donutChart" width="90" height="90"></canvas>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+          <div style="font-size:7pt;color:#888;">일간</div>
+          <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:800;color:#ff9800;line-height:1;">戊</div>
+          <div style="font-size:6.5pt;color:#888;">土(토)</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div style="display:flex;align-items:center;gap:3px;font-size:7pt;">
+  <span style="width:6px;height:6px;border-radius:2px;background:#4caf50;flex-shrink:0;"></span>
+  <span style="font-weight:700;color:#4caf50;">木(목) 51%</span><span style="color:#888;"> · ① 용신(用神)</span>
+</div><div style="display:flex;align-items:center;gap:3px;font-size:7pt;">
+  <span style="width:6px;height:6px;border-radius:2px;background:#f44336;flex-shrink:0;"></span>
+  <span style="font-weight:400;color:#555;">火(화) 2%</span><span style="color:#888;"> · 0.3pt</span>
+</div><div style="display:flex;align-items:center;gap:3px;font-size:7pt;">
+  <span style="width:6px;height:6px;border-radius:2px;background:#ff9800;flex-shrink:0;"></span>
+  <span style="font-weight:700;color:#ff9800;">土(토) 42%</span><span style="color:#888;"> · ③ 기신(忌神)</span>
+</div><div style="display:flex;align-items:center;gap:3px;font-size:7pt;">
+  <span style="width:6px;height:6px;border-radius:2px;background:#9e9e9e;flex-shrink:0;"></span>
+  <span style="font-weight:700;color:#9e9e9e;">金(금) 4%</span><span style="color:#888;"> · ④ 한신(閑神)</span>
+</div><div style="display:flex;align-items:center;gap:3px;font-size:7pt;">
+  <span style="width:6px;height:6px;border-radius:2px;background:#2196f3;flex-shrink:0;"></span>
+  <span style="font-weight:700;color:#2196f3;">水(수) 1%</span><span style="color:#888;"> · ② 희신(喜神)</span>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 상생·상극 섹션 제거 (사용자 요청) — 별도 표(오행생극도)에서 다룸 -->
+
+<!-- ④ → ③ 균형 평가표 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+    <div class="card-hd-title">③ 오행 균형 평가표 》 강화·주의 방법</div>
+    <div class="card-hd-sub">각 오행의 역할과 실생활 활용법</div>
+  </div>
+  <table class="eval-table">
+    <thead><tr>
+      <th style="width:14mm;">오행</th><th style="width:18mm;">강약·점수</th>
+      <th style="width:20mm;">4신 역할</th><th style="width:20mm;">현재 상태</th>
+      <th>강화 방법</th><th>주의 사항</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:rgba(244,67,54,0.04);">
+  <td><span style="font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:800;" class="t-목">木</span><br><span style="font-size:7pt;color:#888;">목(木)</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#4caf50;color:white;">매우강</span><br><span style="font-size:7pt;color:#888;">7.39pt · 51%</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#4caf50;color:white;">① 용신(用神)</span></td>
+  <td style="font-size:7pt;color:#c62828;">강화 필수 》 현재 부족</td>
+  <td style="text-align:left;padding:3px 5px;"><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#4caf50;color:white;margin:1px;">초록색 착용</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#4caf50;color:white;margin:1px;">동쪽 방향</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#4caf50;color:white;margin:1px;">봄 집중 행동</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#4caf50;color:white;margin:1px;">나무 소재 인테리어</span></td>
+  <td style="font-size:7pt;color:#555;">土(토)이 극하므로 환절기·辰戌丑未 방어</td>
+</tr>
+<tr style="">
+  <td><span style="font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:800;" class="t-화">火</span><br><span style="font-size:7pt;color:#888;">화(火)</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#f44336;color:white;">매우약</span><br><span style="font-size:7pt;color:#888;">0.32pt · 2%</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#888;color:white;">—</span></td>
+  <td style="font-size:7pt;color:#555;">—</td>
+  <td style="text-align:left;padding:3px 5px;"><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#f44336;color:white;margin:1px;">빨강·주황 착용</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#f44336;color:white;margin:1px;">남쪽 방향</span></td>
+  <td style="font-size:7pt;color:#555;">균형 유지</td>
+</tr>
+<tr style="">
+  <td><span style="font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:800;" class="t-토">土</span><br><span style="font-size:7pt;color:#888;">토(土)</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#ff9800;color:white;">매우강</span><br><span style="font-size:7pt;color:#888;">6.05pt · 42%</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#ff9800;color:white;">③ 기신(忌神)</span></td>
+  <td style="font-size:7pt;color:#e65100;">태과(太過) 주의</td>
+  <td style="text-align:left;padding:3px 5px;"><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#ff9800;color:white;margin:1px;">황토색 착용</span></td>
+  <td style="font-size:7pt;color:#555;">土(토) 기운 더하는 것 자제. 황토·베이지 과다 주의</td>
+</tr>
+<tr style="">
+  <td><span style="font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:800;" class="t-금">金</span><br><span style="font-size:7pt;color:#888;">금(金)</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#9e9e9e;color:white;">매우약</span><br><span style="font-size:7pt;color:#888;">0.61pt · 4%</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#9e9e9e;color:white;">④ 한신(閑神)</span></td>
+  <td style="font-size:7pt;color:#757575;">중립·방치</td>
+  <td style="text-align:left;padding:3px 5px;"><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#9e9e9e;color:white;margin:1px;">흰색·은색 착용</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#9e9e9e;color:white;margin:1px;">서쪽 방향</span></td>
+  <td style="font-size:7pt;color:#555;">균형 유지</td>
+</tr>
+<tr style="background:rgba(76,175,80,0.04);">
+  <td><span style="font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:800;" class="t-수">水</span><br><span style="font-size:7pt;color:#888;">수(水)</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#2196f3;color:white;">매우약</span><br><span style="font-size:7pt;color:#888;">0.13pt · 1%</span></td>
+  <td><span style="display:inline-block;padding:1px 5px;border-radius:5px;font-size:7pt;font-weight:700;background:#2196f3;color:white;">② 희신(喜神)</span></td>
+  <td style="font-size:7pt;color:#388e3c;">유지 필요</td>
+  <td style="text-align:left;padding:3px 5px;"><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#2196f3;color:white;margin:1px;">파랑·검정 착용</span><span style="display:inline-block;padding:1px 4px;border-radius:3px;font-size:7pt;font-weight:700;background:#2196f3;color:white;margin:1px;">북쪽 방향</span></td>
+  <td style="font-size:7pt;color:#555;">土(토) 대운·세운 시 水(수) 약화 주의</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /page -->
+
+<script>
+(function(){
+  const ctx = document.getElementById('donutChart');
+  if(!ctx) return;
+  new Chart(ctx, {
+    type:'doughnut',
+    data:{
+      labels:["木(목)","火(화)","土(토)","金(금)","水(수)"],
+      datasets:[{
+        data:[51,2,42,4,1],
+        backgroundColor:["#4caf50","#f44336","#ff9800","#9e9e9e","#2196f3"],
+        borderWidth:1,
+        borderColor:'#fff'
+      }]
+    },
+    options:{
+      responsive:false, animation:false,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      cutout:'62%'
+    }
+  });
+})();
+</script>
+</body></html>

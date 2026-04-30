@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최원석님의 오행 에너지 밸런스(Energy Balance)</title>
+    <style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #525659;
+            /* Dark gray for print preview feel */
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* A4 Visual Wrapper */
+        .a4-wrapper {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 25mm;
+            /* 25mm margins as visual padding */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            /* Centered physically by flex body */
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            /* Let it fill the printable area (approx 160mm) */
+            padding: 0;
+            /* Remove internal padding, rely on page padding */
+            box-shadow: none;
+            /* Remove card shadow, use page shadow */
+            background: transparent;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        /* 오행 분석 박스 */
+        .ohaeng-analysis-box {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .ohaeng-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ohaeng-table th,
+        .ohaeng-table td {
+            border: 1px solid #eee;
+            padding: 8px 12px;
+            /* Reduced vertical padding */
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .ohaeng-table th {
+            background: #fcfcfc;
+            color: #666;
+            font-weight: 600;
+            border-top: none;
+        }
+
+        .ohaeng-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ohaeng-table td:first-child,
+        .ohaeng-table th:first-child {
+            border-left: none;
+        }
+
+        .ohaeng-table td:last-child,
+        .ohaeng-table th:last-child {
+            border-right: none;
+        }
+
+        /* 오행 컬러 라벨 */
+        .ohaeng-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 12px;
+            color: white;
+        }
+
+        .wood {
+            background: #4caf50;
+        }
+
+        .fire {
+            background: #f44336;
+        }
+
+        .earth {
+            background: #ffb300;
+        }
+
+        .metal {
+            background: #9e9e9e;
+        }
+
+        .water {
+            background: #2196f3;
+        }
+
+        /* 강도 바 */
+        .strength-container {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .strength-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        /* 음양 밸런스 */
+        .balance-section {
+            display: flex;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .balance-card {
+            flex: 1;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 10px;
+            /* Reduced padding from 15px */
+            text-align: center;
+        }
+
+        .balance-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .balance-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .balance-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* 요약 문구 */
+        .ohaeng-summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+            border-left: 4px solid #333;
+        }
+
+        /* 레이더 차트 플레이스홀더 */
+        .radar-chart-container {
+            width: 100%;
+            height: 250px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fcfcfc;
+            border: 1px dashed #ccc;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .radar-chart-placeholder {
+            text-align: center;
+            color: #888;
+        }
+
+        .radar-chart-placeholder i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* --- Profile Card CSS from manseoryeok_test.html --- */
+        h1 {
+            text-align: center;
+            margin: 0;
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding: 8px 12px;
+            background: white;
+            font-size: 20px;
+        }
+
+        /* 헤더 통합 박스 (제목 + 정보) */
+        .header-unified-box {
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            margin-bottom: 20px;
+            /* Reduced from 30px for tight fit */
+        }
+
+        /* 정보 섹션 - 내부 스타일 조정 */
+        .info-section {
+            display: flex;
+            gap: 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .character-wrapper {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            border-right: 1px solid #333;
+            border-radius: 0;
+            padding: 10px;
+        }
+
+        .character-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            font-size: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-circle::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            right: -20%;
+            bottom: -20%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+        }
+
+        .info-table-container {
+            flex: 1;
+            border-collapse: collapse;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+        }
+
+        .info-table-container td {
+            padding: 5px 16px;
+            border-bottom: 1px solid #333;
+            border-right: 1px solid #333;
+            vertical-align: middle;
+        }
+
+        .info-table-container td:last-child {
+            border-right: none;
+        }
+
+        .info-table-container tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-cell.label {
+            width: 110px;
+            font-weight: 600;
+            color: #555;
+            background: #fafafa;
+            text-align: center;
+            font-size: 14px;
+            border-left: none;
+        }
+
+        .info-cell.value {
+            background: white;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .info-cell.value.highlight {
+            font-weight: 600;
+            color: #c9a227;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .a4-wrapper {
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                margin: 0;
+                padding: 25mm !important;
+                /* Force padding to match screen preview */
+                border: none;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+                /* Let wrapper padding handle margins */
+            }
+        }
+
+        /* 상세 오행 테이블 */
+        .ohaeng-detail-box {
+            margin-top: 30px;
+            border: 2px solid #333;
+            /* Black border as requested */
+            border-radius: 12px;
+            /* Rounded corners */
+            overflow: hidden;
+            background: white;
+            padding: 0;
+            /* Table fills the box */
+        }
+
+        .ohaeng-detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            /* "Not too big" */
+        }
+
+        .ohaeng-detail-table th,
+        .ohaeng-detail-table td {
+            border: 1px solid #ddd;
+            /* Full grid borders */
+            padding: 6px 12px;
+            /* Reduced vertical padding from 10px to 6px */
+            vertical-align: middle;
+            color: #444;
+            line-height: 1.3;
+        }
+
+        .ohaeng-detail-table th {
+            background-color: #f7f7f7;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            /* Center headers */
+            border-top: none;
+            /* Let container border handle top */
+        }
+
+        .ohaeng-detail-table tr:first-child th:first-child {
+            border-left: none;
+        }
+
+        .ohaeng-detail-table tr:first-child th:last-child {
+            border-right: none;
+        }
+
+        .ohaeng-detail-table td:first-child {
+            border-left: none;
+        }
+
+        .ohaeng-detail-table td:last-child {
+            border-right: none;
+        }
+
+        .ohaeng-detail-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .detail-hanja-col {
+            font-weight: 700;
+            font-size: 16px;
+            /* Hanja slightly larger */
+            width: 60px;
+            text-align: center;
+        }
+
+        .detail-name-col {
+            font-weight: 600;
+            width: 90px;
+            color: #333;
+        }
+
+        .detail-meta-col {
+            /* Flex width */
+        }
+
+        .detail-score-col {
+            width: 140px;
+            /* Adjusted width */
+            font-weight: 700;
+            text-align: right;
+            /* Values often look better aligned right or center? keeping left/center for now based on image */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-wrapper">
+        <div class="container">
+            <!-- 프로필 카드 (Cheonmyeong Design Map) -->
+            <div class="header-unified-box">
+                <h1>최원석님의 오행 에너지 밸런스(Energy Balance)</h1>
+
+                <!-- 정보 섹션 -->
+                <div class="info-section">
+                    <div class="character-wrapper">
+                        <div class="character-circle">
+                            🐉
+                        </div>
+                    </div>
+                    <table class="info-table-container">
+                        <tr>
+                            <td class="info-cell label">기본정보</td>
+                            <td class="info-cell value" colspan="3">최원석, 남성, 61세<sup>*1</sup></td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">일주동물</td>
+                            <td class="info-cell value highlight" colspan="3">황금용(黃金龍)<sup>*2</sup></td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">양력</td>
+                            <td class="info-cell value" colspan="3">1964-01-20 09:30 / 사시(巳時)</td>
+                        </tr>
+                        <tr>
+                            <td class="info-cell label">음력</td>
+                            <td class="info-cell value" colspan="3">1963-12-06 09:30 / 사시(巳時)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ohaeng-analysis-box">
+                <table class="ohaeng-table">
+                    <thead>
+                        <tr>
+                            <th>기운</th>
+                            <th>갯수</th>
+                            <th>강도(점수)</th>
+                            <th>에너지 상태</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ohaengBody">
+                        <!-- JS Rendering -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="balance-section">
+                <div class="balance-card">
+                    <div class="balance-title">음기운 (陰)</div>
+                    <div class="balance-value" id="yinValue">3</div>
+                    <div class="balance-desc">수렴, 안정, 냉철</div>
+                </div>
+                <div class="balance-card">
+                    <div class="balance-title">양기운 (陽)</div>
+                    <div class="balance-value" id="yangValue">5</div>
+                    <div class="balance-desc">발산, 활동, 열정</div>
+                </div>
+            </div>
+
+            <!-- Detailed Table Container -->
+            <div id="ohaengDetailContainer" class="ohaeng-detail-box">
+                <!-- Detailed Table Rendered Here -->
+            </div>
+
+        </div>
+
+
+        <script>
+            let ohaengData = [
+                {
+                    key: 'wood',
+                    hanja: '木',
+                    hangulName: '나무 목',
+                    name: '목(木)',
+                    count: 2,
+                    score: 25,
+                    status: '안정',
+                    color: '#4caf50',
+                    metaTitle: '시작하는 힘',
+                    metaDesc: '새로운 사업, 배움, 성장의 기운'
+                },
+                {
+                    key: 'fire',
+                    hanja: '火',
+                    hangulName: '불 화',
+                    name: '화(火)',
+                    count: 2,
+                    score: 25,
+                    status: '안정',
+                    color: '#f44336',
+                    metaTitle: '퍼지는 힘',
+                    metaDesc: '방송, 홍보, 열정, 인간관계의 확장'
+                },
+                {
+                    key: 'earth',
+                    hanja: '土',
+                    hangulName: '흙 토',
+                    name: '토(土)',
+                    count: 3,
+                    score: 45,
+                    status: '매우 강함',
+                    color: '#ffb300',
+                    metaTitle: '단단한 기반',
+                    metaDesc: '부동산, 신용, 중재, 안정감'
+                },
+                {
+                    key: 'metal',
+                    hanja: '金',
+                    hangulName: '쇠 금',
+                    name: '금(金)',
+                    count: 0,
+                    score: 0,
+                    status: '없음',
+                    color: '#9e9e9e',
+                    metaTitle: '결실을 보는 힘',
+                    metaDesc: '정리, 마감, 수확, 강단'
+                },
+                {
+                    key: 'water',
+                    hanja: '水',
+                    hangulName: '물 수',
+                    name: '수(水)',
+                    count: 1,
+                    score: 5,
+                    status: '매우 부족',
+                    color: '#2196f3',
+                    metaTitle: '흐르는 지혜',
+                    metaDesc: '정보 공유, 유연함, 유통, 휴식'
+                }
+            ];
+
+            function getStatus(score) {
+                if (score === 0) return '없음';
+                if (score < 10) return '매우부족';
+                if (score < 20) return '부족';
+                if (score < 40) return '안정';
+                return '매우강함';
+            }
+
+            function renderOhaeng() {
+                const tbody = document.getElementById('ohaengBody');
+                let html = '';
+
+                ohaengData.forEach(item => {
+                    html += `
+                    <tr>
+                        <td><span class="ohaeng-label ${item.key}">${item.name}</span></td>
+                        <td>${item.count}개</td>
+                        <td style="width: 150px;">
+                            <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                                <span style="font-weight:700; color:#333;">${item.score}점</span>
+                                <div class="strength-container">
+                                    <div class="strength-bar" style="width: ${item.score}%; background: ${item.color};"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="color:${item.score >= 40 ? '#d32f2f' : item.score < 20 && item.score > 0 ? '#666' : item.score === 0 ? '#888' : '#333'}"><strong>${item.status}</strong></span></td>
+                    </tr>
+                `;
+                });
+
+                tbody.innerHTML = html;
+            }
+
+            function renderDetailTable() {
+                const container = document.getElementById('ohaengDetailContainer');
+                let html = `
+                <table class="ohaeng-detail-table">
+                    <thead>
+                        <tr>
+                            <th class="detail-hanja-col" style="text-align:center;">한자</th>
+                            <th class="detail-name-col">이름</th>
+                            <th class="detail-meta-col">현대적 비유 (4060 맞춤형)</th>
+                            <th class="detail-score-col">최원석님의 점수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                ohaengData.forEach(item => {
+                    // APPLY COLOR TO HANJA
+                    html += `
+                        <tr>
+                            <td class="detail-hanja-col" style="text-align:center;">
+                                <span style="color: ${item.color}; font-size: 18px;">${item.hanja}</span>
+                            </td>
+                            <td class="detail-name-col"><strong>${item.hangulName}</strong></td>
+                            <td class="detail-meta-col">
+                                <strong>${item.metaTitle}:</strong> ${item.metaDesc}
+                            </td>
+                            <td class="detail-score-col">
+                                <strong>${item.status} (${item.score}점)</strong>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+            }
+
+            renderOhaeng();
+            renderDetailTable();
+        </script>
+    </div>
+</body>
+
+</html>

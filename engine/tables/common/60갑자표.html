@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>60갑자표</title>
+  <style>
+    @font-face { font-family:'Noto Sans KR'; src:local('Noto Sans KR'); }
+    @font-face { font-family:'Noto Serif KR'; src:local('Noto Serif KR'); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR',sans-serif;
+      background: white;
+      padding: 10px;
+    }
+    .page { width:604px; max-height:840px; padding:6px 8px; background:white; overflow:hidden; margin:0 auto; }
+    .banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:5px; }
+    .banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+    .banner-hdr-info { font-size:7pt;color:rgba(255,255,255,.85); }
+    .card { border:1.5px solid #333;border-radius:8px;overflow:hidden; }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 1px;
+      background: #ddd;
+      padding: 1px;
+    }
+    .gapja-cell {
+      padding: 6px 4px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-left: 3px solid;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      background: white;
+    }
+    .gapja-han {
+      font-size: 9pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .gapja-kor {
+      font-size: 6pt;
+      color: #666;
+    }
+    @media print { body{background:white;margin:0;padding:0;} .page{margin:0;box-shadow:none;} @page{size:604px 840px;margin:0;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#3e2723,#5d4037);">
+      <div class="banner-hdr-title">📋 60갑자표</div>
+      <div class="banner-hdr-info">사주명리학 기초 참조표</div>
+    </div>
+    <div class="card">
+    <div class="grid-container">
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲子</div>
+        <div class="gapja-kor">갑자</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙丑</div>
+        <div class="gapja-kor">을축</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙寅</div>
+        <div class="gapja-kor">병인</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁卯</div>
+        <div class="gapja-kor">정묘</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊辰</div>
+        <div class="gapja-kor">무진</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己巳</div>
+        <div class="gapja-kor">기사</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚午</div>
+        <div class="gapja-kor">경오</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛未</div>
+        <div class="gapja-kor">신미</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬申</div>
+        <div class="gapja-kor">임신</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸酉</div>
+        <div class="gapja-kor">계유</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲戌</div>
+        <div class="gapja-kor">갑술</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙亥</div>
+        <div class="gapja-kor">을해</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙子</div>
+        <div class="gapja-kor">병자</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁丑</div>
+        <div class="gapja-kor">정축</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊寅</div>
+        <div class="gapja-kor">무인</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己卯</div>
+        <div class="gapja-kor">기묘</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚辰</div>
+        <div class="gapja-kor">경진</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛巳</div>
+        <div class="gapja-kor">신사</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬午</div>
+        <div class="gapja-kor">임오</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸未</div>
+        <div class="gapja-kor">계미</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲申</div>
+        <div class="gapja-kor">갑신</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙酉</div>
+        <div class="gapja-kor">을유</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙戌</div>
+        <div class="gapja-kor">병술</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁亥</div>
+        <div class="gapja-kor">정해</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊子</div>
+        <div class="gapja-kor">무자</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己丑</div>
+        <div class="gapja-kor">기축</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚寅</div>
+        <div class="gapja-kor">경인</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛卯</div>
+        <div class="gapja-kor">신묘</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬辰</div>
+        <div class="gapja-kor">임진</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸巳</div>
+        <div class="gapja-kor">계사</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲午</div>
+        <div class="gapja-kor">갑오</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙未</div>
+        <div class="gapja-kor">을미</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙申</div>
+        <div class="gapja-kor">병신</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁酉</div>
+        <div class="gapja-kor">정유</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊戌</div>
+        <div class="gapja-kor">무술</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己亥</div>
+        <div class="gapja-kor">기해</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚子</div>
+        <div class="gapja-kor">경자</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛丑</div>
+        <div class="gapja-kor">신축</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬寅</div>
+        <div class="gapja-kor">임인</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸卯</div>
+        <div class="gapja-kor">계묘</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲辰</div>
+        <div class="gapja-kor">갑진</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙巳</div>
+        <div class="gapja-kor">을사</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙午</div>
+        <div class="gapja-kor">병오</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁未</div>
+        <div class="gapja-kor">정미</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊申</div>
+        <div class="gapja-kor">무신</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己酉</div>
+        <div class="gapja-kor">기유</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚戌</div>
+        <div class="gapja-kor">경술</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛亥</div>
+        <div class="gapja-kor">신해</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬子</div>
+        <div class="gapja-kor">임자</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸丑</div>
+        <div class="gapja-kor">계축</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">甲寅</div>
+        <div class="gapja-kor">갑인</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #a8dbb5; background: #f3fcf5;">
+        <div class="gapja-han">乙卯</div>
+        <div class="gapja-kor">을묘</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丙辰</div>
+        <div class="gapja-kor">병진</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f5a9a5; background: #fff5f5;">
+        <div class="gapja-han">丁巳</div>
+        <div class="gapja-kor">정사</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">戊午</div>
+        <div class="gapja-kor">무오</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #f0d470; background: #fffdf4;">
+        <div class="gapja-han">己未</div>
+        <div class="gapja-kor">기미</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">庚申</div>
+        <div class="gapja-kor">경신</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #b0c4d0; background: #f7f9fa;">
+        <div class="gapja-han">辛酉</div>
+        <div class="gapja-kor">신유</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">壬戌</div>
+        <div class="gapja-kor">임술</div>
+      </div>
+      <div class="gapja-cell" style="border-left-color: #90bfe0; background: #f0f6ff;">
+        <div class="gapja-han">癸亥</div>
+        <div class="gapja-kor">계해</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

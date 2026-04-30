@@ -1,0 +1,307 @@
+/* ============================================================
+   사주집필 인쇄용 스타일시트 (print.css)
+   - A4 기준 인쇄 최적화
+   - VS Code Live Preview 및 Chrome 인쇄 호환
+   ============================================================ */
+
+/* ── 로컬 폰트 ────────────────────────────────────────────── */
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+
+/* ── 기본 리셋 ────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11pt;
+  line-height: 1.85;
+  color: #1a1a1a;
+  background: #fff;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+/* ── 페이지 레이아웃 (화면용) ────────────────────────────── */
+.page-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 60px;
+}
+
+/* ── 인쇄 페이지 설정 ─────────────────────────────────────── */
+@page {
+  size: A4;
+  margin: 18mm 20mm 18mm 22mm;
+}
+
+@media print {
+  body { font-size: 10.5pt; background: #fff; }
+  .page-wrap { max-width: 100%; padding: 0; }
+  .no-print { display: none !important; }
+  h1, h2, h3 { page-break-after: avoid; }
+  table { page-break-inside: avoid; }
+  .saju-table-wrap { page-break-inside: avoid; }
+}
+
+/* ── 표지 ─────────────────────────────────────────────────── */
+.cover-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 40px;
+  page-break-after: always;
+}
+
+.cover-title { font-size: 28pt; font-weight: bold; color: #2c2c2c; margin-bottom: 16px; }
+.cover-sub   { font-size: 13pt; color: #666; margin-bottom: 32px; }
+.cover-name  { font-size: 20pt; font-weight: bold; color: #8b0000; }
+.cover-divider { width: 60px; height: 3px; background: #8b0000; margin: 20px auto; }
+
+/* ── 목차 ─────────────────────────────────────────────────── */
+.toc-page { page-break-after: always; }
+.toc-title { font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 24px; color: #2c2c2c; }
+.toc-item { display: flex; align-items: baseline; margin-bottom: 6px; font-size: 11pt; }
+.toc-text { flex: 1; }
+.toc-dots { flex: 1; border-bottom: 1px dotted #ccc; margin: 0 8px; }
+.toc-page-num { color: #666; min-width: 24px; text-align: right; }
+
+/* ── 챕터 헤딩 ────────────────────────────────────────────── */
+.chapter-title {
+  font-size: 18pt;
+  font-weight: bold;
+  color: #8b0000;
+  margin: 32px 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #8b0000;
+  page-break-before: always;
+}
+.chapter-title:first-child { page-break-before: avoid; }
+
+.section-title {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #2c2c2c;
+  margin: 24px 0 8px;
+  padding-left: 10px;
+  border-left: 4px solid #8b0000;
+}
+
+.subsection-title {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #444;
+  margin: 16px 0 6px;
+}
+.subsection-title .subsection-sub {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #2c2c2c;
+}
+
+/* ── 본문 텍스트 ──────────────────────────────────────────── */
+p { margin-bottom: 10px; }
+
+.text-block { margin-bottom: 14px; }
+.text-block p { text-indent: 0; }
+
+.bullet-item { padding-left: 16px; margin-bottom: 4px; }
+.bullet-item::before { content: "• "; color: #8b0000; }
+
+.emphasis-box {
+  background: #fdf5f0;
+  border-left: 4px solid #c0392b;
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.info-box {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 4px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+
+/* ── 사주 기본표 ──────────────────────────────────────────── */
+.saju-table-wrap {
+  margin: 20px 0;
+}
+
+.saju-pillar-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5pt;
+  margin-bottom: 16px;
+}
+
+.saju-pillar-table th {
+  background: #8b0000;
+  color: #fff;
+  padding: 8px 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+.saju-pillar-table .th-sub {
+  font-size: 8.5pt;
+  font-weight: normal;
+  opacity: 0.85;
+}
+
+.saju-pillar-table td {
+  border: 1px solid #e0c8c8;
+  padding: 8px 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.saju-pillar-table .td-label {
+  background: #fdf0f0;
+  font-weight: bold;
+  color: #6b0000;
+  font-size: 10pt;
+  width: 60px;
+}
+
+.saju-pillar-table .td-tg {
+  font-size: 22pt;
+  font-weight: bold;
+  color: #2c2c2c;
+  letter-spacing: 2px;
+}
+
+.saju-pillar-table .td-jj {
+  font-size: 20pt;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+
+.hanja-sub {
+  font-size: 9pt;
+  color: #888;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+.highlight-cell {
+  background: #fff0f0 !important;
+}
+
+.saju-pillar-table .highlight {
+  background: #c0392b !important;
+}
+
+/* ── 핵심정보 요약표 ─────────────────────────────────────── */
+.saju-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5pt;
+  margin-top: 10px;
+}
+
+.saju-summary-table th {
+  background: #6b0000;
+  color: #fff;
+  padding: 7px 12px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.saju-summary-table td {
+  border: 1px solid #e0c8c8;
+  padding: 7px 12px;
+  vertical-align: middle;
+}
+
+.td-key {
+  background: #fdf0f0;
+  font-weight: bold;
+  color: #6b0000;
+  width: 140px;
+  white-space: nowrap;
+}
+
+.row-yongsin .td-val { font-weight: bold; color: #1a7a3c; }
+.yongsin { color: #1a7a3c !important; font-weight: bold; }
+.warn { color: #c0392b; }
+
+/* ── 오행 점수표 ─────────────────────────────────────────── */
+.ohaeng-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5pt;
+  margin: 10px 0;
+}
+
+.ohaeng-table th {
+  background: #5c3d1e;
+  color: #fff;
+  padding: 7px 10px;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.ohaeng-table td {
+  border: 1px solid #e0d8d0;
+  padding: 7px 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.oh-name { font-weight: bold; font-size: 12pt; white-space: nowrap; }
+.oh-score { font-weight: bold; }
+.oh-pct { color: #555; }
+
+.wood  { color: #2d6a2d; }
+.fire  { color: #c0392b; }
+.earth { color: #8b6914; }
+.metal { color: #555; }
+.water { color: #1a5276; }
+
+.bar-fill {
+  display: inline-block;
+  height: 12px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.tag-yongsin { color: #1a7a3c; font-weight: bold; }
+.tag-huisin  { color: #1a5276; font-weight: bold; }
+.tag-byeongsin { color: #c0392b; font-weight: bold; }
+.tag-neutral { color: #888; }
+
+.row-yongsin-mark { background: #f0faf4; }
+.row-huisin-mark  { background: #f0f6ff; }
+
+.table-note {
+  font-size: 9pt;
+  color: #888;
+  margin-top: 6px;
+  padding-left: 4px;
+}

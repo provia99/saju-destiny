@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>십이운성조견표</title>
+  <style>
+    @font-face { font-family:'Noto Sans KR'; src:local('Noto Sans KR'); }
+    @font-face { font-family:'Noto Serif KR'; src:local('Noto Serif KR'); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR',sans-serif;
+      background: white;
+      padding: 10px;
+    }
+    .page { width:604px; max-height:840px; padding:6px 8px; background:white; overflow:hidden; margin:0 auto; }
+    .banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:5px; }
+    .banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+    .banner-hdr-info { font-size:7pt;color:rgba(255,255,255,.85); }
+    .card { border:1.5px solid #333;border-radius:8px;overflow:hidden; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead tr {
+      background: #f5f5f5;
+    }
+    th {
+      padding: 4px 3px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      font-size: 7pt;
+      color: #333;
+    }
+    td {
+      padding: 3px 2px;
+      border: 1px solid #e0e0e0;
+      font-size: 7pt;
+      text-align: center;
+    }
+    .tenkan-label {
+      font-weight: bold;
+      font-size: 9pt;
+      padding: 4px;
+    }
+    .jiji-label {
+      font-weight: bold;
+      font-size: 7pt;
+      padding: 4px;
+      background: #f5f5f5;
+    }
+    .yunsung-han {
+      font-size: 7pt;
+      font-weight: 600;
+    }
+    .yunsung-kor {
+      font-size: 6pt;
+      color: #666;
+    }
+    @media print { body{background:white;margin:0;padding:0;} .page{margin:0;box-shadow:none;} @page{size:604px 840px;margin:0;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#004d40,#00695c);">
+      <div class="banner-hdr-title">📋 십이운성조견표</div>
+      <div class="banner-hdr-info">사주명리학 기초 참조표</div>
+    </div>
+    <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 42px;">天干</th>
+          <th style="width: 42px;">子</th>
+          <th style="width: 42px;">丑</th>
+          <th style="width: 42px;">寅</th>
+          <th style="width: 42px;">卯</th>
+          <th style="width: 42px;">辰</th>
+          <th style="width: 42px;">巳</th>
+          <th style="width: 42px;">午</th>
+          <th style="width: 42px;">未</th>
+          <th style="width: 42px;">申</th>
+          <th style="width: 42px;">酉</th>
+          <th style="width: 42px;">戌</th>
+          <th style="width: 42px;">亥</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tenkan-label">甲</td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">乙</td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">丙</td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">丁</td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">戊</td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">己</td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">庚</td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">辛</td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">壬</td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tenkan-label">癸</td>
+          <td style="background: #e3eef9;">
+            <div class="yunsung-han">沐浴</div>
+            <div class="yunsung-kor">목욕</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">冠帶</div>
+            <div class="yunsung-kor">관대</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">臨官</div>
+            <div class="yunsung-kor">임관</div>
+          </td>
+          <td style="background: #fde8e7;">
+            <div class="yunsung-han">帝旺</div>
+            <div class="yunsung-kor">제왕</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">衰</div>
+            <div class="yunsung-kor">쇠</div>
+          </td>
+          <td style="background: #eef1f4;">
+            <div class="yunsung-han">病</div>
+            <div class="yunsung-kor">병</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">死</div>
+            <div class="yunsung-kor">사</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">墓</div>
+            <div class="yunsung-kor">묘</div>
+          </td>
+          <td style="background: #f0f0f0;">
+            <div class="yunsung-han">絶</div>
+            <div class="yunsung-kor">절</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">胎</div>
+            <div class="yunsung-kor">태</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">養</div>
+            <div class="yunsung-kor">양</div>
+          </td>
+          <td style="background: #e8f7ec;">
+            <div class="yunsung-han">長生</div>
+            <div class="yunsung-kor">장생</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banya Report Editor</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Global Style Integration -->
+    <link rel="stylesheet" href="../static/style.css">
+    <!-- CKEditor 5 Super Build CDN (Provides Source Editing, General HTML Support, etc.) -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/super-build/ckeditor.js"></script>
+    <!-- Diff Match Patch for Merging manual edits -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121111/diff_match_patch.js"></script>
+    <!-- QWebChannel for Python Bridge -->
+    <script src="https://cdn.jsdelivr.net/gh/qtproject/qtwebchannel@5.15.2/src/webchannel/qwebchannel.js"></script>
+    <style>
+        :root {
+            --editor-bg: #f8f9fa;
+            --paper-bg: #ffffff;
+            --toolbar-bg: #ffffff;
+            --border-color: #d1d5db;
+            --accent-color: #1a1f2c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--editor-bg);
+            font-family: 'Noto Sans KR', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CKEditor Toolbar Customization */
+        .ck-editor__top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .ck.ck-editor__main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        /* Paper-like Editor Design */
+        .ck-content {
+            width: 210mm; /* A4 Width */
+            height: 297mm; /* A4 Height (Fixed for 'cut' effect) */
+            padding: 20mm !important;
+            margin: 0 auto;
+            background-color: var(--paper-bg) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color) !important;
+            border-radius: 4px;
+            font-size: 11pt;
+            line-height: 1.8;
+            color: #2c3e50;
+            overflow: hidden; /* 영역 밖 내용 절단 */
+        }
+
+        /* Heading Styles */
+        .ck-content h1 { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 24pt; border-bottom: 3px solid #667eea; padding-bottom: 10px; margin-top: 30px; }
+        .ck-content h2 { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 18pt; color: #34495e; margin-top: 25px; }
+        
+        /* Table Styles for Editor */
+        .ck-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .ck-content table td, .ck-content table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        /* Banya Custom Components Styling in Editor */
+        .ohaeng-container, .new-mans-container {
+            margin: 20px auto !important;
+            pointer-events: none; /* Prevent accidental edits of complex structures if needed */
+            user-select: none;
+        }
+
+        /* Semantic Slot Highlighting (Optional) */
+        .saju-slot {
+            background-color: rgba(100, 149, 237, 0.05);
+            border-bottom: 1px dashed rgba(100, 149, 237, 0.5);
+            transition: background-color 0.3s;
+        }
+        .saju-slot:hover {
+            background-color: rgba(100, 149, 237, 0.15);
+        }
+
+        /* Status Bar */
+        #status-bar {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Floating Action Buttons */
+        .action-buttons {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .btn-action {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background-color 0.2s;
+            color: white;
+            position: relative;
+        }
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+        .btn-action span {
+            font-size: 10px;
+            position: absolute;
+            bottom: -20px;
+            color: #333;
+            width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .btn-save { background-color: #4CAF50; }
+        .btn-print { background-color: #2196F3; }
+        .btn-master { background-color: #9C27B0; }
+    </style>
+</head>
+<body>
+    <div id="editor-container">
+        <div id="editor"></div>
+    </div>
+    
+    <div class="action-buttons">
+        <button class="btn-action btn-save" onclick="fileSave()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            <span>저장</span>
+        </button>
+        <button class="btn-action btn-print" onclick="printPdf()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>PDF 인쇄</span>
+        </button>
+        <button class="btn-action btn-master" onclick="saveAsMaster()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+            <span>마스터 저장</span>
+        </button>
+    </div>
+    <div id="status-bar">
+        <span id="file-info">새 문서</span>
+        <span id="save-status">저지됨</span>
+    </div>
+
+    <script>
+        let editorInstance;
+
+        CKEDITOR.ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: {
+                    items: [
+                        'sourceEditing', '|',
+                        'heading', '|',
+                        'bold', 'italic', 'underline', 'strikethrough', '|',
+                        'bulletedList', 'numberedList', '|',
+                        'outdent', 'indent', '|',
+                        'undo', 'redo', '|',
+                        'insertTable', 'blockQuote', 'link', 'htmlEmbed', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+                        'alignment'
+                    ]
+                },
+                language: 'ko',
+                // 모든 HTML 태그와 속성을 그대로 유지하도록 설정 (중요)
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
+                // 엔터 키 입력 시 <p> 대신 <br> 사용 안함 (표준 유지)
+            })
+            .then(editor => {
+                editorInstance = editor;
+                console.log('CKEditor 5 초기화 완료');
+                
+                // QWebChannel 초기화
+                if (typeof QWebChannel !== 'undefined') {
+                    new QWebChannel(qt.webChannelTransport, function(channel) {
+                        window.pybridge = channel.objects.pybridge;
+                        console.log('Python Bridge 연결 성공');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        let originalContent = ''; // 불러올 당시의 원본 데이터
+
+        // Python에서 호출할 함수들
+        function setContent(html) {
+            if (editorInstance) {
+                editorInstance.setData(html);
+                originalContent = html; // 원본 데이터 갱신
+                document.getElementById('save-status').innerText = '데이터 로드됨';
+            }
+        }
+
+        function isModified() {
+            if (!editorInstance) return false;
+            const current = editorInstance.getData();
+            // 공백이나 줄바꿈 사소한 차이는 무시하기 위해 trim 처리
+            return current.trim() !== originalContent.trim();
+        }
+
+        function mergeContent(newHtml) {
+            if (!editorInstance) return;
+            
+            const currentEdited = editorInstance.getData();
+            const dmp = new diff_match_patch();
+            
+            // 1. 기존 원본 -> 현재 수정본 사이의 패치(차이점) 생성
+            const diffs = dmp.diff_main(originalContent, currentEdited);
+            dmp.diff_cleanupSemantic(diffs);
+            const patches = dmp.patch_make(originalContent, diffs);
+            
+            // 2. 해당 패치를 새로운 집필 결과물에 적용
+            const results = dmp.patch_apply(patches, newHtml);
+            const mergedHtml = results[0];
+            
+            // 3. 에디터에 적용 및 원본 갱신
+            editorInstance.setData(mergedHtml);
+            originalContent = newHtml; // 새 결과를 새로운 기준점으로 설정
+            document.getElementById('save-status').innerText = '병합 완료';
+            return true;
+        }
+
+        function updateSlots(newData) {
+            if (!editorInstance) return;
+            
+            // 현재 에디터의 HTML을 돔 파서로 분석
+            const html = editorInstance.getData();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            const slots = doc.querySelectorAll('.saju-slot');
+            let updatedCount = 0;
+
+            slots.forEach(slot => {
+                const key = slot.getAttribute('data-slot');
+                if (newData[key] !== undefined) {
+                    slot.innerText = newData[key];
+                    updatedCount++;
+                }
+            });
+
+            if (updatedCount > 0) {
+                // 수동 수정본(originalContent)도 갱신하여 병합 팝업 방지 (데이터만 바꾼 것이므로)
+                const newFullHtml = doc.body.innerHTML;
+                editorInstance.setData(newFullHtml);
+                originalContent = newFullHtml; 
+                document.getElementById('save-status').innerText = '데이터 업데이트 완료';
+                return true;
+            }
+            return false;
+        }
+
+        function getSlotsFromContent(html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const slots = doc.querySelectorAll('.saju-slot');
+            const data = {};
+            slots.forEach(slot => {
+                const key = slot.getAttribute('data-slot');
+                data[key] = slot.innerText;
+            });
+            return data;
+        }
+
+        function getContent() {
+            if (editorInstance) {
+                return editorInstance.getData();
+            }
+            return '';
+        }
+
+        // Action Functions
+        function fileSave() {
+            // Python의 file_save() 호출 유도
+            if (typeof window.pybridge !== 'undefined') {
+                window.pybridge.triggerSave();
+            } else {
+                console.log('Python 브릿지 없음 - 자동 저장 시도 (웹 직접 실행 시)');
+            }
+        }
+
+        function printPdf() {
+            const html = getContent();
+            if (typeof window.pybridge !== 'undefined') {
+                window.pybridge.printToPdf(html);
+            } else {
+                alert('에디터 실행 환경에서만 인쇄가 가능합니다.');
+            }
+        }
+
+        function saveAsMaster() {
+            const html = getContent();
+            if (typeof window.pybridge !== 'undefined') {
+                window.pybridge.saveAsMaster(html);
+            } else {
+                alert('에디터 실행 환경에서만 마스터 저장 가능합니다.');
+            }
+        }
+
+        function setFileInfo(info) {
+            document.getElementById('file-info').innerText = info;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제 완료 - 반야 쇼핑몰</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: linear-gradient(135deg, #1a3a6a, #2c5aa0); color: white; padding: 20px; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; }
+        .container { max-width: 600px; margin: 60px auto; padding: 0 20px; flex: 1; }
+        .success-card { background: white; border-radius: 12px; padding: 50px 40px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .success-icon { font-size: 80px; margin-bottom: 20px; }
+        .success-title { font-size: 28px; font-weight: bold; color: #1a3a6a; margin-bottom: 10px; }
+        .success-subtitle { color: #666; margin-bottom: 40px; font-size: 16px; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 30px 0; text-align: left; }
+        .info-table tr { border-bottom: 1px solid #eee; }
+        .info-table td { padding: 12px 8px; }
+        .info-table td:first-child { color: #666; width: 40%; }
+        .info-table td:last-child { font-weight: bold; color: #333; }
+        .amount-row td { color: #e53935 !important; font-size: 20px; }
+        .notice { background: #f0f7ff; border-left: 4px solid #1a3a6a; padding: 15px 20px; border-radius: 4px; margin: 20px 0; text-align: left; }
+        .notice p { color: #444; font-size: 14px; line-height: 1.6; }
+        .btn-group { display: flex; gap: 12px; margin-top: 30px; }
+        .btn { flex: 1; padding: 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-primary { background: #1a3a6a; color: white; }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        footer { background: #1a3a6a; color: white; padding: 30px; text-align: center; margin-top: auto; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo">🔮 반야 쇼핑몰</div>
+    </div>
+</header>
+<div class="container">
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+        <div class="success-title">결제가 완료되었습니다!</div>
+        <div class="success-subtitle">주문해 주셔서 감사합니다. 곧 상품을 보내드리겠습니다.</div>
+
+        <table class="info-table">
+            <tr>
+                <td>주문번호</td>
+                <td>{{ order_id }}</td>
+            </tr>
+            <tr>
+                <td>결제 수단</td>
+                <td>{{ method }}</td>
+            </tr>
+            <tr class="amount-row">
+                <td>결제 금액</td>
+                <td>₩{{ "{:,}".format(amount) }}</td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td>{{ customer_email }}</td>
+            </tr>
+            {% if approved_at %}
+            <tr>
+                <td>결제 시각</td>
+                <td>{{ approved_at[:19].replace("T", " ") }}</td>
+            </tr>
+            {% endif %}
+        </table>
+
+        <div class="notice">
+            <p>📧 <strong>{{ customer_email }}</strong> 으로 상품이 발송됩니다.</p>
+            <p style="margin-top: 8px;">즉시 배송 상품은 바로 이메일로 전달되며,<br>예약 배송 상품은 지정된 시간에 발송됩니다.</p>
+        </div>
+
+        <div class="btn-group">
+            <a href="/shop/products" class="btn btn-primary">쇼핑 계속하기</a>
+            <a href="/" class="btn btn-secondary">홈으로</a>
+        </div>
+    </div>
+</div>
+<footer><p>&copy; 2024 반야 쇼핑몰</p></footer>
+<script>
+    // 결제 완료 후 장바구니 비우기
+    localStorage.removeItem('cart');
+</script>
+</body>
+</html>

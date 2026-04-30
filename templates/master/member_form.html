@@ -1,0 +1,374 @@
+{% extends "base.html" %}
+{% block title %}{% if mode=='new' %}회원 등록{% else %}회원 수정{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="m-0 fw-bold">{% if mode=='new' %}회원 등록{% else %}회원 수정{% endif %}</h3>
+      <a href="/members/list" class="btn btn-sm btn-outline-secondary">목록으로</a>
+    </div>
+
+    <!-- 프로필 완성도 미터 -->
+    <div class="card border-0 mb-4" style="background: linear-gradient(135deg,#fff8e1 0%,#fff3cd 100%); border-radius:12px;">
+      <div class="card-body py-3 px-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div>
+            <span class="fw-bold" style="color:#8b6914;">📋 프로필 완성도</span>
+            <span class="small text-muted ms-2">입력 항목이 늘수록 풀이가 더 정확해집니다</span>
+          </div>
+          <div class="fw-bold" style="font-size:1.4rem;color:#d4af37;">
+            <span id="accuracyPct">0</span>%
+          </div>
+        </div>
+        <div class="progress" style="height:10px;border-radius:6px;background:#f5e9c7;">
+          <div id="accuracyBar" class="progress-bar" role="progressbar" style="width:0%;background:linear-gradient(90deg,#d4af37 0%,#f4c430 100%);transition:width 0.4s;"></div>
+        </div>
+        <div class="small mt-2" id="accuracyHint" style="color:#8b6914;"></div>
+      </div>
+    </div>
+
+    {% if errors %}
+    <div class="alert alert-danger shadow-sm border-0">
+      <ul class="mb-0">
+        {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="card shadow border-0" style="border-radius: 12px;">
+      <div class="card-body p-4 p-md-5">
+        <form method="post" action="{% if mode=='new' %}/members/new{% else %}/members/{{ member.id }}/edit{% endif %}">
+          
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-color: {{ brand_color|default('#1A3A6A') }} !important; border-width: 2px !important;">기본 정보</h5>
+          <div class="row g-3 mb-5">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold text-muted">이름 <span class="text-danger">*</span></label>
+              <input type="text" name="name" class="form-control" value="{{ member.name|default('') }}" required>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold text-muted d-block">성별 <span class="text-danger">*</span></label>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="gender" id="genderM" value="남" {% if member.gender != '여' %}checked{% endif %} required>
+                <label class="form-check-label" for="genderM">남성</label>
+              </div>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="gender" id="genderF" value="여" {% if member.gender == '여' %}checked{% endif %} required>
+                <label class="form-check-label" for="genderF">여성</label>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <label class="form-label small fw-bold text-muted">이메일 <span class="text-danger">*</span></label>
+              <input type="email" name="email" class="form-control" value="{{ member.email|default('') }}" placeholder="example@email.com" required>
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-4 pb-2 border-bottom" style="color: {{ brand_color|default('#1A3A6A') }}; border-color: {{ brand_color|default('#1A3A6A') }} !important; border-width: 2px !important;">명리 정보</h5>
+          <div class="row g-3 mb-5">
+            <!-- 1줄: 생년 / 생월 / 생일 / 양력·음력+윤달 -->
+            <div class="col-md-3 col-6">
+              <label class="form-label small fw-bold text-muted">생년 <span class="text-danger">*</span></label>
+              <input type="number" name="birth_year" class="form-control" min="1900" max="2100" value="{{ member.birth_year|default('1980') }}" required>
+            </div>
+            <div class="col-md-2 col-6">
+              <label class="form-label small fw-bold text-muted">생월 <span class="text-danger">*</span></label>
+              <select name="birth_month" class="form-select" required>
+                {% for i in range(1, 13) %}
+                <option value="{{ i }}" {% if member.birth_month|string == i|string %}selected{% endif %}>{{ i }}월</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-2 col-6">
+              <label class="form-label small fw-bold text-muted">생일 <span class="text-danger">*</span></label>
+              <select name="birth_day" class="form-select" required>
+                {% for i in range(1, 32) %}
+                <option value="{{ i }}" {% if member.birth_day|string == i|string %}selected{% endif %}>{{ i }}일</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-5 col-6">
+              <label class="form-label small fw-bold text-muted d-block">양력 / 음력</label>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="lunar_yn" id="lunar0" value="0" {% if not member.lunar_yn %}checked{% endif %} onclick="document.getElementById('leap_wrap').style.display='none'">
+                <label class="form-check-label" for="lunar0">양력</label>
+              </div>
+              <div class="form-check form-check-inline mt-1">
+                <input class="form-check-input" type="radio" name="lunar_yn" id="lunar1" value="1" {% if member.lunar_yn %}checked{% endif %} onclick="document.getElementById('leap_wrap').style.display='inline-block'">
+                <label class="form-check-label" for="lunar1">음력</label>
+              </div>
+              <div class="form-check form-check-inline mt-1" id="leap_wrap" style="display: {% if member and member.lunar_yn %}inline-block{% else %}none{% endif %}; margin-left:10px; padding:4px 12px; background:#eef2ff; border-radius:8px; border:1px solid #c7d2fe;">
+                <input class="form-check-input" type="checkbox" name="leap_month_yn" id="leap_month_yn" value="1" {% if member and member.leap_month_yn %}checked{% endif %}>
+                <label class="form-check-label small fw-bold text-primary" for="leap_month_yn">
+                  <i class="bi bi-moon-stars-fill"></i> 윤달
+                </label>
+              </div>
+            </div>
+
+            <!-- 2줄: 생시 -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">생시 <span class="text-danger">*</span></label>
+              <select name="birth_time" class="form-select" required>
+                {% set times = [
+                  ('모름','모름'), ('자시','자시 (23:30~01:29)'), ('축시','축시 (01:30~03:29)'),
+                  ('인시','인시 (03:30~05:29)'), ('묘시','묘시 (05:30~07:29)'), ('진시','진시 (07:30~09:29)'),
+                  ('사시','사시 (09:30~11:29)'), ('오시','오시 (11:30~13:29)'), ('미시','미시 (13:30~15:29)'),
+                  ('신시','신시 (15:30~17:29)'), ('유시','유시 (17:30~19:29)'), ('술시','술시 (19:30~21:29)'),
+                  ('해시','해시 (21:30~23:29)')
+                ] %}
+                {% for val, label in times %}
+                <option value="{{ val }}" {% if member.birth_time == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <h5 class="fw-bold mb-3 pb-2 border-bottom" style="color:#d4af37; border-color:#d4af37 !important; border-width:2px !important;">
+            정확한 풀이를 위한 정보 <span class="fw-normal" style="font-size:0.8rem;color:#888;">(선택)</span>
+          </h5>
+          <div class="row g-4 mb-5">
+            <input type="hidden" name="birth_region" value="">
+            <input type="hidden" name="birth_time_accuracy" id="btaHidden" value="">
+
+            <!-- Q8 활동상태 -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">활동 상태</label>
+              <select name="activity_type" class="form-select form-select-sm">
+                {% for st in ['직장인','사업가','프리랜서','학생','은퇴','주부','무직'] %}
+                <option value="{{ st }}" {% if member.activity_type|default('직장인') == st %}selected{% endif %}>{{ st }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Q9 가족 (결혼/자녀/형제) -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">가족 (결혼·자녀·형제)</label>
+              <div class="row g-1">
+                <div class="col-4">
+                  <select name="marital_status" class="form-select form-select-sm">
+                    {% for ms in ['미혼','기혼','이혼','사별','재혼'] %}
+                    <option value="{{ ms }}" {% if member.marital_status|default('미혼') == ms %}selected{% endif %}>{{ ms }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="col-4">
+                  <select name="has_children" class="form-select form-select-sm">
+                    {% set hc = [('없음','자녀 없음'),('있음','자녀 있음')] %}
+                    {% for v,l in hc %}<option value="{{ v }}" {% if member.has_children|default('없음') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                  </select>
+                </div>
+                <div class="col-4">
+                  <select name="has_siblings" class="form-select form-select-sm">
+                    {% set hs = [('있음','형제 있음'),('없음','외동')] %}
+                    {% for v,l in hs %}<option value="{{ v }}" {% if member.has_siblings|default('있음') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Q10 부모 -->
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">부모님은?</label>
+              <select name="parent_status" class="form-select form-select-sm">
+                {% set parent_opts = [('양친','두 분 다 생존'),('편친','한 분 별세'),('없음','두 분 다 별세')] %}
+                {% for v,l in parent_opts %}
+                <option value="{{ v }}" {% if member.parent_status|default('양친') == v %}selected{% endif %}>{{ l }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- 추가 질문 -->
+            <div class="col-12"><hr class="my-2"></div>
+            <div class="col-12 small text-muted mb-1">
+              <i class="bi bi-pencil-square"></i> <strong>추가 질문</strong> (선택 — 가능한 만큼만 답해주세요)
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q1. 가장 잘 풀렸던 시기는?</label>
+              <select name="self_q1" class="form-select form-select-sm">
+                {% set q1_opts = [('','선택하세요'),('10대','10대'),('20대','20대'),('30대','30대'),('40대','40대'),('50대','50대'),('60대+','60대 이상'),('없음','특별히 없음')] %}
+                {% for v,l in q1_opts %}<option value="{{ v }}" {% if member.self_q1|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q2. 가장 힘들었던 시기는?</label>
+              <select name="self_q2" class="form-select form-select-sm">
+                {% for v,l in q1_opts %}<option value="{{ v }}" {% if member.self_q2|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q3. 평생 가장 약한 신체 부위?</label>
+              <select name="self_q6" class="form-select form-select-sm">
+                {% set q3_opts = [('','선택하세요'),('간담','간·근육·눈'),('심혈관','심장·혈관·정신'),('소화기','위·비장·소화'),('호흡기','폐·기관지·대장·피부'),('신장','신장·방광·생식기·허리'),('없음','특별히 없음')] %}
+                {% for v,l in q3_opts %}<option value="{{ v }}" {% if member.self_q6|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q4. 요즘(최근 1~2년) 어떠세요?</label>
+              <select name="self_q3" class="form-select form-select-sm">
+                {% set q6_opts = [('','선택하세요'),('잘풀림','요즘 잘 풀려요'),('보통','그냥 보통'),('막힘','요즘 너무 힘들어요')] %}
+                {% for v,l in q6_opts %}<option value="{{ v }}" {% if member.self_q3|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q5. 더위·추위 중 어느 쪽이 더 힘드세요?</label>
+              <select name="self_q5" class="form-select form-select-sm">
+                {% set qhr_opts = [('','선택하세요'),('추위','추위에 더 약함'),('더위','더위에 더 약함'),('비슷','비슷')] %}
+                {% for v,l in qhr_opts %}<option value="{{ v }}" {% if member.self_q5|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q6. 본능적으로 끌리는 것은? (색상·계절·여행지)</label>
+              {% set q4_parts = (member.self_q4|default('')).split(',') %}
+              <div class="row g-1">
+                <div class="col-4">
+                  <select name="self_q4_color" class="form-select form-select-sm q4-part" data-pos="0">
+                    {% set q4c = [('','색상'),('빨강','빨강·주황'),('노랑','노랑·황토'),('초록','초록·연두'),('흰색','흰색·은색'),('검정','검정·짙은파랑')] %}
+                    {% for v,l in q4c %}<option value="{{ v }}" {% if q4_parts[0]|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                  </select>
+                </div>
+                <div class="col-4">
+                  <select name="self_q4_season" class="form-select form-select-sm q4-part" data-pos="1">
+                    {% set q4s = [('','계절'),('봄','봄'),('여름','여름'),('환절기','늦여름·환절기'),('가을','가을'),('겨울','겨울')] %}
+                    {% for v,l in q4s %}<option value="{{ v }}" {% if q4_parts[1]|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                  </select>
+                </div>
+                <div class="col-4">
+                  <select name="self_q4_travel" class="form-select form-select-sm q4-part" data-pos="2">
+                    {% set q4t = [
+                      ('','여행지'),
+                      ('바다','🌊 바다·해변·호수'),
+                      ('산숲','⛰️ 산·숲·계곡'),
+                      ('바위산','🏔️ 바위산·암벽·동굴'),
+                      ('시골','🏡 시골·평야·전원'),
+                      ('도시','🌃 도시·축제·번화가'),
+                      ('집콕','🛌 집콕·동네 산책'),
+                      ('온천','♨️ 온천·휴양지'),
+                      ('사찰','🛕 사찰·고요한 곳')
+                    ] %}
+                    {% for v,l in q4t %}<option value="{{ v }}" {% if q4_parts[2]|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                  </select>
+                </div>
+              </div>
+              <input type="hidden" name="self_q4" id="selfQ4Hidden" value="{{ member.self_q4|default('') }}">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Q7. 스트레스 후 회복은?</label>
+              <select name="self_q7" class="form-select form-select-sm">
+                {% set q7_opts = [('','선택하세요'),('빠름','금방 회복'),('느림','오래 끔'),('중간','중간')] %}
+                {% for v,l in q7_opts %}<option value="{{ v }}" {% if member.self_q7|default('') == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+              </select>
+            </div>
+
+          </div>
+
+          <!-- 내부 hidden (사용 안 함) -->
+          <input type="hidden" name="concern_area" value="{{ member.concern_area|default('종합') }}">
+          <input type="hidden" name="health_concern" value="{{ member.health_concern|default('기본') }}">
+          <input type="hidden" name="memo" value="{{ member.memo|default('') }}">
+
+          {% if mode == 'edit' %}
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">상태 (활성/비활성)</label>
+              <select name="status" class="form-select form-select-sm">
+                <option value="활성" {% if member.status == '활성' %}selected{% endif %}>활성</option>
+                <option value="비활성" {% if member.status == '비활성' %}selected{% endif %}>비활성</option>
+              </select>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3 text-end mt-4">
+            <a href="/members/list" class="btn btn-light px-4 border rounded-pill fw-bold">취소하기</a>
+            <button type="submit" class="btn px-5 text-white fw-bold rounded-pill mx-1 shadow-sm" style="background-color: {{ brand_color|default('#1A3A6A') }};">저장하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function autoHyphen(target) {
+    target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
+// ── 정확도 미터 (베이스 5 + 검증8문 95 = 100) ──
+// 베이스(5) = 기본정보 입력 완성도
+// Q1(25) + Q2(20) + Q3(15) + Q4(13) + Q5(13) + Q6(5) + Q7(4) = 95
+function _baseFilled() {
+  const must = ['name','birth_year','birth_month','birth_day','birth_time','gender'];
+  return must.every(n => {
+    const el = document.querySelector(`[name="${n}"]`);
+    return el && (el.value || '').trim();
+  });
+}
+// Q6 환경(색상·계절·여행지) 3개 select → self_q4 hidden에 콤마 합성
+function _composeQ4() {
+  const c = document.querySelector('[name="self_q4_color"]')?.value || '';
+  const s = document.querySelector('[name="self_q4_season"]')?.value || '';
+  const t = document.querySelector('[name="self_q4_travel"]')?.value || '';
+  document.getElementById('selfQ4Hidden').value = `${c},${s},${t}`;
+  return [c,s,t].filter(Boolean).length;
+}
+
+// 진태양시 보정 제거됨 (출생지·정확시각 입력 비활성)
+function updateAccuracy() {
+  let pct = 0;
+  const hints = [];
+
+  // 베이스
+  if (_baseFilled()) pct += 5;
+  else hints.push('기본 정보(이름·생년월일·생시·성별)부터 입력해주세요');
+
+  // 추가 질문 (내부 가중치는 노출하지 않음)
+  const qWeights = [
+    {field:'self_q1', w:25},
+    {field:'self_q2', w:20},
+    {field:'self_q6', w:15},
+    {field:'self_q3', w:13},
+    {field:'self_q5', w:13},
+    {field:'self_q7', w:4},
+  ];
+  let qAnswered = 0;
+  qWeights.forEach(({field,w}) => {
+    const el = document.querySelector(`[name="${field}"]`);
+    if (el && el.value) { pct += w; qAnswered++; }
+  });
+  // Q6 환경: 3개 모두 선택해야 만점, 부분선택은 비례
+  const q4Filled = _composeQ4();
+  if (q4Filled === 3) { pct += 5; qAnswered++; }
+  else if (q4Filled > 0) pct += Math.round(5 * q4Filled / 3);
+
+  const qRemaining = (qWeights.length + 1) - qAnswered;
+  if (qRemaining > 0) hints.push(`추가 질문 ${qRemaining}개 더 답해주시면 더 정확합니다`);
+
+  if (pct > 100) pct = 100;
+  document.getElementById('accuracyPct').textContent = pct;
+  document.getElementById('accuracyBar').style.width = pct + '%';
+  const hintEl = document.getElementById('accuracyHint');
+  if (pct >= 100) hintEl.innerHTML = '<strong style="color:#2e7d32;">✓ 모든 정보가 입력되었습니다</strong>';
+  else if (hints.length) hintEl.innerHTML = '💡 ' + hints[0];
+  else hintEl.innerHTML = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 모든 입력 변경 시 정확도 미터 갱신
+  document.querySelectorAll('input,select').forEach(el => {
+    el.addEventListener('change', updateAccuracy);
+    el.addEventListener('input', updateAccuracy);
+  });
+  updateAccuracy();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,1192 @@
+{% extends "brand/_brand_chrome.html" %}
+{% set page = 'traditional' %}
+{% block title %}정통사주 | {{ master.선생님이름 }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  /* ===== Hero — 일주 캐릭터 + 일간 별칭 ===== */
+  .ts-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 22px 20px;
+    margin-bottom: 18px;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(192,132,252,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(245,200,66,0.2) 0%, transparent 55%),
+      linear-gradient(160deg, #2a1550 0%, #4a2080 50%, #6d3fa0 100%);
+    border: 1px solid rgba(245,200,66,0.4);
+    box-shadow: 0 16px 40px rgba(59,32,104,0.55);
+    text-align: center;
+  }
+  .ts-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,200,66,0.6), transparent);
+  }
+  .ts-hero-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .ts-hero-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff8dc 0%, var(--gold) 60%, #fde68a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .ts-hero-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .ts-hero-meta {
+    display: inline-flex; flex-wrap: wrap; justify-content: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .ts-hero-chip {
+    font-size: 11px;
+    color: var(--lav-pale);
+    background: rgba(155,89,182,0.2);
+    border: 1px solid rgba(155,89,182,0.4);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  .ts-hero-chip strong { color: var(--gold-light); font-weight: 800; }
+
+  /* 섹션 헤더 */
+  .ts-section-header { margin: 22px 0 12px; }
+  .ts-section-eyebrow {
+    font-size: 10px; font-weight: 800;
+    color: var(--gold-light); letter-spacing: 1.5px;
+    margin-bottom: 4px;
+  }
+  .ts-section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px; font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  /* ===== 명식판 (4기둥 × 천간/지지) ===== */
+  .ts-pillars-card {
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(245,200,66,0.35);
+    border-radius: 18px;
+    padding: 18px 12px 16px;
+    margin-bottom: 18px;
+  }
+  .ts-pillars-head {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+  .ts-pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .ts-pillar {
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: center;
+  }
+  .ts-pillar.ilju .ts-cell { box-shadow: 0 0 0 1.5px var(--gold), 0 8px 20px rgba(245,200,66,0.25); }
+  /* 셀(천간/지지) — 오행 색 */
+  .ts-cell {
+    width: 100%;
+    max-width: 60px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: #1e1433;
+    font-weight: 900;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+  }
+  .ts-cell:hover { transform: translateY(-2px); }
+  .ts-cell-char {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 1px;
+  }
+  .ts-cell-kr {
+    font-size: 9px;
+    font-weight: 800;
+    opacity: 0.85;
+    letter-spacing: 0.3px;
+  }
+  /* 오행별 배경 색 */
+  .ts-cell.oh-木 { background: linear-gradient(160deg, #a4e2a4, #4caf50); }
+  .ts-cell.oh-火 { background: linear-gradient(160deg, #ffab91, #e64a19); color: #fff; }
+  .ts-cell.oh-土 { background: linear-gradient(160deg, #fdd56a, #d4a017); }
+  .ts-cell.oh-金 { background: linear-gradient(160deg, #eceff1, #90a4ae); }
+  .ts-cell.oh-水 { background: linear-gradient(160deg, #81d4fa, #0288d1); color: #fff; }
+  /* 십성 라벨 */
+  .ts-sip {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .ts-pillar.ilju .ts-sip-cheon { color: var(--gold); font-weight: 800; }
+  .ts-pillar-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--lav-pale);
+    margin-top: 2px;
+  }
+  .ts-pillar.ilju .ts-pillar-name { color: var(--gold-light); }
+
+  /* ===== 오행 도넛 + 5신 ===== */
+  .ts-elements-card {
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(155,89,182,0.4);
+    border-radius: 18px;
+    padding: 20px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .ts-donut-wrap {
+    flex-shrink: 0;
+    position: relative;
+    width: 140px;
+    height: 140px;
+  }
+  .ts-donut-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ts-donut-segment {
+    fill: none;
+    stroke-width: 22;
+    transition: stroke-width 0.2s;
+  }
+  .ts-donut-segment:hover { stroke-width: 26; }
+  .ts-donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .ts-donut-center-oh {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px; font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .ts-donut-center-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-top: 3px;
+    font-weight: 700;
+  }
+  .ts-elements-list {
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 5px;
+  }
+  .ts-elem-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px;
+  }
+  .ts-elem-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+  }
+  .ts-elem-name { color: var(--text-primary); font-weight: 700; min-width: 28px; }
+  .ts-elem-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(155,89,182,0.18);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ts-elem-fill { height: 100%; border-radius: 2px; }
+  .ts-elem-pct {
+    color: var(--gold-light);
+    font-weight: 800;
+    font-size: 11px;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* 5신 표시 */
+  .ts-sinsin-card {
+    background: linear-gradient(160deg, rgba(245,200,66,0.08), rgba(155,89,182,0.08));
+    border: 1px solid rgba(245,200,66,0.35);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+  .ts-sinsin-head {
+    font-size: 11px; color: var(--gold-light);
+    font-weight: 800; letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .ts-sinsin-head strong { color: var(--text-primary); font-weight: 900; }
+  .ts-sinsin-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .ts-sinsin-item {
+    text-align: center;
+    padding: 8px 2px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+  }
+  .ts-sinsin-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .ts-sinsin-oh {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .ts-sinsin-kr {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* ===== 대운 타임라인 ===== */
+  .ts-daewoon-card {
+    background: linear-gradient(160deg, rgba(59,32,104,0.55), rgba(109,63,160,0.28));
+    border: 1px solid rgba(155,89,182,0.4);
+    border-radius: 18px;
+    padding: 22px 12px 14px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ts-daewoon-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(224,184,255,0.5), rgba(245,200,66,0.4), transparent);
+  }
+  .ts-track {
+    position: relative;
+    height: 110px;
+    margin: 4px 4px 6px;
+  }
+  .ts-line {
+    position: absolute;
+    left: 3%; right: 3%;
+    top: 50%;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+      rgba(155,89,182,0.35) 0%,
+      rgba(192,132,252,0.55) 30%,
+      rgba(245,200,66,0.55) 70%,
+      rgba(155,89,182,0.35) 100%);
+    box-shadow: 0 0 8px rgba(155,89,182,0.35);
+  }
+  /* 현재 나이 인디케이터 (세로줄) */
+  .ts-now {
+    position: absolute;
+    top: 22%; bottom: 22%;
+    width: 1.5px;
+    background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+    box-shadow: 0 0 10px rgba(245,200,66,0.7);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .ts-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 110px;
+    border: none; background: none; padding: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .ts-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 22px; height: 22px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.5) 0%, rgba(245,200,66,0) 70%);
+    filter: blur(1.5px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .ts-glow.tone-low  { background: radial-gradient(circle, rgba(248,113,113,0.45) 0%, rgba(248,113,113,0) 70%); }
+  .ts-glow.tone-high { background: radial-gradient(circle, rgba(74,222,128,0.5)  0%, rgba(74,222,128,0)  70%); }
+  .ts-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 9px; height: 9px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff8dc 0%, var(--gold) 70%);
+    border: 1.2px solid #fde68a;
+    box-shadow: 0 0 6px rgba(245,200,66,0.7);
+    pointer-events: none;
+    transition: all 0.25s;
+  }
+  .ts-core.tone-low  { background: radial-gradient(circle, #fff 0%, #f87171 70%); border-color: #fca5a5; box-shadow: 0 0 6px rgba(248,113,113,0.7); }
+  .ts-core.tone-high { background: radial-gradient(circle, #fff 0%, #4ade80 70%); border-color: #86efac; box-shadow: 0 0 6px rgba(74,222,128,0.7); }
+  .ts-dot-age {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .ts-dot-ganji {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px; font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .ts-dot-kr {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 700;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .ts-dot:hover .ts-core { transform: translate(-50%, -50%) scale(1.3); }
+  .ts-dot.active .ts-core {
+    transform: translate(-50%, -50%) scale(1.5);
+    box-shadow: 0 0 14px rgba(245,200,66,0.95);
+  }
+  .ts-dot.active .ts-glow {
+    width: 36px; height: 36px;
+    animation: tl-pulse 2.4s ease-in-out infinite;
+  }
+  .ts-dot.active .ts-dot-age,
+  .ts-dot.active .ts-dot-kr     { color: var(--gold-light); font-weight: 800; }
+  .ts-dot.active .ts-dot-ganji  { color: var(--gold); }
+  /* 현재 대운 — 항상 표시 */
+  .ts-dot.is-current .ts-glow {
+    width: 30px; height: 30px;
+    animation: tl-pulse 3s ease-in-out infinite;
+  }
+  .ts-dot.is-current .ts-dot-ganji { color: var(--gold); }
+  /* 대운 풀이 펼침 */
+  .ts-daewoon-detail {
+    margin: 8px 6px 0;
+    padding: 12px 14px;
+    background: rgba(30,20,51,0.6);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, max-height 0.35s, padding 0.25s, border-color 0.25s;
+    padding-top: 0; padding-bottom: 0;
+  }
+  .ts-daewoon-detail.visible {
+    opacity: 1;
+    max-height: 240px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .ts-daewoon-detail.tone-high { border-left-color: #4ade80; }
+  .ts-daewoon-detail.tone-mid  { border-left-color: #fff;    }
+  .ts-daewoon-detail.tone-low  { border-left-color: #f87171; }
+  .ts-dd-head {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .ts-dd-ganji {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px; font-weight: 900;
+    color: var(--gold);
+  }
+  .ts-dd-age { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+  .ts-dd-tone { margin-left: auto; font-size: 12px; font-weight: 800; }
+  .ts-dd-tone.tone-high { color: #4ade80; }
+  .ts-dd-tone.tone-mid  { color: #fff; }
+  .ts-dd-tone.tone-low  { color: #f87171; }
+  .ts-dd-text { font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+  .ts-dd-text-muted { color: var(--text-secondary); }
+  .ts-dd-curr-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 900;
+    color: #1e1433;
+    background: var(--gold);
+    padding: 2px 7px;
+    border-radius: 8px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== 풀이 박스 (각 섹션 아래 텍스트) ===== */
+  .ts-narr {
+    background: rgba(30,20,51,0.5);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+  }
+  .ts-narr em {
+    font-style: normal;
+    font-weight: 800;
+    color: var(--gold-light);
+  }
+
+  /* ===== 십성 5계열 분포 ===== */
+  .ts-sip-card {
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(155,89,182,0.4);
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    margin-bottom: 18px;
+  }
+  .ts-sip-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(155,89,182,0.18);
+  }
+  .ts-sip-row:last-child { border-bottom: none; }
+  .ts-sip-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    background: linear-gradient(145deg, rgba(155,89,182,0.25), rgba(245,200,66,0.15));
+    border: 1px solid rgba(245,200,66,0.3);
+    flex-shrink: 0;
+  }
+  .ts-sip-info {
+    flex: 1; min-width: 0;
+  }
+  .ts-sip-name {
+    font-size: 13px; font-weight: 800;
+    color: var(--gold-light);
+    line-height: 1.2;
+  }
+  .ts-sip-sub {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .ts-sip-bar-wrap {
+    flex: 1.2; min-width: 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ts-sip-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(155,89,182,0.18);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .ts-sip-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lav-light), var(--gold));
+    border-radius: 3px;
+    box-shadow: 0 0 6px rgba(245,200,66,0.4);
+  }
+  .ts-sip-cnt {
+    font-size: 11px; font-weight: 800;
+    color: var(--gold-light);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* ===== 현재 세운 카드 ===== */
+  .ts-seun-card {
+    border-radius: 16px;
+    padding: 18px 18px 16px;
+    margin-bottom: 18px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+  }
+  .ts-seun-card.tone-high {
+    background: linear-gradient(160deg, rgba(74,222,128,0.18), rgba(74,222,128,0.06));
+    border-color: rgba(74,222,128,0.45);
+    box-shadow: 0 14px 32px rgba(74,222,128,0.18);
+  }
+  .ts-seun-card.tone-mid {
+    background: linear-gradient(160deg, rgba(245,200,66,0.16), rgba(155,89,182,0.08));
+    border-color: rgba(245,200,66,0.45);
+    box-shadow: 0 14px 32px rgba(245,200,66,0.18);
+  }
+  .ts-seun-card.tone-low {
+    background: linear-gradient(160deg, rgba(248,113,113,0.16), rgba(248,113,113,0.05));
+    border-color: rgba(248,113,113,0.45);
+    box-shadow: 0 14px 32px rgba(248,113,113,0.15);
+  }
+  .ts-seun-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .ts-seun-year {
+    font-size: 11px; font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+  .ts-seun-ganji {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .ts-seun-kr {
+    font-size: 11px; color: var(--text-muted);
+    font-weight: 700;
+  }
+  .ts-seun-tone {
+    margin-left: auto;
+    font-size: 13px; font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+  .ts-seun-tone.tone-high { color: #4ade80; background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.4); }
+  .ts-seun-tone.tone-mid  { color: #fff;    background: rgba(245,200,66,0.18); border: 1px solid rgba(245,200,66,0.4); }
+  .ts-seun-tone.tone-low  { color: #f87171; background: rgba(248,113,113,0.18); border: 1px solid rgba(248,113,113,0.4); }
+  .ts-seun-text {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .ts-seun-text em { color: var(--gold-light); font-style: normal; font-weight: 800; }
+
+  /* ===== 개운법 칩 ===== */
+  .ts-gaewoon-card {
+    background: linear-gradient(160deg, rgba(245,200,66,0.10), rgba(155,89,182,0.08));
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .ts-gaewoon-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(245,200,66,0.3);
+  }
+  .ts-gaewoon-yong {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px; font-weight: 900;
+    line-height: 1;
+  }
+  .ts-gaewoon-meta {
+    flex: 1;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .ts-gaewoon-meta strong {
+    color: var(--gold-light);
+    font-weight: 800;
+  }
+  .ts-gaewoon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .ts-gw-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(155,89,182,0.25);
+    border-radius: 10px;
+  }
+  .ts-gw-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    background: linear-gradient(145deg, rgba(155,89,182,0.3), rgba(245,200,66,0.15));
+    flex-shrink: 0;
+  }
+  .ts-gw-body { flex: 1; min-width: 0; }
+  .ts-gw-label {
+    font-size: 10px; font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .ts-gw-value {
+    font-size: 12.5px; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .ts-gw-color-swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* ===== 구매 유도 카드 (재사용) ===== */
+  .ts-buy-card {
+    position: relative;
+    border-radius: 22px;
+    padding: 22px 18px 20px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 100% 0%, rgba(245,200,66,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(192,132,252,0.22) 0%, transparent 55%),
+      linear-gradient(160deg, #1d0f3a 0%, #2a1550 50%, #3d1d6b 100%);
+    border: 1px solid rgba(245,200,66,0.55);
+    box-shadow: 0 24px 60px rgba(59,32,104,0.65), inset 0 1px 0 rgba(255,248,220,0.25);
+  }
+  .ts-buy-headline {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .ts-buy-headline em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+  .ts-buy-sub {
+    font-size: 12.5px; color: var(--text-secondary);
+    line-height: 1.55; margin-bottom: 16px;
+  }
+  .ts-buy-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .ts-buy-feature {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(245,200,66,0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+  }
+  .ts-buy-feature::before { content: '✓ '; color: var(--gold); font-weight: 900; }
+  .ts-buy-price {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(245,200,66,0.3);
+    margin-bottom: 14px;
+  }
+  .ts-buy-price-old {
+    font-size: 13px; color: var(--text-muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(248,113,113,0.7);
+  }
+  .ts-buy-price-discount {
+    font-size: 11px; font-weight: 900; color: #fff;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    padding: 3px 8px; border-radius: 8px;
+  }
+  .ts-buy-price-new {
+    margin-left: auto;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(135deg, #fff8dc, var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(245,200,66,0.4));
+  }
+  .ts-buy-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; padding: 16px;
+    border: none; border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold) 50%, #fde68a);
+    background-size: 200% 100%;
+    color: #1e1433;
+    font-size: 16px; font-weight: 900;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 12px 28px rgba(245,200,66,0.4), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -2px 0 rgba(0,0,0,0.15);
+    animation: ts-shimmer 3s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  @keyframes ts-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+  .ts-buy-btn:hover { transform: translateY(-2px); }
+  .ts-buy-arrow { transition: transform 0.2s; }
+  .ts-buy-btn:hover .ts-buy-arrow { transform: translateX(4px); }
+
+  /* 사주 정보 없을 때 */
+  .ts-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .ts-empty a {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 22px;
+    border-radius: 12px;
+    background: rgba(245,200,66,0.15);
+    border: 1px solid rgba(245,200,66,0.5);
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 700;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if not trad %}
+  <div class="ts-empty">
+    사주 정보가 부족합니다.<br>
+    프로필에서 생년월일·생시를 입력하시면 정통사주를 확인하실 수 있습니다.
+    <br><a href="{{ base_url }}/profile">프로필 입력하기 →</a>
+  </div>
+{% else %}
+
+<!-- 로딩 오버레이 -->
+<div class="cp-loader" id="cpLoader" aria-live="polite">
+  <div class="cp-loader-orb">
+    <div class="cp-loader-ring"></div>
+    <div class="cp-loader-ring cp-loader-ring--inner"></div>
+    <div class="cp-loader-star">✦</div>
+  </div>
+  <div class="cp-loader-text">
+    <div class="cp-loader-title">{{ master.선생님이름 }}이 사주를 살펴보고 계십니다</div>
+    <div class="cp-loader-sub">
+      <span>일주·격국·신강약 · 용신·희신 · 십성 배치</span>
+      <span class="cp-loader-dots"><i></i><i></i><i></i></span>
+    </div>
+  </div>
+</div>
+
+<div class="cp-results" id="cpResults">
+
+<!-- ① Hero — 일주 캐릭터 -->
+<div class="ts-hero">
+  <div class="ts-hero-eyebrow">{{ subject_label|default(client.name) }}님의 정통사주</div>
+  <div class="ts-hero-name">{{ trad.alias }}</div>
+  <div class="ts-hero-sub">{{ trad.alias_sub }}</div>
+  <div class="ts-hero-meta">
+    <span class="ts-hero-chip">일간 <strong>{{ trad.일간 }} {{ trad.일간한글 }}</strong></span>
+    <span class="ts-hero-chip">{{ trad.ilju_animal }} <strong>{{ trad.ilju_kr }}</strong>띠 일주</span>
+    <span class="ts-hero-chip"><strong>{{ trad.신강약 }}</strong></span>
+  </div>
+</div>
+
+{% if trad.text_ilgan %}
+<div class="ts-narr">{{ trad.text_ilgan|safe }}</div>
+{% endif %}
+
+<!-- ② 명식판 (4기둥) -->
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">✦ 사주 원국</div>
+  <div class="ts-section-title">사주 명식</div>
+</div>
+<div class="ts-pillars-card">
+  <div class="ts-pillars-head">
+    <div>시주</div><div>일주</div><div>월주</div><div>년주</div>
+  </div>
+  <div class="ts-pillars">
+    {% for p in trad.pillars %}
+    <div class="ts-pillar {% if p.is_ilju %}ilju{% endif %}">
+      <div class="ts-sip ts-sip-cheon">{{ p.cheon_sip }}</div>
+      <div class="ts-cell oh-{{ p.cheon_oh }}">
+        <div class="ts-cell-char">{{ p.cheon }}</div>
+        <div class="ts-cell-kr">{{ p.cheon_kr }}</div>
+      </div>
+      <div class="ts-cell oh-{{ p.ji_oh }}">
+        <div class="ts-cell-char">{{ p.ji }}</div>
+        <div class="ts-cell-kr">{{ p.ji_kr }}</div>
+      </div>
+      <div class="ts-sip">{{ p.ji_sip }}</div>
+      <div class="ts-pillar-name">{{ p.name }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ③ 오행 분포 도넛 -->
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">⚖️ 오행 분포</div>
+  <div class="ts-section-title">오행 균형</div>
+</div>
+<div class="ts-elements-card" id="tsElements" data-dist='{{ trad.oh_dist|tojson }}'>
+  <div class="ts-donut-wrap">
+    <svg viewBox="0 0 100 100">
+      <!-- 배경 원 -->
+      <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(155,89,182,0.15)" stroke-width="22"/>
+      <g id="tsDonutSegs"></g>
+    </svg>
+    <div class="ts-donut-center">
+      <div class="ts-donut-center-oh">{{ trad.일간오행 }}</div>
+      <div class="ts-donut-center-label">일간 오행</div>
+    </div>
+  </div>
+  <div class="ts-elements-list">
+    {% for e in trad.oh_dist %}
+    <div class="ts-elem-row">
+      <div class="ts-elem-dot" style="background: {{ e.color }};"></div>
+      <div class="ts-elem-name">{{ e.oh }} {{ e.kr }}</div>
+      <div class="ts-elem-bar"><div class="ts-elem-fill" style="width:{{ e.pct }}%; background: {{ e.color }};"></div></div>
+      <div class="ts-elem-pct">{{ e.pct }}%</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% if trad.text_oh_balance %}
+<div class="ts-narr">{{ trad.text_oh_balance|safe }}</div>
+{% endif %}
+
+<!-- ④ 5신 (용신·희신·기신·구신·한신) -->
+{% if trad.sinsin %}
+<div class="ts-sinsin-card">
+  <div class="ts-sinsin-head"><strong>당신의 5신</strong> · 용신은 가장 도움이 되는 오행, 기신은 피해야 할 흐름</div>
+  <div class="ts-sinsin-grid">
+    {% for s in trad.sinsin %}
+    <div class="ts-sinsin-item">
+      <div class="ts-sinsin-label">{{ s.label }}</div>
+      <div class="ts-sinsin-oh" style="color: {{ s.color }};">{{ s.oh }}</div>
+      <div class="ts-sinsin-kr">{{ s.kr }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if trad.text_sinsin %}
+<div class="ts-narr">{{ trad.text_sinsin|safe }}</div>
+{% endif %}
+
+<!-- ⑤ 십성 5계열 분포 -->
+{% if trad.sip_dist %}
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">⚡ 십성 분포</div>
+  <div class="ts-section-title">5계열 균형</div>
+</div>
+<div class="ts-sip-card">
+  {% for s in trad.sip_dist %}
+  <div class="ts-sip-row">
+    <div class="ts-sip-icon">{{ s.icon }}</div>
+    <div class="ts-sip-info">
+      <div class="ts-sip-name">{{ s.key }}</div>
+      <div class="ts-sip-sub">{{ s.sub }} · {{ s.meaning }}</div>
+    </div>
+    <div class="ts-sip-bar-wrap">
+      <div class="ts-sip-bar"><div class="ts-sip-fill" style="width:{{ s.pct }}%;"></div></div>
+      <div class="ts-sip-cnt">{{ s.count }}자</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if trad.text_sip_top %}
+<div class="ts-narr">{{ trad.text_sip_top|safe }}</div>
+{% endif %}
+
+<!-- ⑥ 대운 타임라인 -->
+{% if trad.daewoon %}
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">🌊 인생 큰 흐름</div>
+  <div class="ts-section-title">대운 (10년 단위)</div>
+</div>
+<div class="ts-daewoon-card" id="tsDaewoon" data-list='{{ trad.daewoon|tojson }}' data-age='{{ trad.age_now }}'>
+  <div class="ts-track" id="tsTrack">
+    <div class="ts-line"></div>
+    <div class="ts-now" id="tsNow" style="display:none;"></div>
+    <!-- 대운 점은 JS가 동적 생성 -->
+  </div>
+  <div class="ts-daewoon-detail" id="tsDaewoonDetail">
+    <div class="ts-dd-head">
+      <span class="ts-dd-ganji"></span>
+      <span class="ts-dd-age"></span>
+      <span class="ts-dd-tone"></span>
+    </div>
+    <div class="ts-dd-text"></div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ⑦ 현재 세운 (올해 흐름) -->
+{% if trad.seun %}
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">🌅 올해 흐름</div>
+  <div class="ts-section-title">{{ trad.seun.year }}년 세운</div>
+</div>
+<div class="ts-seun-card tone-{{ trad.seun.tone }}">
+  <div class="ts-seun-head">
+    <div>
+      <div class="ts-seun-year">{{ trad.seun.year }}년</div>
+      <div class="ts-seun-ganji">{{ trad.seun.cheon }}{{ trad.seun.ji }}</div>
+      <div class="ts-seun-kr">{{ trad.seun.cheon_kr }}{{ trad.seun.ji_kr }}</div>
+    </div>
+    <div class="ts-seun-tone tone-{{ trad.seun.tone }}">
+      {% if trad.seun.tone == 'high' %}길운{% elif trad.seun.tone == 'low' %}주의{% else %}평운{% endif %}
+    </div>
+  </div>
+  <div class="ts-seun-text">
+    {% if trad.seun.gilhyung %}
+      올해는 <em>{{ trad.seun.gilhyung }}</em>의 흐름입니다.
+    {% endif %}
+    {% if trad.text_seun %}<br>{{ trad.text_seun|safe }}{% endif %}
+  </div>
+</div>
+{% endif %}
+
+<!-- ⑧ 개운법 (용신 기반) -->
+{% if trad.gaewoon %}
+<div class="ts-section-header">
+  <div class="ts-section-eyebrow">🍀 개운법</div>
+  <div class="ts-section-title">오늘 적용할 가이드</div>
+</div>
+<div class="ts-gaewoon-card">
+  <div class="ts-gaewoon-head">
+    <span class="ts-gaewoon-yong" style="color: {{ trad.gaewoon.color_hex }};">{{ trad.gaewoon.yong }}</span>
+    <div class="ts-gaewoon-meta">
+      {% if trad.text_gaewoon %}{{ trad.text_gaewoon|safe }}{% else %}
+      당신의 용신은 <strong>{{ trad.gaewoon.yong }} {{ trad.gaewoon.yong_kr }}</strong>입니다.<br>
+      이 흐름을 일상에 더하면 운기가 부드러워집니다.
+      {% endif %}
+    </div>
+  </div>
+  <div class="ts-gaewoon-grid">
+    <div class="ts-gw-item">
+      <div class="ts-gw-icon">🎨</div>
+      <div class="ts-gw-body">
+        <div class="ts-gw-label">행운의 색</div>
+        <div class="ts-gw-value">
+          <span class="ts-gw-color-swatch" style="background:{{ trad.gaewoon.color_hex }};"></span>
+          {{ trad.gaewoon.color_label }}
+        </div>
+      </div>
+    </div>
+    <div class="ts-gw-item">
+      <div class="ts-gw-icon">🧭</div>
+      <div class="ts-gw-body">
+        <div class="ts-gw-label">행운의 방향</div>
+        <div class="ts-gw-value">{{ trad.gaewoon.direction }}</div>
+      </div>
+    </div>
+    <div class="ts-gw-item">
+      <div class="ts-gw-icon">⏰</div>
+      <div class="ts-gw-body">
+        <div class="ts-gw-label">좋은 시간대</div>
+        <div class="ts-gw-value">{{ trad.gaewoon.time }}</div>
+      </div>
+    </div>
+    <div class="ts-gw-item">
+      <div class="ts-gw-icon">🍴</div>
+      <div class="ts-gw-body">
+        <div class="ts-gw-label">추천 음식</div>
+        <div class="ts-gw-value">{{ trad.gaewoon.food }}</div>
+      </div>
+    </div>
+    <div class="ts-gw-item" style="grid-column: 1 / -1;">
+      <div class="ts-gw-icon">💎</div>
+      <div class="ts-gw-body">
+        <div class="ts-gw-label">행운의 소품</div>
+        <div class="ts-gw-value">{{ trad.gaewoon.item }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ⑨ 구매 유도 -->
+<div class="ts-buy-card">
+  <div class="ts-buy-headline">
+    이 명식의 진짜 풀이는 <em>1/10</em>입니다
+  </div>
+  <div class="ts-buy-sub">
+    정통사주 풀버전 PDF는 명식 8자 모두의 십성·신살·합충, 평생 대운 흐름, 분야별 깊이 풀이를 담습니다.
+  </div>
+
+  <div class="ts-buy-features">
+    <div class="ts-buy-feature">8자 십성·신살 풀이</div>
+    <div class="ts-buy-feature">평생 대운 분석</div>
+    <div class="ts-buy-feature">5분야 상세 풀이</div>
+    <div class="ts-buy-feature">마스터 친필 코멘트</div>
+  </div>
+
+  <div class="ts-buy-price">
+    <span class="ts-buy-price-old">119,000원</span>
+    <span class="ts-buy-price-discount">-50%</span>
+    <span class="ts-buy-price-new">59,000원</span>
+  </div>
+
+  <a href="{{ base_url }}/shop" class="ts-buy-btn">
+    <span>정통사주 풀버전 받기</span>
+    <span class="ts-buy-arrow">→</span>
+  </a>
+</div>
+
+</div><!-- /.cp-results -->
+
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  /* ===== 오행 도넛 그리기 (멱등) ===== */
+  (function initDonut(){
+    const wrap = document.getElementById('tsElements');
+    if (!wrap) return;
+    let dist;
+    try { dist = JSON.parse(wrap.dataset.dist || '[]'); }
+    catch(e) { console.error('[ts-donut] parse fail', e); return; }
+    if (!dist || !dist.length) return;
+
+    const segG = document.getElementById('tsDonutSegs');
+    if (!segG) return;
+    /* 기존 segment 제거 */
+    segG.querySelectorAll('.ts-donut-segment').forEach(el => el.remove());
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const r = 38;
+    const cx = 50, cy = 50;
+    const circ = 2 * Math.PI * r;
+    let acc = 0;  // accumulated dasharray offset
+    dist.forEach(e => {
+      const len = (e.pct / 100) * circ;
+      if (len <= 0) return;
+      const seg = document.createElementNS(SVG_NS, 'circle');
+      seg.setAttribute('cx', cx);
+      seg.setAttribute('cy', cy);
+      seg.setAttribute('r', r);
+      seg.setAttribute('fill', 'none');
+      seg.setAttribute('stroke', e.color);
+      seg.setAttribute('stroke-width', '22');
+      seg.setAttribute('stroke-dasharray', len + ' ' + (circ - len));
+      seg.setAttribute('stroke-dashoffset', -acc);
+      seg.setAttribute('class', 'ts-donut-segment');
+      segG.appendChild(seg);
+      acc += len;
+    });
+  })();
+
+  /* ===== 대운 타임라인 (멱등) ===== */
+  (function initDaewoon(){
+    const wrap = document.getElementById('tsDaewoon');
+    if (!wrap) return;
+    let list;
+    try { list = JSON.parse(wrap.dataset.list || '[]'); }
+    catch(e) { console.error('[ts-daewoon] parse fail', e); return; }
+    if (!list || !list.length) return;
+    const ageNow = parseInt(wrap.dataset.age || '0', 10);
+
+    const track  = wrap.querySelector('#tsTrack');
+    const detail = wrap.querySelector('#tsDaewoonDetail');
+    if (!track || !detail) return;
+    /* 기존 dot 제거 */
+    track.querySelectorAll('.ts-dot').forEach(el => el.remove());
+    const LEFT_PCT = 4;
+    const RIGHT_PCT = 96;
+    const span = RIGHT_PCT - LEFT_PCT;
+    const N = list.length;
+
+    const dotEls = [];
+    let curIdx = -1;
+    list.forEach((d, i) => {
+      const left = LEFT_PCT + span * ((i + 0.5) / N);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ts-dot' + (d.is_current ? ' is-current' : '');
+      btn.style.left = left + '%';
+      btn.dataset.idx = i;
+      btn.innerHTML =
+        '<span class="ts-dot-age">' + d.start_age + '세</span>' +
+        '<span class="ts-glow tone-' + d.tone + '"></span>' +
+        '<span class="ts-core tone-' + d.tone + '"></span>' +
+        '<span class="ts-dot-ganji">' + d.cheon + d.ji + '</span>' +
+        '<span class="ts-dot-kr">' + d.cheon_kr + d.ji_kr + '</span>';
+      btn.addEventListener('click', () => showDae(i));
+      track.appendChild(btn);
+      dotEls.push(btn);
+      if (d.is_current) curIdx = i;
+    });
+
+    /* NOW 세로줄 — 현재 나이가 대운 전체 범위 안에 있을 때만 표시 */
+    const firstStart = list[0].start_age;
+    const lastEnd    = list[N - 1].end_age;
+    if (ageNow >= firstStart && ageNow <= lastEnd && lastEnd > firstStart) {
+      const ageFrac = (ageNow - firstStart) / (lastEnd - firstStart);
+      const nowPct = LEFT_PCT + span * ageFrac;
+      const nowEl = wrap.querySelector('#tsNow');
+      if (nowEl) {
+        nowEl.style.left = nowPct + '%';
+        nowEl.style.display = 'block';
+      }
+    }
+
+    function showDae(i) {
+      const d = list[i];
+      const head = detail.querySelector('.ts-dd-head');
+      head.querySelector('.ts-dd-ganji').textContent = d.cheon + d.ji + ' (' + d.cheon_kr + d.ji_kr + ')';
+      head.querySelector('.ts-dd-age').textContent  = d.age_range + ' · ' + d.start_year + '년~';
+      const tone = head.querySelector('.ts-dd-tone');
+      tone.textContent = d.gilhyung || (d.tone === 'high' ? '길운' : d.tone === 'low' ? '주의' : '평운');
+      tone.className = 'ts-dd-tone tone-' + d.tone;
+      const text = detail.querySelector('.ts-dd-text');
+      const curBadge = d.is_current ? '<span class="ts-dd-curr-badge">현재 대운</span>' : '';
+      text.innerHTML =
+        curBadge + ' 십이운성 <strong>' + (d.ship || '-') + '</strong>의 시기입니다.';
+      detail.classList.remove('tone-high','tone-mid','tone-low');
+      detail.classList.add('tone-' + d.tone, 'visible');
+      dotEls.forEach((el, idx) => el.classList.toggle('active', idx === i));
+    }
+
+    /* 자동 활성: 현재 대운, 없으면 첫 번째 */
+    showDae(curIdx >= 0 ? curIdx : 0);
+  })();
+</script>
+{% endblock %}

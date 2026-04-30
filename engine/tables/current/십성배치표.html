@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>십성 배치표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333;
+  width:604px;
+  max-height:840px;
+  overflow:hidden;
+  padding:2px 4px;
+  background:transparent;
+}
+.page * { line-height:1.3; }
+@media screen {
+  body { background:#f5f5f5; }
+  .page { border:1px solid #333; margin:20px auto;  background:transparent; border-radius:4px; }
+}
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  background:transparent; width:604px;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 840px; margin:0; }
+}
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:1.5px solid #333; border-radius:11px; overflow:hidden; margin-top:3px; }
+.card-hd { padding:4px 14px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:8.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+.wonkuk-section { padding:5px 12px 4px; background:#fafafa; border-bottom:1px solid #e0e0e0; }
+.wk-title { font-size:7pt; font-weight:700; color:#888; margin-bottom:3px; letter-spacing:.5px; }
+.pillar-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+.pillar-box { border:1.5px solid #333; border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+.pb-hd { text-align:center; padding:2px 4px; border-bottom:1px solid #e0e0e0; background:#f5f5f5; }
+.pb-hd-label { font-size:7pt; font-weight:700; color:#888; }
+.pb-hd-name  { font-size:7pt; font-weight:700; color:#555; }
+.pb-stem   { padding:3px 4px; border-bottom:1px solid #e0e0e0; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.pb-branch { padding:3px 4px; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.pb-hanja  { font-family:'Noto Serif KR',serif; font-size:17pt; font-weight:800; line-height:1; }
+.pb-kr     { font-size:7pt; color:#888; }
+.pb-sipseong { font-size:7pt; font-weight:700; color:white; padding:1px 6px; border-radius:6px; }
+.ilgan-marker { font-size:6.5pt; font-weight:900; color:white; background:#f44336; padding:1px 4px; border-radius:3px; margin-bottom:1px; }
+.sipseong-table { width:100%; border-collapse:collapse; table-layout:fixed; }
+.sipseong-table th { font-size:7pt; font-weight:700; color:#555; background:#f8f8f8; padding:1px 4px; border:1px solid #333; text-align:center; word-break:keep-all; overflow-wrap:break-word; }
+.sipseong-table th:first-child { border-left:none; }
+.sipseong-table th:last-child  { border-right:none; }
+.sipseong-table thead tr th    { border-top:none; }
+.sipseong-table td { border:1px solid #333; padding:2px 4px; vertical-align:middle; font-size:7pt; word-break:keep-all; overflow-wrap:break-word; line-height:1.4; }
+.sipseong-table td:first-child { border-left:none; }
+.sipseong-table td:last-child  { border-right:none; }
+.sipseong-table tbody tr:last-child td { border-bottom:none; }
+.sipseong-table tr.group-start td { border-top:1.5px solid #ccc; }
+.memo { background:#f8f9fa; border:1.5px solid #333; border-radius:8px; padding:6px 10px; font-size:7pt; color:#555; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="banner-hdr" style="background:linear-gradient(135deg,#283593,#3949ab);">
+  <div>
+    <div class="banner-hdr-title">⭐ 십성(十星) 배치표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진)</div>
+  </div>
+</div>
+<div class="card">
+
+  <!-- 헤더 -->
+  <div class="card-hd" style="background:linear-gradient(135deg,#7b1fa2,#e91e63);">
+    <div class="card-hd-title">⭐ 십성(十星) 배치표 》 내 하늘의 별자리</div>
+    <div class="card-hd-sub">임효원 님 · 戊申-甲寅-戊辰-甲寅 · 있는 별과 없는 별</div>
+  </div>
+
+  <!-- 원국 배치도 -->
+  <div class="wonkuk-section">
+    <div class="wk-title">▼ 사주 원국 》 기둥별 십성 배치</div>
+    <div class="pillar-grid">
+      
+      <div class="pillar-box" style="">
+        <div class="pb-hd" style="">
+          <div class="pb-hd-label" style="color:#888;">년주(年柱)</div>
+          <div class="pb-hd-name" style="color:#555;">조상·사회·초년</div>
+        </div>
+        <div class="pb-stem" style="background:transparent;">
+          
+          <div class="pb-hanja" style="color:#ff9800;">戊</div>
+          <div class="pb-kr">무(戊) · 土</div>
+          <div class="pb-sipseong" style="background:#4caf50;">비견</div>
+        </div>
+        <div class="pb-branch" style="background:transparent;">
+          <div class="pb-hanja" style="color:#9e9e9e;">申</div>
+          <div class="pb-kr">신(申) · 金</div>
+          <div class="pb-sipseong" style="background:#f44336;">식신</div>
+        </div>
+        <div style="font-size:6.5pt;color:#e65100;font-weight:700;text-align:center;padding:2px 3px;background:#fff3e0;border-radius:4px;border-top:1px solid #ffe0b2;min-height:10px;">겁살</div>
+      </div>
+
+      <div class="pillar-box" style="">
+        <div class="pb-hd" style="">
+          <div class="pb-hd-label" style="color:#888;">월주(月柱)</div>
+          <div class="pb-hd-name" style="color:#555;">부모·직업·청년</div>
+        </div>
+        <div class="pb-stem" style="background:transparent;">
+          
+          <div class="pb-hanja" style="color:#4caf50;">甲</div>
+          <div class="pb-kr">갑(甲) · 木</div>
+          <div class="pb-sipseong" style="background:#9e9e9e;">편관</div>
+        </div>
+        <div class="pb-branch" style="background:transparent;">
+          <div class="pb-hanja" style="color:#4caf50;">寅</div>
+          <div class="pb-kr">인(寅) · 木</div>
+          <div class="pb-sipseong" style="background:#9e9e9e;">편관</div>
+        </div>
+        <div style="font-size:6.5pt;color:#e65100;font-weight:700;text-align:center;padding:2px 3px;background:#fff3e0;border-radius:4px;border-top:1px solid #ffe0b2;min-height:10px;">망신살</div>
+      </div>
+
+      <div class="pillar-box" style="border:2px solid #f44336;">
+        <div class="pb-hd" style="background:#fff3e0;">
+          <div class="pb-hd-label" style="color:#f44336;">일주(日柱) ★나</div>
+          <div class="pb-hd-name" style="color:#e65100;">배우자·중년</div>
+        </div>
+        <div class="pb-stem" style="background:#fff8f5;">
+          <div class="ilgan-marker">일간(나)</div>
+          <div class="pb-hanja" style="color:#ff9800;">戊</div>
+          <div class="pb-kr">무(戊) · 土</div>
+          <div class="pb-sipseong" style="background:#aaa;">일원(나)</div>
+        </div>
+        <div class="pb-branch" style="background:#fff8f5;">
+          <div class="pb-hanja" style="color:#ff9800;">辰</div>
+          <div class="pb-kr">진(辰) · 土</div>
+          <div class="pb-sipseong" style="background:#4caf50;">비견</div>
+        </div>
+        <div style="font-size:6.5pt;font-weight:700;text-align:center;padding:2px 3px;background:#fce4ec;border-radius:4px;border-top:1px solid #f48fb1;min-height:10px;color:#c62828;">백호대살<br>반안살</div>
+      </div>
+
+      <div class="pillar-box" style="">
+        <div class="pb-hd" style="">
+          <div class="pb-hd-label" style="color:#888;">시주(時柱)</div>
+          <div class="pb-hd-name" style="color:#555;">자녀·말년·꿈</div>
+        </div>
+        <div class="pb-stem" style="background:transparent;">
+          
+          <div class="pb-hanja" style="color:#4caf50;">甲</div>
+          <div class="pb-kr">갑(甲) · 木</div>
+          <div class="pb-sipseong" style="background:#9e9e9e;">편관</div>
+        </div>
+        <div class="pb-branch" style="background:transparent;">
+          <div class="pb-hanja" style="color:#4caf50;">寅</div>
+          <div class="pb-kr">인(寅) · 木</div>
+          <div class="pb-sipseong" style="background:#9e9e9e;">편관</div>
+        </div>
+        <div style="font-size:6.5pt;color:#e65100;font-weight:700;text-align:center;padding:2px 3px;background:#fff3e0;border-radius:4px;border-top:1px solid #ffe0b2;min-height:10px;">망신살</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 십성 10개 목록표 -->
+  <table class="sipseong-table">
+    <thead>
+      <tr>
+        <th style="width:12mm;">계열</th>
+        <th style="width:16mm;">십성</th>
+        <th style="width:14mm;">유무</th>
+        <th style="width:22mm;">위치</th>
+        <th style="width:54mm;">의미·기질</th>
+        <th style="width:30mm;">삶의 영역</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="group-start">
+        <td rowspan="2" style="text-align:center;background:#e8f5e9;">
+        <span style="font-size:7pt;font-weight:700;color:#2e7d32;">비겁<br>(比劫)</span>
+      </td>
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#4caf50;">비견</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#4caf50;">✅ 있음</span></td>
+        <td><span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#4caf50;margin:1px;">년간 戊(무)</span> <span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#4caf50;margin:1px;">일지 辰(진)</span></td>
+        <td style=""><strong>주체성·자립심·동등한 경쟁.</strong> 나와 같은 기운. 독립적으로 움직이는 힘.</td>
+        <td style="font-size:7pt;color:#555;">형제·동료·경쟁자 관계. 자립·독립 사업.</td>
+      </tr>
+      <tr >
+        
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#4caf50;">겁재</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>경쟁심·추진력·과감한 실행력.</strong> 승부근성이 있고 한번에 큰 것을 잡으려 함.</td>
+        <td style="font-size:7pt;color:#bbb;">경쟁·투자·사업 기질. 재물 기복 주의.</td>
+      </tr>
+      <tr class="group-start">
+        <td rowspan="2" style="text-align:center;background:#ffebee;">
+        <span style="font-size:7pt;font-weight:700;color:#b71c1c;">식상<br>(食傷)</span>
+      </td>
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#f44336;">식신</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#f44336;">✅ 있음</span></td>
+        <td><span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#f44336;margin:1px;">년지 申(신)</span></td>
+        <td style=""><strong>창의력·표현·여유·먹복.</strong> 자연스러운 재능 발휘. 없으면 창작보다 실무형.</td>
+        <td style="font-size:7pt;color:#555;">창작·예술·요식·자유업.</td>
+      </tr>
+      <tr >
+        
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#f44336;">상관</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>표현력·반골기질·예술성.</strong> 없으면 규칙 안에서 안정을 추구.</td>
+        <td style="font-size:7pt;color:#bbb;">언론·예술·교육(비판).</td>
+      </tr>
+      <tr class="group-start">
+        <td rowspan="2" style="text-align:center;background:#fff3e0;opacity:0.5;">
+        <span style="font-size:7pt;font-weight:700;color:#e65100;">재성<br>(財星)</span>
+      </td>
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#ff9800;">편재</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>사업적 재물·투기·확장성.</strong> 없으면 안정 자산 선호.</td>
+        <td style="font-size:7pt;color:#bbb;">사업·투자·무역.</td>
+      </tr>
+      <tr >
+        
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#ff9800;">정재</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>안정적 수입·성실·관리형 재물.</strong> 꾸준히 모으는 재물 기질. 배우자와 재물 연결.</td>
+        <td style="font-size:7pt;color:#bbb;">월급·연금·임대수입. 재물 안정형.</td>
+      </tr>
+      <tr class="group-start">
+        <td rowspan="2" style="text-align:center;background:#f5f5f5;">
+        <span style="font-size:7pt;font-weight:700;color:#424242;">관성<br>(官星)</span>
+      </td>
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;">편관</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;">✅ 있음</span></td>
+        <td><span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;margin:1px;">월간 甲(갑)</span> <span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;margin:1px;">월지 寅(인)</span> <span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;margin:1px;">시간 甲(갑)</span> <span style="display:inline-block;padding:1px 5px;border-radius:4px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;margin:1px;">시지 寅(인)</span></td>
+        <td style=""><strong>도전성·권력욕·강한 추진력.</strong> 없으면 강압보다 원칙으로 움직임.</td>
+        <td style="font-size:7pt;color:#555;">군·경·특수직.</td>
+      </tr>
+      <tr >
+        
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#9e9e9e;">정관</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>원칙성·책임감·명예욕.</strong> 사회적 책임과 규범을 매우 중시함.</td>
+        <td style="font-size:7pt;color:#bbb;">공직·조직·명예직. 신뢰·책임 기질.</td>
+      </tr>
+      <tr class="group-start">
+        <td rowspan="2" style="text-align:center;background:#e3f2fd;opacity:0.5;">
+        <span style="font-size:7pt;font-weight:700;color:#0d47a1;">인성<br>(印星)</span>
+      </td>
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#2196f3;">편인</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>직관력·독창성·편중된 학습.</strong> 독특하고 창의적인 사고방식.</td>
+        <td style="font-size:7pt;color:#bbb;">예술·종교·전문직. 독특한 사고.</td>
+      </tr>
+      <tr >
+        
+        <td><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#2196f3;">정인</span></td>
+        <td style="text-align:center;"><span style="display:inline-block;padding:1px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#bdbdbd;">❌ 없음</span></td>
+        <td><span style="font-size:7pt;color:#ccc;">— 원국 없음</span></td>
+        <td style="color:#bbb;"><strong>수용성·학문·어머니·보호.</strong> 학습·지식으로 운이 열리는 구조.</td>
+        <td style="font-size:7pt;color:#bbb;">학문·자격증·보호·모성. 공부로 성취.</td>
+      </tr></tbody>
+  </table>
+
+  <!-- 없는 십성 -->
+  <div style="padding:5px 12px;background:#fff8f8;border-top:1px solid #ffcdd2;display:flex;align-items:flex-start;gap:5px;">
+    <span style="font-size:7pt;font-weight:700;color:#c62828;flex-shrink:0;padding-top:1px;">❌ 없는 십성</span>
+    <div style="display:flex;flex-wrap:wrap;gap:3px;">
+      <span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#43a047;border:1px solid rgba(0,0,0,.1);">겁재</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#e53935;border:1px solid rgba(0,0,0,.1);">상관</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#ffa726;border:1px solid rgba(0,0,0,.1);">편재</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#fb8c00;border:1px solid rgba(0,0,0,.1);">정재</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#616161;border:1px solid rgba(0,0,0,.1);">정관</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#42a5f5;border:1px solid rgba(0,0,0,.1);">편인</span>
+<span style="padding:2px 7px;border-radius:6px;font-size:7pt;font-weight:700;color:white;background:#1e88e5;border:1px solid rgba(0,0,0,.1);">정인</span>
+      <span style="font-size:7pt;color:#e57373;align-self:center;">→ 재성 없음 = 재물 기복 · 인성 없음 = 학문 약</span>
+    </div>
+  </div>
+
+  <!-- 계열별 요약 -->
+  <div style="display:flex;gap:0;border-top:1px solid #e0e0e0;">
+    <div style="flex:1;padding:3px 5px;text-align:center;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;">
+      <div style="font-size:7pt;font-weight:700;color:#4caf50;">비겁(比劫)</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:700;line-height:1;color:#4caf50;">2</div>
+      <div style="font-size:7pt;">✅✅</div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">자립심·경쟁심<br>강한 주체성</div>
+    </div><div style="flex:1;padding:3px 5px;text-align:center;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;">
+      <div style="font-size:7pt;font-weight:700;color:#f44336;">식상(食傷)</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:700;line-height:1;color:#f44336;">1</div>
+      <div style="font-size:7pt;">✅</div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">창의·표현력<br>없으면 실무형</div>
+    </div><div style="flex:1;padding:3px 5px;text-align:center;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;background:#fff5f5;">
+      <div style="font-size:7pt;font-weight:700;color:#ff9800;">재성(財星)</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:700;line-height:1;color:#bdbdbd;">0</div>
+      <div style="font-size:7pt;"><span style="color:#ddd;">✕✕</span></div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">재물 기질<br>없음</div>
+    </div><div style="flex:1;padding:3px 5px;text-align:center;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;">
+      <div style="font-size:7pt;font-weight:700;color:#9e9e9e;">관성(官星)</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:700;line-height:1;color:#9e9e9e;">4</div>
+      <div style="font-size:7pt;">✅✅✅ 최다</div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">원칙·명예<br>책임 기질</div>
+    </div><div style="flex:1;padding:3px 5px;text-align:center;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;gap:2px;background:#fff5f5;">
+      <div style="font-size:7pt;font-weight:700;color:#2196f3;">인성(印星)</div>
+      <div style="font-family:'Noto Serif KR',serif;font-size:11pt;font-weight:700;line-height:1;color:#bdbdbd;">0</div>
+      <div style="font-size:7pt;"><span style="color:#ddd;">✕✕</span></div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">학문·보호<br>없음</div>
+    </div>
+    <div style="flex:1;padding:3px 5px;text-align:center;display:flex;flex-direction:column;gap:2px;">
+      <div style="font-size:7pt;font-weight:700;color:#888;">최다계열</div>
+      <div style="font-size:7pt;font-weight:900;color:#9e9e9e;">관성</div>
+      <div style="font-size:7pt;color:#888;">4개 · 최다</div>
+      <div style="font-size:7pt;color:#888;line-height:1.3;">없는계열<br>재성·인성</div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#7b1fa2;font-size:7pt;">📌 반야선생의 십성 배치 핵심 요약</strong><br>
+  임효원 님의 사주에서 가장 주목할 것은 <strong style="color:#9e9e9e;">관성이 4개</strong>로 최다 》 <strong>원칙·명예를 중시하는</strong> 기질이 두드러집니다. 반면 <strong style="color:#f44336;">재성·인성 계열이 없어</strong> 재성 없음 = 재물 기복 · 인성 없음 = 학문 약에 해당합니다.
+</div>
+
+</div>
+</body>
+</html>

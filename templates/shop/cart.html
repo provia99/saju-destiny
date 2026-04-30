@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니 - 반야 쇼핑몰</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #1a3a6a, #2c5aa0); color: white; padding: 20px; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #1a3a6a; margin-bottom: 24px; }
+        .cart-section { background: white; border-radius: 10px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .cart-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+        .cart-item:last-of-type { border-bottom: none; }
+        .item-icon { font-size: 40px; width: 60px; text-align: center; }
+        .item-info { flex: 1; }
+        .item-name { font-weight: bold; color: #1a3a6a; font-size: 16px; }
+        .item-type { color: #888; font-size: 13px; margin-top: 3px; }
+        .item-qty-ctrl { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { width: 28px; height: 28px; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+        .qty-btn:hover { background: #f0f0f0; }
+        .qty-num { font-weight: bold; min-width: 20px; text-align: center; }
+        .item-price { font-weight: bold; color: #e53935; font-size: 18px; min-width: 90px; text-align: right; }
+        .remove-btn { color: #aaa; cursor: pointer; font-size: 20px; padding: 4px 8px; }
+        .remove-btn:hover { color: #e53935; }
+        .total-section { background: white; border-radius: 10px; padding: 24px 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 16px; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; }
+        .total-label { font-size: 18px; font-weight: bold; color: #333; }
+        .total-price { font-size: 26px; font-weight: bold; color: #e53935; }
+        .btn-group { display: flex; gap: 12px; margin-top: 20px; }
+        .btn { flex: 1; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-primary { background: #1a3a6a; color: white; }
+        .btn-primary:hover { background: #2c5aa0; }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .empty-cart { text-align: center; padding: 60px 20px; color: #999; }
+        .empty-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-cart a { color: #1a3a6a; text-decoration: none; font-weight: bold; }
+        footer { background: #1a3a6a; color: white; padding: 30px; text-align: center; margin-top: 60px; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo">&#128302; &#48152;&#50556; &#49905;&#54551;&#47189;</div>
+        <nav>
+            <a href="/shop/products">&#49345;&#54408;</a>
+            <a href="/shop/cart">&#128722; &#51109;&#48148;&#44396;&#45768;</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <h1>&#128722; &#51109;&#48148;&#44396;&#45768;</h1>
+
+    <div class="cart-section" id="cart-section">
+        <div class="empty-cart" id="empty-msg">
+            <div class="empty-icon">&#128722;</div>
+            <p>&#51109;&#48148;&#44396;&#45768;&#44032; &#48708;&#50612;&#51080;&#49845;&#45768;&#45796;.</p>
+            <p style="margin-top:12px"><a href="/shop/products">&#49345;&#54408; &#48372;&#47084;&#44032;&#44592;</a></p>
+        </div>
+        <div id="cart-items"></div>
+    </div>
+
+    <div class="total-section" id="total-section" style="display:none">
+        <div class="total-row">
+            <span class="total-label">&#52509; &#44208;&#51228;&#44552;&#50529;</span>
+            <span class="total-price" id="total-price">&#8361;0</span>
+        </div>
+        <div class="btn-group">
+            <a href="/shop/products" class="btn btn-secondary">&#49937;&#54856; &#44228;&#49549;&#54616;&#44592;</a>
+            <button class="btn btn-primary" onclick="goCheckout()">&#44208;&#51228;&#54616;&#44592;</button>
+        </div>
+    </div>
+</div>
+
+<footer><p>&copy; 2024 &#48152;&#50556; &#49905;&#54551;&#47189;</p></footer>
+
+<script>
+var cart = [];
+
+function loadCart() {
+    var raw = localStorage.getItem('cart');
+    cart = raw ? JSON.parse(raw) : [];
+    renderCart();
+}
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function renderCart() {
+    var container = document.getElementById('cart-items');
+    var emptyMsg = document.getElementById('empty-msg');
+    var totalSection = document.getElementById('total-section');
+
+    container.innerHTML = '';
+
+    if (cart.length === 0) {
+        emptyMsg.style.display = 'block';
+        totalSection.style.display = 'none';
+        return;
+    }
+
+    emptyMsg.style.display = 'none';
+    totalSection.style.display = 'block';
+
+    var total = 0;
+
+    for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        var subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        var typeLabel = item.product_type === 'pdf' ? 'PDF' : '\uCC45';
+        var icon = item.product_type === 'pdf' ? '&#128196;' : '&#128218;';
+
+        var div = document.createElement('div');
+        div.className = 'cart-item';
+        div.setAttribute('data-idx', i);
+        div.innerHTML =
+            '<div class="item-icon">' + icon + '</div>' +
+            '<div class="item-info">' +
+                '<div class="item-name">' + item.name + '</div>' +
+                '<div class="item-type">' + typeLabel + '</div>' +
+            '</div>' +
+            '<div class="item-qty-ctrl">' +
+                '<button class="qty-btn" onclick="changeQty(' + i + ', -1)">-</button>' +
+                '<span class="qty-num">' + item.quantity + '</span>' +
+                '<button class="qty-btn" onclick="changeQty(' + i + ', 1)">+</button>' +
+            '</div>' +
+            '<div class="item-price">\u20a9' + subtotal.toLocaleString() + '</div>' +
+            '<span class="remove-btn" onclick="removeItem(' + i + ')">&times;</span>';
+
+        container.appendChild(div);
+    }
+
+    document.getElementById('total-price').textContent = '\u20a9' + total.toLocaleString();
+}
+
+function changeQty(idx, delta) {
+    cart[idx].quantity += delta;
+    if (cart[idx].quantity <= 0) {
+        cart.splice(idx, 1);
+    }
+    saveCart();
+    renderCart();
+}
+
+function removeItem(idx) {
+    cart.splice(idx, 1);
+    saveCart();
+    renderCart();
+}
+
+function goCheckout() {
+    if (cart.length === 0) {
+        alert('\uC7A5\uBC14\uAD6C\uB2C8\uAC00 \uBE44\uC5B4\uC788\uC2B5\uB2C8\uB2E4.');
+        return;
+    }
+    window.location.href = '/shop/checkout';
+}
+
+loadCart();
+</script>
+</body>
+</html>

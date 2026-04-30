@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>십이운성 개인표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{ border:1px solid #333;width:604px;max-height:840px;padding:6px 10px;background:transparent;display:flex;flex-direction:column;gap:4px;overflow:hidden;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;border-radius:4px;}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}body{background:transparent;margin:0;padding:0;}.page{margin:0;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+.card{border:1.5px solid #333;border-radius:8px;overflow:hidden;}
+.card-hd{padding:4px 12px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:8pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:6pt;color:rgba(255,255,255,.85);}
+/* ① 4기둥 */
+.un-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:6px 8px;}
+.un-col{border-radius:6px;padding:6px 5px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.un-label{font-size:7pt;color:#888;font-weight:700;}
+.un-ganji{font-family:'Noto Serif KR',serif;font-size:16pt;font-weight:800;line-height:1;}
+.un-kr{font-size:6pt;color:#888;margin-left:2px;}
+.un-badge{font-size:8pt;font-weight:700;color:white;padding:2px 10px;border-radius:10px;margin-top:2px;}
+.un-grade{font-size:6pt;font-weight:700;margin-top:1px;}
+.un-desc{font-size:7pt;color:#666;line-height:1.3;}
+/* ② 대운 */
+.dw-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;padding:4px 6px;}
+.dw-cell{border-radius:4px;padding:3px 2px;text-align:center;}
+.dw-ganji{font-family:'Noto Serif KR',serif;font-size:8pt;font-weight:800;line-height:1;}
+.dw-age{font-size:6.5pt;color:#888;}
+.dw-un{font-size:7pt;font-weight:700;color:white;padding:1px 4px;border-radius:3px;margin-top:1px;display:inline-block;}
+/* ③ 조견표 */
+.ref-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:4px 6px;}
+.ref-cell{border:1px solid #eee;border-radius:4px;padding:3px 3px;text-align:center;}
+.ref-name{font-size:8pt;font-weight:800;}
+.ref-grade{font-size:7pt;font-weight:700;color:white;padding:1px 4px;border-radius:3px;display:inline-block;margin:1px 0;}
+.ref-desc{font-size:6.5pt;color:#666;line-height:1.3;}
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#283593,#3949ab);">
+  <div>
+    <div class="banner-hdr-title">🔮 십이운성(十二運星) 개인표</div>
+    <div class="banner-hdr-sub">일간 기준 4기둥·대운별 에너지 단계</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">戊辰(무진) · 일간 戊(무) 기준</div>
+  </div>
+</div>
+
+<!-- ① 원국 4기둥 십이운성 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1a237e,#283593);">
+    <div class="card-hd-title">① 원국 4기둥 십이운성</div>
+    <div class="card-hd-sub">년주·월주·일주(★)·시주 각 천간 기준</div>
+  </div>
+  <div class="un-grid"><div class="un-col" style="border:1px solid #333;background:#ffebee;">
+  <div class="un-label">년주</div>
+  <div class="un-ganji">
+    <span style="color:#ff9800;">戊</span><span style="color:#9e9e9e;">申</span>
+    <span class="un-kr">무신</span>
+  </div>
+  <div class="un-badge" style="background:#c62828;">병</div>
+  <div class="un-grade">주의</div>
+  <div class="un-desc">감성 풍부 》 돌봄·예술·배려</div>
+</div><div class="un-col" style="border:1px solid #333;background:#e8f5e9;">
+  <div class="un-label">월주</div>
+  <div class="un-ganji">
+    <span style="color:#4caf50;">甲</span><span style="color:#4caf50;">寅</span>
+    <span class="un-kr">갑인</span>
+  </div>
+  <div class="un-badge" style="background:#2e7d32;">장생</div>
+  <div class="un-grade">길</div>
+  <div class="un-desc">생명 시작 》 희망·열정·새 시작</div>
+</div><div class="un-col" style="border:2px solid #c62828;background:#e3f2fd;">
+  <div class="un-label">일주 ★</div>
+  <div class="un-ganji">
+    <span style="color:#ff9800;">戊</span><span style="color:#ff9800;">辰</span>
+    <span class="un-kr">무진</span>
+  </div>
+  <div class="un-badge" style="background:#1565c0;">관대</div>
+  <div class="un-grade">길</div>
+  <div class="un-desc">사회 진출 》 포부·발전·확장</div>
+</div><div class="un-col" style="border:1px solid #333;background:#e8f5e9;">
+  <div class="un-label">시주</div>
+  <div class="un-ganji">
+    <span style="color:#4caf50;">甲</span><span style="color:#4caf50;">寅</span>
+    <span class="un-kr">갑인</span>
+  </div>
+  <div class="un-badge" style="background:#2e7d32;">장생</div>
+  <div class="un-grade">길</div>
+  <div class="un-desc">생명 시작 》 희망·열정·새 시작</div>
+</div></div>
+</div>
+
+<!-- ② 대운별 십이운성 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+    <div class="card-hd-title">② 대운(大運) 10기 십이운성 흐름</div>
+    <div class="card-hd-sub">현재 대운 ▶ 표시</div>
+  </div>
+  <div class="dw-grid"><div class="dw-cell" style="border:1px solid #eee;opacity:0.5;">
+  <div class="dw-ganji" style="color:#2196f3;">癸丑</div>
+  <div class="dw-age">8-17세</div>
+  <div class="dw-un" style="background:#2e7d32;">양</div>
+</div><div class="dw-cell" style="border:1px solid #eee;opacity:0.5;">
+  <div class="dw-ganji" style="color:#2196f3;">壬子</div>
+  <div class="dw-age">18-27세</div>
+  <div class="dw-un" style="background:#37474f;">태</div>
+</div><div class="dw-cell" style="border:1px solid #eee;opacity:0.5;">
+  <div class="dw-ganji" style="color:#9e9e9e;">辛亥</div>
+  <div class="dw-age">28-37세</div>
+  <div class="dw-un" style="background:#c62828;">절</div>
+</div><div class="dw-cell" style="border:1px solid #eee;opacity:0.5;">
+  <div class="dw-ganji" style="color:#9e9e9e;">庚戌</div>
+  <div class="dw-age">38-47세</div>
+  <div class="dw-un" style="background:#37474f;">묘</div>
+</div><div class="dw-cell" style="border:1px solid #eee;opacity:0.5;">
+  <div class="dw-ganji" style="color:#ff9800;">己酉</div>
+  <div class="dw-age">48-57세</div>
+  <div class="dw-un" style="background:#e65100;">사</div>
+</div><div class="dw-cell" style="border:1.5px solid #c62828;background:#fff5f5;">
+  <div class="dw-ganji" style="color:#ff9800;">戊申</div>
+  <div class="dw-age">58-67세 ▶</div>
+  <div class="dw-un" style="background:#c62828;">병</div>
+</div><div class="dw-cell" style="border:1px solid #eee;">
+  <div class="dw-ganji" style="color:#f44336;">丁未</div>
+  <div class="dw-age">68-77세</div>
+  <div class="dw-un" style="background:#37474f;">쇠</div>
+</div><div class="dw-cell" style="border:1px solid #eee;">
+  <div class="dw-ganji" style="color:#f44336;">丙午</div>
+  <div class="dw-age">78-87세</div>
+  <div class="dw-un" style="background:#4a148c;">제왕</div>
+</div><div class="dw-cell" style="border:1px solid #eee;">
+  <div class="dw-ganji" style="color:#4caf50;">乙巳</div>
+  <div class="dw-age">88-97세</div>
+  <div class="dw-un" style="background:#2e7d32;">건록</div>
+</div><div class="dw-cell" style="border:1px solid #eee;">
+  <div class="dw-ganji" style="color:#4caf50;">甲辰</div>
+  <div class="dw-age">98-107세</div>
+  <div class="dw-un" style="background:#1565c0;">관대</div>
+</div></div>
+</div>
+
+<!-- ③ 12운성 조견표 -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">③ 십이운성 의미 조견표</div>
+    <div class="card-hd-sub">내 원국에 해당하는 운성은 테두리 강조</div>
+  </div>
+  <div class="ref-grid"><div class="ref-cell" style="border:1.5px solid #2e7d32;font-weight:700;">
+  <div class="ref-name" style="color:#2e7d32;">장생</div>
+  <div class="ref-grade" style="background:#2e7d32;">길</div>
+  <div class="ref-desc">생명 시작 》 희망·열정·새 시작</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#e65100;">목욕</div>
+  <div class="ref-grade" style="background:#e65100;">변화</div>
+  <div class="ref-desc">감수성·매력 》 감정 기복·이성운</div>
+</div><div class="ref-cell" style="border:1.5px solid #1565c0;font-weight:700;">
+  <div class="ref-name" style="color:#1565c0;">관대</div>
+  <div class="ref-grade" style="background:#1565c0;">길</div>
+  <div class="ref-desc">사회 진출 》 포부·발전·확장</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#2e7d32;">건록</div>
+  <div class="ref-grade" style="background:#2e7d32;">길</div>
+  <div class="ref-desc">실력 전성기 》 독립·능력 인정</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#4a148c;">제왕</div>
+  <div class="ref-grade" style="background:#4a148c;">길</div>
+  <div class="ref-desc">절정 권위 》 강한 자아·리더십</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#37474f;">쇠</div>
+  <div class="ref-grade" style="background:#37474f;">중</div>
+  <div class="ref-desc">성숙 여유 》 내실·안정·지혜</div>
+</div><div class="ref-cell" style="border:1.5px solid #c62828;font-weight:700;">
+  <div class="ref-name" style="color:#c62828;">병</div>
+  <div class="ref-grade" style="background:#c62828;">주의</div>
+  <div class="ref-desc">감성 풍부 》 돌봄·예술·배려</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#e65100;">사</div>
+  <div class="ref-grade" style="background:#e65100;">변화</div>
+  <div class="ref-desc">전환 기운 》 통찰·변화·재생</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#37474f;">묘</div>
+  <div class="ref-grade" style="background:#37474f;">중</div>
+  <div class="ref-desc">저장 잠재 》 신중·기억력·보수</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#c62828;">절</div>
+  <div class="ref-grade" style="background:#c62828;">주의</div>
+  <div class="ref-desc">단절 재출발 》 독립·강인·급변</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#37474f;">태</div>
+  <div class="ref-grade" style="background:#37474f;">중</div>
+  <div class="ref-desc">잠재 가능성 》 유연·적응·발전</div>
+</div><div class="ref-cell" style="">
+  <div class="ref-name" style="color:#2e7d32;">양</div>
+  <div class="ref-grade" style="background:#2e7d32;">길</div>
+  <div class="ref-desc">양육 보호 》 의지·안정·타인 도움</div>
+</div></div>
+</div>
+
+</div></body></html>

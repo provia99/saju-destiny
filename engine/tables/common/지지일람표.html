@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지지일람표</title>
+  <style>
+    @font-face { font-family:'Noto Sans KR'; src:local('Noto Sans KR'); }
+    @font-face { font-family:'Noto Serif KR'; src:local('Noto Serif KR'); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR',sans-serif;
+      background: white;
+      padding: 10px;
+    }
+    .page { width:604px; max-height:840px; padding:6px 8px; background:white; overflow:hidden; margin:0 auto; }
+    .banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:5px; }
+    .banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+    .banner-hdr-info { font-size:7pt;color:rgba(255,255,255,.85); }
+    .card { border:1.5px solid #333;border-radius:8px;overflow:hidden; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    thead tr {
+      background: #f5f5f5;
+    }
+    th {
+      padding: 6px 8px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      font-size: 7pt;
+      color: #333;
+    }
+    td {
+      padding: 5px 7px;
+      border: 1px solid #e0e0e0;
+      font-size: 7pt;
+      text-align: center;
+    }
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+    .jiji-cell {
+      font-size: 12pt;
+      font-weight: bold;
+      min-width: 25px;
+    }
+    .kor-cell {
+      font-weight: 600;
+      font-size: 7pt;
+    }
+    .og-cell {
+      font-weight: 600;
+      border-left: 3px solid;
+      padding-left: 6px;
+    }
+    @media print { body{background:white;margin:0;padding:0;} .page{margin:0;box-shadow:none;} @page{size:604px 840px;margin:0;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+      <div class="banner-hdr-title">📋 지지일람표</div>
+      <div class="banner-hdr-info">사주명리학 기초 참조표</div>
+    </div>
+    <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>지지</th>
+          <th>한글</th>
+          <th>오행</th>
+          <th>음양</th>
+          <th>계절</th>
+          <th>월(음력)</th>
+          <th>시간</th>
+          <th>방위</th>
+          <th>띠</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #90bfe0; background: #f0f6ff;">子</td>
+          <td class="kor-cell">자</td>
+          <td class="og-cell" style="border-left-color: #1a4e7a; color: #1a4e7a;">水</td>
+          <td>양</td>
+          <td>겨울</td>
+          <td>11월</td>
+          <td>23-01시</td>
+          <td>北</td>
+          <td>쥐</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">丑</td>
+          <td class="kor-cell">축</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td>음</td>
+          <td>겨울→봄</td>
+          <td>12월</td>
+          <td>01-03시</td>
+          <td>北東</td>
+          <td>소</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #a8dbb5; background: #f3fcf5;">寅</td>
+          <td class="kor-cell">인</td>
+          <td class="og-cell" style="border-left-color: #1e6b2a; color: #1e6b2a;">木</td>
+          <td>양</td>
+          <td>봄</td>
+          <td>1월</td>
+          <td>03-05시</td>
+          <td>東北</td>
+          <td>호랑이</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #a8dbb5; background: #f3fcf5;">卯</td>
+          <td class="kor-cell">묘</td>
+          <td class="og-cell" style="border-left-color: #1e6b2a; color: #1e6b2a;">木</td>
+          <td>음</td>
+          <td>봄</td>
+          <td>2월</td>
+          <td>05-07시</td>
+          <td>東</td>
+          <td>토끼</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">辰</td>
+          <td class="kor-cell">진</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td>양</td>
+          <td>봄→여름</td>
+          <td>3월</td>
+          <td>07-09시</td>
+          <td>東南</td>
+          <td>용</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #f5a9a5; background: #fff5f5;">巳</td>
+          <td class="kor-cell">사</td>
+          <td class="og-cell" style="border-left-color: #b92e27; color: #b92e27;">火</td>
+          <td>음</td>
+          <td>여름</td>
+          <td>4월</td>
+          <td>09-11시</td>
+          <td>南東</td>
+          <td>뱀</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #f5a9a5; background: #fff5f5;">午</td>
+          <td class="kor-cell">오</td>
+          <td class="og-cell" style="border-left-color: #b92e27; color: #b92e27;">火</td>
+          <td>양</td>
+          <td>여름</td>
+          <td>5월</td>
+          <td>11-13시</td>
+          <td>南</td>
+          <td>말</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">未</td>
+          <td class="kor-cell">미</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td>음</td>
+          <td>여름→가을</td>
+          <td>6월</td>
+          <td>13-15시</td>
+          <td>南西</td>
+          <td>양</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #b0c4d0; background: #f7f9fa;">申</td>
+          <td class="kor-cell">신</td>
+          <td class="og-cell" style="border-left-color: #3d4f5c; color: #3d4f5c;">金</td>
+          <td>양</td>
+          <td>가을</td>
+          <td>7월</td>
+          <td>15-17시</td>
+          <td>西南</td>
+          <td>원숭이</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #b0c4d0; background: #f7f9fa;">酉</td>
+          <td class="kor-cell">유</td>
+          <td class="og-cell" style="border-left-color: #3d4f5c; color: #3d4f5c;">金</td>
+          <td>음</td>
+          <td>가을</td>
+          <td>8월</td>
+          <td>17-19시</td>
+          <td>西</td>
+          <td>닭</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="jiji-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">戌</td>
+          <td class="kor-cell">술</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td>양</td>
+          <td>가을→겨울</td>
+          <td>9월</td>
+          <td>19-21시</td>
+          <td>西北</td>
+          <td>개</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="jiji-cell" style="border-left: 3px solid #90bfe0; background: #f0f6ff;">亥</td>
+          <td class="kor-cell">해</td>
+          <td class="og-cell" style="border-left-color: #1a4e7a; color: #1a4e7a;">水</td>
+          <td>음</td>
+          <td>겨울</td>
+          <td>10월</td>
+          <td>21-23시</td>
+          <td>北西</td>
+          <td>돼지</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</body>
+</html>

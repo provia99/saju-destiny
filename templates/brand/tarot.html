@@ -1,0 +1,291 @@
+{% extends "brand/_brand_chrome.html" %}
+{% set page = 'tarot' %}
+{% block title %}오늘의 타로 | {{ master.선생님이름 }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  .tarot-page-head {
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .date-line {
+    font-size: 12px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .page-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .page-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  .hint {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  /* 큰 타로 카드 */
+  .tarot-card-wrap {
+    perspective: 1500px;
+    margin: 0 auto 20px;
+    width: 100%;
+    max-width: 280px;
+    height: 480px;
+    cursor: pointer;
+  }
+  .tarot-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+  .tarot-card.flipped { transform: rotateY(180deg); }
+  .tarot-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(59,32,104,0.7), 0 0 0 2px rgba(245,200,66,0.5), 0 0 36px rgba(245,200,66,0.25);
+  }
+  .tarot-back {
+    background:
+      radial-gradient(circle at 50% 50%, rgba(245,200,66,0.22) 0%, transparent 60%),
+      linear-gradient(135deg, #2a1550 0%, #4a2080 50%, #7b3fa8 100%);
+    border: 2px solid rgba(245,200,66,0.6);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .tarot-back-pattern {
+    border: 2px solid rgba(245,200,66,0.5);
+    border-radius: 12px;
+    padding: 30px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 22px;
+    width: 100%; height: 100%; justify-content: center;
+  }
+  .tarot-back-symbol {
+    font-size: 48px;
+    color: var(--gold);
+    text-shadow: 0 0 18px rgba(245,200,66,0.8);
+  }
+  .tarot-back-text {
+    font-size: 15px;
+    color: var(--gold-light);
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .tarot-front {
+    transform: rotateY(180deg);
+    background: var(--bg-card);
+    border: 2px solid rgba(245,200,66,0.5);
+    padding: 10px;
+  }
+  .tarot-front img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+  }
+
+  /* 풀이 박스 */
+  .tarot-info {
+    background: linear-gradient(160deg, rgba(39,26,69,1), rgba(47,32,85,1));
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 32px rgba(59,32,104,0.45);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .tarot-info.visible { opacity: 1; transform: translateY(0); }
+  .tarot-name {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .tarot-name-kr {
+    font-size: 22px; font-weight: 900; color: var(--gold-light);
+    font-family: 'Noto Serif KR', serif;
+  }
+  .tarot-name-en {
+    font-size: 12px; color: var(--text-muted); font-style: italic;
+  }
+  .tarot-position {
+    font-size: 11px;
+    background: rgba(76,175,80,0.18);
+    color: #4ade80;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    border: 1px solid rgba(76,175,80,0.4);
+  }
+  .tarot-position.reversed {
+    background: rgba(239,68,68,0.18);
+    color: #f87171;
+    border-color: rgba(239,68,68,0.4);
+  }
+  .tarot-keywords {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+  }
+  .tarot-keyword {
+    font-size: 11px;
+    color: var(--lav-light);
+    background: rgba(155,89,182,0.18);
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .tarot-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+  .tarot-saju-line {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(245,200,66,0.35);
+    font-size: 12px;
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+
+  /* Do / Don't 두 카드 */
+  .dodont-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s 0.15s, transform 0.6s 0.15s;
+  }
+  .dodont-grid.visible { opacity: 1; transform: translateY(0); }
+  .dodont-card {
+    border-radius: 16px;
+    padding: 14px 14px 16px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+  }
+  .dodont-card.do {
+    background: linear-gradient(160deg, rgba(34,197,94,0.18), rgba(34,197,94,0.06));
+    border-color: rgba(74,222,128,0.45);
+  }
+  .dodont-card.dont {
+    background: linear-gradient(160deg, rgba(239,68,68,0.18), rgba(239,68,68,0.06));
+    border-color: rgba(248,113,113,0.45);
+  }
+  .dodont-head {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .dodont-card.do .dodont-head    { color: #4ade80; }
+  .dodont-card.dont .dodont-head  { color: #f87171; }
+  .dodont-icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900;
+    border: 1.5px solid currentColor;
+  }
+  .dodont-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tarot-page-head">
+  <div class="date-line">✦ {{ today_str }} {{ weekday }}</div>
+  <div class="page-title">오늘의 타로</div>
+  <div class="page-sub">{{ subject_label|default(client.name) }}님의 사주와 오늘 일진이 함께 뽑은 한 장</div>
+</div>
+
+<div class="hint">카드를 터치해 결과를 확인하세요</div>
+
+<div class="tarot-card-wrap" onclick="flipBig()">
+  <div class="tarot-card" id="bigCard">
+    <div class="tarot-face tarot-back">
+      <div class="tarot-back-pattern">
+        <div class="tarot-back-symbol">✦</div>
+        <div class="tarot-back-text">CLICK<br>TO REVEAL</div>
+        <div class="tarot-back-symbol">✦</div>
+      </div>
+    </div>
+    <div class="tarot-face tarot-front {% if tarot.is_reversed %}tarot-reversed{% endif %}">
+      <img src="{{ tarot.image }}" alt="{{ tarot.name_kr }}">
+    </div>
+  </div>
+</div>
+
+<div class="tarot-info" id="bigInfo">
+  <div class="tarot-name">
+    <span class="tarot-name-kr">{{ tarot.name_kr }}</span>
+    <span class="tarot-name-en">{{ tarot.name }}</span>
+    <span class="tarot-position {% if tarot.is_reversed %}reversed{% endif %}">{{ tarot.position_kr }}</span>
+  </div>
+  <div class="tarot-keywords">
+    {% for k in tarot.keywords %}<span class="tarot-keyword">#{{ k }}</span>{% endfor %}
+  </div>
+  <div class="tarot-text">{{ tarot.text }}</div>
+  {% if tarot.saju_line %}
+  <div class="tarot-saju-line">✦ {{ tarot.saju_line }}</div>
+  {% endif %}
+</div>
+
+{% if tarot.do or tarot.dont %}
+<div class="dodont-grid" id="dodontGrid">
+  {% if tarot.do %}
+  <div class="dodont-card do">
+    <div class="dodont-head"><span class="dodont-icon">✓</span> DO</div>
+    <div class="dodont-text">{{ tarot.do }}</div>
+  </div>
+  {% endif %}
+  {% if tarot.dont %}
+  <div class="dodont-card dont">
+    <div class="dodont-head"><span class="dodont-icon">✕</span> DON'T</div>
+    <div class="dodont-text">{{ tarot.dont }}</div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function flipBig() {
+    const card = document.getElementById('bigCard');
+    const info = document.getElementById('bigInfo');
+    const dodont = document.getElementById('dodontGrid');
+    if (!card || !info) return;
+    if (card.classList.contains('flipped')) return;
+    card.classList.add('flipped');
+    setTimeout(() => {
+      info.classList.add('visible');
+      if (dodont) dodont.classList.add('visible');
+    }, 500);
+  }
+</script>
+{% endblock %}

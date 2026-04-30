@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -c run_all.js)",
+      "Bash(node -e ' *)",
+      "Bash(node -c ch_summary_db.js)",
+      "Bash(node -c generate_ch_summary.js)",
+      "Bash(node -c render_ch_summary.js)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const M=JSON.parse\\(fs.readFileSync\\('queue/sample/정종욱_88083038/saju/2026/master.json','utf8'\\)\\);M.product_type='saju_summary';fs.writeFileSync\\('queue/sample/정종욱_88083038/saju/2026/master.json',JSON.stringify\\(M,null,2\\)\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const M=JSON.parse\\(fs.readFileSync\\('queue/sample/정종욱_88083038/saju/2026/master.json','utf8'\\)\\);M.product_type='saju_full';fs.writeFileSync\\('queue/sample/정종욱_88083038/saju/2026/master.json',JSON.stringify\\(M,null,2\\)\\);\")",
+      "Bash(mkdir -p core)",
+      "Bash(mkdir -p products/fullbook)",
+      "Bash(mkdir -p products/summary)",
+      "Bash(mkdir -p products/yearly)",
+      "Bash(mkdir -p products/wealth_career)"
+    ]
+  }
+}

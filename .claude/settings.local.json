@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -c /c/Users/provi/Desktop/banya_web/engine/ch04_db.js)",
+      "Bash(node -c /c/Users/provi/Desktop/banya_web/engine/ch03_db.js)",
+      "Bash(node -c /c/Users/provi/Desktop/banya_web/engine/ch_kijil_db.js)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

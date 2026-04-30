@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>2027 4월 운세 》 임효원님</title><style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;background:#f5f5f5;}
+
+/* 표지 */
+.calendar-cover{width:604px;height:840px;margin:10px auto;background:linear-gradient(160deg,#0d1b3e 0%,#1a237e 30%,#283593 60%,#3949ab 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;page-break-after:always;position:relative;overflow:hidden;}
+.calendar-cover::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,213,79,.15),transparent 70%);}
+.calendar-cover::after{content:'';position:absolute;bottom:-60px;left:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(66,165,245,.1),transparent 70%);}
+.cc-top{position:relative;z-index:1;margin-bottom:20px;}
+.cc-year{font-size:72pt;font-weight:900;letter-spacing:10px;line-height:1;background:linear-gradient(180deg,#ffffff,#e0e0e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;}
+.cc-title{font-size:14pt;font-weight:600;letter-spacing:6px;margin-top:6px;color:rgba(255,255,255,.6);text-transform:uppercase;}
+.cc-divider{width:120px;height:2px;background:linear-gradient(90deg,transparent,#ffd54f,transparent);margin:20px auto;position:relative;z-index:1;}
+.cc-middle{position:relative;z-index:1;margin-bottom:24px;}
+.cc-sub{font-size:10pt;color:rgba(255,255,255,.5);margin-bottom:16px;letter-spacing:2px;}
+.cc-name{font-size:26pt;font-weight:900;background:linear-gradient(90deg,#ffd54f,#ffecb3,#ffd54f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px;}
+.cc-saju-box{margin-top:18px;display:inline-flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.2);}
+.cc-pillar{display:flex;flex-direction:column;align-items:center;width:70px;}
+.cc-pillar-label{font-size:7pt;color:rgba(255,255,255,.4);padding:4px 0 2px;background:rgba(255,255,255,.05);width:100%;}
+.cc-pillar-tg{font-size:16pt;font-weight:800;padding:4px 0 0;line-height:1.2;}
+.cc-pillar-jj{font-size:16pt;font-weight:800;padding:0 0 4px;line-height:1.2;}
+.cc-pillar-kr{font-size:7pt;color:rgba(255,255,255,.5);padding-bottom:4px;}
+.cc-tags{margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+.cc-tag{font-size:8.5pt;padding:5px 14px;border-radius:20px;font-weight:700;}
+.cc-tag.yong{background:rgba(255,213,79,.2);color:#ffd54f;border:1px solid rgba(255,213,79,.3);}
+.cc-tag.hui{background:rgba(129,212,250,.15);color:#81d4fa;border:1px solid rgba(129,212,250,.25);}
+.cc-tag.gangyak{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);}
+.cc-bottom{position:relative;z-index:1;margin-top:24px;}
+.cc-legend{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;}
+.cc-leg-item{font-size:7.5pt;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);}
+.cc-footer-note{font-size:7pt;color:rgba(255,255,255,.3);margin-top:12px;}
+
+/* A4 월 페이지 */
+.month-page{width:604px;height:840px;padding:10px;margin:10px auto;background:white;overflow:hidden;display:flex;flex-direction:column;page-break-after:always;}
+.cal-wrap{border:1.5px solid #888;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;flex:1;}
+.month-hdr{background:linear-gradient(135deg,#1a237e,#283593);padding:12px 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.month-hdr-left{display:flex;align-items:baseline;gap:10px;}
+.month-name{font-size:24pt;font-weight:900;color:white;}
+.month-year{font-size:10pt;color:rgba(255,255,255,.7);}
+.month-hdr-right{font-size:8pt;color:rgba(255,255,255,.7);text-align:right;}
+.month-hdr-name{font-size:10pt;font-weight:800;background:linear-gradient(90deg,#ffd54f,#fff176);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* 요일 헤더 */
+.dow-row{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f5f5;border-bottom:2px solid #bbb;flex-shrink:0;}
+.dow{text-align:center;font-size:11pt;font-weight:700;color:#555;padding:6px 0;}
+.dow.sun{color:#c62828;} .dow.sat{color:#1565c0;}
+
+/* 주 그리드 */
+.weeks{flex:1;display:flex;flex-direction:column;}
+.week-row{display:grid;grid-template-columns:repeat(7,1fr);flex:1;border-bottom:1px solid #bbb;}
+.week-row:last-child{border-bottom:none;}
+
+/* 일별 셀 》 A4 여유 공간 활용 */
+.day-cell{padding:3px 5px;border-right:1px solid #bbb;position:relative;display:flex;flex-direction:column;gap:1px;overflow:hidden;}
+.day-cell:last-child{border-right:none;}
+.day-cell.empty{background:#fafafa;}
+.overflow-cell{background:#f7f7f7;}
+.overflow-cell .dc-day,.overflow-cell .dc-theme,.overflow-cell .dc-lucky,.overflow-cell .dc-reason,.overflow-cell .dc-tag,.overflow-cell .dc-iljin{opacity:.5;}
+.dc-day.dc-overflow{font-size:8.5pt;font-weight:700;white-space:nowrap;}
+
+.dc-top{display:flex;align-items:center;justify-content:space-between;width:100%;}
+.dc-day{font-size:12pt;font-weight:800;}
+.dc-score{font-size:7pt;font-weight:700;padding:2px 5px;border-radius:4px;}
+.dc-theme{font-size:10pt;line-height:1;}
+.dc-jeolgi{font-size:7pt;color:#d32f2f;font-weight:700;vertical-align:middle;}
+.dc-event{font-size:6.5pt;color:#1565c0;font-weight:700;vertical-align:middle;}
+.dc-event.dc-holiday{color:#c62828;}
+.dc-relation{font-size:7.5pt;color:#6a1b9a;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;margin-top:auto;}
+.dc-iljin{font-size:8pt;font-weight:700;color:#888;white-space:nowrap;width:100%;text-align:center;}
+.dc-lunar{font-size:6pt;color:#aaa;}
+.dc-birthday{font-size:8pt;margin-left:1px;}
+.dc-theme-bday{font-size:20pt;text-align:center;line-height:1;}
+.dc-bday-label{font-size:7pt;color:#e91e63;font-weight:800;text-align:center;}
+.dc-badge{position:absolute;bottom:3px;right:4px;font-size:8pt;}
+.dc-lucky{font-size:7.5pt;color:#555;text-align:center;white-space:nowrap;font-weight:600;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.dc-reason{font-size:8pt;color:#555;line-height:1.3;padding:1px 2px;border-radius:2px;width:100%;text-align:center;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dc-reason.good{color:#2e7d32;}
+.dc-reason.bad{color:#c62828;}
+.dc-tag{font-size:7pt;font-weight:700;min-height:10px;text-align:center;white-space:nowrap;margin:0;padding:0;}
+.dc-tag:empty{visibility:hidden;}
+.dc-tag[data-type="손없는날"]{color:#2e7d32;}
+.dc-tag[data-type="고백·계약좋은날"]{color:#e91e63;}
+.dc-tag[data-type="최고의만남날"]{color:#e91e63;font-weight:900;}
+.dc-tag[data-type="이사하기좋은날"]{color:#2e7d32;}
+.dc-tag[data-type="투자좋은날"]{color:#e65100;}
+.dc-tag[data-type="저축·구매좋은날"]{color:#ff8f00;}
+.dc-tag[data-type="버리기·정리좋은날"]{color:#00838f;}
+.dc-tag[data-type="창작좋은날"]{color:#00838f;}
+.dc-tag[data-type="면접·시험좋은날"]{color:#1565c0;}
+.dc-tag[data-type="공부좋은날"]{color:#6a1b9a;}
+.dc-tag[data-type="건강챙기는날"]{color:#388e3c;}
+.dc-tag[data-type="만남좋은날"]{color:#e91e63;}
+.dc-tag[data-type="여행좋은날"]{color:#0097a7;}
+.dc-tag[data-type="미용좋은날"]{color:#ad1457;}
+.dc-tag[data-type="변화주의날"]{color:#e65100;}
+.dc-tag[data-type="큰변화주의"]{color:#c62828;}
+.dc-tag[data-type="🌟대길일"]{color:#2e7d32;font-weight:900;}
+.dc-tag[data-type="⚠️대주의"]{color:#c62828;font-weight:900;}
+.dc-tag[data-type="⚠️흉일"]{color:#c62828;font-weight:700;}
+.dc-tag[data-type="주의필요"]{color:#e65100;}
+.dc-times{font-size:6pt;color:#555;margin-top:auto;}
+.dc-time-good{color:#2e7d32;}
+.dc-time-bad{color:#c62828;}
+
+/* 하단 범례 */
+.month-footer{padding:6px 15px;background:#f9f9f9;border-top:1px solid #bbb;display:flex;align-items:center;gap:10px;font-size:7pt;color:#888;flex-shrink:0;}
+.mf-item{display:flex;align-items:center;gap:3px;}
+
+@media screen{.calendar-cover,.month-page{box-shadow:0 2px 12px rgba(0,0,0,.15);border-radius:4px;}}
+@media print{
+  body{background:white;}
+  .calendar-cover,.month-page{box-shadow:none;margin:0 auto;border-radius:0;}
+  .calendar-cover{-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact;}
+  .calendar-cover::before,.calendar-cover::after{display:none;}
+  .cc-year{-webkit-text-fill-color:white;background:none;color:white;}
+  .cc-name{-webkit-text-fill-color:#ffd54f;background:none;color:#ffd54f;}
+  .month-hdr-name{-webkit-text-fill-color:#ffd54f;background:none;color:#ffd54f;}
+  .cc-pillar-tg,.cc-pillar-jj{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cc-saju-box{border-color:rgba(255,255,255,.4);}
+  .cc-tag{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .cal-wrap,.month-hdr,.dow-row,.weeks,.month-footer,.week-row{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .day-cell,.dc-score,.dc-reason,.dc-tag,.dc-lucky,.dc-iljin,.dc-theme,.overflow-cell,.day-cell.empty{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .month-page{overflow:visible;page-break-inside:avoid;}
+  body{display:flex;flex-direction:column;align-items:center;}
+  @page{size:A4;margin:15mm;}
+}
+</style></head><body><div class="month-page">
+  <div class="cal-wrap">
+  <div class="month-hdr">
+    <div class="month-hdr-left">
+      <div class="month-name">4월</div>
+      <div class="month-year">2027</div>
+    </div>
+    <div class="month-hdr-right">
+      <div class="month-hdr-name">임효원 님</div>
+      <div>용신 木(목) · 戊辰 일주</div>
+    </div>
+  </div>
+  <div class="dow-row">
+    <div class="dow sun">일</div><div class="dow">월</div><div class="dow">화</div>
+    <div class="dow">수</div><div class="dow">목</div><div class="dow">금</div>
+    <div class="dow sat">토</div>
+  </div>
+  <div class="weeks"><div class="week-row"><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell empty"></div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">1</span><span class="dc-lunar">2.25</span>
+    <span class="dc-score" style="color:#c62828;background:#ffebee;">34</span>
+  </div>
+  <div class="dc-theme">🏆</div>
+  <div class="dc-relation">화합·좋은만남</div>
+  <div class="dc-lucky">베이지 서쪽약속</div>
+  <div class="dc-tag" data-type="만남좋은날">만남좋은날 · 미용좋은날</div>
+  <div class="dc-iljin">己酉 기유 🐔</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">2</span><span class="dc-lunar">2.26</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">44</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">다툼주의</div>
+  <div class="dc-lucky">흰색 내면충전</div>
+  <div class="dc-tag" data-type="큰변화주의">큰변화주의</div>
+  <div class="dc-iljin">庚戌 경술 🐶</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#1565c0;">3</span><span class="dc-lunar">2.27</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">46</span>
+  </div>
+  <div class="dc-theme">💰</div>
+  <div class="dc-relation">말조심</div>
+  <div class="dc-lucky">은색 북쪽휴식</div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날 · 주의필요</div>
+  <div class="dc-iljin">辛亥 신해 🐷</div>
+</div></div>
+<div class="week-row"><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#c62828;">4</span><span class="dc-lunar">2.28</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">72</span>
+  </div>
+  <div class="dc-theme">💰</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">파랑 북쪽휴식</div>
+  <div class="dc-tag" data-type="미용좋은날">미용좋은날</div>
+  <div class="dc-iljin">壬子 임자 🐭</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">5</span><span class="dc-lunar">2.29</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">63</span>
+  </div>
+  <div class="dc-theme">💪 <span class="dc-jeolgi">청명</span></div>
+  <div class="dc-relation">협력좋음</div>
+  <div class="dc-lucky">검정 내면충전</div>
+  <div class="dc-tag" data-type="고백·계약좋은날">고백·계약좋은날</div>
+  <div class="dc-iljin">癸丑 계축 🐮</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">6</span><span class="dc-lunar">2.30</span>
+    <span class="dc-score" style="color:#2e7d32;background:#e8f5e9;">89</span>
+  </div>
+  <div class="dc-theme">📋</div>
+  <div class="dc-relation">예의필요</div>
+  <div class="dc-lucky">진초록 동쪽산책</div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날</div>
+  <div class="dc-iljin">甲寅 갑인 🐯</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">7</span><span class="dc-lunar">3.1</span>
+    <span class="dc-score" style="color:#2e7d32;background:#e8f5e9;">82</span>
+  </div>
+  <div class="dc-theme">📋</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">연두 동쪽산책</div>
+  <div class="dc-tag" data-type="이사하기좋은날">이사하기좋은날 · 미용좋은날</div>
+  <div class="dc-iljin">乙卯 을묘 🐰</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">8</span><span class="dc-lunar">3.2</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">58</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">구설주의</div>
+  <div class="dc-lucky">빨강 내면충전</div>
+  <div class="dc-tag" data-type="공부좋은날">공부좋은날</div>
+  <div class="dc-iljin">丙辰 병진 🐲</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">9</span><span class="dc-lunar">3.3</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">56</span>
+  </div>
+  <div class="dc-theme">💘</div>
+  <div class="dc-relation">귀인만남</div>
+  <div class="dc-lucky">주황 남쪽외출</div>
+  <div class="dc-tag" data-type="손없는날">손없는날 · 여행좋은날</div>
+  <div class="dc-iljin">丁巳 정사 🐍</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#1565c0;">10</span><span class="dc-lunar">3.4</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">53</span>
+  </div>
+  <div class="dc-theme">💘</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">노랑 남쪽외출</div>
+  <div class="dc-tag" data-type="손없는날">손없는날 · 미용좋은날</div>
+  <div class="dc-iljin">戊午 무오 🐴</div>
+</div></div>
+<div class="week-row"><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#c62828;">11</span><span class="dc-lunar">3.5</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">45</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">경쟁조심</div>
+  <div class="dc-lucky">베이지 내면충전</div>
+  <div class="dc-tag" data-type="건강챙기는날">건강챙기는날</div>
+  <div class="dc-iljin">己未 기미 🐏</div>
+</div><div class="day-cell" style="border:2px solid #c62828;background:#fff5f5;">
+  <div class="dc-top">
+    <span class="dc-day" style="">12</span><span class="dc-lunar">3.6</span>
+    <span class="dc-score" style="color:#c62828;background:#ffebee;">31</span>
+  </div>
+  <div class="dc-theme">🏆</div>
+  <div class="dc-relation">말조심</div>
+  <div class="dc-lucky">흰색 서쪽약속</div>
+  <div class="dc-tag" data-type="⚠️흉일">⚠️흉일 · 여행좋은날</div>
+  <div class="dc-iljin">庚申 경신 🐵</div>
+</div><div class="day-cell" style="border:2px solid #c62828;background:#fff5f5;">
+  <div class="dc-top">
+    <span class="dc-day" style="">13</span><span class="dc-lunar">3.7</span>
+    <span class="dc-score" style="color:#c62828;background:#ffebee;">23</span>
+  </div>
+  <div class="dc-theme">🏆</div>
+  <div class="dc-relation">화합·좋은만남</div>
+  <div class="dc-lucky">은색 서쪽약속</div>
+  <div class="dc-tag" data-type="⚠️흉일">⚠️흉일 · 만남좋은날</div>
+  <div class="dc-iljin">辛酉 신유 🐔</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">14</span><span class="dc-lunar">3.8</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">64</span>
+  </div>
+  <div class="dc-theme">💪 <span class="dc-event">블랙데이</span></div>
+  <div class="dc-relation">다툼주의</div>
+  <div class="dc-lucky">파랑 내면충전</div>
+  <div class="dc-tag" data-type="변화주의날">변화주의날</div>
+  <div class="dc-iljin">壬戌 임술 🐶</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">15</span><span class="dc-lunar">3.9</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">74</span>
+  </div>
+  <div class="dc-theme">💰</div>
+  <div class="dc-relation">협력좋음</div>
+  <div class="dc-lucky">검정 북쪽휴식</div>
+  <div class="dc-tag" data-type="고백·계약좋은날">고백·계약좋은날 · 여행좋은날</div>
+  <div class="dc-iljin">癸亥 계해 🐷</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">16</span><span class="dc-lunar">3.10</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">78</span>
+  </div>
+  <div class="dc-theme dc-theme-bday">🌟</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky"><span class="dc-bday-label" style="color:#2e7d32;">대길일</span></div>
+  <div class="dc-tag" data-type="이사하기좋은날">이사하기좋은날 · 미용좋은날</div>
+  <div class="dc-iljin">甲子 갑자 🐭</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#1565c0;">17</span><span class="dc-lunar">3.11</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">61</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">예의필요</div>
+  <div class="dc-lucky">연두 내면충전</div>
+  <div class="dc-tag" data-type="이사하기좋은날">이사하기좋은날</div>
+  <div class="dc-iljin">乙丑 을축 🐮</div>
+</div></div>
+<div class="week-row"><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#c62828;">18</span><span class="dc-lunar">3.12</span>
+    <span class="dc-score" style="color:#2e7d32;background:#e8f5e9;">80</span>
+  </div>
+  <div class="dc-theme">📋</div>
+  <div class="dc-relation">귀인만남</div>
+  <div class="dc-lucky">빨강 동쪽산책</div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날</div>
+  <div class="dc-iljin">丙寅 병인 🐯</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">19</span><span class="dc-lunar">3.13</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">73</span>
+  </div>
+  <div class="dc-theme">📋</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">주황 동쪽산책</div>
+  <div class="dc-tag" data-type="손없는날">손없는날 · 이사하기좋은날</div>
+  <div class="dc-iljin">丁卯 정묘 🐰</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">20</span><span class="dc-lunar">3.14</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">52</span>
+  </div>
+  <div class="dc-theme">💪 <span class="dc-jeolgi">곡우</span></div>
+  <div class="dc-relation">구설주의</div>
+  <div class="dc-lucky">노랑 내면충전</div>
+  <div class="dc-tag" data-type="손없는날">손없는날</div>
+  <div class="dc-iljin">戊辰 무진 🐲</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">21</span><span class="dc-lunar">3.15</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">50</span>
+  </div>
+  <div class="dc-theme">💘</div>
+  <div class="dc-relation">경쟁조심</div>
+  <div class="dc-lucky">베이지 남쪽외출</div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날</div>
+  <div class="dc-iljin">己巳 기사 🐍</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">22</span><span class="dc-lunar">3.16</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">42</span>
+  </div>
+  <div class="dc-theme">💘</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">흰색 남쪽외출</div>
+  <div class="dc-tag" data-type="미용좋은날">미용좋은날 · 주의필요</div>
+  <div class="dc-iljin">庚午 경오 🐴</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">23</span><span class="dc-lunar">3.17</span>
+    <span class="dc-score" style="color:#c62828;background:#ffebee;">34</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">말조심</div>
+  <div class="dc-lucky">은색 내면충전</div>
+  <div class="dc-tag" data-type="주의필요">주의필요</div>
+  <div class="dc-iljin">辛未 신미 🐏</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#1565c0;">24</span><span class="dc-lunar">3.18</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">51</span>
+  </div>
+  <div class="dc-theme">🏆</div>
+  <div class="dc-relation">사교좋음</div>
+  <div class="dc-lucky">파랑 서쪽약속</div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날 · 주의필요</div>
+  <div class="dc-iljin">壬申 임신 🐵</div>
+</div></div>
+<div class="week-row"><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="color:#c62828;">25</span><span class="dc-lunar">3.19</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">51</span>
+  </div>
+  <div class="dc-theme">🏆</div>
+  <div class="dc-relation">최고화합</div>
+  <div class="dc-lucky">검정 서쪽약속</div>
+  <div class="dc-tag" data-type="최고의만남날">최고의만남날 · 미용좋은날</div>
+  <div class="dc-iljin">癸酉 계유 🐔</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">26</span><span class="dc-lunar">3.20</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">70</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">다툼주의</div>
+  <div class="dc-lucky">진초록 내면충전</div>
+  <div class="dc-tag" data-type="변화주의날">변화주의날 · 이사하기좋은날</div>
+  <div class="dc-iljin">甲戌 갑술 🐶</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">27</span><span class="dc-lunar">3.21</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">72</span>
+  </div>
+  <div class="dc-theme dc-theme-bday">🌟</div>
+  <div class="dc-relation">예의필요</div>
+  <div class="dc-lucky"><span class="dc-bday-label" style="color:#2e7d32;">대길일</span></div>
+  <div class="dc-tag" data-type="여행좋은날">여행좋은날</div>
+  <div class="dc-iljin">乙亥 을해 🐷</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">28</span><span class="dc-lunar">3.22</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">69</span>
+  </div>
+  <div class="dc-theme">💰</div>
+  <div class="dc-relation">이성운</div>
+  <div class="dc-lucky">빨강 북쪽휴식</div>
+  <div class="dc-tag" data-type="미용좋은날">미용좋은날</div>
+  <div class="dc-iljin">丙子 병자 🐭</div>
+</div><div class="day-cell" style="">
+  <div class="dc-top">
+    <span class="dc-day" style="">29</span><span class="dc-lunar">3.23</span>
+    <span class="dc-score" style="color:#ff9800;background:#fff3e0;">52</span>
+  </div>
+  <div class="dc-theme">💪</div>
+  <div class="dc-relation">귀인만남</div>
+  <div class="dc-lucky">주황 내면충전</div>
+  <div class="dc-tag" data-type="손없는날">손없는날</div>
+  <div class="dc-iljin">丁丑 정축 🐮</div>
+</div><div class="day-cell" style="border:1.5px solid #2e7d32;background:#f1f8e9;">
+  <div class="dc-top">
+    <span class="dc-day" style="">30</span><span class="dc-lunar">3.24</span>
+    <span class="dc-score" style="color:#1565c0;background:#e3f2fd;">74</span>
+  </div>
+  <div class="dc-theme">📋</div>
+  <div class="dc-relation">경쟁조심</div>
+  <div class="dc-lucky">노랑 동쪽산책</div>
+  <div class="dc-tag" data-type="손없는날">손없는날 · 여행좋은날</div>
+  <div class="dc-iljin">戊寅 무인 🐯</div>
+</div><div class="day-cell empty"></div></div></div>
+  <div class="month-footer">
+    <span class="mf-item"><span style="display:inline-block;width:10px;height:10px;border:2px solid #2e7d32;background:#f1f8e9;border-radius:2px;"></span> 길일</span>
+    <span class="mf-item"><span style="display:inline-block;width:10px;height:10px;border:2px solid #c62828;background:#fff5f5;border-radius:2px;"></span> 주의일</span>
+    <span class="mf-item">💪체력충전 🏆성과발휘 💰재물기회 📋직업명예 💘인연소통</span>
+    <span class="mf-item">행운색: 초록 · 연두</span>
+    <span class="mf-item">코디: 원목 소품 · 녹색 머플러</span>
+  </div>
+  </div>
+</div></body></html>

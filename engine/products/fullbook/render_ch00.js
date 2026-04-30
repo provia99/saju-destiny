@@ -1,0 +1,200 @@
+'use strict';
+
+// ── 신살·신강약 슬롯 직접 주입 ──────────────────────────────────
+function _injectSinsal(M) {
+  const s = M.선생님이름 || '반야선생';
+  if (!M._천을귀인설명)
+    M._천을귀인설명 = M.천을귀인유무 === '있음'
+      ? `천을귀인(天乙貴人)이 있다는 것은 어려운 상황에서 귀인이 나타나 도움을 주는 기운이 있다는 뜻이에요. ${s}이 봐온 분들 중에 천을귀인이 있는 분들은 위기의 순간마다 의외의 도움이 찾아오는 경우가 많았어요. 이 기운이 가장 잘 발휘되려면 스스로도 남을 도우려는 마음을 갖는 것이 중요해요.` : '';
+  if (!M._역마살설명)
+    M._역마살설명 = M.역마살유무 === '있음'
+      ? `역마살(驛馬殺)이 있다는 것은 변화와 이동의 기운이 강하다는 뜻이에요. 현대에는 오히려 긍정적인 기운으로 작용하여 해외 활동, 이직, 여행, 새로운 환경으로의 전환이 능력이 빛나는 분이에요. ${s}이 드리는 조언은 이렇어요. 역마살의 에너지를 목적 있는 방향으로 활용하는 것이 가장 좋은 대처법이에요.` : '';
+  if (!M._백호살설명)
+    M._백호살설명 = M.백호살유무 === '있음'
+      ? `백호대살(白虎大殺)이 있다는 것은 강렬한 기운이 사주에 담겨 있다는 뜻이에요. 잘 활용하면 강한 추진력과 결단력이 되고, 조심하지 않으면 건강·사고·인간관계에서 갑작스러운 변화가 올 수 있어요. 방어책: 무리한 활동과 급한 결정을 삼가고, 정기 건강 점검을 꾸준히 하세요.` : '';
+  if (!M._도화살설명)
+    M._도화살설명 = M.도화살유무 === '있음'
+      ? `도화살(桃花殺)이 있다는 것은 이성과 인기의 기운이 강하다는 뜻이에요. 대운(大運)에서도 이 기운이 활성화될 때 인간관계와 인기가 특히 강해집니다. 방어책: 도화(桃花)의 매력을 직업적 능력으로 승화하고, 이성 관계에서는 신중한 선택을 하세요.` : '';
+  if (!M._홍염살설명)
+    M._홍염살설명 = M.홍염살유무 === '있음'
+      ? `홍염살(紅艶殺)이 있다는 것은 강렬한 감성과 예술적 기운이 담겨 있다는 뜻이에요. 대운(大運) 흐름과 결합해 특정 시기에 감성과 창의성이 폭발적으로 발휘돼요. 방어책: 감성 에너지를 창작 활동으로 발산하고, 중요한 결정은 감정이 안정된 상태에서 내리십시오.` : '';
+  if (!M._괴강살설명)
+    M._괴강살설명 = M.괴강살유무 === '있음'
+      ? `괴강살(魁罡殺)이 있다는 것은 강한 기질과 독립심이 담겨 있다는 뜻이에요. 대운(大運)과 결합하면 특정 10년에 강력한 추진력이 발휘돼요. 방어책: 강한 의지는 살리되, 기신대운(忌神大運)에서는 충동적 결정을 조심하세요.` : '';
+  if (!M._신강약설명) {
+    const sin = M.신강약 || '';
+    if (sin.includes('중화형')) {
+      M._신강약설명 = '중화형 신강(身强) 구조이에요. 신강의 추진력과 신약의 유연함을 겸비한 균형형이에요. 재성(財星)·관성(官星) 대운(大運)에 좋은 흐름이 오면서도 협력 구조에서도 능력이 빛납니다.';
+    } else {
+      M._신강약설명 = sin.includes('신강(')
+        ? '신강(身强) 구조이에요. 추진력과 자립심이 강점이에요. 재성(財星)·관성(官星) 대운(大運)에 좋은 흐름이 옵니다.'
+        : '신약(身弱) 구조이에요. 유연하고 협력에 강해요. 인성(印星)·비겁(比劫) 대운(大運)에 전환점이 옵니다.';
+    }
+  }
+  // 신강약 정규화 (5단계: 극신강/신강/중화형신강/신약/극신약)
+  if (M.신강약) {
+    const r = M.신강약;
+    if (r.includes('중화형')) {
+      M.신강약  = '중화형 신강(身强)';
+      M.신강약단 = '중화형신강';
+    } else {
+      if (/강신약/.test(r))      M.신강약 = '신약(身弱)';
+      else if (/약신강/.test(r)) M.신강약 = '신강(身强)';
+      else if (/강신강/.test(r)) M.신강약 = '신강(身强)';
+      else if (/약신약/.test(r)) M.신강약 = '신약(身弱)';
+      else if (r && !r.includes('(')) M.신강약 = r.includes('강') ? '신강(身强)' : '신약(身弱)';
+      M.신강약단 = M.신강약.includes('신강(') ? '신강' : '신약';
+    }
+  }
+}
+
+// ================================================================
+// render_ch00.js 》 서장(머리말) 렌더링
+// 입력: queue/{fileId}_ch00.json
+// 출력: queue/{fileId}_ch00_result.txt
+// ================================================================
+const fs   = require('fs');
+const path = require('path');
+const { DB_INTRO, DB_CH00: _DB_CH00_NEW } = require('./ch00_db');
+// DB_INTRO와 새 DB_CH00 블록 병합
+const DB_CH00 = Object.assign({}, DB_INTRO, _DB_CH00_NEW || {});
+const { 브랜드블록, 결혼블록, 자녀블록, 고민강조블록, 형제블록, 부모블록, 건강블록, injectCh08Fields } = require('./ch_personal_db');
+
+function loadMember(jsonPath) {
+  const raw = fs.readFileSync(jsonPath, 'utf8');
+  const M   = JSON.parse(raw);
+  for (const k of Object.keys(M)) { if (k.startsWith('===')) delete M[k]; }
+  return M;
+}
+
+function resolveBlock(key, M) {
+  // BRAND 블록 처리
+  if (key.startsWith('BRAND.')) {
+    if (key === 'BRAND.안내') {
+      let btext = 브랜드블록.안내;
+      for (const [bk, bv] of Object.entries(M)) {
+        if (typeof bv === 'string') btext = btext.replaceAll('{{' + bk + '}}', bv);
+      }
+      return btext;
+    }
+    return '';
+  }
+  // PERSONAL 블록 처리
+  if (key.startsWith('PERSONAL.')) {
+    function applyS(text) {
+      for (const [k,v] of Object.entries(M)) {
+        if (typeof v === 'string') text = text.replaceAll(`{{${k}}}`, v);
+      }
+      return text;
+    }
+    if (key === 'PERSONAL.결혼') return applyS(결혼블록[M.결혼상태||'미혼'] || 결혼블록['미혼']);
+    if (key === 'PERSONAL.자녀') return applyS(자녀블록[M.자녀||'없음'] || 자녀블록['없음']);
+    if (key === 'PERSONAL.고민') return applyS(고민강조블록[M.고민분야||'종합'] || 고민강조블록['종합']);
+    if (key === 'PERSONAL.형제') return applyS(형제블록[M.형제유무||'있음'] || 형제블록['있음']);
+    if (key === 'PERSONAL.부모') return applyS(부모블록[M.부모상황||'양친'] || 부모블록['양친']);
+    if (key === 'PERSONAL.건강') return applyS(건강블록[M.건강관심||'기본'] || 건강블록['기본']);
+    return '';
+  }
+
+  // CH00 / INTRO 공용 DB 처리
+  const parts = key.split('.');
+  const ns    = parts[0];   // 예: 'INTRO' 또는 'CH00'
+  const k     = parts[1];
+  const sub   = parts[2];
+
+  // 네임스페이스에 맞는 DB 선택
+  let DB = null;
+  if (ns === 'INTRO' || ns === 'CH00') DB = DB_CH00;
+
+  if (!DB) return `[NS없음: ${ns}]`;
+  if (!DB[k]) return `[CH00없음: ${k}]`;
+  if (typeof DB[k] === 'object' && sub) {
+    const val = DB[k][sub];
+    if (!val) return `[CH00없음: ${k}.${sub}]`;
+    return String(val);
+  }
+  if (typeof DB[k] === 'object') return `[CH00없음: ${k}(서브키필요)]`;
+  return String(DB[k]);
+}
+
+function render(text, M) {
+  // [[...]] 블록 치환
+  text = text.replace(/\[\[([^\]]+)\]\]/g, (_, expr) => {
+    const resolved = expr.replace(/\{\{([^}]+)\}\}/g, (__, k) => M[k] ?? k);
+    let blk = resolveBlock(resolved, M);
+    // <<IS 키 값>> ... <<ENDIF>> 처리
+    blk = blk.replace(/<<IS ([^\s>]+)\s+([^>]+)>>([\s\S]*?)<<ENDIF>>/g, (_, key, val, block) => {
+      return (M[key] ?? '') === val.trim() ? block : '';
+    });
+    // <<IF 키=값>> ... <<ENDIF>> 처리
+    blk = blk.replace(/<<IF ([^>]+)>>([\s\S]*?)<<ENDIF>>/g, (_, condStr, block) => {
+      const conds = condStr.trim().split(/\s+/);
+      const pass = conds.every(c => { const [k,v] = c.split('='); return (M[k]??'') === v; });
+      return pass ? block : '';
+    });
+    return blk;
+  });
+  // {{슬롯}} 치환
+  text = text.replace(/\{\{([^}]+)\}\}/g, (_, key) => M[key] ?? '');
+  // 과도한 공백 정리
+
+  // ── 최종 <<IS>>·<<IF>> 후처리 + 2차 슬롯 치환 ──────────
+  let _pr;
+  do {
+    _pr = text;
+    text = text.replace(/<<IS ([^\s>]+)\s+([^>]+)>>[\s\S]*?<<ENDIF>>/g, (_, k, v, block) => {
+      return (M[k] ?? '') === v.trim() ? (block||'') : '';
+    });
+    text = text.replace(/<<IF ([^>]+)>>[\s\S]*?<<ENDIF>>/g, (_, condStr, block) => {
+      const pass = condStr.trim().split(/\s+/).every(c => {
+        const [k,v]=c.split('='); return (M[k]??'')===v;
+      });
+      return pass ? (block||'') : '';
+    });
+  } while (text !== _pr);
+  text = text.replace(/<<ENDIF>>/g, '');
+  for (const [k,v] of Object.entries(M)) {
+    if (typeof v === 'string') text = text.replaceAll('{{'+k+'}}', v);
+  }
+  text = text.replace(/\{\{[^}]+\}\}/g, '');
+  text = text.replace(/\n{4,}/g, '\n\n\n').trim() + '\n';
+  return text;
+}
+
+
+
+function main() {
+  const jsonArg    = process.argv[2] || 'choi_wonsuk_ch00.json';
+  const tmplFile   = process.argv[3] || path.join(__dirname, 'ch00_template.txt');
+  
+  const jsonPath = path.isAbsolute(jsonArg) ? jsonArg : path.join(__dirname, 'queue', jsonArg);
+const samplesDir = path.dirname(jsonPath);
+
+  if (!fs.existsSync(jsonPath)) {
+    console.error(`파일 없음: ${jsonPath}`);
+    process.exit(1);
+  }
+
+  const M    = loadMember(jsonPath);
+  _injectSinsal(M);
+  // ch08 공유 필드 주입 (기신오행, 현재대운성격 등)
+  injectCh08Fields(M, samplesDir, null);
+
+  let text = fs.readFileSync(tmplFile, 'utf8');
+  text = render(text, M);
+  // {{슬롯}} 잔재 치환 (제목줄 등 [[]] 밖에 있는 것)
+  for (const [k, v] of Object.entries(M)) {
+    if (typeof v === 'string' || typeof v === 'number')
+      text = text.replaceAll('{{' + k + '}}', String(v));
+  }
+  
+  const finalOutput = text;
+
+  const fileId  = M.id || M.이름;
+  const outPath = path.join(samplesDir, `${fileId}_ch00_result.txt`);
+  fs.writeFileSync(outPath, finalOutput, 'utf8');
+  console.log(`✅ 렌더링 완료: queue/${path.basename(outPath)}`);
+  console.log(`📄 글자수: ${finalOutput.length}자`);
+}
+
+main();

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반야 - 사주 명리 서비스</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
+        :root {
+            --gold: #C8B860;
+            --gold-light: #E8D88A;
+            --gold-dark: #A09040;
+            --dark: #0D0D0D;
+            --dark2: #1A1A1A;
+            --dark3: #252525;
+            --text: #E8E0CC;
+            --text-muted: #9A9080;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── 헤더 ── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13,13,13,0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(200,184,96,0.15);
+        }
+
+        .logo {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            display: block;
+            letter-spacing: 0.2em;
+            margin-top: -2px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-left: 28px;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: var(--gold); }
+
+        .btn-login {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold) !important;
+            padding: 7px 20px;
+            border-radius: 3px;
+            font-size: 0.85rem !important;
+            transition: all 0.2s !important;
+        }
+
+        .btn-login:hover {
+            background: var(--gold) !important;
+            color: var(--dark) !important;
+        }
+
+        /* ── 히어로 ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 20px 80px;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(200,184,96,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(200,184,96,0.04) 0%, transparent 50%),
+                var(--dark);
+        }
+
+        /* 별 배경 */
+        .stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: var(--op, 0.6); transform: scale(1); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 1px solid rgba(200,184,96,0.4);
+            color: var(--gold);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 560px;
+            margin: 0 auto 44px;
+            font-weight: 300;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--dark);
+            padding: 14px 36px;
+            border-radius: 3px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(200,184,96,0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            padding: 14px 36px;
+            border-radius: 3px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* 스크롤 힌트 */
+        .scroll-hint {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-hint::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ── 섹션 공통 ── */
+        section {
+            padding: 100px 20px;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.35em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.9;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        /* ── 특징 섹션 ── */
+        .features {
+            background: var(--dark2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--dark3);
+            padding: 44px 36px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover { background: #2A2A2A; }
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* ── 상품 섹션 ── */
+        .products-section {
+            background: var(--dark);
+        }
+
+        .products-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--dark2);
+            border: 1px solid rgba(200,184,96,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .product-card:hover {
+            border-color: rgba(200,184,96,0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        }
+
+        .product-thumb {
+            height: 160px;
+            background: linear-gradient(135deg, var(--dark3) 0%, #1E1A0E 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(200,184,96,0.08) 0%, transparent 70%);
+        }
+
+        .product-body {
+            padding: 24px;
+        }
+
+        .product-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gold);
+        }
+
+        .product-price small {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-left: 4px;
+        }
+
+        /* ── 프로세스 섹션 ── */
+        .process-section {
+            background: var(--dark2);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .step-num {
+            width: 72px;
+            height: 72px;
+            border: 1px solid var(--gold-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            background: var(--dark2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h4 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── CTA 섹션 ── */
+        .cta-section {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .cta-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            border: 1px solid rgba(200,184,96,0.15);
+            border-radius: 6px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(200,184,96,0.06) 0%, transparent 60%);
+        }
+
+        .cta-inner h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .cta-inner p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 36px;
+            font-weight: 300;
+        }
+
+        /* ── 푸터 ── */
+        footer {
+            background: var(--dark2);
+            border-top: 1px solid rgba(200,184,96,0.1);
+            padding: 40px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-left: 20px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--gold); }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ── 반응형 ── */
+        @media (max-width: 768px) {
+            header { padding: 16px 20px; }
+            nav { display: none; }
+            .process-steps::before { display: none; }
+            .products-header { flex-direction: column; align-items: flex-start; }
+            footer { flex-direction: column; text-align: center; }
+            .footer-links { margin-top: 8px; }
+            .footer-links a { margin: 0 10px; }
+        }
+
+        /* 구분선 */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 24px 0;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<header>
+    <a href="/" class="logo">
+        반야
+        <span>BANYA · 사주 명리 서비스</span>
+    </a>
+    <nav>
+        <a href="/shop/">상품 보기</a>
+        <a href="#features">서비스 소개</a>
+        <a href="#process">이용 방법</a>
+        <a href="/login" class="btn-login">관리자 로그인</a>
+    </nav>
+</header>
+
+<!-- ── 히어로 ── -->
+<section class="hero">
+    <!-- 별 배경 (JS로 생성) -->
+    <div class="stars" id="stars"></div>
+
+    <div>
+        <div class="hero-badge">✦ 사주 명리 · 운명 분석 서비스</div>
+        <h1>
+            당신의 사주에 담긴<br>
+            <em>운명의 이야기</em>를<br>
+            읽어드립니다
+        </h1>
+        <p>
+            생년월일시로 풀어내는 깊은 사주 분석.<br>
+            AI와 전통 명리학이 만나 완성하는<br>
+            나만의 운명 해석서를 만나보세요.
+        </p>
+        <div class="hero-btns">
+            <a href="/shop/" class="btn-primary">상품 보러가기</a>
+            <a href="#process" class="btn-outline">이용 방법 보기</a>
+        </div>
+    </div>
+
+    <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- ── 특징 섹션 ── -->
+<section class="features" id="features">
+    <div class="section-inner">
+        <div class="section-label">Why Banya</div>
+        <h2 class="section-title">반야가 특별한 이유</h2>
+        <div class="divider"></div>
+        <p class="section-desc">
+            수천 년의 동양 명리학과 현대 AI 기술이 결합된<br>
+            정밀한 사주 분석 서비스를 제공합니다.
+        </p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🔮</span>
+                <h3>정밀한 명리 분석</h3>
+                <p>사주팔자의 음양오행, 십성, 신살까지 전통 명리학의 핵심 이론을 바탕으로 깊이 있는 분석을 제공합니다.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📜</span>
+                <h3>맞춤형 해석서 제공</h3>
+                <p>단순한 운세가 아닌, 당신만을 위한 상세한 사주 해석서를 PDF 문서로 제공합니다.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>빠른 분석 완성</h3>
+                <p>결제 후 신속하게 분석이 완성됩니다. 언제 어디서나 편리하게 받아보실 수 있습니다.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <h3>안전한 개인정보 보호</h3>
+                <p>고객의 생년월일 정보는 철저히 보호됩니다. 분석 목적 외에는 절대 사용되지 않습니다.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── 상품 섹션 ── -->
+<section class="products-section" id="products">
+    <div class="section-inner">
+        <div class="products-header">
+            <div>
+                <div class="section-label">Products</div>
+                <h2 class="section-title">사주 분석 상품</h2>
+                <div class="divider"></div>
+                <p class="section-desc">원하시는 분석 유형을 선택하세요.</p>
+            </div>
+            <a href="/shop/" class="btn-outline">전체 상품 보기</a>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+            <!-- JS로 로드 -->
+            <div class="product-card" style="pointer-events:none; opacity:0.5;">
+                <div class="product-thumb">✦</div>
+                <div class="product-body">
+                    <div class="product-tag">Loading</div>
+                    <div class="product-name">상품을 불러오는 중...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── 프로세스 섹션 ── -->
+<section class="process-section" id="process">
+    <div class="section-inner">
+        <div style="text-align:center; margin-bottom: 0;">
+            <div class="section-label" style="justify-content:center; display:flex;">How It Works</div>
+            <h2 class="section-title" style="text-align:center;">이용 방법</h2>
+            <div class="divider" style="margin: 24px auto;"></div>
+            <p class="section-desc" style="margin: 0 auto; text-align:center;">
+                간단한 4단계로 나만의 사주 해석서를 받아보세요.
+            </p>
+        </div>
+
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-num">一</div>
+                <h4>상품 선택</h4>
+                <p>원하시는 사주 분석 상품을 선택합니다.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">二</div>
+                <h4>정보 입력</h4>
+                <p>생년월일시, 성별 등 기본 정보를 입력합니다.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">三</div>
+                <h4>결제 완료</h4>
+                <p>안전한 토스페이먼츠로 결제를 완료합니다.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">四</div>
+                <h4>해석서 수령</h4>
+                <p>완성된 사주 해석서를 다운로드 받으세요.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA 섹션 ── -->
+<section class="cta-section">
+    <div class="section-inner">
+        <div class="cta-inner">
+            <div class="section-label" style="display:block; text-align:center; margin-bottom:16px;">지금 시작하세요</div>
+            <h2>나의 사주를 지금<br>확인해보세요</h2>
+            <p>
+                생년월일시만 있으면 됩니다.<br>
+                당신만을 위한 맞춤 사주 해석서를 만나보세요.
+            </p>
+            <a href="/shop/" class="btn-primary">상품 보러가기 →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ── 푸터 ── -->
+<footer>
+    <div class="footer-logo">반야 (BANYA)</div>
+    <div class="footer-links">
+        <a href="/shop/">상품</a>
+        <a href="/login">관리자</a>
+    </div>
+    <div class="footer-copy">© 2025 BANYA. All rights reserved.</div>
+</footer>
+
+<script>
+// ── 별 생성 ──
+(function() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2 + 1;
+        star.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            --dur: ${Math.random() * 4 + 2}s;
+            --op: ${Math.random() * 0.5 + 0.2};
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        container.appendChild(star);
+    }
+})();
+
+// ── 상품 로드 ──
+(async function() {
+    try {
+        const res = await fetch('/shop/api/products');
+        if (!res.ok) return;
+        const data = await res.json();
+        const products = (data.products || data).slice(0, 4);
+        if (!products.length) return;
+
+        const icons = ['🔮', '📜', '✨', '🌙', '⭐', '🌟'];
+        const grid = document.getElementById('products-grid');
+        grid.innerHTML = products.map((p, i) => `
+            <a href="/shop/product/${p.id}" class="product-card">
+                <div class="product-thumb">${icons[i % icons.length]}</div>
+                <div class="product-body">
+                    <div class="product-tag">사주 분석</div>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-desc">${(p.description || '').slice(0, 60)}${(p.description || '').length > 60 ? '...' : ''}</div>
+                    <div class="product-price">
+                        ${Number(p.price).toLocaleString()}원
+                        <small>/ 1회</small>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    } catch(e) {
+        // 상품 로드 실패 시 기본 메시지
+        document.getElementById('products-grid').innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
+                <a href="/shop/" style="color:var(--gold); text-decoration:none;">상품 목록 보러가기 →</a>
+            </div>
+        `;
+    }
+})();
+
+// ── 스무스 스크롤 ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+</script>
+</body>
+</html>

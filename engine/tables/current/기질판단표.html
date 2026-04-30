@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>기질 판단표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; margin:0 auto; padding:14px 20px; background:transparent; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px auto; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+table { width:100%; border-collapse:collapse; }
+th { background:#1a3a6a; color:white; font-size:11px; font-weight:700; padding:5px 6px; text-align:center; }
+th:first-child { text-align:left; }
+td { font-size:10px; padding:5px 6px; border-bottom:1px solid #e8e8e8; vertical-align:top; line-height:1.4; }
+tr:nth-child(even) td { background:#f8f9fc; }
+tr:nth-child(odd) td { background:#ffffff; }
+.yes { background:#e8f5e9 !important; color:#2e7d32; font-weight:900; text-align:center; font-size:10px; }
+.no  { background:#ffebee !important; color:#c62828; font-weight:900; text-align:center; font-size:10px; }
+.q-col { font-weight:700; color:#333; min-width:180px; }
+.r-col { color:#555; font-size:10px; }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+      <div>
+        <div class="banner-hdr-title">기질 판단표</div>
+        <div class="banner-hdr-sub">YES/NO 기질 판단 · 중화형신강 · 편관격(偏官格)</div>
+      </div>
+      <div>
+        <div class="banner-hdr-name">임효원 님</div>
+        <div class="banner-hdr-detail">일주 戊辰(무진)</div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:35%;">질문</th>
+          <th style="width:12%;">답변</th>
+          <th style="width:53%;">근거</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="q-col">독립적으로 일할 때 더 잘하나?</td>
+          <td class="yes">YES</td>
+          <td class="r-col">중화형신강 — 자기 에너지가 강하여 독립적 환경에서 역량을 잘 발휘합니다.</td>
+        </tr>
+        <tr>
+          <td class="q-col">팀워크에서 빛나나?</td>
+          <td class="no">NO</td>
+          <td class="r-col">중화형신강 — 혼자 주도하려는 성향이 강해 팀에서 마찰이 생길 수 있습니다.</td>
+        </tr>
+        <tr>
+          <td class="q-col">리더 역할이 맞나?</td>
+          <td class="yes">YES</td>
+          <td class="r-col">편관격(偏官格) — 편관/비견의 기운이 있어 추진력과 결단력으로 리더 역할에 적합합니다.</td>
+        </tr>
+        <tr>
+          <td class="q-col">전문가 역할이 맞나?</td>
+          <td class="no">NO</td>
+          <td class="r-col">편관격(偏官格) — 전문 분야보다는 관리·조직 역할이 더 어울리는 구조입니다.</td>
+        </tr>
+        <tr>
+          <td class="q-col">새 도전보다 안정이 맞나?</td>
+          <td class="no">NO</td>
+          <td class="r-col">중화형신강 — 자기 기운이 강하여 새로운 도전도 잘 소화합니다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

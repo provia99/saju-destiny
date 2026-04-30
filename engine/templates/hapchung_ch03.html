@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>합충형파해 분석표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 공통 카드 ── */
+.card {
+  border:2px solid #333;
+  border-radius:14px;
+  overflow:hidden;
+}
+.card-hd {
+  padding:8px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:10pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt;  color:rgba(255,255,255,.85); }
+
+/* ── 원국 4기둥 미니 표시 ── */
+.wonkuk-bar {
+  display:flex; align-items:center; justify-content:center;
+  gap:6px; padding:10px 18px 8px;
+  background:#fafafa; border-bottom:1px solid #f0f0f0;
+}
+.wk-pillar {
+  display:flex; flex-direction:column; align-items:center;
+  background:white; border:1.5px solid #333;
+  border-radius:8px; padding:5px 10px; min-width:26mm;
+}
+.wk-label { font-size:5.5pt; color:#aaa; font-weight:700; letter-spacing:.5px; }
+.wk-stem  { font-family:'Nanum Myeongjo',serif; font-size:15pt; font-weight:800; line-height:1.1; }
+.wk-ji    { font-family:'Nanum Myeongjo',serif; font-size:15pt; font-weight:800; line-height:1.1; }
+.wk-kr    { font-size:6pt; color:#999; }
+.wk-arrow { font-size:12pt; color:#ddd; }
+
+/* ── 메인 목록표 ── */
+.hcf-table { width:100%; border-collapse:collapse; }
+.hcf-table th {
+  font-size:7pt; font-weight:700; color:#555;
+  background:#f8f8f8; padding:6px 10px;
+  border:1px solid #333; text-align:center;
+  letter-spacing:.3px;
+}
+.hcf-table th:first-child { border-left:none; }
+.hcf-table th:last-child  { border-right:none; }
+.hcf-table td {
+  border:1px solid #333;
+  padding:6px 10px; vertical-align:middle;
+  font-size:7.5pt; line-height:1.5;
+}
+.hcf-table td:first-child { border-left:none; }
+.hcf-table td:last-child  { border-right:none; }
+.hcf-table thead tr th    { border-top:none; }
+.hcf-table tbody tr:last-child td { border-bottom:none; }
+.hcf-table tr:hover td { background:#fafeff; }
+
+/* 구분 컬럼 */
+.col-type  { width:18mm; }
+.col-rel   { width:28mm; }
+.col-pos   { width:32mm; }
+.col-mean  { width:auto; }
+.col-life  { width:42mm; }
+
+/* 타입 배지 */
+.type-badge {
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:3px 10px; border-radius:10px; color:white;
+  font-size:7pt; font-weight:900; white-space:nowrap;
+}
+
+/* 관계 한자 */
+.rel-hanja {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:13pt; font-weight:800;
+}
+
+/* 위치 칩 */
+.pos-chip {
+  display:inline-block; padding:2px 7px; border-radius:5px;
+  font-size:6.5pt; font-weight:700; color:white; margin:1px;
+}
+
+/* 작용 아이콘 */
+.effect-icon { font-size:10pt; margin-right:3px; }
+
+/* 없음 행 */
+.empty-row td {
+  color:#ccc; font-style:italic; text-align:center;
+  background:#fafafa;
+}
+
+/* ── 결과 요약 칩 ── */
+.result-row {
+  display:flex; gap:8px; padding:12px 16px;
+  background:white; border-top:1px solid #f0f0f0;
+  flex-wrap:wrap;
+}
+.res-chip {
+  flex:1; min-width:28mm;
+  border-radius:10px; padding:8px 12px;
+  display:flex; flex-direction:column; gap:2px;
+}
+.res-type  { font-size:6pt; font-weight:700; opacity:.9; }
+.res-main  { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; line-height:1.2; }
+.res-sub   { font-size:6pt; opacity:.8; line-height:1.4; }
+
+/* ── 반야선생 핵심 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:9px 14px;
+  font-size:7pt; color:#555; line-height:1.8;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══ 합충형파해 분석표 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#6a1b9a,#ab47bc);">
+    <div class="card-hd-title">⚡ 합충형파해(合沖刑破害) 분석표</div>
+    <div class="card-hd-sub">최원석 님 · 癸卯-乙丑-戊辰-丁巳 · 네 기둥의 대화</div>
+  </div>
+
+  <!-- 원국 미니 표시 -->
+  <div class="wonkuk-bar">
+    <div class="wk-pillar">
+      <div class="wk-label">년주(年柱)</div>
+      <div class="wk-stem" style="color:#2196f3;">癸</div>
+      <div class="wk-ji"   style="color:#4caf50;">卯</div>
+      <div class="wk-kr">계묘</div>
+    </div>
+    <div class="wk-arrow">→</div>
+    <div class="wk-pillar">
+      <div class="wk-label">월주(月柱)</div>
+      <div class="wk-stem" style="color:#4caf50;">乙</div>
+      <div class="wk-ji"   style="color:#ff9800;">丑</div>
+      <div class="wk-kr">을축</div>
+    </div>
+    <div class="wk-arrow">→</div>
+    <div class="wk-pillar" style="border:2px solid #333;">
+      <div class="wk-label">일주(日柱) ★</div>
+      <div class="wk-stem" style="color:#ff9800;">戊</div>
+      <div class="wk-ji"   style="color:#ff9800;">辰</div>
+      <div class="wk-kr">무진</div>
+    </div>
+    <div class="wk-arrow">→</div>
+    <div class="wk-pillar">
+      <div class="wk-label">시주(時柱)</div>
+      <div class="wk-stem" style="color:#f44336;">丁</div>
+      <div class="wk-ji"   style="color:#f44336;">巳</div>
+      <div class="wk-kr">정사</div>
+    </div>
+  </div>
+
+  <!-- 메인 테이블 -->
+  <table class="hcf-table">
+    <thead>
+      <tr>
+        <th class="col-type">구분</th>
+        <th class="col-rel">관계 글자</th>
+        <th class="col-pos">위치</th>
+        <th class="col-mean">의미</th>
+        <th class="col-life">실생활 영향</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ── 천간합 ── -->
+      <tr>
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#4caf50;">천간합<br>(天干合)</span>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="rel-hanja" style="color:#2196f3;">癸</span>
+            <span style="font-size:9pt;color:#aaa;">+</span>
+            <span class="rel-hanja" style="color:#ff9800;">戊</span>
+          </div>
+          <div style="font-size:6.5pt;color:#888;margin-top:2px;">계무합 → 化 <strong style="color:#f44336;">火(화)</strong></div>
+        </td>
+        <td>
+          <span class="pos-chip" style="background:#2196f3;">년간 癸</span>
+          <span class="pos-chip" style="background:#ff9800;">일간 戊</span>
+          <div style="font-size:6pt;color:#aaa;margin-top:3px;">년간 ↔ 일간</div>
+        </td>
+        <td>
+          <span class="effect-icon">✨</span><strong>합화(合化) 길작용</strong><br>
+          <span style="font-size:6.5pt;color:#555;">두 천간이 만나 새로운 오행 火(화)로 변환. 用神 火가 강화되는 매우 길한 구조.</span>
+        </td>
+        <td>
+          <span style="font-size:7pt;color:#333;">年(사회·명예)과 日(나·활동)의 합 → 사회에서 인정받는 기운. 타인과 협력할 때 시너지가 극대화됨. 귀인과의 인연이 깊음.</span>
+        </td>
+      </tr>
+
+      <!-- ── 지지합 (삼합) ── -->
+      <tr>
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#9c27b0;">지지합<br>(地支合)</span>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="rel-hanja" style="color:#f44336;">巳</span>
+            <span style="font-size:9pt;color:#aaa;">+</span>
+            <span class="rel-hanja" style="color:#ff9800;">丑</span>
+          </div>
+          <div style="font-size:6.5pt;color:#888;margin-top:2px;">삼합(三合) 반합 → 化 <strong style="color:#9e9e9e;">金(금)</strong></div>
+        </td>
+        <td>
+          <span class="pos-chip" style="background:#f44336;">시지 巳</span>
+          <span class="pos-chip" style="background:#ff9800;">월지 丑</span>
+          <div style="font-size:6pt;color:#aaa;margin-top:3px;">시지 ↔ 월지 (반합)</div>
+        </td>
+        <td>
+          <span class="effect-icon">⚠️</span><strong>반합 흉작용</strong><br>
+          <span style="font-size:6.5pt;color:#555;">巳丑酉 삼합 중 2개. 병신(忌神) 金(금)이 강화되는 구조. 주의 필요.</span>
+        </td>
+        <td>
+          <span style="font-size:7pt;color:#333;">時(말년·자녀)와 月(직업·형제) 연결 → 자녀·가족 문제와 직업 문제가 엮이는 경향. 金 기운 과잉 시 재물 지출·분쟁 주의.</span>
+        </td>
+      </tr>
+
+      <!-- ── 지지충 — 없음 ── -->
+      <tr class="empty-row">
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#bdbdbd;">지지충<br>(地支沖)</span>
+        </td>
+        <td colspan="4" style="text-align:left;padding-left:16px;">
+          <span style="color:#ccc;">— 없음 &nbsp;</span>
+          <span style="font-size:6.5pt;color:#bbb;">원국 네 기둥 지지 사이에 충(沖) 없음 → 기본 안정 구조</span>
+        </td>
+      </tr>
+
+      <!-- ── 지지형 — 없음 ── -->
+      <tr class="empty-row">
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#bdbdbd;">지지형<br>(地支刑)</span>
+        </td>
+        <td colspan="4" style="text-align:left;padding-left:16px;">
+          <span style="color:#ccc;">— 없음 &nbsp;</span>
+          <span style="font-size:6.5pt;color:#bbb;">원국 네 기둥 지지 사이에 형(刑) 없음</span>
+        </td>
+      </tr>
+
+      <!-- ── 파 ── -->
+      <tr>
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#ff5722;">파(破)</span>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="rel-hanja" style="color:#ff9800;">丑</span>
+            <span style="font-size:9pt;color:#aaa;">↯</span>
+            <span class="rel-hanja" style="color:#ff9800;">辰</span>
+          </div>
+          <div style="font-size:6.5pt;color:#888;margin-top:2px;">축진파(丑辰破)</div>
+        </td>
+        <td>
+          <span class="pos-chip" style="background:#ff9800;">월지 丑</span>
+          <span class="pos-chip" style="background:#ff9800;">일지 辰</span>
+          <div style="font-size:6pt;color:#aaa;margin-top:3px;">월지 ↔ 일지</div>
+        </td>
+        <td>
+          <span class="effect-icon">💥</span><strong>깨뜨리는 작용</strong><br>
+          <span style="font-size:6.5pt;color:#555;">완성 직전 무너지는 패턴. 오랫동안 준비한 것이 막바지에 어긋남.</span>
+        </td>
+        <td>
+          <span style="font-size:7pt;color:#333;">月(직업·형제)와 日(배우자·내면) 파 → 직업에서 마무리가 잘 안 되는 경향. 형제와의 관계에서 갈등 주의. 완성 직전 점검 습관 필요.</span>
+        </td>
+      </tr>
+
+      <!-- ── 해 ── -->
+      <tr>
+        <td style="text-align:center;">
+          <span class="type-badge" style="background:#e91e63;">해(害)</span>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="rel-hanja" style="color:#4caf50;">卯</span>
+            <span style="font-size:9pt;color:#aaa;">↯</span>
+            <span class="rel-hanja" style="color:#ff9800;">辰</span>
+          </div>
+          <div style="font-size:6.5pt;color:#888;margin-top:2px;">묘진해(卯辰害)</div>
+        </td>
+        <td>
+          <span class="pos-chip" style="background:#4caf50;">년지 卯</span>
+          <span class="pos-chip" style="background:#ff9800;">일지 辰</span>
+          <div style="font-size:6pt;color:#aaa;margin-top:3px;">년지 ↔ 일지</div>
+        </td>
+        <td>
+          <span class="effect-icon">🚧</span><strong>방해하는 작용</strong><br>
+          <span style="font-size:6.5pt;color:#555;">잘 되어가다 보이지 않는 장애가 생기는 패턴. 오해가 쌓임.</span>
+        </td>
+        <td>
+          <span style="font-size:7pt;color:#333;">年(사회·조상)와 日(배우자·내면) 해 → 사회 활동에서 예상치 못한 방해. 오해로 인한 관계 갈등 주의. 명확한 소통이 특히 중요.</span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- 결과 요약 -->
+  <div class="result-row">
+    <div class="res-chip" style="background:#e8f5e9;border:1.5px solid #333;">
+      <div class="res-type" style="color:#2e7d32;">✅ 길한 구조</div>
+      <div class="res-main" style="color:#2e7d32;">천간합 癸戊</div>
+      <div class="res-sub" style="color:#388e3c;">化火 → 用神 강화<br>사회 인정·귀인 인연</div>
+    </div>
+    <div class="res-chip" style="background:#fff3e0;border:1.5px solid #333;">
+      <div class="res-type" style="color:#e65100;">⚠️ 주의 구조</div>
+      <div class="res-main" style="color:#e65100;">巳丑 반합</div>
+      <div class="res-sub" style="color:#e65100;">化金 → 忌神 강화<br>재물·건강 관리 필요</div>
+    </div>
+    <div class="res-chip" style="background:#fce4ec;border:1.5px solid #333;">
+      <div class="res-type" style="color:#c62828;">💥 파 작용</div>
+      <div class="res-main" style="color:#c62828;">丑辰 파(破)</div>
+      <div class="res-sub" style="color:#c62828;">월지↔일지<br>마무리 무너지는 패턴</div>
+    </div>
+    <div class="res-chip" style="background:#fce4ec;border:1.5px solid #333;">
+      <div class="res-type" style="color:#c62828;">🚧 해 작용</div>
+      <div class="res-main" style="color:#c62828;">卯辰 해(害)</div>
+      <div class="res-sub" style="color:#c62828;">년지↔일지<br>보이지 않는 방해</div>
+    </div>
+    <div class="res-chip" style="background:#f5f5f5;border:1.5px solid #333;">
+      <div class="res-type" style="color:#9e9e9e;">✅ 없음</div>
+      <div class="res-main" style="color:#9e9e9e;">충·형</div>
+      <div class="res-sub" style="color:#9e9e9e;">지지 충·형 없음<br>기본 안정 구조</div>
+    </div>
+  </div>
+
+</div><!-- card -->
+
+<!-- 반야선생 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#6a1b9a;">📌 반야선생의 합충형파해 핵심 요약</strong><br>
+  가장 중요한 것은 <strong style="color:#4caf50;">천간합 癸戊 → 化火</strong>입니다. 년간(사회)과 일간(나)이 합하여 用神 火를 만드는 매우 길한 구조예요. 사회에서 인정받고 귀인을 만나는 힘의 근원입니다.
+  반면 <strong style="color:#ff5722;">丑辰 파(破)</strong>는 월지(직업)와 일지(배우자·내면)가 깨뜨리는 관계라 오랫동안 준비한 일이 막판에 틀어지는 경험을 반복합니다 — 마무리 직전 반드시 한 번 더 점검하는 습관이 필요해요.
+  <strong style="color:#e91e63;">卯辰 해(害)</strong>는 사회 활동에서 예상치 못한 방해가 생기는 패턴입니다. 명확한 소통과 문서화가 방어책이에요.
+</div>
+
+</div>
+</body>
+</html>

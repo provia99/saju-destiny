@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold mb-0">집필 현황 관리</h4>
+        <a href="/members/list" class="btn btn-outline-secondary btn-sm">회원 목록</a>
+    </div>
+
+    <!-- 상태 필터 탭 -->
+    <ul class="nav nav-pills mb-4 bg-white p-2 rounded shadow-sm">
+        {% for s in ['전체', '완료', '생성중', '오류', '대기'] %}
+        <li class="nav-item">
+            <a class="nav-link {% if curr_status == s %}active bg-brand{% else %}text-muted{% endif %}" 
+               href="/saju/history?status={{ s }}">{{ s }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- 집필 목록 테이블 -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-muted small">
+                        <tr>
+                            <th class="ps-4">회원명</th>
+                            <th>연도</th>
+                            <th>판</th>
+                            <th>상태</th>
+                            <th>완료일시</th>
+                            <th class="pe-4 text-center">다운로드</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in books %}
+                        <tr>
+                            <td class="ps-4 fw-bold text-dark">{{ b.member_name }}</td>
+                            <td>{{ b.book_year }}년</td>
+                            <td><span class="text-muted small">{{ b.edition }}</span></td>
+                            <td>
+                                {% if b.status == '완료' %}
+                                <span class="badge bg-success-subtle text-success rounded-pill px-3">완료</span>
+                                {% elif b.status == '생성중' %}
+                                <span class="badge bg-warning-subtle text-dark rounded-pill px-3">
+                                    <span class="spinner-border spinner-border-sm me-1" role="status"></span>생성중
+                                </span>
+                                {% elif b.status == '오류' %}
+                                <span class="badge bg-danger-subtle text-danger rounded-pill px-3">오류</span>
+                                {% else %}
+                                <span class="badge bg-light text-muted rounded-pill px-3">{{ b.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="small text-muted">{{ b.completed_at or '-' }}</td>
+                            <td class="pe-4 text-center">
+                                {% if b.status == '완료' %}
+                                <a href="/saju/download/{{ b.id }}" class="btn btn-sm btn-brand shadow-sm">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        {% if not books %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted small">아직 집필 이력이 없습니다.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-brand { background-color: var(--brand) !important; color: white !important; }
+    .btn-brand { background-color: var(--brand) !important; color: white !important; border: none; }
+    .text-brand { color: var(--brand) !important; }
+    .bg-success-subtle { background-color: #d1e7dd; }
+    .bg-warning-subtle { background-color: #fff3cd; }
+    .bg-danger-subtle { background-color: #f8d7da; }
+</style>
+{% endblock %}

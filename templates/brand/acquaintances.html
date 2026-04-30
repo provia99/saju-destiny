@@ -1,0 +1,540 @@
+{% extends "brand/_brand_chrome.html" %}
+{% set page = 'acquaintances' %}
+{% block title %}내 지인 | {{ master.선생님이름 }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  .ax-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .ax-h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px; font-weight: 800;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .ax-toggle {
+    padding: 7px 14px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: #1e1433;
+    font-size: 12px; font-weight: 800;
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245,200,66,0.3);
+  }
+  .ax-toggle.cancel {
+    background: rgba(155,89,182,0.18);
+    color: var(--text-secondary);
+    box-shadow: none;
+    border: 1px solid var(--border);
+  }
+
+  .ax-toast {
+    background: rgba(74,222,128,0.15);
+    border: 1px solid rgba(74,222,128,0.4);
+    color: #4ade80;
+    padding: 9px 14px;
+    border-radius: 12px;
+    font-size: 12.5px; font-weight: 700;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .ax-error {
+    background: rgba(248,113,113,0.15);
+    border: 1px solid rgba(248,113,113,0.4);
+    color: #fca5a5;
+    padding: 9px 14px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+
+  /* ========== 추가 폼 (인라인) ========== */
+  .ax-form-wrap {
+    display: none;
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 16px;
+    padding: 16px 14px;
+    margin-bottom: 16px;
+  }
+  .ax-form-wrap.open { display: block; }
+  .ax-form-head {
+    font-size: 12px; font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .ax-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .ax-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .ax-grp { display: flex; flex-direction: column; gap: 4px; }
+  .ax-lbl { font-size: 10.5px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.3px; }
+  .ax-inp, .ax-sel {
+    width: 100%;
+    padding: 9px 11px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(155,89,182,0.3);
+    border-radius: 9px;
+    color: var(--text-primary);
+    font-size: 12.5px;
+    font-family: inherit;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .ax-inp:focus, .ax-sel:focus {
+    border-color: var(--gold);
+    background: rgba(0,0,0,0.35);
+  }
+  .ax-sel option { background: var(--bg-card); }
+
+  /* 라디오 행 */
+  .ax-radios { display: flex; gap: 6px; }
+  .ax-radios.gender > * { flex: 1; }
+  .ax-radios input[type="radio"] { display: none; }
+  .ax-radios label {
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(155,89,182,0.3);
+    color: var(--text-secondary);
+    font-size: 12px; font-weight: 700;
+    cursor: pointer;
+  }
+  .ax-radios input:checked + label {
+    background: linear-gradient(135deg, var(--lav-mid), var(--gold-dark));
+    border-color: var(--gold);
+    color: #fff;
+  }
+  .ax-leap {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-left: 6px;
+    font-size: 11px; color: var(--gold-light);
+  }
+  .ax-leap input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--gold); }
+
+  /* 관계 5칸 */
+  .ax-rel-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+  .ax-rel-grid input[type="radio"] { display: none; }
+  .ax-rel-grid label {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 8px 4px;
+    border-radius: 9px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(155,89,182,0.3);
+    font-size: 10.5px; font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .ax-rel-grid label .em { font-size: 18px; margin-bottom: 2px; }
+  .ax-rel-grid input:checked + label {
+    background: linear-gradient(135deg, var(--lav-mid), var(--gold-dark));
+    border-color: var(--gold);
+    color: #fff;
+  }
+
+  .ax-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), #fde68a);
+    color: #1e1433;
+    font-size: 14px; font-weight: 900;
+    cursor: pointer;
+    margin-top: 4px;
+    box-shadow: 0 6px 16px rgba(245,200,66,0.3);
+  }
+
+  /* ========== 지인 목록 ========== */
+  .ax-empty {
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .ax-empty .em { font-size: 48px; margin-bottom: 10px; opacity: 0.55; }
+  .ax-list { display: flex; flex-direction: column; gap: 9px; }
+  .ax-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    border-radius: 13px;
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+    border: 1px solid rgba(155,89,182,0.3);
+    position: relative; overflow: hidden;
+  }
+  .ax-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--lav-light), var(--gold));
+  }
+  .ax-card-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: linear-gradient(145deg, rgba(155,89,182,0.35), rgba(245,200,66,0.18));
+    border: 1px solid rgba(245,200,66,0.3);
+    flex-shrink: 0;
+  }
+  .ax-card-info { flex: 1; min-width: 0; }
+  .ax-card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .ax-card-name { font-size: 14px; font-weight: 800; color: var(--gold-light); }
+  .ax-card-rel {
+    font-size: 9.5px; font-weight: 700; color: #1e1433;
+    background: linear-gradient(135deg, var(--lav-light), var(--gold));
+    padding: 2px 7px; border-radius: 9px;
+    letter-spacing: 0.2px;
+  }
+  .ax-card-meta { font-size: 11px; color: var(--text-secondary); }
+  .ax-card-memo { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; opacity: 0.8; }
+  .ax-card-actions {
+    display: flex; flex-direction: column; gap: 4px;
+    flex-shrink: 0;
+  }
+  .ax-card-btn {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(155,89,182,0.3);
+    background: rgba(155,89,182,0.1);
+    color: var(--text-muted);
+    font-size: 12px; cursor: pointer;
+    text-decoration: none;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0;
+  }
+  .ax-card-btn.edit:hover {
+    background: rgba(245,200,66,0.18);
+    color: var(--gold);
+    border-color: rgba(245,200,66,0.4);
+  }
+  .ax-card-btn.del:hover {
+    background: rgba(248,113,113,0.18);
+    color: #f87171;
+    border-color: rgba(248,113,113,0.4);
+  }
+  /* ========== 삭제 확인 모달 ========== */
+  .ax-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 8, 30, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: ax-modal-fade 0.2s ease-out;
+  }
+  .ax-modal-overlay.open { display: flex; }
+  @keyframes ax-modal-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .ax-modal {
+    width: 88%;
+    max-width: 320px;
+    border-radius: 18px;
+    background: linear-gradient(160deg, #2a1b4a, #3a2560);
+    border: 1px solid rgba(245,200,66,0.45);
+    padding: 22px 20px 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(245,200,66,0.15);
+    text-align: center;
+    animation: ax-modal-pop 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  @keyframes ax-modal-pop {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .ax-modal-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    background: linear-gradient(135deg, rgba(248,113,113,0.25), rgba(248,113,113,0.1));
+    border: 1px solid rgba(248,113,113,0.5);
+    color: #fca5a5;
+  }
+  .ax-modal-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px; font-weight: 800;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .ax-modal-msg {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .ax-modal-msg strong { color: var(--text-primary); font-weight: 800; }
+  .ax-modal-actions {
+    display: flex; gap: 8px;
+  }
+  .ax-modal-btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 11px;
+    border: 1px solid;
+    font-size: 13px; font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .ax-modal-btn.cancel {
+    background: rgba(155,89,182,0.12);
+    border-color: rgba(155,89,182,0.3);
+    color: var(--text-secondary);
+  }
+  .ax-modal-btn.cancel:hover {
+    background: rgba(155,89,182,0.22);
+    color: var(--text-primary);
+  }
+  .ax-modal-btn.confirm {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-color: #b91c1c;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(239,68,68,0.4);
+  }
+  .ax-modal-btn.confirm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(239,68,68,0.55);
+  }
+
+  /* 편집 중 표시 */
+  .ax-card.editing {
+    border-color: rgba(245,200,66,0.6);
+    box-shadow: 0 0 0 2px rgba(245,200,66,0.25);
+  }
+  .ax-form-mode-badge {
+    display: inline-block;
+    font-size: 9.5px; font-weight: 800;
+    color: #1e1433;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    padding: 2px 7px;
+    border-radius: 8px;
+    margin-left: 6px;
+    letter-spacing: 0.3px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ax-head">
+  <div class="ax-h1">내 지인</div>
+  {% if edit_id %}
+  <a href="{{ base_url }}/acquaintances" class="ax-toggle cancel">× 편집 취소</a>
+  {% else %}
+  <button type="button" class="ax-toggle" id="axToggle" onclick="axToggleForm()">+ 추가</button>
+  {% endif %}
+</div>
+
+{% if msg %}
+<div class="ax-toast">{{ msg }}</div>
+{% endif %}
+
+{% if errors %}
+<div class="ax-error">{% for e in errors %}{{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+{% endif %}
+
+<!-- 인라인 추가/수정 폼 -->
+<div class="ax-form-wrap {% if errors or edit_id %}open{% endif %}" id="axFormWrap">
+  <div class="ax-form-head">
+    {% if edit_id %}{{ edit_name }}님 정보 수정<span class="ax-form-mode-badge">EDIT</span>
+    {% else %}새 지인 등록{% endif %}
+  </div>
+  <form method="post" action="{% if edit_id %}{{ base_url }}/acquaintances/{{ edit_id }}/edit{% else %}{{ base_url }}/acquaintances{% endif %}">
+    <div class="ax-row">
+      <div class="ax-grp">
+        <label class="ax-lbl">이름(별칭)</label>
+        <input type="text" name="name" class="ax-inp" maxlength="20" required
+               value="{{ form.name|default('') }}" placeholder="예: 어머니, 친구 J">
+      </div>
+      <div class="ax-grp">
+        <label class="ax-lbl">성별</label>
+        <div class="ax-radios gender">
+          <span><input type="radio" id="axM" name="gender" value="남" {% if (form.gender|default('남')) == '남' %}checked{% endif %}><label for="axM">남</label></span>
+          <span><input type="radio" id="axF" name="gender" value="여" {% if (form.gender|default('남')) == '여' %}checked{% endif %}><label for="axF">여</label></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ax-row triple">
+      <div class="ax-grp">
+        <label class="ax-lbl">생년</label>
+        <input type="number" name="birth_year" class="ax-inp" min="1900" max="2100" required
+               value="{{ form.birth_year|default(1990) }}">
+      </div>
+      <div class="ax-grp">
+        <label class="ax-lbl">월</label>
+        <select name="birth_month" class="ax-sel" required>
+          {% for i in range(1, 13) %}<option value="{{ i }}" {% if (form.birth_month|default(1)|int) == i %}selected{% endif %}>{{ i }}월</option>{% endfor %}
+        </select>
+      </div>
+      <div class="ax-grp">
+        <label class="ax-lbl">일</label>
+        <select name="birth_day" class="ax-sel" required>
+          {% for i in range(1, 32) %}<option value="{{ i }}" {% if (form.birth_day|default(1)|int) == i %}selected{% endif %}>{{ i }}일</option>{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="ax-row">
+      <div class="ax-grp">
+        <label class="ax-lbl">양/음력</label>
+        <div class="ax-radios">
+          <span><input type="radio" id="axLY" name="lunar_yn" value="" {% if not form.lunar_yn %}checked{% endif %}
+                       onchange="document.getElementById('axLeapWrap').style.display='none'"><label for="axLY">양력</label></span>
+          <span><input type="radio" id="axLN" name="lunar_yn" value="1" {% if form.lunar_yn %}checked{% endif %}
+                       onchange="document.getElementById('axLeapWrap').style.display='inline-flex'"><label for="axLN">음력</label></span>
+          <span class="ax-leap" id="axLeapWrap" style="display:{% if form.lunar_yn %}inline-flex{% else %}none{% endif %};">
+            <input type="checkbox" id="axLeap" name="leap_month_yn" value="1" {% if form.leap_month_yn %}checked{% endif %}>
+            <label for="axLeap">윤달</label>
+          </span>
+        </div>
+      </div>
+      <div class="ax-grp">
+        <label class="ax-lbl">생시</label>
+        <select name="birth_time" class="ax-sel">
+          {% set times = [
+            ('모름','모름'), ('자시','자시 (23:30~01:29)'), ('축시','축시 (01:30~03:29)'),
+            ('인시','인시 (03:30~05:29)'), ('묘시','묘시 (05:30~07:29)'), ('진시','진시 (07:30~09:29)'),
+            ('사시','사시 (09:30~11:29)'), ('오시','오시 (11:30~13:29)'), ('미시','미시 (13:30~15:29)'),
+            ('신시','신시 (15:30~17:29)'), ('유시','유시 (17:30~19:29)'), ('술시','술시 (19:30~21:29)'),
+            ('해시','해시 (21:30~23:29)')
+          ] %}
+          {% for v, l in times %}<option value="{{ v }}" {% if (form.birth_time|default('모름')) == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="ax-grp" style="margin-bottom:12px;">
+      <label class="ax-lbl">관계</label>
+      <div class="ax-rel-grid">
+        {% set rels = [('가족','👨‍👩‍👧'),('연인','💕'),('친구','🤝'),('동료','💼'),('기타','✨')] %}
+        {% for v, em in rels %}
+        <span>
+          <input type="radio" id="axR{{ loop.index }}" name="relation" value="{{ v }}"
+                 {% if (form.relation|default('기타')) == v %}checked{% endif %}>
+          <label for="axR{{ loop.index }}"><span class="em">{{ em }}</span><span>{{ v }}</span></label>
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="ax-grp" style="margin-bottom:8px;">
+      <label class="ax-lbl">메모 (선택)</label>
+      <input type="text" name="memo" class="ax-inp" maxlength="60"
+             value="{{ form.memo|default('') }}" placeholder="별명·생일선물 메모 등">
+    </div>
+
+    <button type="submit" class="ax-submit">{% if edit_id %}✦ 수정 저장{% else %}✦ 저장하기{% endif %}</button>
+  </form>
+</div>
+
+{% if not acquaintances %}
+<div class="ax-empty">
+  <div class="em">👥</div>
+  아직 등록된 지인이 없습니다.<br>
+  가족·연인·친구의 사주를 등록하면<br>
+  궁합·관계도 분석을 함께 볼 수 있습니다.
+</div>
+{% else %}
+<div class="ax-list">
+  {% for a in acquaintances %}
+  <div class="ax-card {% if edit_id == a.id %}editing{% endif %}">
+    <div class="ax-card-icon">{% if a.relation == '가족' %}👨‍👩‍👧{% elif a.relation == '연인' %}💕{% elif a.relation == '친구' %}🤝{% elif a.relation == '동료' %}💼{% else %}✨{% endif %}</div>
+    <div class="ax-card-info">
+      <div class="ax-card-top">
+        <span class="ax-card-name">{{ a.name }}</span>
+        <span class="ax-card-rel">{{ a.relation }}</span>
+      </div>
+      <div class="ax-card-meta">
+        {{ a.birth_year }}.{{ '%02d'|format(a.birth_month) }}.{{ '%02d'|format(a.birth_day) }}
+        {% if a.lunar_yn %}(음{% if a.leap_month_yn %}·윤{% endif %}){% endif %}
+        · {{ a.gender }} · {{ a.birth_time }}
+        {% if a.age %} · {{ a.age }}세{% endif %}
+      </div>
+      {% if a.memo %}<div class="ax-card-memo">"{{ a.memo }}"</div>{% endif %}
+    </div>
+    <div class="ax-card-actions">
+      <a href="{{ base_url }}/acquaintances?edit={{ a.id }}#axFormWrap" class="ax-card-btn edit" title="편집">✎</a>
+      <form method="post" action="{{ base_url }}/acquaintances/{{ a.id }}/delete"
+            id="axDelForm-{{ a.id }}" style="margin:0;">
+        <button type="button" class="ax-card-btn del" title="삭제"
+                data-acq-id="{{ a.id }}" data-acq-name="{{ a.name }}"
+                onclick="axAskDelete(this)">×</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- 삭제 확인 모달 -->
+<div class="ax-modal-overlay" id="axModalOverlay" onclick="axCloseModal(event)">
+  <div class="ax-modal" onclick="event.stopPropagation()">
+    <div class="ax-modal-icon">⚠️</div>
+    <div class="ax-modal-title">지인 삭제</div>
+    <div class="ax-modal-msg"><strong id="axModalName">—</strong>님을 삭제할까요?<br>이 작업은 되돌릴 수 없습니다.</div>
+    <div class="ax-modal-actions">
+      <button type="button" class="ax-modal-btn cancel" onclick="axCloseModal()">취소</button>
+      <button type="button" class="ax-modal-btn confirm" id="axModalConfirm">삭제</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* IIFE 로 감싸 SPA 재진입 시 const/let 충돌 방지.
+   인라인 onclick=axXxx() 참조용 함수는 window 에 등록. */
+(function () {
+  let _axDelTargetId = null;
+
+  window.axToggleForm = function () {
+    const w = document.getElementById('axFormWrap');
+    const t = document.getElementById('axToggle');
+    if (!w || !t) return;
+    const opened = w.classList.toggle('open');
+    if (opened) {
+      t.textContent = '× 취소';
+      t.classList.add('cancel');
+    } else {
+      t.textContent = '+ 추가';
+      t.classList.remove('cancel');
+    }
+  };
+
+  window.axAskDelete = function (btn) {
+    if (!btn) return;
+    _axDelTargetId = btn.dataset.acqId;
+    document.getElementById('axModalName').textContent = btn.dataset.acqName || '';
+    document.getElementById('axModalOverlay').classList.add('open');
+  };
+
+  window.axCloseModal = function (e) {
+    if (e && e.target.id !== 'axModalOverlay') return;
+    document.getElementById('axModalOverlay').classList.remove('open');
+    _axDelTargetId = null;
+  };
+
+  const confirmBtn = document.getElementById('axModalConfirm');
+  if (confirmBtn && confirmBtn.dataset.bound !== '1') {
+    confirmBtn.dataset.bound = '1';
+    confirmBtn.addEventListener('click', () => {
+      if (_axDelTargetId == null) return;
+      const f = document.getElementById('axDelForm-' + _axDelTargetId);
+      if (f) f.submit();
+    });
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('axModalOverlay')?.classList.remove('open');
+      _axDelTargetId = null;
+    }
+  });
+})();
+</script>
+{% endblock %}

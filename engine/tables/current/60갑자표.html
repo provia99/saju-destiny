@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>60갑자표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:transparent;}
+.page{ border:1px solid #333;width:604px;max-height:840px;padding:6px 8px;background:transparent;overflow:hidden;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;border-radius:4px;}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}body{background:transparent;margin:0;padding:0;}.page{margin:0;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-radius:8px;margin-bottom:5px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+.card{border:1.5px solid #333;border-radius:8px;overflow:hidden;}
+.legend{display:flex;align-items:center;gap:6px;padding:4px 10px;background:#fafafa;border-bottom:1px solid #eee;flex-wrap:wrap;}
+.legend-label{font-size:6pt;color:#888;font-weight:700;}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:1px;background:#ddd;padding:1px;}
+.gc{padding:4px 2px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:36px;background:transparent;border-left:3px solid;position:relative;}
+.gn{font-size:4pt;color:#ccc;position:absolute;top:1px;right:2px;}
+.gh{font-size:9pt;font-weight:bold;}
+.gk{font-size:5.5pt;color:#666;}
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#3e2723,#5d4037);">
+  <div>
+    <div class="banner-hdr-title">📋 60갑자표 (六十甲子)</div>
+    <div class="banner-hdr-sub">60가지 천간·지지 조합 순환표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">戊辰(무진) 일주 · </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="legend">
+    <span class="legend-label">표시:</span>
+    <span style="display:inline-flex;align-items:center;gap:3px;font-size:6pt;padding:2px 6px;border-radius:4px;border:1.5px solid #c62828;color:#c62828;font-weight:700;">⭐ 戊辰 일주</span> <span style="display:inline-flex;align-items:center;gap:3px;font-size:6pt;padding:2px 6px;border-radius:4px;border:1.5px solid #2e7d32;color:#2e7d32;font-weight:700;">📅 丙午 2026년</span>
+  </div>
+  <div class="grid">
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">1</div>
+  <div class="gh" style="color:#2e7d32;">甲子</div>
+  <div class="gk">갑자</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">2</div>
+  <div class="gh" style="color:#2e7d32;">乙丑</div>
+  <div class="gk">을축</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">3</div>
+  <div class="gh" style="color:#c62828;">丙寅</div>
+  <div class="gk">병인</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">4</div>
+  <div class="gh" style="color:#c62828;">丁卯</div>
+  <div class="gk">정묘</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;border:2.5px solid #c62828;">
+  <div class="gn">5</div>
+  <div class="gh" style="color:#e65100;">戊辰</div>
+  <div class="gk">무진</div><div style="font-size:4pt;font-weight:700;color:#c62828;margin-top:1px;">⭐일주</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">6</div>
+  <div class="gh" style="color:#e65100;">己巳</div>
+  <div class="gk">기사</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">7</div>
+  <div class="gh" style="color:#37474f;">庚午</div>
+  <div class="gk">경오</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">8</div>
+  <div class="gh" style="color:#37474f;">辛未</div>
+  <div class="gk">신미</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">9</div>
+  <div class="gh" style="color:#0d47a1;">壬申</div>
+  <div class="gk">임신</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">10</div>
+  <div class="gh" style="color:#0d47a1;">癸酉</div>
+  <div class="gk">계유</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">11</div>
+  <div class="gh" style="color:#2e7d32;">甲戌</div>
+  <div class="gk">갑술</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">12</div>
+  <div class="gh" style="color:#2e7d32;">乙亥</div>
+  <div class="gk">을해</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">13</div>
+  <div class="gh" style="color:#c62828;">丙子</div>
+  <div class="gk">병자</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">14</div>
+  <div class="gh" style="color:#c62828;">丁丑</div>
+  <div class="gk">정축</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">15</div>
+  <div class="gh" style="color:#e65100;">戊寅</div>
+  <div class="gk">무인</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">16</div>
+  <div class="gh" style="color:#e65100;">己卯</div>
+  <div class="gk">기묘</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">17</div>
+  <div class="gh" style="color:#37474f;">庚辰</div>
+  <div class="gk">경진</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">18</div>
+  <div class="gh" style="color:#37474f;">辛巳</div>
+  <div class="gk">신사</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">19</div>
+  <div class="gh" style="color:#0d47a1;">壬午</div>
+  <div class="gk">임오</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">20</div>
+  <div class="gh" style="color:#0d47a1;">癸未</div>
+  <div class="gk">계미</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">21</div>
+  <div class="gh" style="color:#2e7d32;">甲申</div>
+  <div class="gk">갑신</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">22</div>
+  <div class="gh" style="color:#2e7d32;">乙酉</div>
+  <div class="gk">을유</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">23</div>
+  <div class="gh" style="color:#c62828;">丙戌</div>
+  <div class="gk">병술</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">24</div>
+  <div class="gh" style="color:#c62828;">丁亥</div>
+  <div class="gk">정해</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">25</div>
+  <div class="gh" style="color:#e65100;">戊子</div>
+  <div class="gk">무자</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">26</div>
+  <div class="gh" style="color:#e65100;">己丑</div>
+  <div class="gk">기축</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">27</div>
+  <div class="gh" style="color:#37474f;">庚寅</div>
+  <div class="gk">경인</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">28</div>
+  <div class="gh" style="color:#37474f;">辛卯</div>
+  <div class="gk">신묘</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">29</div>
+  <div class="gh" style="color:#0d47a1;">壬辰</div>
+  <div class="gk">임진</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">30</div>
+  <div class="gh" style="color:#0d47a1;">癸巳</div>
+  <div class="gk">계사</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">31</div>
+  <div class="gh" style="color:#2e7d32;">甲午</div>
+  <div class="gk">갑오</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">32</div>
+  <div class="gh" style="color:#2e7d32;">乙未</div>
+  <div class="gk">을미</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">33</div>
+  <div class="gh" style="color:#c62828;">丙申</div>
+  <div class="gk">병신</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">34</div>
+  <div class="gh" style="color:#c62828;">丁酉</div>
+  <div class="gk">정유</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">35</div>
+  <div class="gh" style="color:#e65100;">戊戌</div>
+  <div class="gk">무술</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">36</div>
+  <div class="gh" style="color:#e65100;">己亥</div>
+  <div class="gk">기해</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">37</div>
+  <div class="gh" style="color:#37474f;">庚子</div>
+  <div class="gk">경자</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">38</div>
+  <div class="gh" style="color:#37474f;">辛丑</div>
+  <div class="gk">신축</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">39</div>
+  <div class="gh" style="color:#0d47a1;">壬寅</div>
+  <div class="gk">임인</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">40</div>
+  <div class="gh" style="color:#0d47a1;">癸卯</div>
+  <div class="gk">계묘</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">41</div>
+  <div class="gh" style="color:#2e7d32;">甲辰</div>
+  <div class="gk">갑진</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">42</div>
+  <div class="gh" style="color:#2e7d32;">乙巳</div>
+  <div class="gk">을사</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;border:2.5px solid #2e7d32;">
+  <div class="gn">43</div>
+  <div class="gh" style="color:#c62828;">丙午</div>
+  <div class="gk">병오</div><div style="font-size:4pt;font-weight:700;color:#2e7d32;margin-top:1px;">📅2026년</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">44</div>
+  <div class="gh" style="color:#c62828;">丁未</div>
+  <div class="gk">정미</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">45</div>
+  <div class="gh" style="color:#e65100;">戊申</div>
+  <div class="gk">무신</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">46</div>
+  <div class="gh" style="color:#e65100;">己酉</div>
+  <div class="gk">기유</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">47</div>
+  <div class="gh" style="color:#37474f;">庚戌</div>
+  <div class="gk">경술</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">48</div>
+  <div class="gh" style="color:#37474f;">辛亥</div>
+  <div class="gk">신해</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">49</div>
+  <div class="gh" style="color:#0d47a1;">壬子</div>
+  <div class="gk">임자</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">50</div>
+  <div class="gh" style="color:#0d47a1;">癸丑</div>
+  <div class="gk">계축</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">51</div>
+  <div class="gh" style="color:#2e7d32;">甲寅</div>
+  <div class="gk">갑인</div>
+</div>
+<div class="gc" style="border-left-color:#a8dbb5;background:#f3fcf5;">
+  <div class="gn">52</div>
+  <div class="gh" style="color:#2e7d32;">乙卯</div>
+  <div class="gk">을묘</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">53</div>
+  <div class="gh" style="color:#c62828;">丙辰</div>
+  <div class="gk">병진</div>
+</div>
+<div class="gc" style="border-left-color:#f5a9a5;background:#fff5f5;">
+  <div class="gn">54</div>
+  <div class="gh" style="color:#c62828;">丁巳</div>
+  <div class="gk">정사</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">55</div>
+  <div class="gh" style="color:#e65100;">戊午</div>
+  <div class="gk">무오</div>
+</div>
+<div class="gc" style="border-left-color:#f0d470;background:#fffdf4;">
+  <div class="gn">56</div>
+  <div class="gh" style="color:#e65100;">己未</div>
+  <div class="gk">기미</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">57</div>
+  <div class="gh" style="color:#37474f;">庚申</div>
+  <div class="gk">경신</div>
+</div>
+<div class="gc" style="border-left-color:#b0c4d0;background:#f7f9fa;">
+  <div class="gn">58</div>
+  <div class="gh" style="color:#37474f;">辛酉</div>
+  <div class="gk">신유</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">59</div>
+  <div class="gh" style="color:#0d47a1;">壬戌</div>
+  <div class="gk">임술</div>
+</div>
+<div class="gc" style="border-left-color:#90bfe0;background:#f0f6ff;">
+  <div class="gn">60</div>
+  <div class="gh" style="color:#0d47a1;">癸亥</div>
+  <div class="gk">계해</div>
+</div>
+  </div>
+</div>
+
+</div></body></html>

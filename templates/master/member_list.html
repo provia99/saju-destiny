@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}회원 목록{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="m-0 fw-bold">회원 목록</h3>
+  <a href="/members/new" class="btn fw-bold text-white shadow-sm" style="background-color: {{ brand_color|default('#1A3A6A') }}; border: none; border-radius: 8px;">+ 회원 등록</a>
+</div>
+
+{# client별 등급 요약 — 한도 가까운 client 강조 #}
+{% if tier_by_client %}
+<div class="row g-2 mb-3">
+  {% for cid, tier in tier_by_client.items() %}
+  {% set ratio = (tier.count / tier.limit * 100) if tier.limit else 0 %}
+  {% set near = ratio >= 80 %}
+  <div class="col-md-4 col-sm-6">
+    <div class="card border-0 shadow-sm" style="background:{{ '#fff5f5' if near else '#f8fafc' }};border-left:4px solid {{ '#ef4444' if near else '#d4af37' }} !important;">
+      <div class="card-body py-2 px-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            {% set client_member = members|selectattr("client_id", "equalto", cid)|first %}
+            <div class="small fw-bold">
+              <a href="/clients/{{ cid }}" class="text-decoration-none text-dark">
+                <i class="bi bi-person-circle"></i> client #{{ cid }}{% if client_member %} · {{ client_member.name }}{% endif %}
+              </a>
+            </div>
+            <div class="small text-muted">
+              누적 결제 {{ "{:,}".format(tier.paid) }}원
+              {% if tier.next_threshold %} · 다음 등급까지 {{ "{:,}".format(tier.next_threshold[0] - tier.paid) }}원{% endif %}
+            </div>
+          </div>
+          <div class="text-end">
+            <div class="fw-bold" style="color:{{ '#ef4444' if near else '#8b6914' }};font-size:1.1rem;">
+              {{ tier.count }} / {{ tier.limit }}명
+            </div>
+          </div>
+        </div>
+        <div class="progress mt-1" style="height:4px;">
+          <div class="progress-bar" style="width:{{ ratio }}%;background:{{ '#ef4444' if near else '#d4af37' }};"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="card shadow-sm border-0 mb-4 py-2 px-3">
+  <!-- 탭 네비게이션 추가 (고객 신청 대기 포함) -->
+  <ul class="nav nav-tabs mb-3 border-bottom-0">
+    <li class="nav-item">
+      <a class="nav-link {% if show == 'all' %}active fw-bold text-dark border-bottom-0{% else %}text-muted{% endif %}" href="/members/list?show=all">전체보기</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if show == 'requests' %}active fw-bold text-dark border-bottom-0{% else %}text-muted{% endif %}" href="/members/list?show=requests">
+        고객 신청 대기 
+        {% set req_count = members|selectattr("client_id")|selectattr("request_status", "equalto", "대기")|list|length %}
+        {% if req_count > 0 %}
+        <span class="badge bg-danger rounded-pill">{{ req_count }}건</span>
+        {% endif %}
+      </a>
+    </li>
+  </ul>
+
+  {% if show == 'all' %}
+  <form method="get" action="/members/list" class="row g-2 align-items-center">
+    <div class="col-auto">
+      <div class="btn-group shadow-sm">
+        <button type="submit" name="status" value="전체" class="btn btn-sm {% if status=='전체' or not status %}btn-secondary{% else %}btn-outline-secondary{% endif %}">전체</button>
+        <button type="submit" name="status" value="활성" class="btn btn-sm {% if status=='활성' %}btn-success{% else %}btn-outline-success{% endif %}">활성</button>
+        <button type="submit" name="status" value="비활성" class="btn btn-sm {% if status=='비활성' %}btn-warning{% else %}btn-outline-warning{% endif %}">비활성</button>
+      </div>
+    </div>
+    <div class="col-auto ms-auto d-flex">
+      {% if status %}
+      <input type="hidden" name="status" value="{{ status }}">
+      {% endif %}
+      <input type="text" name="search" class="form-control form-control-sm shadow-sm" placeholder="이름/이메일 검색..." value="{{ search|default('') }}" style="border-radius: 6px;">
+      <button type="submit" class="btn btn-sm btn-dark ms-2 fw-bold shadow-sm" style="border-radius: 6px;">검색</button>
+    </div>
+  </form>
+  {% endif %}
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle m-0">
+      <thead class="table-light">
+        <tr>
+          <th>이름</th>
+          <th>이메일</th>
+          <th>성별</th>
+          <th>생년</th>
+          <th>입력방식</th>
+          <th>활동상태</th>
+          <th>집필상태</th>
+          <th>신청상태</th>
+          <th>등록일시</th>
+          <th class="text-end">액션</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in members %}
+        <tr>
+          <td class="fw-bold">{{ m.name }}</td>
+          <td><small class="text-muted">{{ m.email|default('—') }}</small></td>
+          <td>{{ m.gender }}</td>
+          <td>{{ m.birth_year }}{% if m.lunar_yn and m.leap_month_yn %}<small class="text-danger ms-1" title="윤달">㈫</small>{% endif %}</td>
+          <td>
+            {% if m.client_id %}
+            <span class="badge bg-info text-dark">고객직접</span>
+            {% else %}
+            <span class="badge bg-secondary">마스터</span>
+            {% endif %}
+          </td>
+          <td>{{ m.activity_type }}</td>
+          <td>
+            {% if m.집필상태 == '완료' %}<span class="badge bg-success">완료</span>
+            {% elif m.집필상태 == '대기' %}<span class="badge bg-warning text-dark">대기</span>
+            {% elif m.집필상태 == '생성중' %}<span class="badge bg-warning text-dark">생성중</span>
+            {% elif m.집필상태 == '오류' %}<span class="badge bg-danger">오류</span>
+            {% else %}<span class="badge bg-secondary">-</span>{% endif %}
+          </td>
+          <td>
+            {% if m.request_status == '신청완료' %}
+            <span class="badge bg-primary">신청완료</span>
+            {% elif m.request_status == '대기' %}
+            <span class="badge bg-warning text-dark">신청대기</span>
+            {% elif m.request_status == '승인' %}
+            <span class="badge bg-success">승인됨</span>
+            {% else %}
+            -
+            {% endif %}
+          </td>
+          <td>{{ m.created_at[:16] }}</td>
+          <td class="text-end">
+            {% if m.request_status == '신청완료' or m.request_status == '대기' %}
+              {% if m.client_id %}
+              <form method="post" action="/members/{{ m.id }}/approve" class="d-inline">
+                <button type="submit" class="btn btn-sm text-white fw-bold shadow-sm mb-1" style="background-color: {{ brand_color|default('#1A3A6A') }};">승인+집필</button>
+              </form>
+              {% endif %}
+            {% else %}
+              <a href="/saju/write/{{ m.id }}" class="btn btn-sm btn-outline-success fw-bold">집필</a>
+            {% endif %}
+            
+            <a href="/members/{{ m.id }}/edit" class="btn btn-sm btn-outline-primary fw-bold">수정</a>
+            <button type="button" class="btn btn-sm btn-outline-danger fw-bold" data-bs-toggle="modal" data-bs-target="#deleteModal{{ m.id }}">삭제</button>
+          </td>
+        </tr>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ m.id }}" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+              <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">회원 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body text-center py-4">
+                <p class="mb-0"><strong>{{ m.name }}</strong> 회원을 삭제하시겠습니까?</p>
+                <p class="text-muted small mt-2">비활성 처리를 권장하며, 완전 삭제 시 복구가 불가능합니다.</p>
+              </div>
+              <div class="modal-footer border-0 justify-content-center pt-0">
+                <form method="post" action="/members/{{ m.id }}/delete" class="w-100 d-flex gap-2">
+                  <button type="button" class="btn btn-light flex-fill" data-bs-dismiss="modal">취소</button>
+                  <button type="submit" name="delete_type" value="비활성" class="btn btn-warning flex-fill fw-bold text-dark">비활성 처리</button>
+                  <button type="submit" name="delete_type" value="완전삭제" class="btn btn-danger flex-fill fw-bold" onclick="return confirm('정말 완전 삭제하시겠습니까?');">완전 삭제</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <tr><td colspan="10" class="text-center py-5 text-muted">등록된 회원이 없습니다.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

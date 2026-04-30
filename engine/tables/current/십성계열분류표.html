@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>십성계열분류표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:12px 20px; background:transparent; display:flex; flex-direction:column; gap:5px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; }
+}
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #ccc;border-radius:10px;overflow:hidden;flex-shrink:0; }
+.card-hd { padding:5px 14px;display:flex;align-items:center;justify-content:space-between; }
+.card-hd-title { font-size:9pt;font-weight:900;color:white; }
+.card-hd-sub   { font-size:6.5pt;color:rgba(255,255,255,.9); }
+/* 기본 정보 스트립 */
+.info-strip { display:grid;grid-template-columns:repeat(5,1fr);background:transparent; }
+.is-cell { padding:5px 7px;text-align:center;border-right:1px solid #e8e8e8; }
+.is-cell:last-child { border-right:none; }
+.is-lbl  { font-size:7pt;color:#999;font-weight:700;margin-bottom:2px;letter-spacing:.3px; }
+.is-val  { font-size:7.5pt;font-weight:800;color:#333;line-height:1.3; }
+/* 계열 표 */
+.gy-table { width:100%;border-collapse:collapse;background:transparent; }
+.gy-table thead tr { background:#475569; }
+.gy-table th { font-size:6.5pt;font-weight:700;color:white;padding:4px 7px;text-align:center;
+               border-right:1px solid #566778;letter-spacing:.3px; }
+.gy-table th:last-child { border-right:none; }
+/* 행 구분: 명확한 1px solid 회색 */
+.gy-row td { font-size:7pt;color:#333;padding:5px 7px;
+             border-bottom:1px solid #dde1e6;border-right:1px solid #e8ecf0;
+             vertical-align:top; }
+.gy-row td:last-child { border-right:none; }
+.gy-row:last-child td { border-bottom:none; }
+/* 없는 계열 행은 배경 약하게 */
+.gy-row.absent td { background:#fafafa; }
+/* 계열 이름 컬럼 */
+.gy-name { font-weight:900;font-size:8.5pt;line-height:1; }
+.gy-han  { font-size:6pt;color:#999;margin-top:2px; }
+.cnt-chip { display:inline-block;font-size:7.5pt;font-weight:900;padding:2px 9px;border-radius:5px;
+            color:white;margin-top:3px; }
+.cnt-chip.absent { background:#c0c7cf;color:#fff; }
+/* 십성 위치 박스 */
+.ss-box  { display:flex;flex-direction:column;gap:3px; }
+/* 있는 십성 */
+.ss-item-yes { border-radius:6px;padding:4px 7px;border-width:1.5px;border-style:solid; }
+.ss-name-yes { font-size:7.5pt;font-weight:800; }
+.ss-locs { margin-top:2px;display:flex;flex-wrap:wrap;gap:3px; }
+.ss-loc-chip { font-size:7pt;font-weight:700;padding:1px 5px;border-radius:3px;
+               color:white;display:inline-block; }
+/* 없는 십성 */
+.ss-item-no  { border-radius:5px;padding:3px 6px;background:#f2f4f6;border:1px solid #dde1e6; }
+.ss-name-no  { font-size:7pt;font-weight:700;color:#bbb; }
+.ss-none-lbl { font-size:7pt;color:#ccc;margin-top:1px; }
+/* 의미 컬럼 */
+.mean-desc  { font-size:7pt;font-weight:800;margin-bottom:3px; }
+.mean-item  { font-size:6.5pt;color:#444;margin-bottom:3px;line-height:1.5; padding-left:8px; position:relative; }
+.mean-item:before { content:"•";position:absolute;left:0;color:#999; }
+.mean-absent { font-size:6.5pt;color:#aaa;font-style:italic;line-height:1.4; }
+/* 삶의 영역 컬럼 */
+.domain-item { font-size:6.5pt;color:#555;margin-bottom:3px;line-height:1.4; }
+.domain-absent { font-size:6pt;color:#ccc; }
+/* 요약 행 */
+.sum-row { display:flex;gap:5px;flex-wrap:wrap;padding:6px 14px;background:#f8f9fa;border-top:1.5px solid #e8ecf0; }
+.sum-tag { font-size:7pt;font-weight:700;padding:3px 9px;border-radius:5px;white-space:nowrap; }
+</style>
+</head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#283593,#3949ab);">
+  <div>
+    <div class="banner-hdr-title">⭐ 십성 계열 분류표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진)</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+    <div class="card-hd-title">기본 명리 정보</div>
+    <div class="card-hd-sub">신강약 · 격국 · 최다계열 · 용신 · 없는계열</div>
+  </div>
+  <div class="info-strip">
+  <div class="is-cell"><div class="is-lbl">신강약</div><div class="is-val" style="color:#8b0000;">중화형신강</div></div>
+  <div class="is-cell"><div class="is-lbl">格局</div><div class="is-val" style="font-size:7pt;">편관격(偏官格)</div></div>
+  <div class="is-cell"><div class="is-lbl">最多계열</div><div class="is-val" style="color:#3d4f5c;">관성 (4개)</div></div>
+  <div class="is-cell"><div class="is-lbl">用神</div><div class="is-val" style="color:#2e7d32;font-size:7.5pt;">木(목)</div></div>
+  <div class="is-cell"><div class="is-lbl">없는 계열</div><div class="is-val" style="color:#c62828;font-size:7pt;">재성·인성</div></div>
+</div>
+</div>
+
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#7b1fa2,#e91e63);">
+    <div class="card-hd-title">⭐ 5계열 10성 배치 분석</div>
+    <div class="card-hd-sub">比劫·食傷·財星·官星·印星 》 있는 별과 없는 별</div>
+  </div>
+  <table class="gy-table">
+    <thead><tr>
+      <th>계열</th><th>십성 (위치)</th><th>의미 · 기질</th><th>삶의 영역</th>
+    </tr></thead>
+    <tbody><tr class="gy-row">
+  <td style="border-left:4px solid #1e6b2a;text-align:center;width:62px;background:white;">
+    <div class="gy-name" style="color:#1e6b2a;">비겁</div>
+    <div class="gy-han">比劫</div>
+    <span class="cnt-chip" style="background:#1e6b2a;">1개</span>
+  </td>
+  <td style="width:130px;background:white;"><div class="ss-box"><div class="ss-item-yes" style="background:#e8f7ec;border-color:#1e6b2a66;">
+  <span class="ss-name-yes" style="color:#1e6b2a;">비견</span>
+  <div class="ss-locs"><span class="ss-loc-chip" style="background:#1e6b2a;">년간</span><span class="ss-loc-chip" style="background:#1e6b2a;">일지</span></div>
+</div><div class="ss-item-no">
+  <span class="ss-name-no">겁재</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div></div></td>
+  <td style="background:white;">
+    <div class="mean-desc" style="color:#1e6b2a;">자립·경쟁·자존심</div>
+    <div class="mean-item"><strong style="color:#1e6b2a;">비견</strong> 》 주체성·자립·동등한 경쟁. 독립적으로 움직이는 힘.</div>
+  </td>
+  <td style="width:82px;background:white;">
+    <div class="domain-item">형제·동료·경쟁자. 자립·독립 사업.</div>
+  </td>
+</tr><tr class="gy-row">
+  <td style="border-left:4px solid #b92e27;text-align:center;width:62px;background:white;">
+    <div class="gy-name" style="color:#b92e27;">식상</div>
+    <div class="gy-han">食傷</div>
+    <span class="cnt-chip" style="background:#b92e27;">1개</span>
+  </td>
+  <td style="width:130px;background:white;"><div class="ss-box"><div class="ss-item-yes" style="background:#fde8e7;border-color:#b92e2766;">
+  <span class="ss-name-yes" style="color:#b92e27;">식신</span>
+  <div class="ss-locs"><span class="ss-loc-chip" style="background:#b92e27;">년지</span></div>
+</div><div class="ss-item-no">
+  <span class="ss-name-no">상관</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div></div></td>
+  <td style="background:white;">
+    <div class="mean-desc" style="color:#b92e27;">창의·표현·재능 발휘</div>
+    <div class="mean-item"><strong style="color:#b92e27;">식신</strong> 》 창의·표현·여유·먹복. 자연스러운 재능 발휘.</div>
+  </td>
+  <td style="width:82px;background:white;">
+    <div class="domain-item">창작·예술·요식·자유업.</div>
+  </td>
+</tr><tr class="gy-row absent">
+  <td style="border-left:4px solid #9b6f00;text-align:center;width:62px;background:#f8f9fa;">
+    <div class="gy-name" style="color:#9b6f00;">재성</div>
+    <div class="gy-han">財星</div>
+    <span class="cnt-chip absent">없음</span>
+  </td>
+  <td style="width:130px;background:#f8f9fa;"><div class="ss-box"><div class="ss-item-no">
+  <span class="ss-name-no">편재</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div><div class="ss-item-no">
+  <span class="ss-name-no">정재</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div></div></td>
+  <td style="background:#f8f9fa;">
+    <div class="mean-desc" style="color:#bbb;">재물·사업·현실 감각</div>
+    <div class="mean-absent">원국에 재성 계열 없음<br>편재: 사업적 재물·투기·확장성. 유동적 재물.<br>정재: 안정적 재물·근면·절약. 고정 수입 선호</div>
+  </td>
+  <td style="width:82px;background:#f8f9fa;">
+    <div class="domain-absent">—</div>
+  </td>
+</tr><tr class="gy-row">
+  <td style="border-left:4px solid #3d4f5c;text-align:center;width:62px;background:white;">
+    <div class="gy-name" style="color:#3d4f5c;">관성</div>
+    <div class="gy-han">官星</div>
+    <span class="cnt-chip" style="background:#3d4f5c;">1개</span>
+  </td>
+  <td style="width:130px;background:white;"><div class="ss-box"><div class="ss-item-yes" style="background:#eef1f4;border-color:#3d4f5c66;">
+  <span class="ss-name-yes" style="color:#3d4f5c;">편관</span>
+  <div class="ss-locs"><span class="ss-loc-chip" style="background:#3d4f5c;">월간</span><span class="ss-loc-chip" style="background:#3d4f5c;">월지</span><span class="ss-loc-chip" style="background:#3d4f5c;">시간</span><span class="ss-loc-chip" style="background:#3d4f5c;">시지</span></div>
+</div><div class="ss-item-no">
+  <span class="ss-name-no">정관</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div></div></td>
+  <td style="background:white;">
+    <div class="mean-desc" style="color:#3d4f5c;">명예·직업·조직력</div>
+    <div class="mean-item"><strong style="color:#3d4f5c;">편관</strong> 》 추진력·명예욕·투쟁심. 강한 카리스마.</div>
+  </td>
+  <td style="width:82px;background:white;">
+    <div class="domain-item">군경·스포츠·리더십.</div>
+  </td>
+</tr><tr class="gy-row absent">
+  <td style="border-left:4px solid #1a4e7a;text-align:center;width:62px;background:#f8f9fa;">
+    <div class="gy-name" style="color:#1a4e7a;">인성</div>
+    <div class="gy-han">印星</div>
+    <span class="cnt-chip absent">없음</span>
+  </td>
+  <td style="width:130px;background:#f8f9fa;"><div class="ss-box"><div class="ss-item-no">
+  <span class="ss-name-no">편인</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div><div class="ss-item-no">
+  <span class="ss-name-no">정인</span>
+  <div class="ss-none-lbl">원국 없음</div>
+</div></div></td>
+  <td style="background:#f8f9fa;">
+    <div class="mean-desc" style="color:#bbb;">학문·지혜·모성</div>
+    <div class="mean-absent">원국에 인성 계열 없음<br>편인: 직관·독창·편법적 지식. 독특한 발상.<br>정인: 학문·지식·모성·보수적 사고. 공부 능력</div>
+  </td>
+  <td style="width:82px;background:#f8f9fa;">
+    <div class="domain-absent">—</div>
+  </td>
+</tr></tbody>
+  </table>
+  <div class="sum-row"><span class="sum-tag" style="background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">주요 비견</span><span class="sum-tag" style="background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">식신</span><span class="sum-tag" style="background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;">편관</span><span class="sum-tag" style="background:#fff3e0;color:#e65100;border:1px solid #ffcc80;">십성 부재</span><span class="sum-tag" style="background:#f3e5f5;color:#7b1fa2;border:1px solid #ce93d8;">없는 십성: 겁재·상관·편재·정재·정관·편인·정인</span></div>
+</div>
+
+</div></body></html>

@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사주 해석서 프리뷰 - {{ user_name }}님</title>
+
+    <!-- 폰트 미리 로드 -->
+    <link rel="preload" href="/fonts/NotoSerifKR-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/NotoSerifKR-Medium.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/NotoSerifKR-Bold.ttf" as="font" type="font/ttf" crossorigin>
+
+    <style>
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 100;
+            src: url('/fonts/NotoSerifKR-ExtraLight.ttf') format('truetype');
+        }
+
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 200;
+            src: url('/fonts/NotoSerifKR-ExtraLight.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 300;
+            src: url('/fonts/NotoSerifKR-Light.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 400;
+            src: url('/fonts/NotoSerifKR-Regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 500;
+            src: url('/fonts/NotoSerifKR-Medium.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 600;
+            src: url('/fonts/NotoSerifKR-SemiBold.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 700;
+            src: url('/fonts/NotoSerifKR-Bold.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 800;
+            src: url('/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Noto Serif KR';
+            font-weight: 900;
+            src: url('/fonts/NotoSerifKR-Black.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif KR', 'Batang', serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .control-group {
+            margin-bottom: 1rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 110px;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: #dd6b20;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: #805ad5;
+            color: white;
+        }
+
+        .btn-info:hover:not(:disabled) {
+            background: #6b46c1;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .version-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .version-info.active {
+            display: block;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+        }
+
+        .custom-badge {
+            background: #ed8936;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .history-panel {
+            background: white;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .history-panel.active {
+            display: block;
+        }
+
+        .history-item {
+            padding: 0.8rem;
+            background: #f8f9fa;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .history-item.current {
+            background: #e6f3ff;
+            border: 2px solid #667eea;
+        }
+
+        .preview-container {
+            margin: 2rem auto;
+            max-width: 1200px;
+            background: #525659;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        /* A4 페이지 */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin: 0 auto 2rem auto;
+            padding: 20mm 25mm;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            page-break-after: always;
+            overflow: hidden; /* 영역 밖 내용 절단 */
+
+            /* 세로 방향 정렬 (콜아웃 하단 배치용) */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 페이지 번호 */
+        .page-number {
+            position: absolute;
+            bottom: 15mm;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .preview-actions {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            display: none;
+        }
+
+        .preview-actions.active {
+            display: flex;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+
+        /* A4 페이지 시뮬레이션 */
+        .preview-content {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview {
+            background: white;
+            padding: 3rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            min-height: 400px;
+        }
+
+        .preview.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.1rem;
+            border-radius: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .chapter-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .text-component {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .text-component p {
+            margin-bottom: 1rem;
+        }
+
+
+
+        /* 반야 콜아웃 - 이미지 스타일 */
+        .banya-callout {
+            margin: 2rem 0 1.5rem 0;
+            padding: 0;
+            position: relative;
+            page-break-inside: avoid;
+
+            /* 자동으로 아래로 밀림 (Flexbox) */
+            margin-top: auto;
+        }
+
+        .callout-box {
+            border: 3px solid #6B7FE8;
+            border-radius: 20px;
+            padding: 1.8rem 2rem 1.5rem 2rem;
+            position: relative;
+            background: #F5F7FF;
+            margin-top: 0;
+        }
+
+        /* 스타일별 테두리 및 배경 색상 */
+        .banya-심안 .callout-box {
+            border-color: #6B7FE8;
+            background: #F5F7FF;
+        }
+
+        .banya-비책 .callout-box {
+            border-color: #ffc107;
+            background: #FFFBF0;
+        }
+
+        .banya-위로 .callout-box {
+            border-color: #6B7FE8;
+            background: #F5F7FF;
+        }
+
+        .banya-응원 .callout-box {
+            border-color: #f97316;
+            background: #FFF5F0;
+        }
+
+        .banya-화두 .callout-box {
+            border-color: #10b981;
+            background: #F0FDF4;
+        }
+
+        /* 우상단 원형 아이콘 */
+        .callout-icon-circle {
+            position: absolute;
+            top: -20px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 3px solid #6B7FE8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 3;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .banya-비책 .callout-icon-circle {
+            border-color: #ffc107;
+        }
+
+        .banya-응원 .callout-icon-circle {
+            border-color: #f97316;
+        }
+
+        .banya-화두 .callout-icon-circle {
+            border-color: #10b981;
+        }
+
+        /* 제목 */
+        .callout-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #6B7FE8;
+            display: block;
+            margin-bottom: 0;
+            padding-right: 4rem;
+        }
+
+        /* 점선 구분선 */
+        .callout-divider {
+            border: none;
+            border-top: 2px dotted #D0D0D0;
+            margin: 1rem 0 1.5rem 0;
+        }
+
+        /* 내용 */
+        .callout-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #333;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        /* 위로 스타일 - 별 제거 */
+        .banya-위로 .callout-star {
+            display: none;
+        }
+
+        .text-component {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .text-component p {
+            margin-bottom: 1rem;
+        }
+
+        /* 강조 텍스트 */
+        strong {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        em {
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .callout-content strong {
+            font-weight: 700;
+            color: inherit;
+        }
+
+        /* 텍스트 내 구분선 */
+        .text-divider {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 2rem 0;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .prompt-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-item-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .prompt-item-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .model-haiku {
+            background: #e6f3ff;
+            color: #0066cc;
+        }
+
+        .model-sonnet {
+            background: #f3e5ff;
+            color: #6b46c1;
+        }
+
+        .prompt-textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .prompt-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .prompt-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* JSON 에디터 스타일 */
+        .json-editor-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .json-editor-container.active {
+            display: block;
+        }
+
+        .json-editor-textarea {
+            width: 100%;
+            height: 500px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .mode-toggle-btn {
+            margin-right: 10px;
+            padding: 5px 10px;
+            background: #eee;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .mode-toggle-btn.active {
+            background: #4a5568;
+            color: white;
+            border-color: #4a5568;
+        }
+
+        /* ================================
+           인쇄 스타일 - 웹과 완전히 동일
+           ================================ */
+        @media print {
+
+            /* 배경 제거 */
+            body {
+                background: white;
+            }
+
+            /* UI 요소 숨김 */
+            .header,
+            .controls,
+            .preview-actions,
+            .modal,
+            .history-panel,
+            .prompt-actions,
+            #stats,
+            #versionInfo {
+                display: none !important;
+            }
+
+            /* 페이지 컨테이너 배경 제거 */
+            .preview-container {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .preview {
+                padding: 0;
+                background: none;
+                box-shadow: none;
+                border: none;
+            }
+
+            /* A4 페이지 스타일 - 웹과 동일 유지 */
+            .page {
+                width: 210mm;
+                min-height: 297mm;
+                background: white;
+                margin: 0 auto;
+                padding: 25mm 20mm;
+                box-shadow: none;
+                /* 인쇄 시 그림자만 제거 */
+                page-break-after: always;
+                box-sizing: border-box;
+                height: auto;
+                overflow: visible;
+                display: block;
+                /* 중요 */
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+
+            /* 페이지 번호 - 웹과 동일 */
+            .page-number {
+                position: absolute;
+                bottom: 15mm;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #999;
+                font-size: 11pt;
+                font-family: 'Noto Serif KR', serif;
+            }
+
+            /* 챕터 제목 - 웹과 동일 */
+            .chapter-title {
+                font-family: 'Noto Serif KR', serif;
+                font-size: 25pt;
+                font-weight: 700;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+                border-bottom: 3px solid #667eea;
+                color: #333;
+                page-break-after: avoid;
+            }
+
+            /* 텍스트 - 웹과 동일 */
+            .text-component {
+                font-family: 'Noto Serif KR', serif;
+                font-size: 12pt;
+                font-weight: 400;
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                text-align: justify;
+                page-break-inside: avoid;
+            }
+
+            .text-component p {
+                margin-bottom: 1rem;
+            }
+
+            /* 강조 텍스트 */
+            strong {
+                font-weight: 700;
+                color: #667eea;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* 콜아웃 - 웹과 동일 */
+            .banya-callout {
+                margin: 3rem auto 2rem auto;
+                padding: 0;
+                position: relative;
+                max-width: 90%;
+                page-break-inside: avoid;
+            }
+
+            .callout-box {
+                border: 3px solid;
+                border-radius: 25px;
+                padding: 2.5rem 2rem 2rem 2rem;
+                position: relative;
+                background: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* 콜아웃 색상 유지 */
+            .banya-심안 .callout-box {
+                border-color: #667eea;
+            }
+
+            .banya-비책 .callout-box {
+                border-color: #ffc107;
+            }
+
+            .banya-위로 .callout-box {
+                border-color: #e91e63;
+            }
+
+            .banya-응원 .callout-box {
+                border-color: #f97316;
+            }
+
+            .banya-화두 .callout-box {
+                border-color: #10b981;
+            }
+
+            /* 콜아웃 아이콘 원 */
+            .callout-icon-circle {
+                position: absolute;
+                top: -25px;
+                right: 40px;
+                width: 70px;
+                height: 70px;
+                background: white;
+                border: 3px solid;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.5rem;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .banya-심안 .callout-icon-circle {
+                border-color: #667eea;
+            }
+
+            .banya-비책 .callout-icon-circle {
+                border-color: #ffc107;
+            }
+
+            .banya-위로 .callout-icon-circle {
+                border-color: #e91e63;
+            }
+
+            .banya-응원 .callout-icon-circle {
+                border-color: #f97316;
+            }
+
+            .banya-화두 .callout-icon-circle {
+                border-color: #10b981;
+            }
+
+            /* 콜아웃 제목 */
+            .callout-title {
+                font-family: 'Noto Serif KR', serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #667eea;
+                display: block;
+                margin-bottom: 1.5rem;
+                padding-top: 0.5rem;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* 점선 */
+            .callout-divider {
+                border: none;
+                border-top: 2px dotted #ddd;
+                margin: 1.5rem 0;
+            }
+
+            /* 콜아웃 내용 */
+            .callout-content {
+                font-family: 'Noto Serif KR', serif;
+                font-size: 1.25rem;
+                font-weight: 500;
+                line-height: 2;
+                color: #333;
+                white-space: pre-wrap;
+                padding-top: 0.5rem;
+            }
+
+            /* 별 (위로) */
+            .banya-위로 .callout-star {
+                position: absolute;
+                top: -20px;
+                right: 120px;
+                font-size: 2.2rem;
+            }
+
+            /* 폰트 강제 적용 */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>📖 {{ user_name }}님의 사주 해석서 프리뷰</h1>
+        <p>챕터별 생성 · 프롬프트 편집 · 인쇄</p>
+    </div>
+
+    <div class="controls">
+        <div class="control-group">
+            <label>챕터 선택:</label>
+            <select id="chapterSelect">
+                <option value="">-- 챕터를 선택하세요 --</option>
+                {% for chapter in chapters %}
+                <option value="{{ chapter.id }}">{{ chapter.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" id="generateBtn" disabled>
+                🚀 생성하기
+            </button>
+            <button class="btn btn-secondary" id="regenerateBtn" disabled>
+                🔄 다시 생성
+            </button>
+            <button class="btn btn-warning" id="editPromptBtn" disabled>
+                ✏️ 프롬프트 편집
+            </button>
+            <button class="btn btn-info" id="historyBtn" disabled>
+                📜 히스토리
+            </button>
+            <button class="btn btn-primary" id="printBtn" onclick="window.print()" disabled>
+                🖨️ 인쇄하기
+            </button>
+        </div>
+
+        <div class="version-info" id="versionInfo">
+            <span class="version-badge" id="versionBadge">버전 1</span>
+            <span id="versionTimestamp"></span>
+            <span id="versionTotal" style="margin-left: 1rem; color: #666;"></span>
+            <span class="version-badge custom-badge" id="customBadge" style="display: none;">커스텀</span>
+        </div>
+
+        <div class="history-panel" id="historyPanel">
+            <h3 style="margin-bottom: 1rem;">📜 생성 히스토리</h3>
+            <div id="historyList"></div>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-box">
+                <div class="label">버전</div>
+                <div class="value" id="statVersion">-</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">컴포넌트</div>
+                <div class="value" id="statComponents">-</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">총 글자수</div>
+                <div class="value" id="statChars">-</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">예상 페이지</div>
+                <div class="value" id="statPages">-</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-container">
+        <div class="preview-actions" id="previewActions">
+            <button class="btn btn-primary" onclick="window.print()">
+                🖨️ 인쇄하기
+            </button>
+        </div>
+        <div class="preview empty" id="preview">
+            챕터를 선택하고 '생성하기' 버튼을 눌러주세요
+        </div>
+    </div>
+
+    <!-- 프롬프트 편집 모달 (JSON 지원) -->
+    <div id="promptModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <h2>프롬프트 편집: <span id="promptChapterTitle"></span></h2>
+                    <div style="display: flex; align-items: center;">
+                        <button id="jsonModeBtn" class="mode-toggle-btn" onclick="toggleJsonMode()">JSON 모드</button>
+                        <button id="saveJsonBtn" class="btn btn-primary" style="display: none; margin-right: 10px;"
+                            onclick="saveJsonData()">JSON 저장</button>
+                        <button class="modal-close" onclick="closePromptModal()">×</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="promptList" class="prompt-list"></div>
+                <div id="jsonEditorContainer" class="json-editor-container">
+                    <textarea id="jsonEditor" class="json-editor-textarea" spellcheck="false"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentChapterId = null;
+        let currentVersion = null;
+
+        const chapterSelect = document.getElementById('chapterSelect');
+        const generateBtn = document.getElementById('generateBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const editPromptBtn = document.getElementById('editPromptBtn');
+        const historyBtn = document.getElementById('historyBtn');
+        const printBtn = document.getElementById('printBtn');
+        const preview = document.getElementById('preview');
+        const previewActions = document.getElementById('previewActions');
+
+        chapterSelect.addEventListener('change', async (e) => {
+            const chapterId = e.target.value;
+            currentChapterId = chapterId; // 추가
+
+            generateBtn.disabled = !chapterId;
+            editPromptBtn.disabled = !chapterId;
+
+            // 자동 조회 제거 (생성 버튼 클릭해야만 조회하거나 버전 목록에서 선택)
+            // if (chapterId) {
+            //     currentChapterId = chapterId;
+            //     await checkIfGenerated(chapterId);
+            // }
+        });
+
+        // 챕터 생성 여부 확인 (404 조용히 처리)
+        async function checkIfGenerated(chapterId) {
+            if (!chapterId) return false;
+
+            try {
+                const response = await fetch(`/chapter/${chapterId}`);
+
+                // 404는 정상 (아직 생성 안 됨)
+                if (response.status === 404) {
+                    regenerateBtn.disabled = true;
+                    historyBtn.disabled = true;
+                    printBtn.disabled = true;
+                    return false;
+                }
+
+                if (!response.ok) {
+                    return false;
+                }
+
+                const data = await response.json();
+
+                if (data.generated) {
+                    regenerateBtn.disabled = false;
+                    historyBtn.disabled = false;
+                    printBtn.disabled = false;
+
+                    // 생성된 챕터 표시 (필요한 경우)
+                    // displayChapter(data);
+                    return true;
+                }
+
+                return false;
+            } catch (error) {
+                // 에러는 조용히 무시
+                return false;
+            }
+        }
+
+        generateBtn.addEventListener('click', () => generateChapter(false));
+
+        regenerateBtn.addEventListener('click', () => {
+            if (confirm('다시 생성하시겠습니까?')) {
+                generateChapter(true);
+            }
+        });
+
+        editPromptBtn.addEventListener('click', async () => {
+            if (!currentChapterId) return;
+            await loadPrompts(currentChapterId);
+        });
+
+        historyBtn.addEventListener('click', async () => {
+            if (!currentChapterId) return;
+            const panel = document.getElementById('historyPanel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                await loadHistory(currentChapterId);
+            }
+        });
+
+        async function loadPrompts(chapterId) {
+            try {
+                const response = await fetch(`/prompts/${chapterId}`);
+                const data = await response.json();
+                currentPromptData = data; // 데이터 캐싱
+                displayPromptModal(data);
+            } catch (error) {
+                alert('프롬프트 로드 실패: ' + error.message);
+            }
+        }
+
+        let currentPromptData = null;
+        let isJsonMode = false;
+
+        function displayPromptModal(data) {
+            const promptList = document.getElementById('promptList');
+            document.getElementById('promptChapterTitle').innerText = data.chapter_title;
+            promptList.innerHTML = '';
+
+            // 뷰 초기화 (리스트 모드)
+            isJsonMode = false;
+            document.getElementById('jsonModeBtn').classList.remove('active');
+            document.getElementById('jsonModeBtn').innerText = 'JSON 모드';
+            document.getElementById('promptList').style.display = 'block';
+            document.getElementById('jsonEditorContainer').style.display = 'none';
+            document.getElementById('saveJsonBtn').style.display = 'none';
+
+            data.prompts.forEach((prompt, index) => {
+                const item = document.createElement('div');
+                item.className = 'prompt-item';
+
+                const modelBadge = prompt.model_type === 'haiku'
+                    ? '<span class="model-badge model-haiku">🔵 Haiku</span>'
+                    : '<span class="model-badge model-sonnet">🟣 Sonnet</span>';
+
+                const customBadge = prompt.is_customized
+                    ? '<span class="model-badge custom-badge">커스텀</span>'
+                    : '';
+
+                item.innerHTML = `
+                    <div class="prompt-item-header">
+                        <div>
+                            <div class="prompt-item-title">
+                                ${index + 1}. ${prompt.component_id}
+                                ${modelBadge}
+                                ${customBadge}
+                            </div>
+                            <div class="prompt-item-meta">
+                                ${prompt.component_type} · 
+                                <span style="margin-left:5px;">목표: <input type="number" id="target-${prompt.component_id}" value="${prompt.target_chars}" style="width: 70px; padding: 2px 5px; border: 1px solid #ccc; border-radius: 3px;">자</span>
+                            </div>
+                        </div>
+                    </div>
+                    <textarea class="prompt-textarea" id="prompt-${prompt.component_id}">${prompt.custom_prompt}</textarea>
+                    <div class="prompt-actions">
+                        <button class="btn btn-primary" onclick="savePrompt('${prompt.component_id}')">
+                            💾 저장
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetPrompt('${prompt.component_id}')">
+                            🔄 초기화
+                        </button>
+                    </div>
+                `;
+
+                promptList.appendChild(item);
+            });
+
+            document.getElementById('promptModal').classList.add('active');
+        }
+
+        function toggleJsonMode() {
+            isJsonMode = !isJsonMode;
+            const btn = document.getElementById('jsonModeBtn');
+            const list = document.getElementById('promptList');
+            const editorDiv = document.getElementById('jsonEditorContainer');
+            const editor = document.getElementById('jsonEditor');
+            const saveBtn = document.getElementById('saveJsonBtn');
+
+            if (isJsonMode) {
+                // JSON 모드로 전환
+                btn.classList.add('active');
+                btn.innerText = '리스트 모드';
+                list.style.display = 'none';
+                editorDiv.style.display = 'block';
+                saveBtn.style.display = 'block';
+
+                // 현재 데이터로 JSON 생성
+                const jsonContent = {};
+                currentPromptData.prompts.forEach(p => {
+                    // 리스트 뷰에서 수정한 내용이 있을 수 있으므로 textarea 값 우선 확인
+                    const textArea = document.getElementById(`prompt-${p.component_id}`);
+                    const targetInput = document.getElementById(`target-${p.component_id}`);
+
+                    const val = textArea ? textArea.value : p.custom_prompt;
+                    const target = targetInput ? targetInput.value : p.target_chars;
+
+                    // 목표 글자수가 변경되었거나 객체 형태인 경우
+                    // 기본값과 비교: 원래 데이터가 객체였거나, 현재 입력값이 p.target_chars(기본값)와 다르면 객체로 저장?
+                    // 단순하게: target input이 존재하면 항상 객체로? 아니면 간결성을 위해 string 유지?
+                    // 사용자가 "JSON 편집"에서도 target_chars를 보고 싶을 수 있음.
+                    // -> 항상 객체로 변환하면 기존 string 호환성 문제? 없음 (백엔드에서 처리)
+                    // -> 하지만 사용자가 "간결한 JSON"을 원할 수도 있음.
+
+                    // 전략: target_chars가 있으면 객체로, 없으면(기본값이면) 문자열로? 
+                    // 하지만 targetInput.value는 항상 존재함. 
+                    // p.target_chars는 "현재 로드된 값"임.
+
+                    if (targetInput) {
+                        jsonContent[p.component_id] = {
+                            prompt: val,
+                            target_chars: parseInt(target)
+                        };
+                    } else {
+                        jsonContent[p.component_id] = val;
+                    }
+                });
+
+                editor.value = JSON.stringify(jsonContent, null, 2);
+            } else {
+                // 리스트 모드로 전환 (저장하지 않고 돌아감 -> 확인 필요?)
+                if (confirm('JSON 수정 내용을 잃어버릴 수 있습니다. 저장하지 않고 돌아가시겠습니까?')) {
+                    btn.classList.remove('active');
+                    btn.innerText = 'JSON 모드';
+                    list.style.display = 'block';
+                    editorDiv.style.display = 'none';
+                    saveBtn.style.display = 'none';
+                } else {
+                    isJsonMode = true; // 취소
+                }
+            }
+        }
+
+        async function saveJsonData() {
+            const editor = document.getElementById('jsonEditor');
+            try {
+                const jsonContent = JSON.parse(editor.value);
+
+                // 서버로 전송
+                const response = await fetch(`/preview/prompts/${currentChapterId}/bulk`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompts: jsonContent
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(`저장되었습니다. (${result.count}개 항목)`);
+                    // 리로드
+                    await loadPrompts(currentChapterId);
+                } else {
+                    alert('저장 실패: ' + result.error);
+                }
+            } catch (e) {
+                alert('유효하지 않은 JSON 형식입니다: ' + e.message);
+            }
+        }
+
+        async function savePrompt(componentId) {
+            const textarea = document.getElementById(`prompt-${componentId}`);
+            const targetInput = document.getElementById(`target-${componentId}`);
+            const customPrompt = textarea.value;
+            const targetChars = targetInput ? targetInput.value : null;
+
+            try {
+                const response = await fetch(`/preview/prompts/${currentChapterId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        component_id: componentId,
+                        custom_prompt: customPrompt,
+                        target_chars: targetChars
+                    })
+                });
+
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ 프롬프트 저장 완료!');
+                    await loadPrompts(currentChapterId);
+                }
+            } catch (error) {
+                alert('저장 실패: ' + error.message);
+            }
+        }
+
+        async function resetPrompt(componentId) {
+            if (!confirm('기본 프롬프트로 초기화하시겠습니까?')) return;
+
+            try {
+                const response = await fetch(`/preview/prompts/${currentChapterId}/${componentId}/reset`, {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ 초기화 완료!');
+                    await loadPrompts(currentChapterId);
+                }
+            } catch (error) {
+                alert('초기화 실패: ' + error.message);
+            }
+        }
+
+        function closePromptModal() {
+            document.getElementById('promptModal').classList.remove('active');
+        }
+
+        async function generateChapter(isRegenerate) {
+            if (!currentChapterId) return;
+
+            preview.className = 'preview';
+            preview.innerHTML = '<div class="loading"><div class="spinner"></div><p>생성 중...</p></div>';
+
+            generateBtn.disabled = true;
+            regenerateBtn.disabled = true;
+            editPromptBtn.disabled = true;
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chapter_id: currentChapterId,
+                        use_custom: true
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayChapter(data);
+                    // alert 제거: 바로 화면 표시
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                preview.className = 'preview empty';
+                preview.innerHTML = `❌ 에러: ${error.message}`;
+                alert('⚠️ 오류 발생: ' + error.message);
+            } finally {
+                generateBtn.disabled = false;
+                regenerateBtn.disabled = false;
+                editPromptBtn.disabled = false;
+                historyBtn.disabled = false;
+                printBtn.disabled = false;
+            }
+        }
+
+        function displayChapter(data) {
+            currentVersion = data.version;
+
+            preview.className = 'preview';
+            preview.innerHTML = data.html;
+
+            previewActions.classList.add('active');
+
+            document.getElementById('stats').style.display = 'grid';
+            document.getElementById('statVersion').textContent = `v${data.version}`;
+            document.getElementById('statComponents').textContent = data.stats.components;
+            document.getElementById('statChars').textContent = data.stats.chars.toLocaleString();
+            document.getElementById('statPages').textContent = data.stats.pages;
+
+            const versionInfo = document.getElementById('versionInfo');
+            versionInfo.classList.add('active');
+            document.getElementById('versionBadge').textContent = `버전 ${data.version}`;
+            document.getElementById('versionTimestamp').textContent = data.timestamp;
+            document.getElementById('versionTotal').textContent = `(총 ${data.total_versions}개 버전)`;
+
+            const customBadge = document.getElementById('customBadge');
+            if (data.used_custom) {
+                customBadge.style.display = 'inline-block';
+            } else {
+                customBadge.style.display = 'none';
+            }
+        }
+
+        async function loadHistory(chapterId) {
+            try {
+                const response = await fetch(`/chapter/${chapterId}/history`);
+                const data = await response.json();
+
+                const historyList = document.getElementById('historyList');
+                historyList.innerHTML = '';
+
+                data.history.reverse().forEach(v => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    if (v.version === currentVersion) {
+                        item.classList.add('current');
+                    }
+
+                    item.innerHTML = `
+                    <div>
+                        <strong>버전 ${v.version}</strong>
+                        ${v.used_custom ? '<span class="version-badge custom-badge" style="font-size: 0.8rem;">커스텀</span>' : ''}
+                        <span style="margin-left: 1rem; color: #666;">${v.timestamp}</span>
+                    </div>
+                    <div style="color: #667eea;">
+                        ${v.stats.chars.toLocaleString()}자 · ${v.stats.pages}p
+                    </div>
+                    `;
+
+                    item.addEventListener('click', () => loadVersion(chapterId, v.version));
+                    historyList.appendChild(item);
+                });
+            } catch (error) {
+                console.error('히스토리 로드 실패:', error);
+            }
+        }
+
+        async function loadVersion(chapterId, version) {
+            try {
+                const response = await fetch(`/chapter/${chapterId}/version/${version}`);
+                const data = await response.json();
+                displayChapter(data);
+                await loadHistory(chapterId);
+            } catch (error) {
+                alert('버전 로드 실패: ' + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

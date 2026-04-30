@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1e1433">
+<title>회원가입 | {{ master.선생님이름 }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:    #1e1433;
+    --bg-card:    #271a45;
+    --bg-card2:   #2f2055;
+    --lav-dark:   #3b2068;
+    --lav-mid:    #6d3fa0;
+    --lav-main:   #9b59b6;
+    --lav-light:  #c084e8;
+    --lav-pale:   #e9d5f7;
+    --gold:       #f5c842;
+    --gold-light: #fde68a;
+    --text:       #faf5ff;
+    --text-dim:   #d4b8f0;
+    --text-muted: #9b82c0;
+    --border:     rgba(155,89,182,0.25);
+    --border-gold:rgba(245,200,66,0.3);
+    --error:      #ff6b6b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-deep);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(155,89,182,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(109,63,160,0.12) 0%, transparent 50%);
+    color: var(--text);
+    min-height: 100svh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(30,20,51,0.95);
+    backdrop-filter: blur(14px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(155,89,182,0.12);
+    border: 1px solid var(--border);
+    color: var(--lav-light); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: rgba(155,89,182,0.25); }
+  .top-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .container {
+    max-width: 520px; margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  .page-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .alert-box {
+    padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3);
+    color: var(--error); font-size: 0.85rem;
+    margin-bottom: 20px;
+  }
+
+  .form-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px; padding: 22px 20px;
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .form-section::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,132,252,0.4), transparent);
+  }
+  .section-heading {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-heading::before {
+    content: ''; width: 4px; height: 16px;
+    background: linear-gradient(to bottom, var(--lav-light), var(--gold));
+    border-radius: 2px;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--text-muted);
+  }
+  .required { color: var(--error); margin-left: 2px; }
+  .form-input, .form-select {
+    padding: 12px 14px;
+    background: var(--bg-deep);
+    border: 1.5px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-size: 0.92rem; font-family: 'Noto Sans KR', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none; outline: none;
+    width: 100%;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: var(--lav-main);
+    box-shadow: 0 0 0 3px rgba(155,89,182,0.2);
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input.is-invalid { border-color: var(--error); }
+  .form-select option { background: var(--bg-card); color: var(--text); }
+
+  .radio-group {
+    display: flex; gap: 12px; align-items: center;
+    padding: 10px 0;
+  }
+  .radio-item { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .radio-item input[type="radio"] { accent-color: var(--lav-main); width: 16px; height: 16px; }
+  .radio-item label { font-size: 0.88rem; color: var(--text-dim); cursor: pointer; }
+
+  .lunar-wrap {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 20px;
+    background: rgba(155,89,182,0.12);
+    border: 1px solid var(--border);
+    margin-left: 8px;
+  }
+  .lunar-wrap input[type="checkbox"] { accent-color: var(--lav-main); width: 15px; height: 15px; }
+  .lunar-wrap label { font-size: 0.8rem; color: var(--lav-pale); cursor: pointer; font-weight: 600; }
+
+  .error-text { font-size: 0.75rem; color: var(--error); margin-top: 4px; display: none; }
+
+  .submit-btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--lav-mid), var(--lav-dark));
+    border: none; border-radius: 14px;
+    color: #fff; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.25s;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-shadow: 0 8px 24px rgba(109,63,160,0.5);
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .submit-btn::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  }
+  .submit-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .login-link {
+    text-align: center; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .login-link a { color: var(--gold-light); text-decoration: none; }
+  .login-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/expert/{{ master.master_id }}" class="back-btn">←</a>
+  <div class="top-title">{{ master.선생님이름 }} 회원가입</div>
+</div>
+
+<div class="container">
+  <div class="page-title">신규 회원가입</div>
+
+  {% if error %}
+  <div class="alert-box">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/expert/{{ master.master_id }}/register" id="regForm">
+
+    <!-- 기본 정보 -->
+    <div class="form-section">
+      <div class="section-heading">기본 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">이름 <span class="required">*</span></label>
+          <input type="text" name="name" class="form-input" value="{{ form.name|default('') }}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일 <span class="required">*</span></label>
+          <input type="email" name="email" id="emailInput" class="form-input"
+                 value="{{ form.email|default('') }}" placeholder="example@email.com" required
+                 pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+          <div class="error-text" id="emailError">올바른 이메일 형식이 아닙니다.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">비밀번호 <span class="required">*</span></label>
+          <input type="password" name="password" id="pw" class="form-input" placeholder="6자 이상" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label class="form-label">비밀번호 확인 <span class="required">*</span></label>
+          <input type="password" name="password_confirm" id="pw2" class="form-input" placeholder="비밀번호 재입력" required minlength="6">
+          <div class="error-text" id="pwError">비밀번호가 일치하지 않습니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 명리 정보 -->
+    <div class="form-section">
+      <div class="section-heading">명리 정보</div>
+      <div class="form-row triple">
+        <div class="form-group">
+          <label class="form-label">생년 <span class="required">*</span></label>
+          <input type="number" name="birth_year" class="form-input" min="1900" max="2100" value="{{ form.birth_year|default('1990') }}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생월 <span class="required">*</span></label>
+          <select name="birth_month" class="form-select" required>
+            {% for i in range(1, 13) %}
+            <option value="{{ i }}" {% if form.birth_month|string == i|string %}selected{% endif %}>{{ i }}월</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생일 <span class="required">*</span></label>
+          <select name="birth_day" class="form-select" required>
+            {% for i in range(1, 32) %}
+            <option value="{{ i }}" {% if form.birth_day|string == i|string %}selected{% endif %}>{{ i }}일</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">양력 / 음력</label>
+          <div class="radio-group" style="flex-wrap:wrap;">
+            <div class="radio-item">
+              <input type="radio" name="lunar_yn" id="lunar0" value="0" {% if not form.lunar_yn %}checked{% endif %}
+                     onclick="document.getElementById('leap_wrap').style.display='none'">
+              <label for="lunar0">양력</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" name="lunar_yn" id="lunar1" value="1" {% if form.lunar_yn %}checked{% endif %}
+                     onclick="document.getElementById('leap_wrap').style.display='inline-flex'">
+              <label for="lunar1">음력</label>
+            </div>
+            <div class="lunar-wrap" id="leap_wrap"
+                 style="display: {% if form and form.lunar_yn %}inline-flex{% else %}none{% endif %};">
+              <input type="checkbox" name="leap_month_yn" id="leap_month_yn" value="1" {% if form and form.leap_month_yn %}checked{% endif %}>
+              <label for="leap_month_yn">🌙 윤달</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">생시 <span class="required">*</span></label>
+          <select name="birth_time" class="form-select" required>
+            {% set times = [
+              ('모름','모름'), ('자시','자시 (23:30~01:29)'), ('축시','축시 (01:30~03:29)'),
+              ('인시','인시 (03:30~05:29)'), ('묘시','묘시 (05:30~07:29)'), ('진시','진시 (07:30~09:29)'),
+              ('사시','사시 (09:30~11:29)'), ('오시','오시 (11:30~13:29)'), ('미시','미시 (13:30~15:29)'),
+              ('신시','신시 (15:30~17:29)'), ('유시','유시 (17:30~19:29)'), ('술시','술시 (19:30~21:29)'),
+              ('해시','해시 (21:30~23:29)')
+            ] %}
+            {% for val, label in times %}
+            <option value="{{ val }}" {% if (form.birth_time|default('모름')) == val %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">성별 <span class="required">*</span></label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" name="gender" id="genderM" value="남" {% if form.gender != '여' %}checked{% endif %} required>
+            <label for="genderM">남성</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" name="gender" id="genderF" value="여" {% if form.gender == '여' %}checked{% endif %} required>
+            <label for="genderF">여성</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">
+      ✦ 회원가입 완료
+    </button>
+    <div class="login-link">
+      이미 회원이신가요? <a href="/expert/{{ master.master_id }}/login">로그인</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  const EMAIL_RE = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  const emailInput = document.getElementById('emailInput');
+  const emailErr = document.getElementById('emailError');
+  function checkEmail() {
+    const v = emailInput.value.trim();
+    if (!v) { emailErr.style.display='none'; emailInput.classList.remove('is-invalid'); return false; }
+    if (!EMAIL_RE.test(v)) { emailErr.style.display='block'; emailInput.classList.add('is-invalid'); return false; }
+    emailErr.style.display='none'; emailInput.classList.remove('is-invalid'); return true;
+  }
+  emailInput.addEventListener('input', checkEmail);
+  emailInput.addEventListener('blur', checkEmail);
+
+  const pw = document.getElementById('pw');
+  const pw2 = document.getElementById('pw2');
+  const pwErr = document.getElementById('pwError');
+  function checkPw() {
+    if (pw2.value && pw.value !== pw2.value) { pwErr.style.display='block'; pw2.classList.add('is-invalid'); return false; }
+    pwErr.style.display='none'; pw2.classList.remove('is-invalid'); return true;
+  }
+  pw2.addEventListener('input', checkPw);
+  pw.addEventListener('input', checkPw);
+
+  document.getElementById('regForm').addEventListener('submit', function(e) {
+    if (!emailInput.value.trim() || !EMAIL_RE.test(emailInput.value.trim())) {
+      e.preventDefault(); emailErr.style.display='block'; emailInput.classList.add('is-invalid'); emailInput.focus(); return;
+    }
+    if (!checkPw()) { e.preventDefault(); pw2.focus(); return; }
+    if (pw.value.length < 6) { e.preventDefault(); alert('비밀번호는 6자 이상이어야 합니다.'); pw.focus(); }
+  });
+</script>
+</body>
+</html>

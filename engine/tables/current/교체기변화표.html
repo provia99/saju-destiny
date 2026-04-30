@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>교체기 변화표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; margin:0 auto; padding:14px 20px; background:transparent; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px auto; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.tbl-trans { font-size:10px; color:#333; margin-bottom:10px; padding:5px 10px; border-radius:6px; font-weight:700; display:inline-block; }
+.trans-bad  { background:#ffebee; color:#c62828; border:1px solid #ef9a9a; }
+.trans-good { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; }
+.trans-neutral { background:#f5f5f5; color:#666; border:1px solid #333; }
+table { width:100%; border-collapse:collapse; }
+th { background:#1a3a6a; color:white; font-size:12px; font-weight:700; padding:6px 6px; text-align:center; }
+td { font-size:11px; padding:6px 6px; border-bottom:1px solid #e8e8e8; vertical-align:top; line-height:1.4; white-space:pre-line; }
+tr:nth-child(even) td { background:#f8f9fc; }
+tr:nth-child(odd) td { background:#ffffff; }
+.area-col { font-weight:900; color:#1a3a6a; text-align:center; white-space:nowrap; font-size:11px; }
+.risk-col { color:#c62828; }
+.opp-col  { color:#2e7d32; }
+.def-col  { color:#555; font-size:11px; }
+.hl-risk td.risk-col { background:#ffebee !important; border:2px solid #ef9a9a; }
+.hl-opp td.opp-col   { background:#e8f5e9 !important; border:2px solid #a5d6a7; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#b71c1c,#c62828);">
+      <div>
+        <div class="banner-hdr-title">대운 교체기 변화표</div>
+        <div class="banner-hdr-sub">영역별 대운 전환 변화 분석</div>
+      </div>
+      <div>
+        <div class="banner-hdr-name">임효원 님</div>
+        <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강 · 기신대운 → 기신대운 · 2036년</div>
+      </div>
+    </div>
+    <div class="tbl-trans trans-neutral">기신 → 기신 지속 (戊申(무신) → 丁未(정미))</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:14%;">변화 영역</th>
+          <th style="width:29%;">용신→기신 전환 시</th>
+          <th style="width:29%;">기신→용신 전환 시</th>
+          <th style="width:28%;">방어책</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="area-col">직장·커리어</td>
+          <td class="risk-col">승진 기회 축소 · 직장 내 위상 약화
+이직·퇴사 압박 증가, 보수적 운영 필요</td>
+          <td class="opp-col">새로운 기회 열림 · 승진·발탁 가능
+이직 시 더 좋은 조건, 적극적 도전 유리</td>
+          <td class="def-col">실력 축적에 집중
+인맥 관리 지속
+무리한 이직 자제</td>
+        </tr>
+        <tr>
+          <td class="area-col">재물·투자</td>
+          <td class="risk-col">수입 감소 · 예상치 못한 지출 증가
+투자 손실 위험, 큰 금액 결정 유보</td>
+          <td class="opp-col">수입 증가 · 투자 수익 기대
+재물운 상승, 새로운 수입원 확보 가능</td>
+          <td class="def-col">비상금 확보 필수
+고위험 투자 금지
+보험·안전장치 점검</td>
+        </tr>
+        <tr>
+          <td class="area-col">건강</td>
+          <td class="risk-col">만성 피로 · 면역력 저하
+기존 지병 악화 가능, 정기 검진 필수</td>
+          <td class="opp-col">체력 회복 · 활력 증가
+운동 효과 극대화, 건강 습관 형성 적기</td>
+          <td class="def-col">정기 검진 필수
+무리한 야근 지양
+취약 부위 관리 강화</td>
+        </tr>
+        <tr>
+          <td class="area-col">인간관계</td>
+          <td class="risk-col">갈등 증가 · 배신·이별 가능성
+가까운 사람과의 마찰 주의</td>
+          <td class="opp-col">좋은 인연 유입 · 관계 회복
+귀인 출현, 협력 관계 강화</td>
+          <td class="def-col">감정적 대응 자제
+핵심 인맥 유지 집중
+새 인연은 신중하게</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

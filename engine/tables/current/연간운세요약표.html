@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>2026 연간 운세 요약 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+
+/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+:root {
+  --red:    #f44336;
+  --orange: #ff9800;
+  --green:  #4caf50;
+  --grey:   #9e9e9e;
+  --blue:   #2196f3;
+  --gold:   #ffc107;
+  --dark:   #212121;
+  --border: #e0e0e0;
+  --bg:     #fafafa;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:var(--dark); }
+
+/* ── 604×840px 페이지 ── */
+.page { border:1px solid #333;
+  width:  604px;
+  max-height: 840px;
+  overflow: hidden;
+  padding: 3px 6px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+.inner {
+  width:  588px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+@media screen {
+  body { background: #bbb; }
+  .page { border:1px solid #333; margin: 20px auto;  background: transparent; }
+}
+@media print {
+  body { background: transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  background: transparent !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: 604px 840px; margin: 0; }
+}
+
+/* ── 헤더 ── */
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;flex-shrink:0; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+
+/* ── 총평 칩 (9mm) ── */
+.chips { height: 7mm; display: flex; gap: 1.2mm; flex-shrink: 0; }
+.chip { flex:1; border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0px; }
+.chip-lbl { font-size:6.5pt; font-weight:700; opacity:.9; }
+.chip-val { font-size: 7pt; font-weight:900; line-height:1; }
+.chip-sub { font-size: 4pt; opacity:.8; }
+
+/* ── 테이블 ── */
+.mtbl { width: 100%; border-collapse: collapse; table-layout: fixed; flex-shrink: 0; }
+.mtbl thead th {
+  height: 5mm; font-size: 5.5pt; font-weight:700; color:#555;
+  background: var(--bg); border: 1px solid var(--border);
+  text-align: center; padding: 0 2px;
+}
+.mtbl thead th:first-child { text-align:left; padding-left:3px; }
+.col-month { width: 15mm; }
+.col-score { width: 16mm; }
+.col-sum   { width: 90mm; }
+.col-days  { width: 31mm; }
+
+.mtbl tbody td {
+  height: 7.5mm; border: 1px solid var(--border);
+  vertical-align: middle; padding: 0.5mm 1.2mm;
+  font-size: 5.5pt; line-height: 1.2; overflow: hidden;
+}
+.mtbl tbody tr:nth-child(even) td { background: rgba(0,0,0,.015); }
+
+/* 월 컬럼 */
+.m-col { display:flex; align-items:center; gap:1.6mm; height:100%; }
+.m-num { font-family: 'Noto Serif KR', serif; font-size: 12pt; line-height:1; flex-shrink:0; }
+.m-ename  { font-size:3.5pt; color:#ccc; letter-spacing:.4px; text-transform:uppercase; }
+.m-emoji  { font-size: 7pt; line-height:1; }
+.m-theme  { font-size: 4pt; color:#bbb; }
+
+/* 점수 컬럼 */
+.s-col { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; height:100%; }
+.s-num { font-family:'Noto Serif KR',serif; font-size:8pt; font-weight:700; line-height:1; }
+.s-wrap { width:90%; height:3px; background:#eee; border-radius:2px; overflow:hidden; }
+.s-bar  { height:100%; border-radius:2px; }
+.s-grade { font-size:6.5pt; font-weight:700; }
+
+/* 요약 컬럼 */
+.sum-row { display:flex; align-items:baseline; gap:1.5px; margin-bottom:1px; }
+.sum-row:last-child { margin-bottom:0; }
+.sum-lbl { font-size:6.5pt; font-weight:700; color:white; padding:0.3px 2.5px; border-radius:2px; flex-shrink:0; line-height:1.3; }
+.sum-txt { font-size:7pt; color:#333; line-height:1.25; }
+
+/* 길일/주의 컬럼 */
+.days-sec { margin-bottom:1.5px; }
+.days-sec:last-child { margin-bottom:0; }
+.days-lbl { font-size:6.5pt; font-weight:700; margin-bottom:0.5px; }
+.days-chips { display:flex; flex-wrap:wrap; gap:1.5px; }
+.day-chip { font-size:6.5pt; font-weight:700; color:white; padding:0.3px 3px; border-radius:2px; }
+.no-day { font-size:6.5pt; color:#ccc; }
+
+/* ── 바 차트 (14mm) ── */
+.chart-box {
+  height: 14mm; border: 1px solid var(--border); border-radius: 4px;
+  padding: 1.5mm 2.5mm; background: var(--bg); flex-shrink: 0;
+  display: flex; flex-direction: column;
+}
+.chart-ttl { font-size:7pt; font-weight:700; color:#555; margin-bottom:1.5mm; flex-shrink:0; }
+.chart-body { display:flex; align-items:flex-end; gap:1.5px; flex:1; min-height:0; }
+.chart-col  { flex:1; display:flex; flex-direction:column; align-items:center; gap:0.5px; height:100%; }
+.chart-bwrap { flex:1; width:100%; display:flex; align-items:flex-end; min-height:0; }
+.chart-bar  { width:100%; border-radius:2px 2px 0 0; min-height:1px; }
+.c-s { font-size:3.5pt; font-weight:700; }
+.c-m { font-size:6pt; color:#aaa; }
+
+/* ── 하단 (6mm) ── */
+.foot {
+  height: 6mm; border-top: 1px solid var(--border); padding-top: 1mm;
+  display: flex; justify-content:space-between; align-items:flex-start; flex-shrink: 0;
+}
+.foot-note { font-size:6pt; color:#bbb; line-height:1.5; }
+.foot-leg  { display:flex; gap:4px; flex-shrink:0; }
+.fl-i  { display:flex; align-items:center; gap:1.5px; font-size:6.5pt; color:#777; white-space:nowrap; }
+.fl-dot { width:5px; height:5px; border-radius:2px; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="inner">
+
+<!-- 헤더 -->
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">📈 연간 운세 요약표 (2026년)</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 用神 木(목)</div>
+  </div>
+</div>
+
+<!-- 총평 칩 -->
+<div class="chips">
+  <div class="chip" style="background:#4caf50;color:white;">
+    <div class="chip-lbl">연간 최고 운</div>
+    <div class="chip-val">2월·3월·6월·7월</div>
+    <div class="chip-sub">용신 목 절정기</div>
+  </div>
+  <div class="chip" style="background:#ff9800;color:white;">
+    <div class="chip-lbl">연간 평균 점수</div>
+    <div class="chip-val">74.2점</div>
+    <div class="chip-sub">전체 양호 · 중립세운</div>
+  </div>
+  <div class="chip" style="background:#ff9800;color:white;">
+    <div class="chip-lbl">주의 구간</div>
+    <div class="chip-val">1월·10월</div>
+    <div class="chip-sub">土(토) 기운 강화</div>
+  </div>
+  <div class="chip" style="background:#2196f3;color:white;">
+    <div class="chip-lbl">핵심 전략</div>
+    <div class="chip-val">상반기 집중</div>
+    <div class="chip-sub">2~12월 적극 행동</div>
+  </div>
+</div>
+
+<!-- 테이블 (1~12월) -->
+<table class="mtbl">
+  <thead>
+    <tr>
+      <th class="col-month">월</th>
+      <th class="col-score">평균 점수</th>
+      <th class="col-sum">핵심 운세 요약</th>
+      <th class="col-days">길일 / 주의일</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:rgba(158,158,158,0.06);">
+      <td><div class="m-col"><div class="m-num" style="color:#9e9e9e;">1</div><div><div class="m-ename">JANUARY</div><div class="m-emoji">🌨️</div><div class="m-theme">준비의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#9e9e9e;">40.0</div><div class="s-wrap"><div class="s-bar" style="width:40%;background:#9e9e9e;"></div></div><div class="s-grade" style="color:#9e9e9e;">▼ 주의</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">⚠️ 土(토) 기운 강화. 기신(忌神) 활성화. 무리한 행동 자제.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">보수적 대응 필요. 길일 위주로 움직이고 리스크 관리 우선.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">건강</span><span class="sum-txt">위·비장 계통 주의. 소화 관리.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">4일</span><span class="day-chip" style="background:#f44336;">5일</span><span class="day-chip" style="background:#f44336;">8일</span><span class="day-chip" style="background:#f44336;">9일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">1일</span><span class="day-chip" style="background:#9e9e9e;">7일</span><span class="day-chip" style="background:#9e9e9e;">10일</span></div></div>
+      </td>
+    </tr>
+    <tr style="background:rgba(244,67,54,0.04);">
+      <td><div class="m-col"><div class="m-num" style="color:#9e9e9e;">2</div><div><div class="m-ename">FEBRUARY</div><div class="m-emoji">🌱</div><div class="m-theme">시작의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#f44336;">95.0</div><div class="s-wrap"><div class="s-bar" style="width:95%;background:#f44336;"></div></div><div class="s-grade" style="color:#f44336;">★ 연중1위</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">木(목) 기운 활성화. 용신 발휘 최적 구간. 적극적 행동 권장.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">연중 최고 에너지. 대규모 계약·도전 최적.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#2196f3;">재물</span><span class="sum-txt">수입 극대화 구간. 재물 활동 집중. 과욕 금물.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">7일</span><span class="day-chip" style="background:#f44336;">8일</span><span class="day-chip" style="background:#f44336;">9일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">2일</span><span class="day-chip" style="background:#9e9e9e;">5일</span><span class="day-chip" style="background:#9e9e9e;">11일</span></div></div>
+      </td>
+    </tr>
+    <tr style="background:rgba(244,67,54,0.04);">
+      <td><div class="m-col"><div class="m-num" style="color:#9e9e9e;">3</div><div><div class="m-ename">MARCH</div><div class="m-emoji">🌸</div><div class="m-theme">도약의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#f44336;">95.0</div><div class="s-wrap"><div class="s-bar" style="width:95%;background:#f44336;"></div></div><div class="s-grade" style="color:#f44336;">★ 연중1위</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">木(목) 기운 활성화. 용신 발휘 최적 구간. 적극적 행동 권장.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">연중 최고 에너지. 대규모 계약·도전 최적.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">인연</span><span class="sum-txt">귀인 만남 가능성 높음. 새 인연에 열린 자세.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">1일</span><span class="day-chip" style="background:#f44336;">2일</span><span class="day-chip" style="background:#f44336;">3일</span><span class="day-chip" style="background:#f44336;">10일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">4일</span><span class="day-chip" style="background:#9e9e9e;">5일</span><span class="day-chip" style="background:#9e9e9e;">7일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#2196f3;">4</div><div><div class="m-ename">APRIL</div><div class="m-emoji">🌿</div><div class="m-theme">성장의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#ff9800;">80.0</div><div class="s-wrap"><div class="s-bar" style="width:80%;background:#ff9800;"></div></div><div class="s-grade" style="color:#ff9800;">▲ 양호</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">水(수) 기운 상승. 용신 지원 활성화. 안정적 성장세.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">안정적 성장기. 새로운 인맥 확장 및 계약 추진.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">가족</span><span class="sum-txt">가족 소통 원활. 따뜻한 교류.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">7일</span><span class="day-chip" style="background:#f44336;">8일</span><span class="day-chip" style="background:#f44336;">9일</span><span class="day-chip" style="background:#f44336;">10일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">3일</span><span class="day-chip" style="background:#9e9e9e;">6일</span><span class="day-chip" style="background:#9e9e9e;">12일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#2196f3;">5</div><div><div class="m-ename">MAY</div><div class="m-emoji">🔥</div><div class="m-theme">열정의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#ff9800;">80.0</div><div class="s-wrap"><div class="s-bar" style="width:80%;background:#ff9800;"></div></div><div class="s-grade" style="color:#ff9800;">▲ 양호</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">水(수) 기운 상승. 용신 지원 활성화. 안정적 성장세.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">안정적 성장기. 새로운 인맥 확장 및 계약 추진.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#2196f3;">재물</span><span class="sum-txt">새 수입원 발굴 가능. 씨앗 심는 달.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">1일</span><span class="day-chip" style="background:#f44336;">2일</span><span class="day-chip" style="background:#f44336;">9일</span><span class="day-chip" style="background:#f44336;">10일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">3일</span><span class="day-chip" style="background:#9e9e9e;">4일</span><span class="day-chip" style="background:#9e9e9e;">6일</span></div></div>
+      </td>
+    </tr>
+    <tr style="background:rgba(244,67,54,0.04);">
+      <td><div class="m-col"><div class="m-num" style="color:#4caf50;">6</div><div><div class="m-ename">JUNE</div><div class="m-emoji">☀️</div><div class="m-theme">전성기의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#f44336;">95.0</div><div class="s-wrap"><div class="s-bar" style="width:95%;background:#f44336;"></div></div><div class="s-grade" style="color:#f44336;">★ 연중1위</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">木(목) 기운 활성화. 용신 발휘 최적 구간. 적극적 행동 권장.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">연중 최고 에너지. 대규모 계약·도전 최적.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">건강</span><span class="sum-txt">에너지 충만. 과로만 주의. 간·담 계통 주의. 스트레스 관리.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">7일</span><span class="day-chip" style="background:#f44336;">8일</span><span class="day-chip" style="background:#f44336;">9일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">2일</span><span class="day-chip" style="background:#9e9e9e;">5일</span><span class="day-chip" style="background:#9e9e9e;">11일</span></div></div>
+      </td>
+    </tr>
+    <tr style="background:rgba(244,67,54,0.04);">
+      <td><div class="m-col"><div class="m-num" style="color:#4caf50;">7</div><div><div class="m-ename">JULY</div><div class="m-emoji">🌻</div><div class="m-theme">결실의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#f44336;">95.0</div><div class="s-wrap"><div class="s-bar" style="width:95%;background:#f44336;"></div></div><div class="s-grade" style="color:#f44336;">★ 연중1위</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">木(목) 기운 활성화. 용신 발휘 최적 구간. 적극적 행동 권장.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">연중 최고 에너지. 대규모 계약·도전 최적.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">인연</span><span class="sum-txt">귀인 만남 가능성 높음. 새 인연에 열린 자세.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">1일</span><span class="day-chip" style="background:#f44336;">8일</span><span class="day-chip" style="background:#f44336;">9일</span><span class="day-chip" style="background:#f44336;">12일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">2일</span><span class="day-chip" style="background:#9e9e9e;">3일</span><span class="day-chip" style="background:#9e9e9e;">5일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#f44336;">8</div><div><div class="m-ename">AUGUST</div><div class="m-emoji">🍂</div><div class="m-theme">내실의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#9e9e9e;">55.0</div><div class="s-wrap"><div class="s-bar" style="width:55%;background:#9e9e9e;"></div></div><div class="s-grade" style="color:#9e9e9e;">● 보통</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">중립 기운. 내실 다지기·학습·준비에 집중.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">내실을 다지는 시기. 무리한 확장보다 조율 집중.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">건강</span><span class="sum-txt">보통 컨디션. 규칙적 생활 권장.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">5일</span><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">7일</span><span class="day-chip" style="background:#f44336;">8일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">1일</span><span class="day-chip" style="background:#9e9e9e;">4일</span><span class="day-chip" style="background:#9e9e9e;">10일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#f44336;">9</div><div><div class="m-ename">SEPTEMBER</div><div class="m-emoji">🌾</div><div class="m-theme">성찰의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#9e9e9e;">55.0</div><div class="s-wrap"><div class="s-bar" style="width:55%;background:#9e9e9e;"></div></div><div class="s-grade" style="color:#9e9e9e;">● 보통</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">중립 기운. 내실 다지기·학습·준비에 집중.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">내실을 다지는 시기. 무리한 확장보다 조율 집중.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#2196f3;">재물</span><span class="sum-txt">연말·연초 계획 수립. 무리한 소비 자제.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">7일</span><span class="day-chip" style="background:#f44336;">10일</span><span class="day-chip" style="background:#f44336;">11일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">1일</span><span class="day-chip" style="background:#9e9e9e;">3일</span><span class="day-chip" style="background:#9e9e9e;">9일</span></div></div>
+      </td>
+    </tr>
+    <tr style="background:rgba(158,158,158,0.06);">
+      <td><div class="m-col"><div class="m-num" style="color:#ff9800;">10</div><div><div class="m-ename">OCTOBER</div><div class="m-emoji">🍁</div><div class="m-theme">변화의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#9e9e9e;">40.0</div><div class="s-wrap"><div class="s-bar" style="width:40%;background:#9e9e9e;"></div></div><div class="s-grade" style="color:#9e9e9e;">▼ 주의</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">⚠️ 土(토) 기운 강화. 기신(忌神) 활성화. 무리한 행동 자제.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">보수적 대응 필요. 길일 위주로 움직이고 리스크 관리 우선.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">건강</span><span class="sum-txt">위·비장 계통 주의. 소화 관리.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">4일</span><span class="day-chip" style="background:#f44336;">5일</span><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">7일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">3일</span><span class="day-chip" style="background:#9e9e9e;">9일</span><span class="day-chip" style="background:#9e9e9e;">10일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#ff9800;">11</div><div><div class="m-ename">NOVEMBER</div><div class="m-emoji">❄️</div><div class="m-theme">준비의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#ff9800;">80.0</div><div class="s-wrap"><div class="s-bar" style="width:80%;background:#ff9800;"></div></div><div class="s-grade" style="color:#ff9800;">▲ 양호</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">水(수) 기운 상승. 용신 지원 활성화. 안정적 성장세.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">안정적 성장기. 새로운 인맥 확장 및 계약 추진.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#2196f3;">재물</span><span class="sum-txt">새 수입원 발굴 가능. 씨앗 심는 달.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">5일</span><span class="day-chip" style="background:#f44336;">6일</span><span class="day-chip" style="background:#f44336;">9일</span><span class="day-chip" style="background:#f44336;">10일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">2일</span><span class="day-chip" style="background:#9e9e9e;">8일</span><span class="day-chip" style="background:#9e9e9e;">11일</span></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td><div class="m-col"><div class="m-num" style="color:#9e9e9e;">12</div><div><div class="m-ename">DECEMBER</div><div class="m-emoji">🎄</div><div class="m-theme">감사의 달</div></div></div></td>
+      <td><div class="s-col"><div class="s-num" style="color:#ff9800;">80.0</div><div class="s-wrap"><div class="s-bar" style="width:80%;background:#ff9800;"></div></div><div class="s-grade" style="color:#ff9800;">▲ 양호</div></div></td>
+      <td>
+        <div class="sum-row"><span class="sum-lbl" style="background:#9e9e9e;">총평</span><span class="sum-txt">水(수) 기운 상승. 용신 지원 활성화. 안정적 성장세.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#ff9800;">전략</span><span class="sum-txt">안정적 성장기. 새로운 인맥 확장 및 계약 추진.</span></div>
+        <div class="sum-row"><span class="sum-lbl" style="background:#4caf50;">인연</span><span class="sum-txt">기존 인연 강화·회복. 관계 화해 좋은 시기.</span></div>
+      </td>
+      <td>
+        <div class="days-sec"><div class="days-lbl" style="color:#f44336;">🌟 길일</div><div class="days-chips"><span class="day-chip" style="background:#f44336;">3일</span><span class="day-chip" style="background:#f44336;">4일</span><span class="day-chip" style="background:#f44336;">5일</span><span class="day-chip" style="background:#f44336;">6일</span></div></div>
+        <div class="days-sec"><div class="days-lbl" style="color:#9e9e9e;">⚠️ 주의</div><div class="days-chips"><span class="day-chip" style="background:#9e9e9e;">2일</span><span class="day-chip" style="background:#9e9e9e;">8일</span><span class="day-chip" style="background:#9e9e9e;">9일</span></div></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 하단 -->
+<div class="foot">
+  <div class="foot-note">
+    ※ 임효원 님(戊辰(무진) 일주, 用神 木(목)) 사주 명식과 2026년 丙午(병오) 세운 기반 맞춤형 분석
+  </div>
+</div>
+
+</div><!-- .inner -->
+</div><!-- .page -->
+</body>
+</html>

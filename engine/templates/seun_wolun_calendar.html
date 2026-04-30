@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>2026년 세운·월운 달력표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:8px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:20pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7.5pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-right { text-align:right; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:12pt; font-weight:800; color:#c9a227; }
+.pt-info { font-size:6.5pt; color:#aaa; margin-top:2px; }
+
+/* ── 세운 요약 배너 ── */
+.seun-banner {
+  border:2px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0;
+}
+.seun-hd {
+  background:linear-gradient(135deg,#b71c1c,#f44336);
+  padding:6px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.seun-hd-title { font-size:9pt; font-weight:900; color:white; }
+.seun-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+.seun-body {
+  display:flex; background:white;
+}
+.seun-item {
+  flex:1; padding:7px 10px; text-align:center;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.seun-item:last-child { border-right:none; }
+.si-label { font-size:6pt; color:#aaa; font-weight:700; }
+.si-val   { font-size:9.5pt; font-weight:900; font-family:'Nanum Myeongjo',serif; line-height:1.1; }
+.si-sub   { font-size:6pt; color:#666; }
+.si-badge {
+  font-size:6.5pt; font-weight:700; color:white;
+  padding:2px 9px; border-radius:8px; display:inline-block;
+}
+
+/* ── 월운 달력 테이블 ── */
+.cal-card {
+  border:2px solid #333; border-radius:12px; overflow:hidden; flex:1;
+}
+.cal-hd {
+  background:linear-gradient(135deg,#1a237e,#3949ab);
+  padding:6px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.cal-hd-title { font-size:9pt; font-weight:900; color:white; }
+.cal-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+.cal-table { width:100%; border-collapse:collapse; }
+.cal-table th {
+  font-size:6.5pt; font-weight:700; color:#555;
+  background:#f5f5f5; padding:5px 6px;
+  border:1px solid #333; text-align:center;
+}
+.cal-table th:first-child { border-left:none; }
+.cal-table th:last-child  { border-right:none; }
+.cal-table thead tr th    { border-top:none; }
+
+.cal-table td {
+  border:1px solid #ddd; padding:0; vertical-align:top;
+}
+.cal-table td:first-child { border-left:none; }
+.cal-table td:last-child  { border-right:none; }
+.cal-table tbody tr:last-child td { border-bottom:none; }
+
+/* 월 셀 */
+.month-cell { width:16mm; }
+.mc-wrap {
+  padding:6px 5px; height:100%;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  background:#fafafa; border-right:1px solid #ddd;
+}
+.mc-num  { font-family:'DM Serif Display',serif; font-size:16pt; font-weight:700; line-height:1; }
+.mc-ganji { font-family:'Nanum Myeongjo',serif; font-size:8pt; font-weight:700; line-height:1.2; }
+.mc-ss   { font-size:6pt; color:#888; }
+.mc-grade {
+  font-size:5.5pt; font-weight:700; color:white;
+  padding:1px 5px; border-radius:5px; display:inline-block;
+}
+.mc-unsung { font-size:5.5pt; color:#aaa; }
+.mc-jeolgi { font-size:5.5pt; color:#666; font-weight:600; }
+
+/* 데이터 셀 */
+.dc-wrap { padding:5px 7px; height:100%; display:flex; flex-direction:column; gap:4px; }
+
+/* 길일/조심일 */
+.day-section { display:flex; flex-direction:column; gap:2px; }
+.ds-label {
+  font-size:5.5pt; font-weight:700;
+  padding:1px 6px; border-radius:4px; color:white;
+  display:inline-block; width:fit-content;
+}
+.day-chips { display:flex; flex-wrap:wrap; gap:2px; margin-top:1px; }
+.day-chip  {
+  font-size:5.5pt; font-weight:700; color:white;
+  padding:1px 5px; border-radius:4px;
+}
+
+/* 월 전략 */
+.strategy-txt { font-size:6pt; color:#444; line-height:1.5; }
+.strategy-txt strong { color:#f44336; }
+
+/* 게이지 */
+.gauge-row { display:flex; align-items:center; gap:4px; margin-top:2px; }
+.gauge-label { font-size:5.5pt; color:#aaa; width:22px; }
+.gauge-wrap  { flex:1; height:5px; background:#eee; border-radius:3px; overflow:hidden; }
+.gauge-bar   { height:100%; border-radius:3px; }
+.gauge-pct   { font-size:5.5pt; font-weight:700; width:22px; }
+
+/* 행 테마 */
+.row-yongshin { background:rgba(244,67,54,0.04); }
+.row-heeshin  { background:rgba(76,175,80,0.04); }
+.row-byeongshin { background:rgba(33,150,243,0.04); }
+.row-neutral  { background:white; }
+
+/* ── 색상 ── */
+.c-용신 { background:#f44336; } .t-용신 { color:#f44336; }
+.c-희신 { background:#4caf50; } .t-희신 { color:#4caf50; }
+.c-병신 { background:#2196f3; } .t-병신 { color:#2196f3; }
+.c-중립 { background:#9e9e9e; } .t-중립 { color:#9e9e9e; }
+
+/* ── 하단 범례 ── */
+.legend {
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:7px 10px; border-top:1px solid #e0e0e0;
+  background:#fafafa; flex-shrink:0;
+}
+.lg-item { display:flex; align-items:center; gap:4px; font-size:6pt; color:#666; }
+.lg-dot  { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+
+/* ── 하단 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:8px; padding:7px 12px;
+  font-size:6.5pt; color:#555; line-height:1.7; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">2026년 세운·월운 달력표</div>
+    <div class="pt-sub">歲運·月運 Calendar — 2026년 2월 ~ 2027년 1월 (절기 기준)</div>
+  </div>
+  <div class="pt-right">
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 용신 火(화) 기준</div>
+  </div>
+</div>
+
+<!-- 세운 요약 배너 -->
+<div class="seun-banner">
+  <div class="seun-hd">
+    <div class="seun-hd-title">🌟 2026년 세운(歲運) — 丙午(병오)년</div>
+    <div class="seun-hd-sub">용신 Fire 세운 · 연중 최고 에너지</div>
+  </div>
+  <div class="seun-body">
+    <div class="seun-item">
+      <div class="si-label">세운 간지</div>
+      <div class="si-val" style="color:#f44336;">丙午<br>(병오)</div>
+    </div>
+    <div class="seun-item">
+      <div class="si-label">세운 십성</div>
+      <div class="si-val" style="color:#f44336;">편인</div>
+      <div class="si-sub">火→土(무토 일간)</div>
+    </div>
+    <div class="seun-item">
+      <div class="si-label">12운성</div>
+      <div class="si-val" style="color:#f44336;">제왕(帝旺)</div>
+      <div class="si-sub">최고 에너지</div>
+    </div>
+    <div class="seun-item">
+      <div class="si-label">세운 성격</div>
+      <span class="si-badge" style="background:#f44336;margin-top:4px;">🔥 용신세운</span>
+      <div class="si-sub">用神 火 직접 들어옴</div>
+    </div>
+    <div class="seun-item">
+      <div class="si-label">현재 대운</div>
+      <div class="si-val" style="color:#9e9e9e;">庚申<br>(경신)</div>
+      <div class="si-sub">중립대운 교차</div>
+    </div>
+    <div class="seun-item">
+      <div class="si-label">연간 핵심</div>
+      <div class="si-sub" style="font-size:7pt;color:#333;line-height:1.6;">상반기 집중<br>5·6월 최고조<br>8·10월 주의</div>
+    </div>
+  </div>
+</div>
+
+<!-- 월운 달력 -->
+<div class="cal-card">
+  <div class="cal-hd">
+    <div class="cal-hd-title">📅 월운(月運) 달력 — 12개월 길흉 날짜 가이드</div>
+    <div class="cal-hd-sub">절기 기준 · 🌟 길일(용신·희신일) · ⚠️ 조심일(병신일)</div>
+  </div>
+  <table class="cal-table">
+    <thead>
+      <tr>
+        <th class="month-cell">월</th>
+        <th style="width:22mm;">월운 성격</th>
+        <th style="width:36mm;">🌟 길일 (용신·희신)</th>
+        <th style="width:30mm;">⚠️ 조심일 (병신)</th>
+        <th>전략 포인트</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 2월: 庚寅 희신월 -->
+      <tr class="row-heeshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-희신">2</div>
+          <div class="mc-ganji t-희신">庚寅<br>(경인)</div>
+          <div class="mc-ss">식신</div>
+          <span class="mc-grade c-희신">희신월</span>
+          <div class="mc-unsung">장생(長生)</div>
+          <div class="mc-jeolgi">입춘 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-희신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-희신" style="width:72%;"></div></div>
+            <span class="gauge-pct t-희신">72%</span>
+          </div>
+          <div class="strategy-txt">희신 木 장생. 봄 시작. 새 계획 수립 · 인맥 확장 좋음.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">9일</span><span class="day-chip c-용신">10일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">20일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">22일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">3일</span><span class="day-chip c-병신">4일</span><span class="day-chip c-병신">15일</span><span class="day-chip c-병신">16일</span><span class="day-chip c-병신">17일</span><span class="day-chip c-병신">26일</span><span class="day-chip c-병신">27일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">새 프로젝트·계약 시작에 유리. 입춘 이후 적극 행동. 10·11·22일 중요 결정 최적.</div>
+        </div></td>
+      </tr>
+
+      <!-- 3월: 辛卯 희신월 -->
+      <tr class="row-heeshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-희신">3</div>
+          <div class="mc-ganji t-희신">辛卯<br>(신묘)</div>
+          <div class="mc-ss">상관</div>
+          <span class="mc-grade c-희신">희신월</span>
+          <div class="mc-unsung">목욕(沐浴)</div>
+          <div class="mc-jeolgi">경칩 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-희신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-희신" style="width:75%;"></div></div>
+            <span class="gauge-pct t-희신">75%</span>
+          </div>
+          <div class="strategy-txt">木 기운 절정. 창의력·추진력 극대화. 이직·승진 최적.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">2일</span><span class="day-chip c-용신">3일</span><span class="day-chip c-용신">5일</span><span class="day-chip c-용신">6일</span><span class="day-chip c-용신">12일</span><span class="day-chip c-용신">13일</span><span class="day-chip c-용신">17일</span><span class="day-chip c-용신">18일</span><span class="day-chip c-용신">22일</span><span class="day-chip c-용신">23일</span><span class="day-chip c-용신">29일</span><span class="day-chip c-용신">30일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">8일</span><span class="day-chip c-병신">9일</span><span class="day-chip c-병신">19일</span><span class="day-chip c-병신">24일</span><span class="day-chip c-병신">28일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">월초 집중 공략. 귀인 만남 가능성 높음. 중요 미팅·계약·도전 모두 GO.</div>
+        </div></td>
+      </tr>
+
+      <!-- 4월: 壬辰 병신월 -->
+      <tr class="row-byeongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-병신">4</div>
+          <div class="mc-ganji t-병신">壬辰<br>(임진)</div>
+          <div class="mc-ss">편재</div>
+          <span class="mc-grade c-병신">병신월</span>
+          <div class="mc-unsung">관대(冠帶)</div>
+          <div class="mc-jeolgi">청명 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-병신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:45%;"></div></div>
+            <span class="gauge-pct t-병신">45%</span>
+          </div>
+          <div class="strategy-txt">壬水 병신. 용신 극(剋). 무리한 확장 자제. 길일 집중 활용.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">2일</span><span class="day-chip c-용신">10일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">12일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">22일</span><span class="day-chip c-용신">23일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">4일</span><span class="day-chip c-병신">5일</span><span class="day-chip c-병신">16일</span><span class="day-chip c-병신">17일</span><span class="day-chip c-병신">18일</span><span class="day-chip c-병신">27일</span><span class="day-chip c-병신">28일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">중요 결정은 1·11·22일에 집중. 조심일 계약·투자 자제. 재물 지출 주의.</div>
+        </div></td>
+      </tr>
+
+      <!-- 5월: 癸巳 용신월 -->
+      <tr class="row-yongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-용신">5</div>
+          <div class="mc-ganji t-용신">癸巳<br>(계사)</div>
+          <div class="mc-ss">정재</div>
+          <span class="mc-grade c-용신">🔥 용신월</span>
+          <div class="mc-unsung">건록(建祿)</div>
+          <div class="mc-jeolgi">입하 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-용신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:88%;"></div></div>
+            <span class="gauge-pct t-용신">88%</span>
+          </div>
+          <div class="strategy-txt"><strong>용신 月 건록. 에너지 절정.</strong> 가장 중요한 결정 이달에.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">2일</span><span class="day-chip c-용신">4일</span><span class="day-chip c-용신">5일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">12일</span><span class="day-chip c-용신">16일</span><span class="day-chip c-용신">17일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">22일</span><span class="day-chip c-용신">28일</span><span class="day-chip c-용신">29일</span><span class="day-chip c-용신">31일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">7일</span><span class="day-chip c-병신">8일</span><span class="day-chip c-병신">18일</span><span class="day-chip c-병신">23일</span><span class="day-chip c-병신">27일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt"><strong>투자·계약·도전 최적 타이밍.</strong> 적극적으로 움직이는 것이 결과를 만드는 달.</div>
+        </div></td>
+      </tr>
+
+      <!-- 6월: 甲午 용신월 -->
+      <tr class="row-yongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-용신">6</div>
+          <div class="mc-ganji t-용신">甲午<br>(갑오)</div>
+          <div class="mc-ss">편관</div>
+          <span class="mc-grade c-용신">🌟 용신월</span>
+          <div class="mc-unsung">제왕(帝旺)</div>
+          <div class="mc-jeolgi">망종 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-용신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:95%;"></div></div>
+            <span class="gauge-pct t-용신">95%</span>
+          </div>
+          <div class="strategy-txt"><strong>연중 최고. 제왕 에너지.</strong> 절대 쉬지 말 것.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">9일</span><span class="day-chip c-용신">10일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">20일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">22일</span><span class="day-chip c-용신">30일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">3일</span><span class="day-chip c-병신">4일</span><span class="day-chip c-병신">15일</span><span class="day-chip c-병신">16일</span><span class="day-chip c-병신">17일</span><span class="day-chip c-병신">26일</span><span class="day-chip c-병신">27일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt"><strong>대형 계약·인연·핵심 결정 모두 GO.</strong> 1·10·11·21·22일 최고 길일.</div>
+        </div></td>
+      </tr>
+
+      <!-- 7월: 乙未 희신월 -->
+      <tr class="row-heeshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-희신">7</div>
+          <div class="mc-ganji t-희신">乙未<br>(을미)</div>
+          <div class="mc-ss">정관</div>
+          <span class="mc-grade c-희신">희신월</span>
+          <div class="mc-unsung">쇠(衰)</div>
+          <div class="mc-jeolgi">소서 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-희신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-희신" style="width:80%;"></div></div>
+            <span class="gauge-pct t-희신">80%</span>
+          </div>
+          <div class="strategy-txt">상반기 결실 수확. 관계 정리·재물 관리 철저히.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">3일</span><span class="day-chip c-용신">4일</span><span class="day-chip c-용신">10일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">15일</span><span class="day-chip c-용신">16일</span><span class="day-chip c-용신">20일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">27일</span><span class="day-chip c-용신">28일</span><span class="day-chip c-용신">30일</span><span class="day-chip c-용신">31일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">6일</span><span class="day-chip c-병신">7일</span><span class="day-chip c-병신">17일</span><span class="day-chip c-병신">22일</span><span class="day-chip c-병신">26일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">수확·마무리·감사. 오랜 인연 재회. 하반기 전략 수립 좋음.</div>
+        </div></td>
+      </tr>
+
+      <!-- 8월: 丙申 용신월 -->
+      <tr class="row-yongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-용신">8</div>
+          <div class="mc-ganji t-용신">丙申<br>(병신)</div>
+          <div class="mc-ss">편인</div>
+          <span class="mc-grade c-용신">용신월</span>
+          <div class="mc-unsung">병(病)</div>
+          <div class="mc-jeolgi">입추 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-용신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:70%;"></div></div>
+            <span class="gauge-pct t-용신">70%</span>
+          </div>
+          <div class="strategy-txt">天干 丙火 용신. 지지 申金 병신 교차. 길일 집중 필수.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">8일</span><span class="day-chip c-용신">9일</span><span class="day-chip c-용신">10일</span><span class="day-chip c-용신">19일</span><span class="day-chip c-용신">20일</span><span class="day-chip c-용신">21일</span><span class="day-chip c-용신">29일</span><span class="day-chip c-용신">30일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">2일</span><span class="day-chip c-병신">3일</span><span class="day-chip c-병신">14일</span><span class="day-chip c-병신">15일</span><span class="day-chip c-병신">16일</span><span class="day-chip c-병신">25일</span><span class="day-chip c-병신">26일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">과로 주의. 건강 점검. 9·10·20·21일 중요 업무 집중.</div>
+        </div></td>
+      </tr>
+
+      <!-- 9월: 丁酉 용신월 -->
+      <tr class="row-yongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-용신">9</div>
+          <div class="mc-ganji t-용신">丁酉<br>(정유)</div>
+          <div class="mc-ss">정인</div>
+          <span class="mc-grade c-용신">용신월</span>
+          <div class="mc-unsung">사(死)</div>
+          <div class="mc-jeolgi">백로 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-용신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-용신" style="width:75%;"></div></div>
+            <span class="gauge-pct t-용신">75%</span>
+          </div>
+          <div class="strategy-txt">天干 丁火 용신 정인. 학습·자격·지식 활동 최적.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">2일</span><span class="day-chip c-용신">8일</span><span class="day-chip c-용신">9일</span><span class="day-chip c-용신">13일</span><span class="day-chip c-용신">14일</span><span class="day-chip c-용신">18일</span><span class="day-chip c-용신">19일</span><span class="day-chip c-용신">25일</span><span class="day-chip c-용신">26일</span><span class="day-chip c-용신">28일</span><span class="day-chip c-용신">29일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">4일</span><span class="day-chip c-병신">5일</span><span class="day-chip c-병신">15일</span><span class="day-chip c-병신">20일</span><span class="day-chip c-병신">24일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">연말 계획 수립. 인간관계 점검. 1·9·14·26일 길일 활용.</div>
+        </div></td>
+      </tr>
+
+      <!-- 10월: 戊戌 중립월 -->
+      <tr class="row-neutral">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-중립">10</div>
+          <div class="mc-ganji t-중립">戊戌<br>(무술)</div>
+          <div class="mc-ss">비견</div>
+          <span class="mc-grade c-중립">중립월</span>
+          <div class="mc-unsung">묘(墓)</div>
+          <div class="mc-jeolgi">한로 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-중립">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:55%;"></div></div>
+            <span class="gauge-pct t-중립">55%</span>
+          </div>
+          <div class="strategy-txt">土土 비견 중립. 묘(墓) — 과감한 확장 자제. 내실 다지기.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">7일</span><span class="day-chip c-용신">8일</span><span class="day-chip c-용신">9일</span><span class="day-chip c-용신">18일</span><span class="day-chip c-용신">19일</span><span class="day-chip c-용신">20일</span><span class="day-chip c-용신">28일</span><span class="day-chip c-용신">29일</span><span class="day-chip c-용신">31일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">1일</span><span class="day-chip c-병신">2일</span><span class="day-chip c-병신">13일</span><span class="day-chip c-병신">14일</span><span class="day-chip c-병신">15일</span><span class="day-chip c-병신">24일</span><span class="day-chip c-병신">25일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">월초 조심. 8·9·19·20일 활용. 2027년 계획 수립 시작.</div>
+        </div></td>
+      </tr>
+
+      <!-- 11월: 己亥 병신월 -->
+      <tr class="row-byeongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-병신">11</div>
+          <div class="mc-ganji t-병신">己亥<br>(기해)</div>
+          <div class="mc-ss">겁재</div>
+          <span class="mc-grade c-병신">병신월</span>
+          <div class="mc-unsung">절(絶)</div>
+          <div class="mc-jeolgi">입동 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-병신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:42%;"></div></div>
+            <span class="gauge-pct t-병신">42%</span>
+          </div>
+          <div class="strategy-txt">亥水 병신 절(絶). 무리한 결정 자제. 안정 유지 우선.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">1일</span><span class="day-chip c-용신">7일</span><span class="day-chip c-용신">8일</span><span class="day-chip c-용신">12일</span><span class="day-chip c-용신">13일</span><span class="day-chip c-용신">17일</span><span class="day-chip c-용신">18일</span><span class="day-chip c-용신">24일</span><span class="day-chip c-용신">25일</span><span class="day-chip c-용신">27일</span><span class="day-chip c-용신">28일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">3일</span><span class="day-chip c-병신">4일</span><span class="day-chip c-병신">14일</span><span class="day-chip c-병신">19일</span><span class="day-chip c-병신">23일</span><span class="day-chip c-병신">30일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">연말 마무리. 소중한 관계 챙기기. 조심일 재물 지출 특히 주의.</div>
+        </div></td>
+      </tr>
+
+      <!-- 12월: 庚子 병신월 -->
+      <tr class="row-byeongshin">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-병신">12</div>
+          <div class="mc-ganji t-병신">庚子<br>(경자)</div>
+          <div class="mc-ss">식신</div>
+          <span class="mc-grade c-병신">병신월</span>
+          <div class="mc-unsung">태(胎)</div>
+          <div class="mc-jeolgi">대설 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-병신">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-병신" style="width:40%;"></div></div>
+            <span class="gauge-pct t-병신">40%</span>
+          </div>
+          <div class="strategy-txt">子水 병신. 한 해 마무리. 길일에 집중 행동.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">6일</span><span class="day-chip c-용신">7일</span><span class="day-chip c-용신">8일</span><span class="day-chip c-용신">17일</span><span class="day-chip c-용신">18일</span><span class="day-chip c-용신">19일</span><span class="day-chip c-용신">27일</span><span class="day-chip c-용신">28일</span><span class="day-chip c-용신">30일</span><span class="day-chip c-용신">31일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">1일</span><span class="day-chip c-병신">12일</span><span class="day-chip c-병신">13일</span><span class="day-chip c-병신">14일</span><span class="day-chip c-병신">23일</span><span class="day-chip c-병신">24일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">감사·마무리. 7·8·18·19일 중요 결정. 2027년 씨앗 심기.</div>
+        </div></td>
+      </tr>
+
+      <!-- 2027년 1월: 辛丑 중립월 -->
+      <tr class="row-neutral">
+        <td class="month-cell"><div class="mc-wrap">
+          <div class="mc-num t-중립" style="font-size:12pt;">27.1</div>
+          <div class="mc-ganji t-중립">辛丑<br>(신축)</div>
+          <div class="mc-ss">상관</div>
+          <span class="mc-grade c-중립">중립월</span>
+          <div class="mc-unsung">양(養)</div>
+          <div class="mc-jeolgi">소한 ↑</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="gauge-row">
+            <span class="gauge-label t-중립">운세</span>
+            <div class="gauge-wrap"><div class="gauge-bar c-중립" style="width:58%;"></div></div>
+            <span class="gauge-pct t-중립">58%</span>
+          </div>
+          <div class="strategy-txt">2027년 시작. 중립 안정. 새해 계획 실행 시작.</div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-용신">6일</span><span class="day-chip c-용신">7일</span><span class="day-chip c-용신">11일</span><span class="day-chip c-용신">12일</span><span class="day-chip c-용신">16일</span><span class="day-chip c-용신">17일</span><span class="day-chip c-용신">23일</span><span class="day-chip c-용신">24일</span><span class="day-chip c-용신">26일</span><span class="day-chip c-용신">27일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="day-chips">
+            <span class="day-chip c-병신">2일</span><span class="day-chip c-병신">3일</span><span class="day-chip c-병신">13일</span><span class="day-chip c-병신">18일</span><span class="day-chip c-병신">22일</span><span class="day-chip c-병신">29일</span><span class="day-chip c-병신">30일</span>
+          </div>
+        </div></td>
+        <td><div class="dc-wrap">
+          <div class="strategy-txt">2027년 첫 달. 7·12·17·24일 새해 첫 중요 결정 최적.</div>
+        </div></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- 범례 -->
+  <div class="legend">
+    <div class="lg-item"><div class="lg-dot c-용신"></div>🔥 용신월 (火 기운)</div>
+    <div class="lg-item"><div class="lg-dot c-희신"></div>🌱 희신월 (木 기운)</div>
+    <div class="lg-item"><div class="lg-dot c-병신"></div>💧 병신월 (水·金 기운)</div>
+    <div class="lg-item"><div class="lg-dot c-중립"></div>⚪ 중립월</div>
+    <div class="lg-item"><div class="lg-dot c-용신"></div>🌟 길일 (용신·희신일)</div>
+    <div class="lg-item"><div class="lg-dot c-병신"></div>⚠️ 조심일 (병신일)</div>
+    <div style="margin-left:auto;font-size:6pt;color:#aaa;">절기 기준 월 경계 · 만나이 기준 · 用神 火(화) 기준</div>
+  </div>
+
+</div><!-- cal-card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#b71c1c;">📌 반야선생의 2026년 월운 핵심 요약</strong> &nbsp;
+  <strong style="color:#f44336;">5·6월 용신월 제왕 = 연중 최고.</strong> 이 두 달에 가장 중요한 결정·계약·도전을 집중시키세요.
+  <strong style="color:#2196f3;">4·11·12월 병신월</strong>은 길일에만 행동하고 조심일 재물 지출·계약을 피하세요.
+  <strong style="color:#4caf50;">2·3·7월 희신월</strong>은 꾸준히 움직이면 결과가 따르는 안정적인 달입니다.
+</div>
+
+</div>
+</body>
+</html>

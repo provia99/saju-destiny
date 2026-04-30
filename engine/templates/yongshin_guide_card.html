@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>용신 가이드카드 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:18pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:11pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 상단 한줄 요약 ── */
+.summary-bar {
+  border:2px solid #333; border-radius:10px; overflow:hidden; flex-shrink:0;
+}
+.sb-hd {
+  background:linear-gradient(135deg,#b71c1c,#f44336);
+  padding:8px 18px; display:flex; align-items:center; justify-content:space-between;
+}
+.sb-hd-title { font-size:11pt; font-weight:900; color:white; }
+.sb-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+.sb-body { display:flex; background:white; }
+.sb-item {
+  flex:1; padding:9px 10px; text-align:center;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:3px;
+}
+.sb-item:last-child { border-right:none; }
+.sbi-label { font-size:6pt; color:#aaa; font-weight:700; }
+.sbi-val   {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:20pt; font-weight:800; line-height:1;
+}
+.sbi-sub   { font-size:6.5pt; color:#666; }
+.sbi-badge {
+  font-size:7pt; font-weight:700; color:white;
+  padding:3px 10px; border-radius:8px;
+  display:inline-block; margin-top:2px;
+}
+
+/* ── 2컬럼 가이드 그리드 ── */
+.guide-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:8px; flex-shrink:0;
+}
+
+/* ── 가이드 카드 공통 ── */
+.guide-card {
+  border:2px solid #333; border-radius:12px; overflow:hidden;
+}
+.gc-hd {
+  padding:7px 14px;
+  display:flex; align-items:center; gap:8px;
+}
+.gc-hd-icon {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:18pt; font-weight:800; color:white; line-height:1;
+}
+.gc-hd-text {}
+.gc-hd-title { font-size:9pt; font-weight:900; color:white; }
+.gc-hd-sub   { font-size:6pt; color:rgba(255,255,255,.85); }
+
+.gc-body { background:white; padding:10px 12px; display:flex; flex-direction:column; gap:7px; }
+
+/* 항목 행 */
+.gc-row { display:flex; flex-direction:column; gap:3px; }
+.gc-row-label {
+  font-size:6pt; font-weight:700; color:white;
+  padding:1px 7px; border-radius:4px;
+  display:inline-block; width:fit-content;
+}
+.gc-row-items { display:flex; flex-wrap:wrap; gap:3px; }
+.gc-chip {
+  font-size:7pt; font-weight:700;
+  padding:3px 10px; border-radius:8px;
+  border:1.5px solid;
+}
+/* 길 칩 */
+.chip-good {
+  background:rgba(244,67,54,0.08);
+  border-color:#f44336; color:#c62828;
+}
+/* 주의 칩 */
+.chip-warn {
+  background:rgba(33,150,243,0.08);
+  border-color:#2196f3; color:#1565c0;
+}
+/* 희신 칩 */
+.chip-hee {
+  background:rgba(76,175,80,0.08);
+  border-color:#4caf50; color:#2e7d32;
+}
+/* 중립 칩 */
+.chip-neutral {
+  background:#f5f5f5;
+  border-color:#bdbdbd; color:#757575;
+}
+
+/* ── 실천 체크리스트 ── */
+.checklist-card {
+  border:2px solid #333; border-radius:12px; overflow:hidden; flex-shrink:0;
+}
+.cl-hd {
+  background:linear-gradient(135deg,#1a237e,#283593);
+  padding:7px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.cl-hd-title { font-size:9pt; font-weight:900; color:white; }
+.cl-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+.cl-body {
+  background:white; padding:10px 14px;
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.cl-section {}
+.cl-sec-title {
+  font-size:7pt; font-weight:700; margin-bottom:6px;
+  display:flex; align-items:center; gap:4px;
+}
+.cl-items { display:flex; flex-direction:column; gap:4px; }
+.cl-item {
+  display:flex; align-items:flex-start; gap:5px;
+  font-size:6.5pt; color:#444; line-height:1.5;
+}
+.cl-box {
+  width:11px; height:11px; border:1.5px solid #333;
+  border-radius:2px; flex-shrink:0; margin-top:1px;
+}
+.cl-box.good { border-color:#f44336; }
+.cl-box.warn { border-color:#2196f3; }
+
+/* ── 행동 캘린더 힌트 ── */
+.action-card {
+  border:2px solid #333; border-radius:12px; overflow:hidden; flex-shrink:0;
+}
+.ac-hd {
+  background:linear-gradient(135deg,#e65100,#ff9800);
+  padding:7px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.ac-hd-title { font-size:9pt; font-weight:900; color:white; }
+.ac-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+.ac-body {
+  background:white;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.ac-item {
+  padding:8px 8px; text-align:center;
+  border-right:1px solid #e0e0e0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.ac-item:last-child { border-right:none; }
+.ac-label { font-size:6pt; color:#aaa; font-weight:700; }
+.ac-val   { font-size:8.5pt; font-weight:700; line-height:1.3; }
+.ac-sub   { font-size:6pt; color:#888; line-height:1.4; }
+
+/* ── 하단 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:8px 14px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">용신(用神) 가이드카드</div>
+    <div class="pt-sub">火(화) 기운을 높이는 실생활 실천 가이드 — 언제든 펼쳐보는 나침반</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 戊辰(무진) 일주</div>
+  </div>
+</div>
+
+<!-- 상단 요약 -->
+<div class="summary-bar">
+  <div class="sb-hd">
+    <div class="sb-hd-title">🔥 나의 용신(用神) — 火(화)</div>
+    <div class="sb-hd-sub">신강(身强) 72% · 겁재격(劫財格) · 조후·억부 용신</div>
+  </div>
+  <div class="sb-body">
+    <div class="sb-item">
+      <div class="sbi-label">① 용신</div>
+      <div class="sbi-val" style="color:#f44336;">火</div>
+      <div class="sbi-sub">가장 필요한 기운</div>
+      <span class="sbi-badge" style="background:#f44336;">적극 강화</span>
+    </div>
+    <div class="sb-item">
+      <div class="sbi-label">② 희신</div>
+      <div class="sbi-val" style="color:#4caf50;">木</div>
+      <div class="sbi-sub">용신을 돕는 기운</div>
+      <span class="sbi-badge" style="background:#4caf50;">유지·보강</span>
+    </div>
+    <div class="sb-item">
+      <div class="sbi-label">③ 병신</div>
+      <div class="sbi-val" style="color:#2196f3;">水</div>
+      <div class="sbi-sub">가장 해로운 기운</div>
+      <span class="sbi-badge" style="background:#2196f3;">적극 방어</span>
+    </div>
+    <div class="sb-item">
+      <div class="sbi-label">④ 한신</div>
+      <div class="sbi-val" style="color:#9e9e9e;">金</div>
+      <div class="sbi-sub">중립·간접 주의</div>
+      <span class="sbi-badge" style="background:#9e9e9e;">관리</span>
+    </div>
+    <div class="sb-item">
+      <div class="sbi-label">태과</div>
+      <div class="sbi-val" style="color:#ff9800;">土</div>
+      <div class="sbi-sub">과다 오행</div>
+      <span class="sbi-badge" style="background:#ff9800;">설기 필요</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2컬럼 가이드 그리드 -->
+<div class="guide-grid">
+
+  <!-- 용신 강화 카드 -->
+  <div class="guide-card">
+    <div class="gc-hd" style="background:linear-gradient(135deg,#c62828,#f44336);">
+      <div class="gc-hd-icon">火</div>
+      <div class="gc-hd-text">
+        <div class="gc-hd-title">🔥 용신 강화 — 火(화) 기운 높이기</div>
+        <div class="gc-hd-sub">이것을 가까이 하면 운이 열린다</div>
+      </div>
+    </div>
+    <div class="gc-body">
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#f44336;">색상</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">빨간색</span>
+          <span class="gc-chip chip-good">주황색</span>
+          <span class="gc-chip chip-good">분홍색</span>
+          <span class="gc-chip chip-good">자주색</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#f44336;">방위</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">남(南)쪽 방향</span>
+          <span class="gc-chip chip-good">남향 집·사무실</span>
+          <span class="gc-chip chip-good">남쪽 창문</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#f44336;">시간</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">巳時(9~11시)</span>
+          <span class="gc-chip chip-good">午時(11~13시)</span>
+          <span class="gc-chip chip-good">未時(13~15시)</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#f44336;">계절</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">여름(5~7월)</span>
+          <span class="gc-chip chip-good">입하·망종·소서</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#e65100;">소재·물건</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">촛불·조명</span>
+          <span class="gc-chip chip-good">핫팩·온열기</span>
+          <span class="gc-chip chip-good">빨간 소품</span>
+          <span class="gc-chip chip-good">햇살 많은 공간</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#e65100;">음식</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">매운 음식</span>
+          <span class="gc-chip chip-good">따뜻한 음식</span>
+          <span class="gc-chip chip-good">구운 음식</span>
+          <span class="gc-chip chip-good">빨간 식재료</span>
+        </div>
+      </div>
+      <div class="gc-row">
+        <span class="gc-row-label" style="background:#c62828;">직업·활동</span>
+        <div class="gc-row-items">
+          <span class="gc-chip chip-good">에너지·IT</span>
+          <span class="gc-chip chip-good">미디어·방송</span>
+          <span class="gc-chip chip-good">마케팅</span>
+          <span class="gc-chip chip-good">요식업</span>
+          <span class="gc-chip chip-good">조명·광고</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 희신 + 병신 카드 -->
+  <div style="display:flex;flex-direction:column;gap:8px;">
+
+    <!-- 희신 목 -->
+    <div class="guide-card">
+      <div class="gc-hd" style="background:linear-gradient(135deg,#2e7d32,#4caf50);">
+        <div class="gc-hd-icon">木</div>
+        <div class="gc-hd-text">
+          <div class="gc-hd-title">🌱 희신 보강 — 木(목) 기운 유지</div>
+          <div class="gc-hd-sub">火를 돕는 보조 기운 — 함께 가까이</div>
+        </div>
+      </div>
+      <div class="gc-body">
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#4caf50;">색상·방위</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-hee">초록색</span>
+            <span class="gc-chip chip-hee">청록색</span>
+            <span class="gc-chip chip-hee">동(東)쪽</span>
+            <span class="gc-chip chip-hee">동쪽 창문</span>
+          </div>
+        </div>
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#4caf50;">시간·계절</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-hee">봄(2~4월)</span>
+            <span class="gc-chip chip-hee">寅卯辰시(3~9시)</span>
+          </div>
+        </div>
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#388e3c;">실천</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-hee">화분·식물</span>
+            <span class="gc-chip chip-hee">나무 소재</span>
+            <span class="gc-chip chip-hee">숲·공원 산책</span>
+            <span class="gc-chip chip-hee">새싹채소 섭취</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 병신 방어 -->
+    <div class="guide-card">
+      <div class="gc-hd" style="background:linear-gradient(135deg,#0d47a1,#2196f3);">
+        <div class="gc-hd-icon">水</div>
+        <div class="gc-hd-text">
+          <div class="gc-hd-title">💧 병신 방어 — 水(수) 기운 차단</div>
+          <div class="gc-hd-sub">이것을 피하면 운이 안 막힌다</div>
+        </div>
+      </div>
+      <div class="gc-body">
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#2196f3;">피할 색상·방위</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-warn">파란색 과다</span>
+            <span class="gc-chip chip-warn">검정색 과다</span>
+            <span class="gc-chip chip-warn">북(北)쪽</span>
+          </div>
+        </div>
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#2196f3;">피할 시간·계절</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-warn">겨울(11~1월)</span>
+            <span class="gc-chip chip-warn">子時(23~1시)</span>
+            <span class="gc-chip chip-warn">亥時(21~23시)</span>
+          </div>
+        </div>
+        <div class="gc-row">
+          <span class="gc-row-label" style="background:#1565c0;">주의 사항</span>
+          <div class="gc-row-items">
+            <span class="gc-chip chip-warn">북향 장기 거주</span>
+            <span class="gc-chip chip-warn">수산·냉동업 투자</span>
+            <span class="gc-chip chip-warn">찬 음식 과다</span>
+            <span class="gc-chip chip-warn">겨울 중요 결정</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- 오른쪽 컬럼 -->
+</div><!-- guide-grid -->
+
+<!-- 실천 체크리스트 -->
+<div class="checklist-card">
+  <div class="cl-hd">
+    <div class="cl-hd-title">✅ 일상 실천 체크리스트 — 용신 火 강화 루틴</div>
+    <div class="cl-hd-sub">매일·매주·계절별 체크</div>
+  </div>
+  <div class="cl-body">
+    <!-- 매일 -->
+    <div class="cl-section">
+      <div class="cl-sec-title" style="color:#f44336;">🔥 매일 실천</div>
+      <div class="cl-items">
+        <div class="cl-item"><div class="cl-box good"></div><span>오전 9~13시 핵심 업무·약속 배치</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>빨강·주황 소품 하나 이상 착용</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>따뜻한 음식·음료 섭취</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>햇살 받기 (남향 창가 활용)</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>중요 연락·결정은 午時(11~13시)</span></div>
+      </div>
+    </div>
+    <!-- 매주·매달 -->
+    <div class="cl-section">
+      <div class="cl-sec-title" style="color:#e65100;">📅 매주·매달 실천</div>
+      <div class="cl-items">
+        <div class="cl-item"><div class="cl-box good"></div><span>길일(용신·희신일) 확인 후 행동 계획</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>조심일 중요 계약·투자 보류</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>남쪽 방향 외출·미팅 선호</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>공원·자연(木 기운) 산책</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>火 계열 음식(매운·구운 것) 섭취</span></div>
+      </div>
+    </div>
+    <!-- 계절별 -->
+    <div class="cl-section">
+      <div class="cl-sec-title" style="color:#2196f3;">🌊 계절별 방어·강화</div>
+      <div class="cl-items">
+        <div class="cl-item"><div class="cl-box good"></div><span>봄(2~4월): 새 시작·계획 실행</span></div>
+        <div class="cl-item"><div class="cl-box good"></div><span>여름(5~7월): 최대 적극 행동</span></div>
+        <div class="cl-item"><div class="cl-box warn"></div><span>가을(8~10월): 내실, 무리 자제</span></div>
+        <div class="cl-item"><div class="cl-box warn"></div><span>겨울(11~1월): 중요 결정 최소화</span></div>
+        <div class="cl-item"><div class="cl-box warn"></div><span>겨울: 보온·체온 유지 철저히</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 행동 캘린더 힌트 -->
+<div class="action-card">
+  <div class="ac-hd">
+    <div class="ac-hd-title">🗓️ 2026년 용신 행동 캘린더 요약</div>
+    <div class="ac-hd-sub">언제 움직이고 언제 쉴 것인가</div>
+  </div>
+  <div class="ac-body">
+    <div class="ac-item">
+      <div class="ac-label">최고 집중 구간</div>
+      <div class="ac-val" style="color:#f44336;">5 · 6월</div>
+      <div class="ac-sub">용신월 건록·제왕<br>평생 최고 타이밍</div>
+    </div>
+    <div class="ac-item">
+      <div class="ac-label">적극 행동 구간</div>
+      <div class="ac-val" style="color:#ff9800;">2·3·7·8·9월</div>
+      <div class="ac-sub">희신·용신월<br>꾸준히 실행</div>
+    </div>
+    <div class="ac-item">
+      <div class="ac-label">길일 집중 구간</div>
+      <div class="ac-val" style="color:#9e9e9e;">4·10·11·12월</div>
+      <div class="ac-sub">병신·중립월<br>길일에만 행동</div>
+    </div>
+    <div class="ac-item">
+      <div class="ac-label">다음 황금 전환점</div>
+      <div class="ac-val" style="color:#f44336;">2028년</div>
+      <div class="ac-sub">64세 己未 대운<br>지금부터 준비</div>
+    </div>
+  </div>
+</div>
+
+<!-- 메모 -->
+<div class="memo">
+  <strong style="color:#b71c1c;">📌 반야선생의 용신 가이드 핵심 한 줄</strong> &nbsp;
+  <strong style="color:#f44336;">빨간색을 입고, 남쪽을 바라보고, 오전에 움직이고, 여름에 도전하라.</strong>
+  이것이 최원석 님의 用神 火를 일상에서 강화하는 가장 간단한 방법입니다.
+  반대로 <strong style="color:#2196f3;">파란색·북방·겨울·찬 것</strong>은 忌神 水 — 의식적으로 줄이는 것만으로도 운의 흐름이 달라집니다.
+</div>
+
+</div>
+</body>
+</html>

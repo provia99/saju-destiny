@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>일지분석표 — 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;}
+.page{ border:1px solid #333;width:604px;max-height:600px;padding:10px;margin:10px auto;background:transparent;}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{margin:0;}@page{ border:1px solid #333;size:604px 600px;margin:0;}}
+
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;background:linear-gradient(135deg,#1a237e,#283593);margin-bottom:6px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.7);margin-top:1px;}
+.banner-hdr-right{text-align:right;}
+.banner-hdr-name{font-size:9pt;font-weight:800;background:linear-gradient(90deg,#ffd54f,#fff176);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.banner-hdr-detail{font-size:7pt;color:rgba(255,255,255,.6);}
+
+.ilji-main{display:flex;align-items:center;gap:12px;padding:10px;background:#f8f9fa;border-radius:10px;margin-bottom:6px;border:1.5px solid #ddd;}
+.ilji-char{font-size:32pt;font-weight:900;color:#ff9800;line-height:1;}
+.ilji-kr{font-size:9pt;color:#555;margin-top:2px;text-align:center;}
+.ilji-emoji{font-size:28pt;}
+.ilji-info{flex:1;}
+.ilji-info-row{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.ilji-tag{font-size:7pt;padding:3px 8px;border-radius:10px;font-weight:600;}
+.tag-oh{background:#ff980022;color:#ff9800;border:1px solid #ff980044;}
+.tag-season{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;}
+.tag-dir{background:#e3f2fd;color:#1565c0;border:1px solid #bbdefb;}
+.tag-time{background:#fff3e0;color:#e65100;border:1px solid #ffe0b2;}
+.tag-yy{background:#f3e5f5;color:#7b1fa2;border:1px solid #e1bee7;}
+.tag-animal{background:#fce4ec;color:#c62828;border:1px solid #f8bbd0;}
+
+.section{margin-bottom:6px;}
+.section-title{font-size:8.5pt;font-weight:800;color:#1a237e;margin-bottom:4px;padding-left:6px;border-left:3px solid #1a237e;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.card{background:#fafafa;border:1px solid #333;border-radius:6px;padding:6px 10px;}
+.card-label{font-size:6.5pt;color:#888;font-weight:600;margin-bottom:2px;}
+.card-value{font-size:9pt;font-weight:700;color:#333;}
+.card-desc{font-size:6.5pt;color:#666;margin-top:2px;}
+
+.jjg-wrap{display:flex;gap:8px;}
+.jjg-item{flex:1;background:#fafafa;border:1px solid #333;border-radius:6px;padding:6px;text-align:center;}
+.jjg-gan{font-size:12pt;font-weight:900;display:block;}
+.jjg-oh{font-size:6.5pt;color:#666;display:block;margin-top:1px;}
+.jjg-ratio{font-size:7pt;font-weight:700;color:#1565c0;display:block;margin-top:1px;}
+
+.sinsal-wrap{display:flex;gap:6px;flex-wrap:wrap;}
+.sinsal-chip{font-size:7pt;padding:2px 8px;border-radius:10px;font-weight:600;}
+.sinsal-gil{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9;}
+.sinsal-hyung{background:#ffebee;color:#c62828;border:1px solid #ffcdd2;}
+.sinsal-none{background:#f5f5f5;color:#999;border:1px solid #333;}
+
+.yongshin-box{background:linear-gradient(135deg,#fff8e1,#fff3e0);border:1.5px solid #ffcc02;border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:10px;}
+.yongshin-label{font-size:6.5pt;color:#e65100;font-weight:600;}
+.yongshin-value{font-size:9pt;font-weight:800;color:#e65100;}
+.yongshin-rel{font-size:7pt;color:#bf360c;margin-top:1px;}
+</style>
+</head><body>
+<div class="page">
+  <div class="banner-hdr">
+    <div>
+      <div class="banner-hdr-title">일지(日支) 분석표</div>
+      <div class="banner-hdr-sub">배우자궁 · 내면의 기질 · 숨은 에너지</div>
+    </div>
+    <div class="banner-hdr-right">
+      <div class="banner-hdr-name">임효원 님</div>
+      <div class="banner-hdr-detail">戊辰(무진) 일주</div>
+    </div>
+  </div>
+
+  <div class="ilji-main">
+    <div style="text-align:center;">
+      <div class="ilji-char">辰</div>
+      <div class="ilji-kr">진 · 용</div>
+    </div>
+    <div class="ilji-emoji">🐲</div>
+    <div class="ilji-info">
+      <div class="ilji-info-row">
+        <span class="ilji-tag tag-oh">土(토)</span>
+        <span class="ilji-tag tag-yy">양</span>
+        <span class="ilji-tag tag-season">봄</span>
+        <span class="ilji-tag tag-dir">동남쪽</span>
+        <span class="ilji-tag tag-time">07:30~09:29</span>
+        <span class="ilji-tag tag-animal">용띠</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">12운성 · 일지 에너지 상태</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">일지 12운성</div>
+        <div class="card-value" style="color:#ff9800;font-size:13pt;">관대</div>
+        <div class="card-desc">성장과 자신감</div>
+      </div>
+      <div class="card">
+        <div class="card-label">일지의 의미</div>
+        <div class="card-value">배우자궁 · 내면</div>
+        <div class="card-desc">일지는 나의 내면, 배우자궁, 가정환경을 나타냅니다. 밖에서 보이는 나(일간)와 안에서의 나(일지)가 다를 수 있어요.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">지장간(地藏干) · 일지 속 숨은 천간</div>
+    <div class="jjg-wrap"><div class="jjg-item">
+      <span class="jjg-gan" style="color:#ff9800">戊(무)</span>
+      <span class="jjg-oh">土(토)</span>
+      <span class="jjg-ratio">60%</span>
+    </div><div class="jjg-item">
+      <span class="jjg-gan" style="color:#4caf50">乙(을)</span>
+      <span class="jjg-oh">木(목)</span>
+      <span class="jjg-ratio">30%</span>
+    </div><div class="jjg-item">
+      <span class="jjg-gan" style="color:#2196f3">癸(계)</span>
+      <span class="jjg-oh">水(수)</span>
+      <span class="jjg-ratio">10%</span>
+    </div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">신살(神殺) · 일지에 깃든 특수 기운</div>
+    <div class="sinsal-wrap">
+      <span class="sinsal-chip sinsal-hyung">태극귀인</span><span class="sinsal-chip sinsal-hyung">홍염살</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">용신과의 관계</div>
+    <div class="yongshin-box">
+      <div>
+        <div class="yongshin-label">용신 土(토)</div>
+        <div class="yongshin-value">일지 土(토) ↔ 용신 土(토)</div>
+        <div class="yongshin-rel">용신과 같은 오행 (길)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">일지 활용 가이드</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">유리한 방위</div>
+        <div class="card-value">동남쪽</div>
+        <div class="card-desc">이 방향에서 활동하거나 이 방향의 에너지를 활용하면 자연스럽습니다.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">유리한 계절</div>
+        <div class="card-value">봄</div>
+        <div class="card-desc">이 계절에 중요한 결정이나 시작을 하면 에너지가 잘 맞습니다.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">유리한 시간대</div>
+        <div class="card-value">07:30~09:29</div>
+        <div class="card-desc">하루 중 이 시간대에 집중력과 에너지가 높아지는 경향이 있어요.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">배우자궁 성향</div>
+        <div class="card-value">土(토) 기운</div>
+        <div class="card-desc">안정적이고 신뢰감 있는 배우자 인연</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

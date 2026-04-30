@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<!-- SUMMARY_EDITOR_V1 -->
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ member_name | default('회원') }} 님 》 Banya Premium Studio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* ── 커버용 특수 폰트 (웹 서버 경로) ── */
+    @font-face {
+      font-family: 'NanumBrush';
+      src: url('/static/fonts/NanumBrush.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'LiuJianMaoCao';
+      src: url('/static/fonts/LiuJianMaoCao-Regular.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'HealthsetJoritdae';
+      src: url('/static/fonts/헬스셋조릿대Std.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Skyblessing';
+      src: url('/static/fonts/SkyblessingInjeFontTTF.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'MaShanZheng';
+      src: url('/static/fonts/MaShanZheng-Regular.ttf') format('truetype');
+    }
+
+    /* ── Design Tokens ── */
+    :root {
+      --studio-bg: #111827;
+      --workspace-bg: #374151;
+      --sidebar-bg: rgba(17, 24, 39, 0.95);
+      --accent-gold: #D4AF37;
+      --accent-gold-light: #F3E5AB;
+      --brand-navy: #1E293B;
+      --text-primary: #F3F4F6;
+      --text-secondary: #9CA3AF;
+      --paper-bg: #FFFFFF;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --glass-effect: blur(12px) saturate(180%);
+      --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ── Base Reset ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--studio-bg);
+      color: var(--text-primary);
+    }
+
+    /* ── Layout Hierarchy ── */
+    .studio-shell {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .studio-sidebar {
+      width: 320px;
+      background: var(--sidebar-bg);
+      backdrop-filter: var(--glass-effect);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      transition: transform 0.3s ease;
+    }
+
+    .sb-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sb-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: -0.02em;
+    }
+
+    .sb-header p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .sb-search {
+      padding: 16px 24px;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-wrapper i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px 10px 36px;
+      color: #fff;
+      font-size: 0.875rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-wrapper input:focus {
+      border-color: var(--accent-gold);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .sb-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 16px 24px;
+    }
+
+    .comp-category {
+      margin-top: 24px;
+    }
+
+    .cat-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      padding-left: 8px;
+    }
+
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .comp-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .comp-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-gold);
+      transform: translateX(4px);
+    }
+
+    .comp-card i {
+      width: 32px;
+      height: 32px;
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--accent-gold);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .comp-card span {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* ── Workspace ── */
+    .studio-workspace {
+      flex: 1;
+      background: var(--workspace-bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .ws-toolbar {
+      height: 64px;
+      background: var(--sidebar-bg);
+      backdrop-filter: var(--glass-effect);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 40;
+    }
+
+    .ws-info h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .ws-info p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .ws-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-pill.dirty {
+      color: #FBBF24;
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .status-pill.saved {
+      color: #34D399;
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    .btn-studio {
+      height: 38px;
+      padding: 0 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ── Paper Canvas ── */
+    .canvas-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 60px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+      scroll-behavior: smooth;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      background: var(--paper-bg);
+      box-shadow: var(--shadow-premium);
+      position: relative;
+      padding: 25mm 25mm;
+      color: #1a1a1a;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .page-content {
+      /* 편집 모드: 긴 단락이 잘리지 않도록 overflow visible */
+      min-height: 20px;
+      overflow: visible;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 12mm;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 9pt;
+      color: #999;
+      letter-spacing: 1px;
+    }
+    .page-number:empty { display: none; }
+
+    /* 필러: 화면=iframe, 인쇄=인라인 */
+    .filler-print { display: none; }
+
+    /* ── Editor Blocks ── */
+    .text-block {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 10.5pt !important;
+      /* 본문 */
+      font-weight: 400;
+      /* Regular */
+      line-height: 1.7;
+      outline: none;
+      min-height: 1.2em;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #262626;
+      margin-bottom: 8pt !important;
+      /* 단락 사이 간격 》 엔터(빈 블록)로 조절 */
+    }
+
+    /* 빈 줄 》 엔터로 삽입한 공백 블록 */
+    .text-block.text-empty {
+      font-size: 0 !important;
+      line-height: 0 !important;
+      min-height: 5pt !important;
+      margin-bottom: 0 !important;
+    }
+
+    .text-block.text-empty:focus {
+      font-size: 12pt !important;
+      line-height: 1.6 !important;
+      min-height: 1.2em !important;
+    }
+
+    .text-block:focus {
+      background: rgba(212, 175, 55, 0.03);
+      border-radius: 4px;
+    }
+
+    /* 목차 전용 》 이전 크기 유지 + 간격 축소 */
+    .toc-item {
+      font-size: 11pt !important;
+      font-weight: 700 !important;
+    }
+    .toc-item.text-title {
+      font-size: 18pt !important;
+      font-weight: 700 !important;
+    }
+    .toc-item.text-callout {
+      font-size: 14pt !important;
+      font-weight: 400 !important;
+      margin-top: 6pt !important;
+      margin-bottom: 2pt !important;
+    }
+    .toc-item.text-empty {
+      min-height: 6pt !important;
+    }
+    .toc-item.text-dash {
+      font-size: 11pt !important;
+      font-weight: 400 !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* 대제목 ☯ N장 */
+    .text-title {
+      font-size: 16pt !important;
+      font-weight: 900 !important;
+      margin-top: 24pt !important;
+      margin-bottom: 24pt !important;
+      text-align: center !important;
+    }
+    /* 장 제목 부제 (— 뒤 부분) — 12pt bold */
+    .text-title .text-title-sub {
+      font-size: 12pt !important;
+      font-weight: 700 !important;
+    }
+    .text-toc-title {
+      font-size: 16pt !important;
+      font-weight: 700 !important;
+      margin-top: 24pt !important;
+      margin-bottom: 50pt !important;
+      text-align: center;
+    }
+
+    /* 소제목 ✺ 절 */
+    .text-subtitle {
+      font-size: 14pt !important;
+      font-weight: 700 !important;
+      margin-top: 5pt !important;
+      margin-bottom: 5pt !important;
+      text-align: left;
+    }
+
+    /* 항 ✦ */
+    .text-callout {
+      font-size: 12pt !important;
+      font-weight: 700 !important;
+      margin-top: 7pt !important;
+      margin-bottom: 5pt !important;
+    }
+
+    /* ★ */
+    .text-star {
+      font-size: 11pt !important;
+      font-weight: 700 !important;
+      margin-bottom: 10px;
+    }
+
+    /* ◎ 소항목 제목 */
+    .text-circle {
+      font-size: 11pt !important;
+      font-weight: 700 !important;
+    }
+
+    /* ▸ */
+    .text-arrow {
+      font-size: 9pt !important;
+      font-weight: 700 !important;
+      margin-bottom: 12px;
+    }
+
+    /* - */
+    .text-dash {
+      font-size: 9pt !important;
+      font-weight: 700 !important;
+    }
+
+    /* ※ */
+    .text-ref {
+      font-size: 9pt !important;
+      font-weight: 700 !important;
+    }
+
+    /* [실생활 예시] 등 대괄호 라벨 */
+    .text-box-label {
+      font-size: 10.5pt !important;
+      font-weight: 700 !important;
+      margin-top: 8pt !important;
+      margin-bottom: 4pt !important;
+    }
+
+    /* ◈ 단독 줄 》 표 삽입 위치 마커 */
+    .marker-line {
+      color: #e0a020;
+      font-size: 0.8em;
+      opacity: 0.7;
+      padding: 0 4px;
+    }
+
+    .comp-block {
+      position: relative;
+      margin: 20pt 0;
+      border-radius: 8px;
+      transition: all 0.2s;
+      user-select: none;
+      width: 100%;
+    }
+
+    .comp-block .comp-inner {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      overflow: visible;
+      width: 100%;
+    }
+
+    .comp-block .comp-controls {
+      z-index: 20;
+    }
+
+    .comp-block:hover {
+      box-shadow: 0 0 0 2px var(--accent-gold);
+    }
+
+    .comp-block .comp-controls {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    .comp-block:hover .comp-controls {
+      opacity: 1;
+    }
+
+    .ctrl-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-del {
+      background: #EF4444;
+      color: #fff;
+    }
+
+    .comp-inner {
+      pointer-events: none;
+    }
+
+    .comp-loading {
+      padding: 40px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .insert-indicator {
+      height: 2px;
+      background: var(--accent-gold);
+      margin: 8px 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    /* ── Overlay Loader ── */
+    #studio-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--studio-bg);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .gold-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(212, 175, 55, 0.1);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1200px) {
+      .studio-sidebar {
+        width: 0;
+        transform: translateX(-100%);
+      }
+
+      .a4-page {
+        max-width: 95%;
+      }
+
+      /* 너비만 유연하게 조정 */
+    }
+
+    /* ── Verify Modal ── */
+    .verify-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .verify-overlay.show { opacity: 1; }
+    .verify-modal {
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      width: 720px;
+      max-width: 92vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+      transform: translateY(20px);
+      transition: transform 0.25s;
+    }
+    .verify-overlay.show .verify-modal { transform: translateY(0); }
+    .verify-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .verify-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f3f4f6;
+    }
+    .verify-badges {
+      display: flex;
+      gap: 8px;
+    }
+    .verify-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .verify-badge.err { background: rgba(239,68,68,0.2); color: #f87171; }
+    .verify-badge.warn { background: rgba(251,191,36,0.2); color: #fbbf24; }
+    .verify-badge.ok { background: rgba(52,211,153,0.15); color: #34d399; }
+    .verify-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 24px 24px;
+    }
+    .verify-section { margin-bottom: 16px; }
+    .verify-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 0;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .verify-section-title.sec-error { color: #f87171; }
+    .verify-section-title.sec-warning { color: #fbbf24; }
+    .verify-section-title.sec-pass { color: #34d399; }
+    .verify-section-title i.chevron {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+    .verify-section-title.collapsed i.chevron { transform: rotate(-90deg); }
+    .verify-items { margin-left: 4px; }
+    .verify-items.hidden { display: none; }
+    .verify-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #d1d5db;
+    }
+    .verify-item .vi-cat {
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .verify-item .vi-line {
+      color: #60a5fa;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-right: 8px;
+    }
+    .verify-item .vi-line:hover { color: #93bbfd; }
+    .verify-item .vi-msg { color: #e5e7eb; }
+    .verify-item .vi-expected { color: #34d399; }
+    .verify-item .vi-actual { color: #f87171; }
+    .verify-item .vi-text {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      word-break: break-all;
+      max-height: 40px;
+      overflow: hidden;
+    }
+    .vi-root-toggle {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: #60a5fa;
+      cursor: pointer;
+      user-select: none;
+    }
+    .vi-root-toggle:hover { color: #93c5fd; text-decoration: underline; }
+    .vi-root-toggle i { margin-right: 4px; }
+    .vi-root-causes {
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+    }
+    .vi-root-causes.hidden { display: none; }
+    .vi-rc-item {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.75rem;
+    }
+    .vi-rc-item:last-child { border-bottom: none; }
+    .vi-rc-file {
+      color: #fbbf24;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .vi-rc-file i { margin-right: 3px; font-size: 0.7rem; }
+    .vi-rc-chapter {
+      background: #334155;
+      color: #94a3b8;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+    }
+    .vi-rc-hint {
+      color: #9ca3af;
+      font-style: italic;
+    }
+    .vi-rc-action {
+      color: #a78bfa;
+      flex-basis: 100%;
+      padding-left: 18px;
+    }
+    .verify-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .verify-close-btn {
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: #d1d5db;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .verify-close-btn:hover { background: rgba(255,255,255,0.05); }
+    .verify-loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #9ca3af;
+    }
+    .verify-loading .gold-spinner {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 16px;
+    }
+
+    /* ── Print Styles ── */
+    @media print {
+      @page { margin: 0; size: 210mm 297mm; }
+
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      .studio-sidebar, .ws-toolbar, .ws-actions, .comp-controls, #studio-loader {
+        display: none !important;
+      }
+
+      html, body {
+        width: 210mm !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+
+      .studio-shell, .studio-workspace, .canvas-area {
+        display: block !important;
+        width: 210mm !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background: #fff !important;
+      }
+
+      .a4-page {
+        display: block !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        padding: 20mm 14.5mm 20mm 25mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        overflow: hidden !important;
+        position: relative !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+      }
+
+      .a4-page:last-child {
+        page-break-after: avoid !important;
+      }
+
+      .page-content {
+        overflow: visible !important;
+      }
+
+      .filler-block iframe { display: none !important; }
+      .filler-print { display: block !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="studio-loader">
+    <div class="gold-spinner"></div>
+    <p style="color:var(--text-secondary); font-size:0.875rem; letter-spacing:0.05em;">PREPARING STUDIO...</p>
+  </div>
+
+  <script id="raw-content" type="application/json">{{ content | tojson | safe }}</script>
+  <script id="backup-content" type="application/json">{{ content | tojson | safe }}</script>
+
+  <div class="studio-shell">
+    <!-- Sidebar -->
+    <aside class="studio-sidebar">
+      <div class="sb-header">
+        <h2>BANYA STUDIO</h2>
+        <p>Universal Analysis Builder</p>
+      </div>
+
+      <div class="sb-search">
+        <div class="search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" id="compSearch" placeholder="표 이름 검색..." oninput="filterComponents(this.value)">
+        </div>
+        <div style="padding:4px 0 0;">
+          <button onclick="window.open('/saju/print_tables/{{ member.id }}','_blank')"
+            style="width:100%;padding:6px;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);border-radius:4px;color:#d4af37;font-size:12px;cursor:pointer;">
+            <i class="fas fa-eye"></i> 전체 표 미리보기
+          </button>
+        </div>
+      </div>
+
+      <div class="sb-content" id="sidebarContent">
+        <!-- Categories will be injected here -->
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="studio-workspace">
+      <header class="ws-toolbar">
+        <div class="ws-info">
+          <h1>{{ member_name }} <span style="font-weight:300; color:var(--text-secondary);">해석 보고서</span></h1>
+          <p>{{ book.book_year }}년 운세 분석 및 가이드</p>
+        </div>
+
+        <div class="ws-actions">
+          <div id="saveStatus" class="status-pill saved"><i class="fas fa-check-circle"></i>최근 변경사항 저장됨</div>
+          {% if has_backup %}
+          <button class="btn-studio btn-outline" style="border-color: #FBBF24; color: #FBBF24;"
+            onclick="restoreBackup()"><i class="fas fa-history"></i>이전 수정사항 복구</button>
+          {% endif %}
+          <button class="btn-studio btn-outline" onclick="location.href='/members/dashboard'"><i
+              class="fas fa-home"></i>대시보드</button>
+          <button class="btn-studio btn-outline" onclick="doPrint()"><i class="fas fa-print"></i>인쇄</button>
+          <script>
+            function doPrint() {
+              const _origTitle = document.title;
+              const pName = {{ (member_name or '회원') | tojson }};
+              const yr = {{ (book_year or '') | tojson }};
+              document.title = `${pName}_half${yr ? '_' + yr : ''}`;
+              window.print();
+              setTimeout(() => { document.title = _origTitle; }, 500);
+            }
+          </script>
+          <button class="btn-studio btn-outline" id="fillerBtn" onclick="insertFillersNow()" style="border-color:#f59e0b;color:#f59e0b;"><i class="fas fa-puzzle-piece"></i>필러</button>
+          <button class="btn-studio btn-outline" id="verifyBtn" onclick="runVerify()" style="border-color:#60a5fa;color:#60a5fa;"><i class="fas fa-search"></i>검증</button>
+          <button class="btn-studio btn-outline" style="border-color:#4ade80;color:#4ade80;" id="applyAllBtn"
+            onclick="applyToAll()"><i class="fas fa-globe"></i>모두에게 적용</button>
+          <button class="btn-studio btn-primary" id="saveBtn" onclick="saveData()"><i class="fas fa-save"></i>변경사항
+            저장</button>
+        </div>
+      </header>
+
+      <div class="canvas-area" id="canvas">
+        <!-- Pages will be injected here -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    'use strict';
+
+    const MEMBER_ID = "{{ member.id }}";
+    const BOOK_ID = "{{ book.id | default(0) }}";
+    const PRODUCT_TYPE = "{{ book.product_type | default('saju_summary') }}";
+    const PAGE_PX = 925; // 여유 공간 확보를 위해 925px로 조정 (rounding error 방어)
+
+    const COMPONENTS = [
+      { cat: "기본 정보", items: ["만세력표", "cover", "사주기본표", "사주원국요약표"] },
+      { cat: "오행 및 십성", items: ["4신요약표1", "4신요약표2", "격국분석표", "오행균형표", "오행점수표", "오행생극도", "십성배치표", "십성계열분류표"] },
+      { cat: "상세 분석", items: ["십이운성개인표", "일주요약박스", "일지분석표", "음양비율표", "지지계절방위표", "지장간분석표", "합충형파해분석표", "신살현황표", "건강표", "직업표", "인테리어가이드"] },
+      { cat: "운세 가이드", items: ["용신가이드카드", "용신체크리스트1", "용신체크리스트2", "공망안내박스"] },
+      { cat: "대운/세운", items: ["대운로드맵", "대운타임라인", "세운대운교차표", "세운월운달력"] },
+      { cat: "핵심 요약", items: ["전환점요약표", "전환점타임라인", "연간운세요약표", "운세달력_표지"] },
+      { cat: "운세달력 (월별)", items: ["운세달력_01월","운세달력_02월","운세달력_03월","운세달력_04월","운세달력_05월","운세달력_06월","운세달력_07월","운세달력_08월","운세달력_09월","운세달력_10월","운세달력_11월","운세달력_12월"] },
+      { cat: "기초 조견표", items: ["천간일람표", "지지일람표", "오행조견표", "신살의미조견표", "천간합조견표", "지지육합조견표", "지지충조견표", "십성의미조견표", "십이운성조견표", "60갑자표"] },
+      { cat: "비교/분석표", items: ["천간비교표", "지지비교표", "오행신체연관표", "오행인테리어비교표", "부재십성보완표"] },
+      { cat: "전략 가이드", items: ["건강주의대운표", "양생식품표", "재물전략표", "기질판단표", "신강약대운전략표", "신강약직업표", "교체기변화표", "영역별종합표"] },
+      { cat: "삽화", items: ["돛단배_삽화"] }
+    ];
+
+    let blocks = [];
+    let nextId = 1;
+    let activeBlockId = null; // 현재 편집/선택 중인 블록 ID 추적
+
+    /* ── Content Parsing ── */
+    async function init() {
+      let raw = '';
+      try {
+        raw = JSON.parse(document.getElementById('raw-content').textContent) || '';
+      } catch (e) { raw = ''; }
+
+      // [자동 치료] 부주의로 저장된 HTML 태그가 있다면 순수 텍스트로 치환
+      if (/<div|<p|<br/i.test(raw)) {
+        raw = blockContentToPlainText(raw);
+      }
+      // \f(form feed) → 페이지 브레이크 마커로 변환
+      raw = raw.replace(/\f/g, '\n◈PAGEBREAK◈\n');
+
+      const lines = raw.split('\n');
+      let textBuf = [];
+      let inToc = true;  // cover + 목차 구간 여부
+      const flush = () => {
+        if (textBuf.length) {
+          textBuf.forEach(line => {
+            const b = { id: nextId++, type: 'text', content: line };
+            if (inToc) b.toc = true;
+            blocks.push(b);
+          });
+          textBuf = [];
+        }
+      };
+
+      const _loadedTables = new Set();
+      lines.forEach(line => {
+        const m = line.match(/^\[\[TABLE:(.+?)\]\]$/);
+        if (m) {
+          const name = m[1].trim();
+          if (_loadedTables.has(name)) return;
+          _loadedTables.add(name);
+          // 명식표가 나오면 목차 구간 종료 (요약본: 목차 → 명식표 → 서장)
+          if (inToc && name === '명식표') { flush(); inToc = false; }
+          flush();
+          blocks.push({ id: nextId++, type: 'comp', name });
+        } else {
+          // 첫 번째 ☯ N장 헤더가 나오면 목차 구간 종료
+          if (inToc && (/☯/.test(line) && /(?:\d+|서|종)장/.test(line) || /^\S+\s*\d+장\./.test(line) || /^\S+\s*서장\./.test(line))) {
+            flush();
+            inToc = false;
+          }
+          textBuf.push(line);
+        }
+      });
+      flush();
+
+      if (!blocks.length || blocks[blocks.length - 1].type !== 'text') {
+        blocks.push({ id: nextId++, type: 'text', content: '' });
+      }
+
+      renderSidebar();
+      await renderAll();
+
+      // 새로고침 시 스크롤 위치 복원
+      const _savedPos = sessionStorage.getItem('editor_scroll_' + '{{ book.id }}');
+      if (_savedPos) {
+        const canvas = document.getElementById('canvas');
+        requestAnimationFrame(() => { canvas.scrollTop = parseInt(_savedPos); });
+      }
+
+      // 스크롤 위치 자동 저장
+      const _canvas = document.getElementById('canvas');
+      _canvas.addEventListener('scroll', () => {
+        sessionStorage.setItem('editor_scroll_' + '{{ book.id }}', _canvas.scrollTop);
+      });
+    }
+
+    /* ── Backup Restoration ── */
+    function restoreBackup() {
+      if (!confirm('이전 집필에서 수동으로 편집하여 저장했던 내용을 현재 문서 하단에 추가하시겠습니까?')) return;
+
+      let backup = '';
+      try {
+        backup = JSON.parse(document.getElementById('backup-content').textContent) || '';
+      } catch (e) { backup = ''; }
+
+      if (!backup) { alert('복구할 내용이 없습니다.'); return; }
+
+      const lines = backup.split('\n');
+      lines.forEach(line => {
+        const m = line.match(/^\[\[TABLE:(.+?)\]\]$/);
+        if (m) {
+          blocks.push({ id: nextId++, type: 'comp', name: m[1].trim() });
+        } else {
+          blocks.push({ id: nextId++, type: 'text', content: line });
+        }
+      });
+
+      alert('이전 수정사항을 문서 하단에 추가했습니다. 중복된 내용을 정리하신 후 저장해 주세요.');
+      markDirty();
+      renderAll();
+    }
+
+    /* ── Sidebar ── */
+    function renderSidebar(filter = '') {
+      const container = document.getElementById('sidebarContent');
+      container.innerHTML = '';
+
+      COMPONENTS.forEach(cat => {
+        const filteredItems = cat.items.filter(it => it.includes(filter));
+        if (!filteredItems.length) return;
+
+        const catEl = document.createElement('div');
+        catEl.className = 'comp-category';
+        catEl.innerHTML = `<div class="cat-title">${cat.cat}</div>`;
+
+        const gridEl = document.createElement('div');
+        gridEl.className = 'comp-grid';
+
+        filteredItems.forEach(name => {
+          const card = document.createElement('div');
+          card.className = 'comp-card';
+          card.innerHTML = `<i class="fas fa-table"></i><span>${name}</span>`;
+          card.onclick = () => insertComponent(name);
+          gridEl.appendChild(card);
+        });
+
+        catEl.appendChild(gridEl);
+        container.appendChild(catEl);
+      });
+    }
+
+    function filterComponents(val) { renderSidebar(val); }
+
+    /* ── Rendering Core ── */
+    async function renderAll() {
+      _rendering = true;
+      const canvas = document.getElementById('canvas');
+      const savedScroll = canvas.scrollTop;   // 현재 스크롤 위치 저장
+      canvas.innerHTML = '';
+
+      // Step 1: Create all component elements in parallel for speed
+      const blockElements = await Promise.all(blocks.map(async b => {
+        return b.type === 'text' ? createTextEl(b) : await createCompEl(b);
+      }));
+
+      // Step 2: Real-time Layout Deployment (Brute-force precision with performance fix)
+      let pIdx = 1;
+      let currentPage = createPage(pIdx);
+      canvas.appendChild(currentPage);
+      let contentArea = currentPage.querySelector('.page-content');
+
+      const LIMIT = 932;
+      let _pastTocArea = false; // 목차 구간 지났는지 추적
+
+      // 성능 향상을 위해 DocumentFragment를 고려할 수 있으나, scrollHeight 측정을 위해 순차 삽입 유지
+      for (let i = 0; i < blockElements.length; i++) {
+        const el = blockElements[i];
+        // 서장이 나오면 목차 구간 종료
+        if (!_pastTocArea && /☯\s*서장/.test(el.textContent || '')) _pastTocArea = true;
+
+        // ── 자동 페이지 나눔 룰 ──
+        // 룰: ☯ ✦ ◎ ★ 기호로 시작하는 블록이 페이지 80% 이후에 오면 → 다음 페이지
+        const SYMBOL_BREAK_THRESHOLD = 746; // 페이지 80% (932px × 0.8)
+        const SYMBOL_CHARS = ['☯', '✦', '★', '◎', '['];
+        const elText = (el.textContent || '').trim();
+        const startsWithSymbol = SYMBOL_CHARS.some(s => elText.startsWith(s));
+
+        // 목차 전용 페이지 브레이크 (총본 목차가 길 때만)
+        const TOC_BREAK_KEYWORDS = ['5장. 십성', '9장.'];
+        const isTocItem = el.classList.contains('toc-item');
+        // 목차 항목이 30개 이상일 때만 분할 (요약본처럼 짧은 목차는 분할 안 함)
+        const _tocItemCount = isTocItem ? Array.from(contentArea.querySelectorAll('.toc-item')).length : 0;
+        if (isTocItem && _tocItemCount >= 25 && TOC_BREAK_KEYWORDS.some(t => elText.includes(t)) && contentArea.childNodes.length > 0) {
+          pIdx++;
+          currentPage = createPage(pIdx);
+          canvas.appendChild(currentPage);
+          contentArea = currentPage.querySelector('.page-content');
+        }
+
+        // \f 페이지 브레이크 마커 (목차 구간 제외)
+        if (elText.trim() === '◈PAGEBREAK◈') {
+          if (_pastTocArea && contentArea.childNodes.length > 0) {
+            pIdx++;
+            currentPage = createPage(pIdx);
+            canvas.appendChild(currentPage);
+            contentArea = currentPage.querySelector('.page-content');
+          }
+          continue;
+        }
+
+        // 특정 키워드 강제 페이지 브레이크 (기호 없는 본문용)
+        const FORCE_BREAK_KEYWORDS = [
+          '사주 8글자 중 나를 나타내는 글자',
+        ];
+        if (!isTocItem && FORCE_BREAK_KEYWORDS.some(t => elText.includes(t)) && contentArea.childNodes.length > 0) {
+          pIdx++;
+          currentPage = createPage(pIdx);
+          canvas.appendChild(currentPage);
+          contentArea = currentPage.querySelector('.page-content');
+        }
+
+        // 기호 블록 자동 나눔 (목차 제외)
+        // 페이지 80% 이상 찼으면 기호에서 다음 페이지
+        if (startsWithSymbol && !isTocItem && contentArea.childNodes.length > 0 && contentArea.scrollHeight >= SYMBOL_BREAK_THRESHOLD) {
+          pIdx++;
+          currentPage = createPage(pIdx);
+          canvas.appendChild(currentPage);
+          contentArea = currentPage.querySelector('.page-content');
+        }
+
+        // ☯ 장 → 항상 새 페이지
+        // ✺ 절 → 남은 공간 400px 이상이면 올려 붙이기 (빈줄 2줄 삽입), 미만이면 새 페이지
+        const hasRealContent = contentArea.childNodes.length > 0 && (contentArea.textContent.trim().length > 0 || contentArea.querySelector('.comp-block'));
+        if (el.classList.contains('text-toc-title') && hasRealContent) {
+          // 목차 제목 → 항상 새 페이지, 이후 목차 끝까지 같은 페이지 유지
+          pIdx++;
+          currentPage = createPage(pIdx);
+          canvas.appendChild(currentPage);
+          contentArea = currentPage.querySelector('.page-content');
+        } else if (el.classList.contains('text-title') && hasRealContent) {
+          // ☯ 장은 항상 새 페이지
+          pIdx++;
+          currentPage = createPage(pIdx);
+          canvas.appendChild(currentPage);
+          contentArea = currentPage.querySelector('.page-content');
+        } else if (el.classList.contains('text-subtitle') && hasRealContent) {
+          const remaining = LIMIT - contentArea.scrollHeight;
+          // 절 제목(30px) + 빈줄 2줄(32px) + 다음 블록이 표면 250px 추가
+          let needHeight = 62; // 제목 + 빈줄 2줄
+          // 바로 다음 블록이 표(comp)인지 확인
+          for (let k = i + 1; k < blocks.length; k++) {
+            if (blocks[k].type === 'comp') { needHeight += 250; break; }
+            if (blocks[k].type === 'text' && (blocks[k].content || '').trim()) break; // 텍스트 나오면 표 없음
+            // 빈줄은 건너뜀
+          }
+          if (remaining >= Math.max(400, needHeight)) {
+            // 올려 붙이기 — 빈줄 2줄로 구분
+            for (let sp = 0; sp < 4; sp++) {
+              const spacer = document.createElement('div');
+              spacer.className = 'text-block text-empty';
+              spacer.style.minHeight = '12pt';
+              contentArea.appendChild(spacer);
+            }
+          } else {
+            // 남은 공간 부족 → 새 페이지
+            pIdx++;
+            currentPage = createPage(pIdx);
+            canvas.appendChild(currentPage);
+            contentArea = currentPage.querySelector('.page-content');
+          }
+        }
+
+        // 본문은 LIMIT 넘침 체크(아래)에서 자동 처리 — 들어가면 올려 붙이고 안 들어가면 넘김
+
+        contentArea.appendChild(el);
+
+        // 표 삽입 후 남은 공간이 3줄(82px) 미만이면 다음 텍스트 블록은 다음 페이지로
+        // → 현재 블록이 표이고 삽입 후 남은 공간이 적으면, 다음 블록을 위해 미리 페이지 넘김
+        if (el.classList.contains('comp-block') && contentArea.scrollHeight <= LIMIT) {
+          const remainAfterComp = LIMIT - contentArea.scrollHeight;
+          if (remainAfterComp < 100 && remainAfterComp > 0 && i + 1 < blockElements.length) {
+            pIdx++;
+            currentPage = createPage(pIdx);
+            canvas.appendChild(currentPage);
+            contentArea = currentPage.querySelector('.page-content');
+          }
+        }
+
+        // 실시간 높이 감지 (height: 100% 버그 해결로 정상 작동)
+        if (contentArea.scrollHeight > LIMIT) {
+          if (contentArea.childNodes.length > 1) {
+            contentArea.removeChild(el);
+            // 표(comp) 앞에 기호/절 블록이 있으면 함께 다음 페이지로
+            const carriedItems = [];
+            if (el.classList.contains('comp-block')) {
+              // 표 앞의 블록들을 역순으로 확인: 빈줄 spacer → 기호/절 제목
+              while (contentArea.lastChild) {
+                const last = contentArea.lastChild;
+                const lastText = (last.textContent || '').trim();
+                const isSymbol = ['☯','✦','◎','★','✺'].some(s => lastText.startsWith(s));
+                const isSubtitle = last.classList && last.classList.contains('text-subtitle');
+                const isSpacer = last.classList && last.classList.contains('text-empty');
+                if (isSymbol || isSubtitle) {
+                  carriedItems.unshift(last);
+                  contentArea.removeChild(last);
+                  // 제목 앞의 빈줄 spacer도 함께 가져감
+                  while (contentArea.lastChild && contentArea.lastChild.classList && contentArea.lastChild.classList.contains('text-empty')) {
+                    carriedItems.unshift(contentArea.lastChild);
+                    contentArea.removeChild(contentArea.lastChild);
+                  }
+                  break;
+                } else if (isSpacer) {
+                  carriedItems.unshift(last);
+                  contentArea.removeChild(last);
+                } else {
+                  break;
+                }
+              }
+            }
+            pIdx++;
+            currentPage = createPage(pIdx);
+            canvas.appendChild(currentPage);
+            contentArea = currentPage.querySelector('.page-content');
+            carriedItems.forEach(item => contentArea.appendChild(item));
+            contentArea.appendChild(el);
+          }
+        }
+      }
+
+      // ── 빈 공간에 필러(명언/팁/이미지) 자동 삽입 ──
+      // 필러 자동 삽입 (집필 완료 후)
+      const _fillerBtn = document.getElementById('fillerBtn');
+      if (_fillerBtn) { _fillerBtn.innerHTML = '<i class="fas fa-sync fa-spin"></i>필러 로딩...'; _fillerBtn.disabled = true; }
+      setTimeout(function() { window.insertFillersNow(); }, 5000);
+
+      window.insertFillersNow = function() {
+        if (window._fillerDone) { if(_fillerBtn) _fillerBtn.innerHTML = '<i class="fas fa-puzzle-piece"></i>완료'; return; }
+        window._fillerDone = true;
+        const btn = document.getElementById('fillerBtn');
+        if (btn) { btn.innerHTML = '<i class="fas fa-sync fa-spin"></i>배치 중...'; btn.disabled = true; }
+        const FILLER_MIN = 70;
+        const LIMIT = 932;
+        const _canvas = document.getElementById('canvas');
+        // ── 완전 빈 페이지 자동 삭제 (text·comp·filler 모두 없는 순수 백지) ──
+        _canvas.querySelectorAll('.a4-page').forEach((page, idx) => {
+          if (idx === 0) return;
+          const content = page.querySelector('.page-content');
+          if (!content) return;
+          const hasAny = Array.from(content.children).some(ch =>
+            (ch.classList.contains('text-block') && (ch.textContent || '').trim().length > 0) ||
+            ch.classList.contains('comp-block') ||
+            ch.classList.contains('filler-block')
+          );
+          if (!hasAny) page.remove();
+        });
+        const pages = _canvas.querySelectorAll('.a4-page');
+        const usedFillers = new Set();
+        // 필러 풀: 크기별 텍스트/이미지 분리
+        const _mkList = (prefix, from, to, pad) => Array.from({length:to-from+1}, (_,i) => `${prefix}${String(from+i).padStart(pad,'0')}`);
+        const FILLER_TEXT = {
+          large:  _mkList('filler_large_', 1, 63, 2),
+          medium: [..._mkList('filler_medium_', 1, 30, 2), ..._mkList('filler_medium_', 53, 76, 2)],
+          small:  [..._mkList('filler_small_', 1, 30, 2), ..._mkList('filler_small_', 53, 102, 2)],
+          xs:     [..._mkList('filler_xs_', 1, 100, 2), ..._mkList('filler_xs_', 123, 172, 3)],
+        };
+        const FILLER_IMG = {
+          large:  [], // large는 이미지 없음
+          medium: _mkList('filler_medium_', 31, 52, 2),
+          small:  _mkList('filler_small_', 31, 52, 2),
+          xs:     _mkList('filler_xs_', 101, 122, 3),
+        };
+        const IMG_RATIO = 0.3; // 이미지 30% 의무
+        // 셔플
+        function shuffle(arr) {
+          const a = [...arr];
+          for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+          }
+          return a;
+        }
+        // 텍스트/이미지 셔플 풀
+        const _txtPools = { large:shuffle(FILLER_TEXT.large), medium:shuffle(FILLER_TEXT.medium), small:shuffle(FILLER_TEXT.small), xs:shuffle(FILLER_TEXT.xs) };
+        const _imgPools = { large:[], medium:shuffle(FILLER_IMG.medium), small:shuffle(FILLER_IMG.small), xs:shuffle(FILLER_IMG.xs) };
+        // 통합 풀 (30% 이미지 보장: 이미지→텍스트→이미지→텍스트... 비율 맞춤)
+        function buildMixedPool(txt, img) {
+          const mixed = [];
+          const total = txt.length + img.length;
+          if (img.length === 0) return [...txt];
+          const imgEvery = Math.max(1, Math.round(1 / IMG_RATIO)); // 3~4개마다 1개 이미지
+          let ti = 0, ii = 0;
+          for (let n = 0; n < total; n++) {
+            if ((n + 1) % imgEvery === 0 && ii < img.length) {
+              mixed.push(img[ii++]);
+            } else if (ti < txt.length) {
+              mixed.push(txt[ti++]);
+            } else if (ii < img.length) {
+              mixed.push(img[ii++]);
+            }
+          }
+          return mixed;
+        }
+        const shuffledLarge = buildMixedPool(_txtPools.large, _imgPools.large);
+        const shuffledMedium = buildMixedPool(_txtPools.medium, _imgPools.medium);
+        const shuffledSmall = buildMixedPool(_txtPools.small, _imgPools.small);
+        const shuffledXS = buildMixedPool(_txtPools.xs, _imgPools.xs);
+
+        let prevHadFiller = false;
+        for (let pi = 0; pi < pages.length; pi++) {
+          const page = pages[pi];
+          if (pi === 0) { prevHadFiller = false; continue; }
+          const content = page.querySelector('.page-content');
+          if (!content) { prevHadFiller = false; continue; }
+          // 콘텐츠가 전혀 없는 페이지만 스킵 (표 또는 텍스트 있으면 필러 삽입 허용)
+          const _hasContent = Array.from(content.children).some(ch =>
+            (ch.classList.contains('text-block') && ch.textContent.trim().length > 0) ||
+            ch.classList.contains('comp-block')
+          );
+          if (!_hasContent) continue;
+          // 목차 페이지 스킵 (필러 삽입 금지)
+          // 목차 = "☯ 목 차 ☯" 텍스트 + 여러 장 번호가 한 페이지에 있음
+          const _pageText = content.textContent || '';
+          const _장개수 = (_pageText.match(/\d+장/g) || []).length;
+          if (_장개수 >= 5) continue;  // 5개 이상 장번호 = 목차 페이지
+          const remain = LIMIT - content.scrollHeight;
+          if (remain < FILLER_MIN) continue;
+
+          const sizes = ['large','medium','small','xs'];
+          const pools = {large:shuffledLarge, medium:shuffledMedium, small:shuffledSmall, xs:shuffledXS};
+          const mins = {large:500, medium:320, small:180, xs:FILLER_MIN};
+          let startIdx = remain >= 500 ? 0 : remain >= 320 ? 1 : remain >= 180 ? 2 : 3;
+          // 미사용 필러 우선, 소진 시 재사용 허용 (건너뛰지 않음)
+          let fillerName = pools[sizes[startIdx]].find(f => !usedFillers.has(f));
+          if (!fillerName) fillerName = pools[sizes[startIdx]][Math.floor(Math.random() * pools[sizes[startIdx]].length)];
+          if (!fillerName) continue;
+
+          // 남은 공간에 맞는 최적 사이즈 선택 (동기적 — 다운그레이드 즉시)
+          const _contentRef = content;
+          let _bestIdx = startIdx;
+          // remain에 맞는 가장 큰 사이즈 찾기 (이미 startIdx가 맞지만, 풀 소진 시 다운그레이드)
+          let _bestName = null;
+          for (let si = startIdx; si < sizes.length; si++) {
+            const pool = pools[sizes[si]];
+            if (!pool || pool.length === 0) continue;
+            let n = pool.find(f => !usedFillers.has(f));
+            if (!n) n = pool[Math.floor(Math.random() * pool.length)];
+            if (n) { _bestName = n; _bestIdx = si; break; }
+          }
+          if (!_bestName) continue;
+          usedFillers.add(_bestName);
+
+          const wrap = document.createElement('div');
+          wrap.className = 'filler-block';
+          wrap.style.cssText = 'display:flex;justify-content:center;width:100%;';
+          const spacer = document.createElement('div');
+          spacer.style.cssText = 'flex-shrink:0;';
+          const iframe = document.createElement('iframe');
+          iframe.src = `/static/filler/${_bestName}.html`;
+          iframe.className = 'filler-frame';
+          iframe.style.cssText = 'width:100%;border:none;display:block;overflow:hidden;';
+          iframe.scrolling = 'no';
+          // 필러는 페이지 하단(25mm 여백 바로 위)에 배치 — spacer가 필러를 아래로 밀어줌
+          _contentRef.appendChild(spacer);
+          wrap.appendChild(iframe);
+          _contentRef.appendChild(wrap);
+
+          iframe.onload = function() {
+            try {
+              const doc = this.contentWindow.document;
+              const 선생님 = '{{ teacher_name | default("반야선생") }}';
+              doc.body.innerHTML = doc.body.innerHTML.replace(/\{\{선생님이름\}\}/g, 선생님);
+              const fH = doc.body.scrollHeight + 10;
+              this.style.height = fH + 'px';
+              // 인라인 복사본 생성 (인쇄용)
+              const _styles = Array.from(doc.querySelectorAll('style')).map(s => s.outerHTML).join('');
+              const _inl = document.createElement('div');
+              _inl.className = 'filler-print';
+              _inl.innerHTML = _styles + doc.body.innerHTML;
+              _inl.style.cssText = `width:100%;height:${fH}px;overflow:hidden;`;
+              wrap.appendChild(_inl);
+              setTimeout(() => {
+                const usedH = _contentRef.scrollHeight;
+                if (usedH > LIMIT + 30) {
+                  // 넘침 → 제거하고 한 단계 작은 필러로 동기적 교체
+                  spacer.remove(); wrap.remove();
+                  usedFillers.delete(_bestName);
+                  // 더 작은 사이즈로 재시도 (동기적 삽입)
+                  for (let ri = _bestIdx + 1; ri < sizes.length; ri++) {
+                    const rPool = pools[sizes[ri]];
+                    if (!rPool || rPool.length === 0) continue;
+                    let rn = rPool.find(f => !usedFillers.has(f));
+                    if (!rn) rn = rPool[Math.floor(Math.random() * rPool.length)];
+                    if (!rn) continue;
+                    usedFillers.add(rn);
+                    const w2 = document.createElement('div');
+                    w2.className = 'filler-block';
+                    w2.style.cssText = 'display:flex;justify-content:center;width:100%;';
+                    const s2 = document.createElement('div'); s2.style.cssText = 'flex-shrink:0;';
+                    const f2 = document.createElement('iframe');
+                    f2.src = `/static/filler/${rn}.html`;
+                    f2.className = 'filler-frame';
+                    f2.style.cssText = 'width:100%;border:none;display:block;overflow:hidden;';
+                    f2.scrolling = 'no';
+                    _contentRef.appendChild(s2); w2.appendChild(f2); _contentRef.appendChild(w2);
+                    f2.onload = function() {
+                      try {
+                        const d2 = this.contentWindow.document;
+                        d2.body.innerHTML = d2.body.innerHTML.replace(/\{\{선생님이름\}\}/g, 선생님);
+                        const h2 = d2.body.scrollHeight + 10;
+                        this.style.height = h2 + 'px';
+                        const st2 = Array.from(d2.querySelectorAll('style')).map(s=>s.outerHTML).join('');
+                        const inl2 = document.createElement('div');
+                        inl2.className = 'filler-print';
+                        inl2.innerHTML = st2 + d2.body.innerHTML;
+                        inl2.style.cssText = `width:100%;height:${h2}px;overflow:hidden;`;
+                        w2.appendChild(inl2);
+                        setTimeout(() => {
+                          const uh2 = _contentRef.scrollHeight;
+                          if (uh2 > LIMIT + 30) { s2.remove(); w2.remove(); usedFillers.delete(rn); }
+                          else { s2.style.height = Math.max(0, LIMIT - uh2) + 'px'; }
+                        }, 80);
+                      } catch(e) { this.style.height = '40px'; }
+                    };
+                    break; // 하나 넣으면 끝
+                  }
+                  return;
+                }
+                const gap = LIMIT - usedH;
+                spacer.style.height = (gap > 0 ? gap : 0) + 'px';
+              }, 100);
+            } catch(e) { this.style.height = '60px'; }
+          };
+          prevHadFiller = true;
+        }
+        const _cnt = usedFillers.size;
+        // 사이즈별 통계
+        const _stats = {large:0, medium:0, small:0, xs:0};
+        usedFillers.forEach(name => {
+          if (name.includes('_large_') || name.startsWith('filler_large')) _stats.large++;
+          else if (name.includes('_medium_') || name.startsWith('filler_medium')) _stats.medium++;
+          else if (name.includes('_small_') || name.startsWith('filler_small')) _stats.small++;
+          else if (name.includes('_xs_') || name.startsWith('filler_xs')) _stats.xs++;
+        });
+        const _statStr = `L${_stats.large} M${_stats.medium} S${_stats.small} XS${_stats.xs}`;
+        console.log(`[필러] 총 ${_cnt}개 | ${_statStr}`);
+        if (btn) { btn.innerHTML = `<i class="fas fa-sync fa-spin"></i>로딩(${_cnt})...`; }
+        // 모든 필러 iframe 로드 완료 대기
+        const _fillerIframes = document.querySelectorAll('.filler-block iframe');
+        let _loaded = 0;
+        const _checkDone = () => {
+          _loaded++;
+          if (_loaded >= _fillerIframes.length) {
+            if (btn) { btn.innerHTML = `<i class="fas fa-puzzle-piece"></i>인쇄가능(${_cnt}) L${_stats.large} M${_stats.medium} S${_stats.small} XS${_stats.xs}`; btn.disabled = false; }
+          }
+        };
+        if (_fillerIframes.length === 0) {
+          if (btn) { btn.innerHTML = `<i class="fas fa-puzzle-piece"></i>완료(0) L0 M0 S0 XS0`; btn.disabled = false; }
+        } else {
+          _fillerIframes.forEach(f => {
+            if (f.contentDocument && f.contentDocument.readyState === 'complete' && f.style.height) _checkDone();
+            else f.addEventListener('load', () => setTimeout(_checkDone, 200));
+          });
+          // 30초 타임아웃
+          setTimeout(() => {
+            if (btn && btn.disabled) { btn.innerHTML = `<i class="fas fa-puzzle-piece"></i>인쇄가능(${_cnt})`; btn.disabled = false; }
+          }, 30000);
+        }
+      };
+
+      // 스크롤 위치 복원 (초기 로드는 0이므로 자동으로 최상단 유지)
+      if (savedScroll > 0) {
+        canvas.scrollTop = savedScroll;
+      }
+
+      // ── 페이지 번호 매기기 (목차 다음 페이지부터) ──
+      (function assignPageNumbers() {
+        const allPages = canvas.querySelectorAll('.a4-page');
+        let tocFound = false;
+        let numbering = false;
+        let pageNum = 0;
+        allPages.forEach(page => {
+          const txt = page.textContent || '';
+          if (!tocFound && /목\s*차/.test(txt)) {
+            tocFound = true;
+            // 목차 페이지 자체는 번호 없음, 다음 페이지부터 시작
+            const numEl = page.querySelector('.page-number');
+            if (numEl) numEl.textContent = '';
+            return;
+          }
+          if (tocFound && !numbering) numbering = true;
+          const numEl = page.querySelector('.page-number');
+          if (numEl) {
+            if (numbering) {
+              pageNum++;
+              numEl.textContent = pageNum;
+            } else {
+              numEl.textContent = '';
+            }
+          }
+        });
+      })();
+
+      document.getElementById('studio-loader').style.opacity = '0';
+      setTimeout(() => document.getElementById('studio-loader').style.display = 'none', 300);
+      _rendering = false;
+      if (_pendingRender) {
+        _pendingRender = false;
+        renderAll();
+      }
+    }
+
+    function createPage(num) {
+      const page = document.createElement('div');
+      page.className = 'a4-page';
+      page.innerHTML = `<div class="page-content"></div><div class="page-number"></div>`;
+      return page;
+    }
+
+    function textTypeClass(content, isToc) {
+      if (/☯/.test(content) && /목\s*차/.test(content)) return ' text-toc-title';  // 목차 제목 (별도 관리)
+      if (isToc) return '';  // 목차 내부 줄은 일반 텍스트로 (title 안 됨)
+      if (/☯/.test(content) && (/(?:\d+|서|종)장/.test(content))) return ' text-title';
+      if (/^\s*\S+\s*\d+장\./.test(content)) return ' text-title';  // 이모지+N장. (요약본)
+      if (/^\s*\S+\s*(서장|부록|마지막\s*편지)/.test(content)) return ' text-title';  // 서장/부록/편지 (요약본)
+      if (/✺/.test(content) && /\d+장\.|서장|마지막/.test(content)) return ' text-title';  // 요약본 장 제목 → 새 페이지
+      if (/✺/.test(content) && /제\d+절|부록/.test(content)) return ' text-subtitle';
+      if (/^\s*\[.+\]/.test(content)) return ' text-box-label';  // [실생활 예시] 등 대괄호 라벨
+      if (/^\s*✦/.test(content)) return ' text-callout';
+      if (/^\s*★/.test(content)) return ' text-star';
+      if (/^\s*◎/.test(content)) return ' text-circle';
+      if (/^\s*▸/.test(content)) return ' text-arrow';
+      if (/^\s*-\s/.test(content)) return ' text-dash';
+      if (/^\s*※/.test(content)) return ' text-ref';
+      if (content.trim() === '◈') return ' marker-line';
+      return '';
+    }
+
+    function createTextEl(b) {
+      const el = document.createElement('div');
+      const typeClass = textTypeClass(b.content, !!b.toc);
+      // ☯ 제목 앞뒤 공백 제거
+      if (typeClass === ' text-title' || typeClass === ' text-subtitle' || typeClass === ' text-toc-title') b.content = b.content.trim();
+      el.className = 'text-block' + typeClass;
+      if (!b.content.trim()) el.classList.add('text-empty');
+      if (b.toc) el.classList.add('toc-item');
+      el.id = `block-${b.id}`;
+      el.contentEditable = true;
+      // 순수 텍스트로 로드 (HTML 이중 중첩 방지)
+      // 단, ✺ 장 제목에 '—' 부제가 있으면 부제만 14pt bold span으로 강조
+      if (typeClass === ' text-title' && b.content.includes('—')) {
+        const _idx = b.content.indexOf('—');
+        const _main = b.content.slice(0, _idx);
+        const _sub  = b.content.slice(_idx + 1).trim();
+        const _esc  = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        el.innerHTML = `${_esc(_main)}— <span class="text-title-sub">${_esc(_sub)}</span>`;
+      } else {
+        el.textContent = b.content;
+      }
+
+      el.onfocus = () => { activeBlockId = b.id; };
+      el.oninput = () => {
+        // 순수 텍스트로 동기화 (줄바꿈 제거)
+        b.content = (el.textContent || '').replace(/\n/g, '');
+        const newClass = 'text-block' + textTypeClass(b.content);
+        const targetClass = !b.content.trim() ? newClass + ' text-empty' : newClass;
+        // 클래스가 바뀔 때만 재할당 》 매번 재할당하면 커서 위치 초기화됨
+        if (el.className !== targetClass) el.className = targetClass;
+        markDirty();
+      };
+      el.onblur = () => { scanAndConvertTags(b.id); }; // 포커스 나갈 때 태그 검사
+
+      return el;
+    }
+
+    async function createCompEl(b) {
+      const wrap = document.createElement('div');
+      wrap.className = 'comp-block';
+      wrap.id = `block-${b.id}`;
+      wrap.innerHTML = `<div class="comp-controls"><button class="ctrl-btn btn-del" onclick="deleteBlock(${b.id})"><i class="fas fa-trash-alt"></i></button></div>`;
+      // 표 블록 클릭 시 activeBlockId 설정 (삽입 위치 정확도)
+      wrap.addEventListener('click', () => { activeBlockId = b.id; });
+
+      const host = document.createElement('div');
+      host.className = 'comp-inner';
+      const shadow = host.attachShadow({ mode: 'open' });
+      shadow.innerHTML = `<div style="font-family:'Noto Sans KR',sans-serif;">Loading ${b.name}...</div>`;
+      wrap.appendChild(host);
+
+      try {
+        const apiName = `TABLE:${b.name}`;
+        const res = await fetch(`/saju/api/render_component?name=${encodeURIComponent(apiName)}&member_id=${MEMBER_ID}`);
+        if (res.ok) {
+          shadow.innerHTML = await res.text();
+          // shadow 내용 높이에 맞춰 host 크기 조정
+          const _adjustHost = () => {
+            let h = 0;
+            shadow.querySelectorAll('*').forEach(el => {
+              const r = el.getBoundingClientRect();
+              if (r.bottom > h) h = r.bottom;
+            });
+            const hostTop = host.getBoundingClientRect().top;
+            const finalH = h - hostTop + 10;
+            if (finalH > 50) host.style.minHeight = finalH + 'px';
+          };
+          setTimeout(_adjustHost, 300);
+          setTimeout(_adjustHost, 1000);
+        }
+        else shadow.innerHTML = `<div style="padding:20px; color:#ef4444; font-size:12px;">Error loading ${b.name}</div>`;
+      } catch (e) {
+        shadow.innerHTML = `<div style="padding:20px; color:#ef4444;">Connection Error</div>`;
+      }
+
+      return wrap;
+    }
+
+    /* ── Actions ── */
+    function insertComponent(name) {
+      const newComp = { id: nextId++, type: 'comp', name };
+      const newText = { id: nextId++, type: 'text', content: '' };
+
+      if (activeBlockId) {
+        const idx = blocks.findIndex(b => b.id === activeBlockId);
+        if (idx !== -1) {
+          blocks.splice(idx + 1, 0, newComp, newText);
+        } else {
+          blocks.push(newComp, newText);
+        }
+      } else {
+        blocks.push(newComp, newText);
+      }
+
+      markDirty();
+      renderAll();
+    }
+
+    function scanAndConvertTags(bId) {
+      const b = blocks.find(x => x.id === bId);
+      if (!b || b.type !== 'text') return;
+
+      // HTML 태그가 포함된 상태에서도 태그를 추출할 수 있도록 개선
+      const tagRegex = /\[\[TABLE:(.+?)\]\]/;
+      const plainText = b.content.replace(/<[^>]+>/g, '\n'); // HTML 태그를 개행으로 치환하여 분석
+      const match = plainText.match(tagRegex);
+
+      if (match) {
+        const fullTag = match[0];
+        const compName = match[1].trim();
+
+        // 실제 HTML 내용에서 해당 태그를 기준으로 분리
+        // 주의: 사용자가 텍스트 블록 중간에 [[TABLE:..]]을 직접 타이핑한 경우 처리
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = b.content;
+        const content = tempDiv.innerText;
+
+        if (content.includes(fullTag)) {
+          const parts = content.split(fullTag);
+          const idx = blocks.findIndex(x => x.id === bId);
+
+          const newBlocks = [];
+          if (parts[0].trim()) newBlocks.push({ id: nextId++, type: 'text', content: parts[0].trim() });
+          newBlocks.push({ id: nextId++, type: 'comp', name: compName });
+          if (parts[1].trim()) newBlocks.push({ id: nextId++, type: 'text', content: parts[1].trim() });
+          else newBlocks.push({ id: nextId++, type: 'text', content: '' });
+
+          blocks.splice(idx, 1, ...newBlocks);
+          markDirty();
+          renderAll();
+        }
+      }
+    }
+
+    let _rendering = false;
+    let _pendingRender = false;
+    function deleteBlock(id) {
+      blocks = blocks.filter(b => b.id !== id);
+      if (!blocks.length || blocks[blocks.length - 1].type !== 'text') {
+        blocks.push({ id: nextId++, type: 'text', content: '' });
+      }
+      activeBlockId = null;
+      // 즉시 DOM에서 제거
+      const domEl = document.getElementById(`block-${id}`);
+      if (domEl) domEl.remove();
+      // 자동 저장
+      saveData();
+    }
+
+    function markDirty() {
+      const st = document.getElementById('saveStatus');
+      st.className = 'status-pill dirty';
+      st.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>변경사항 저장 필요';
+    }
+
+    /** HTML → 순수 텍스트 변환 (저장 시 사용) */
+    function blockContentToPlainText(html) {
+      if (!html) return '';
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      // <br>, <div>, <p> 를 줄바꿈으로 치환
+      tmp.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+      tmp.querySelectorAll('div, p').forEach(el => {
+        el.insertAdjacentText('beforebegin', el.innerText);
+        el.insertAdjacentText('beforebegin', '\n');
+        el.remove();
+      });
+      return (tmp.innerText || tmp.textContent || '').replace(/\n{3,}/g, '\n\n').trimEnd();
+    }
+
+    async function saveData() {
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true;
+      const oldHtml = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-sync fa-spin"></i>저장 중...';
+
+
+      // HTML -> 순수 텍스트 변환 후 저장
+      // 연속 빈 block 제거 + TABLE 중복 방지 (같은 이름 첫 번째만 저장)
+      const _cleaned = [];
+      const _savedTables = new Set();
+      let _prevEmpty = false;
+      for (const b of blocks) {
+        if (b.type === 'comp') {
+          if (_savedTables.has(b.name)) continue;
+          _savedTables.add(b.name);
+          _cleaned.push(`[[TABLE:${b.name}]]`);
+          _prevEmpty = false;
+        } else {
+          const isHtml = /<[a-z][\s\S]*>/i.test(b.content);
+          let text = isHtml ? blockContentToPlainText(b.content) : b.content;
+          text = text.replace(/\n+$/, '');
+          const isEmpty = !text.trim();
+          if (isEmpty && _prevEmpty) continue; // 연속 빈줄 스킵
+          _cleaned.push(text);
+          _prevEmpty = isEmpty;
+        }
+      }
+      let content = _cleaned.join('\n');
+      // 최종 정리: 연속 빈줄 2개 이상 → 1개
+      content = content.replace(/\n{3,}/g, '\n\n');
+      const fd = new FormData();
+      fd.append('content', content);
+
+      try {
+        const res = await fetch(`/saju/save/${BOOK_ID}`, { method: 'POST', body: fd });
+        const data = await res.json();
+        if (data.success) {
+          const st = document.getElementById('saveStatus');
+          st.className = 'status-pill saved';
+          st.innerHTML = '<i class="fas fa-check-circle"></i>최근 변경사항 저장됨';
+        }
+      } catch (e) { alert('저장 중 오류가 발생했습니다.'); }
+
+      btn.disabled = false;
+      btn.innerHTML = oldHtml;
+    }
+
+    /* ── 모두에게 적용 ── */
+    let _applyPending = false;
+    async function applyToAll() {
+      const btn = document.getElementById('applyAllBtn');
+      // 첫 클릭: 확인 대기 상태 (confirm() 대화상자 사용 안 함 》 포커스 탈취 방지)
+      if (!_applyPending) {
+        _applyPending = true;
+        btn.style.borderColor = '#f87171';
+        btn.style.color = '#f87171';
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>한번 더 클릭';
+        setTimeout(() => {
+          if (_applyPending) {
+            _applyPending = false;
+            btn.style.borderColor = '#4ade80';
+            btn.style.color = '#4ade80';
+            btn.innerHTML = '<i class="fas fa-globe"></i>모두에게 적용';
+          }
+        }, 3000);
+        return;
+      }
+      _applyPending = false;
+      btn.style.borderColor = '#4ade80';
+      btn.style.color = '#4ade80';
+
+      btn.innerHTML = '<i class="fas fa-sync fa-spin"></i>적용 중...';
+
+      const CHAPTER_RE = /☯\s*((?:\d+|서|종)장)/;
+      const SECTION_RE = /✺\s*(제\d+절|부록)/;
+      const TILDA_RE = /^\s*✦/;  // ✦ 소제목
+      const ENGINE_HARDCODED = new Set(['cover','운세달력_표지','운세달력_02월','운세달력_03월','운세달력_04월','운세달력_05월','운세달력_06월','운세달력_07월','운세달력_08월','운세달력_09월','운세달력_10월','운세달력_11월','운세달력_12월','운세달력_01월']); // 엔진 자동 삽입 》 템플릿 제외
+
+      // ── 앵커 인덱스 구축 (blockIdx → anchorKey) ──
+      // ☯ → "서장" / ✺ → "서장/제1절" / ✦ → "서장/제1절/✦0" (절 안 순번)
+      const anchorAtIdx = new Map();
+      let curChapter = '', curSection = '', tildaCount = 0;
+      blocks.forEach((b, i) => {
+        if (b.type !== 'text') return;
+        const chM = b.content.match(CHAPTER_RE);
+        const secM = b.content.match(SECTION_RE);
+        const tilM = TILDA_RE.test(b.content);
+        if (chM) {
+          curChapter = chM[1]; curSection = ''; tildaCount = 0;
+          anchorAtIdx.set(i, chM[1]);
+        } else if (secM && curChapter) {
+          curSection = secM[1]; tildaCount = 0;
+          anchorAtIdx.set(i, curChapter + '/' + curSection);
+        } else if (tilM && curChapter) {
+          // 목차 구간(첫 ☯ 이전)의 ✦는 이미 curChapter='' 이므로 자동 제외
+          const secKey = curSection ? curChapter + '/' + curSection : curChapter;
+          anchorAtIdx.set(i, secKey + '/✦' + tildaCount);
+          tildaCount++;
+        }
+      });
+
+      const layout = [];
+      let i = 0;
+      while (i < blocks.length) {
+        if (blocks[i].type !== 'comp' || ENGINE_HARDCODED.has(blocks[i].name)) { i++; continue; }
+
+        // ── 연속 comp 블록을 하나의 그룹으로 수집 ──
+        const group = [];
+        let j = i;
+        while (j < blocks.length && blocks[j].type === 'comp') {
+          if (!ENGINE_HARDCODED.has(blocks[j].name)) {
+            group.push(blocks[j].name);
+          }
+          j++;
+        }
+        if (!group.length) { i = j; continue; }
+
+        // ── 그룹 앞: 가장 가까운 앵커 + 텍스트 오프셋 계산 ──
+        let anchorKey = null, anchorIdx = -1;
+        for (let k = i - 1; k >= 0; k--) {
+          if (blocks[k].type !== 'text') continue;
+          if (anchorAtIdx.has(k)) { anchorKey = anchorAtIdx.get(k); anchorIdx = k; break; }
+        }
+
+        if (anchorKey !== null) {
+          // 앵커→그룹 사이 텍스트 줄 수 카운트 (빈 줄 포함)
+          let offset = 0;
+          for (let k = anchorIdx + 1; k < i; k++) {
+            if (blocks[k].type === 'text') offset++;
+          }
+          // TABLE 바로 앞 줄이 ◈ 마커이면 has_marker 표시 (새 집필 시 ◈도 함께 삽입)
+          const prevTxt = blocks[i - 1];
+          const hasMarker = prevTxt && prevTxt.type === 'text' && prevTxt.content.trim() === '◈';
+          const entry = { pos: 'offset', anchor: anchorKey, offset, tables: group };
+          if (hasMarker) entry.has_marker = true;
+          layout.push(entry);
+        } else {
+          // 앵커가 앞에 없는 경우 → 다음 앵커의 'before' 로 저장
+          for (let k = j; k < blocks.length; k++) {
+            if (blocks[k].type !== 'text') continue;
+            if (anchorAtIdx.has(k)) {
+              layout.push({ pos: 'before', anchor: anchorAtIdx.get(k), tables: group });
+              break;
+            }
+          }
+        }
+
+        i = j;
+      }
+
+      // saveData 제거 — 빈줄 폭증 방지. 재집필 시 result.txt가 새로 생성됨
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-sync fa-spin"></i>저장 중...';
+
+      const fd = new FormData();
+      fd.append('layout', JSON.stringify(layout));
+      const st = document.getElementById('saveStatus');
+      try {
+        const res = await fetch(`/saju/template/table_layout`, { method: 'POST', body: fd });
+        let data;
+        try { data = await res.json(); } catch (_) { data = {}; }
+        if (data.success) {
+          st.className = 'status-pill saved';
+          st.innerHTML = `<i class="fas fa-check-circle"></i>모두에게 적용 완료 (${layout.length}개 위치)`;
+        } else {
+          st.className = 'status-pill dirty';
+          st.innerHTML = '<i class="fas fa-exclamation-circle"></i>적용 실패: ' + (data.msg || data.detail || `HTTP ${res.status}`);
+        }
+      } catch (e) {
+        st.className = 'status-pill dirty';
+        st.innerHTML = '<i class="fas fa-exclamation-circle"></i>오류: ' + e;
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-globe"></i>모두에게 적용';
+    }
+
+    /* ── Verify System ── */
+    async function runVerify() {
+      const btn = document.getElementById('verifyBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-sync fa-spin"></i>검증 중...';
+
+      // 모달 생성
+      let overlay = document.getElementById('verifyOverlay');
+      if (overlay) overlay.remove();
+
+      overlay = document.createElement('div');
+      overlay.id = 'verifyOverlay';
+      overlay.className = 'verify-overlay';
+      overlay.innerHTML = `
+        <div class="verify-modal">
+          <div class="verify-header">
+            <h3>검증 중...</h3>
+            <div class="verify-badges"></div>
+          </div>
+          <div class="verify-body">
+            <div class="verify-loading">
+              <div class="gold-spinner"></div>
+              <p>사주 데이터 검증 진행 중...</p>
+            </div>
+          </div>
+          <div class="verify-footer">
+            <button class="verify-close-btn" onclick="closeVerify()">닫기</button>
+          </div>
+        </div>`;
+      document.body.appendChild(overlay);
+      requestAnimationFrame(() => overlay.classList.add('show'));
+
+      // ESC 키로 닫기
+      overlay._escHandler = (e) => { if (e.key === 'Escape') closeVerify(); };
+      document.addEventListener('keydown', overlay._escHandler);
+
+      try {
+        const res = await fetch(`/saju/verify/${MEMBER_ID}?product=${encodeURIComponent(PRODUCT_TYPE)}`);
+        const data = await res.json();
+
+        // ── 프론트 페이지 검증: 빈 페이지 / 필러만 있는 페이지 ──
+        const pages = document.querySelectorAll('.print-page');
+        const pageIssues = [];
+        pages.forEach((page, idx) => {
+          if (idx === 0) return; // 표지 스킵
+          const content = page.querySelector('.page-content');
+          if (!content) return;
+          const children = Array.from(content.children);
+          if (children.length === 0) {
+            pageIssues.push({level:'warning', category:'빈페이지', line: idx+1, text:`${idx+1}페이지`, message:`${idx+1}페이지가 완전히 비어있습니다`});
+            return;
+          }
+          const hasText = children.some(ch => ch.classList.contains('text-block') && ch.textContent.trim().length > 0);
+          const hasTable = children.some(ch => ch.classList.contains('comp-block'));
+          const hasFiller = children.some(ch => ch.querySelector('iframe.filler-frame') || ch.classList.contains('filler-print'));
+          if (!hasText && !hasTable && hasFiller) {
+            pageIssues.push({level:'warning', category:'필러전용페이지', line: idx+1, text:`${idx+1}페이지`, message:`${idx+1}페이지에 필러만 있고 본문/표가 없습니다`});
+          } else if (!hasText && !hasTable && !hasFiller) {
+            pageIssues.push({level:'warning', category:'빈페이지', line: idx+1, text:`${idx+1}페이지`, message:`${idx+1}페이지가 비어있습니다`});
+          }
+        });
+        if (!data.summary) data.summary = {error:0, warning:0, pass:0};
+        if (!data.warnings) data.warnings = [];
+        if (!data.passed) data.passed = [];
+        if (!data.errors) data.errors = [];
+        if (!data.total_checks) data.total_checks = 0;
+        if (pageIssues.length > 0) {
+          data.warnings = data.warnings.concat(pageIssues);
+          data.summary.warning = data.warnings.length;
+        } else {
+          data.passed = data.passed.concat([{level:'pass', category:'페이지검증', message:'빈 페이지 / 필러 전용 페이지 없음'}]);
+          data.summary.pass = data.passed.length;
+        }
+        data.total_checks += 1;
+
+        renderVerifyResults(data);
+      } catch (e) {
+        const body = overlay.querySelector('.verify-body');
+        body.innerHTML = `<div style="text-align:center;padding:40px;color:#f87171;">
+          <i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:12px;display:block;"></i>
+          검증 중 오류가 발생했습니다: ${e.message}</div>`;
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-search"></i>검증';
+    }
+
+    function renderVerifyResults(data) {
+      const overlay = document.getElementById('verifyOverlay');
+      if (!overlay) return;
+
+      const header = overlay.querySelector('.verify-header h3');
+      header.textContent = `검증 결과 (${data.total_checks}개 항목)`;
+
+      const badges = overlay.querySelector('.verify-badges');
+      badges.innerHTML = '';
+      if (data.summary.error > 0) badges.innerHTML += `<span class="verify-badge err">${data.summary.error} 오류</span>`;
+      if (data.summary.warning > 0) badges.innerHTML += `<span class="verify-badge warn">${data.summary.warning} 경고</span>`;
+      badges.innerHTML += `<span class="verify-badge ok">${data.summary.pass} 통과</span>`;
+
+      const body = overlay.querySelector('.verify-body');
+      body.innerHTML = '';
+
+      // 오류 섹션
+      if (data.errors.length > 0) {
+        body.appendChild(buildSection('error', '오류 - 반드시 수정 필요', data.errors, false));
+      }
+      // 경고 섹션
+      if (data.warnings.length > 0) {
+        body.appendChild(buildSection('warning', '경고 - 확인 권장', data.warnings, false));
+      }
+      // 통과 섹션
+      if (data.passed.length > 0) {
+        body.appendChild(buildSection('pass', '통과', data.passed, true));
+      }
+
+      // 버튼 영역
+      const footer = overlay.querySelector('.verify-footer');
+
+      // 리포트 다운로드 버튼 (항상 표시)
+      const dlBtn = document.createElement('button');
+      dlBtn.className = 'btn-studio btn-outline';
+      dlBtn.style.cssText = 'height:36px;font-size:0.85rem;border-color:#60a5fa;color:#60a5fa;';
+      dlBtn.innerHTML = '<i class="fas fa-download"></i>리포트 다운로드';
+      dlBtn.onclick = () => {
+        let txt = `검증 리포트 — ${data.member_name}\n`;
+        txt += `생성일: ${new Date().toLocaleString('ko-KR')}\n`;
+        txt += `총 ${data.total_checks}개 항목 | 오류 ${data.summary.error} | 경고 ${data.summary.warning} | 통과 ${data.summary.pass}\n`;
+        txt += '='.repeat(70) + '\n\n';
+
+        if (data.errors.length) {
+          txt += '❌ 오류 (반드시 수정 필요)\n' + '-'.repeat(50) + '\n';
+          data.errors.forEach((e, i) => {
+            txt += `\n[오류 ${i+1}] ${e.category} (L${e.line || '?'})\n`;
+            txt += `  본문: ${e.text || ''}\n`;
+            if (e.expected) txt += `  정답: ${e.expected}\n`;
+            if (e.actual) txt += `  실제: ${e.actual}\n`;
+            txt += `  설명: ${e.message}\n`;
+            if (e.root_causes && e.root_causes.length) {
+              txt += `  📁 근본 원인:\n`;
+              e.root_causes.forEach(rc => {
+                txt += `    ├─ ${rc.file}${rc.chapter ? ' [' + rc.chapter + ']' : ''}\n`;
+                if (rc.line_hint) txt += `    │  힌트: ${rc.line_hint}\n`;
+                if (rc.action) txt += `    │  수정: ${rc.action}\n`;
+              });
+            }
+          });
+          txt += '\n';
+        }
+
+        if (data.warnings.length) {
+          txt += '⚠️ 경고 (확인 권장)\n' + '-'.repeat(50) + '\n';
+          data.warnings.forEach((w, i) => {
+            txt += `\n[경고 ${i+1}] ${w.category} (L${w.line || '?'})\n`;
+            txt += `  본문: ${w.text || ''}\n`;
+            txt += `  설명: ${w.message}\n`;
+            if (w.root_causes && w.root_causes.length) {
+              txt += `  📁 근본 원인:\n`;
+              w.root_causes.forEach(rc => {
+                txt += `    ├─ ${rc.file}${rc.chapter ? ' [' + rc.chapter + ']' : ''}\n`;
+                if (rc.line_hint) txt += `    │  힌트: ${rc.line_hint}\n`;
+                if (rc.action) txt += `    │  수정: ${rc.action}\n`;
+              });
+            }
+          });
+          txt += '\n';
+        }
+
+        if (data.passed.length) {
+          txt += '✅ 통과\n' + '-'.repeat(50) + '\n';
+          data.passed.forEach(p => {
+            txt += `  ✅ ${p.message}\n`;
+          });
+        }
+
+        const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `검증리포트_${data.member_name}_${new Date().toISOString().slice(0,10)}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+      footer.insertBefore(dlBtn, footer.firstChild);
+
+      // 오류가 있으면 재집필 버튼 추가
+      if (data.summary.error > 0) {
+        const rewriteBtn = document.createElement('button');
+        rewriteBtn.className = 'btn-studio btn-primary';
+        rewriteBtn.style.cssText = 'height:36px;font-size:0.85rem;';
+        rewriteBtn.innerHTML = '<i class="fas fa-redo"></i>재집필';
+        rewriteBtn.onclick = () => {
+          if (confirm('현재 문서를 폐기하고 재집필하시겠습니까?')) {
+            location.href = `/saju/write/${MEMBER_ID}`;
+          }
+        };
+        footer.insertBefore(rewriteBtn, footer.firstChild);
+      }
+    }
+
+    function buildSection(type, title, items, collapsed) {
+      const sec = document.createElement('div');
+      sec.className = 'verify-section';
+
+      const icons = { error: '\u274C', warning: '\u26A0\uFE0F', pass: '\u2705' };
+      const secClass = { error: 'sec-error', warning: 'sec-warning', pass: 'sec-pass' };
+
+      const titleEl = document.createElement('div');
+      titleEl.className = `verify-section-title ${secClass[type]}${collapsed ? ' collapsed' : ''}`;
+      titleEl.innerHTML = `<i class="fas fa-chevron-down chevron"></i> ${icons[type]} ${title} (${items.length})`;
+
+      const itemsWrap = document.createElement('div');
+      itemsWrap.className = `verify-items${collapsed ? ' hidden' : ''}`;
+
+      titleEl.onclick = () => {
+        titleEl.classList.toggle('collapsed');
+        itemsWrap.classList.toggle('hidden');
+      };
+
+      items.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'verify-item';
+
+        let html = `<span class="vi-cat">[${item.category}]</span>`;
+        if (item.line) {
+          html += `<span class="vi-line" onclick="scrollToLine(${item.line})">${item.line}행</span>`;
+        }
+        html += `<span class="vi-msg">${item.message || ''}</span>`;
+        if (item.expected && item.actual) {
+          html += `<br><span class="vi-expected">기대: ${item.expected}</span> / <span class="vi-actual">실제: ${item.actual}</span>`;
+        }
+        if (item.text) {
+          html += `<span class="vi-text">${escapeHtml(item.text)}</span>`;
+        }
+
+        // root_causes 표시
+        if (item.root_causes && item.root_causes.length > 0) {
+          const rcId = 'rc-' + Math.random().toString(36).substr(2, 8);
+          html += `<div class="vi-root-toggle" onclick="document.getElementById('${rcId}').classList.toggle('hidden')">` +
+                  `<i class="fas fa-folder-open"></i> 근본 원인 (${item.root_causes.length}개 파일)</div>`;
+          html += `<div id="${rcId}" class="vi-root-causes hidden">`;
+          item.root_causes.forEach(rc => {
+            html += `<div class="vi-rc-item">`;
+            html += `<span class="vi-rc-file"><i class="fas fa-file-code"></i> ${escapeHtml(rc.file)}</span>`;
+            if (rc.chapter) {
+              html += `<span class="vi-rc-chapter">${escapeHtml(rc.chapter)}</span>`;
+            }
+            html += `<span class="vi-rc-hint">${escapeHtml(rc.line_hint)}</span>`;
+            html += `<span class="vi-rc-action">${escapeHtml(rc.action)}</span>`;
+            html += `</div>`;
+          });
+          html += `</div>`;
+        }
+
+        el.innerHTML = html;
+        itemsWrap.appendChild(el);
+      });
+
+      sec.appendChild(titleEl);
+      sec.appendChild(itemsWrap);
+      return sec;
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function scrollToLine(lineNum) {
+      // 텍스트 블록에서 해당 줄에 해당하는 블록 찾기
+      let cumLine = 0;
+      for (const b of blocks) {
+        cumLine++;
+        if (b.type === 'comp') {
+          if (cumLine >= lineNum) {
+            const el = document.getElementById(`block-${b.id}`);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.style.outline = '2px solid #f87171';
+              setTimeout(() => { el.style.outline = ''; }, 3000);
+            }
+            return;
+          }
+        } else {
+          if (cumLine >= lineNum) {
+            const el = document.getElementById(`block-${b.id}`);
+            if (el) {
+              closeVerify();
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.focus();
+              el.style.outline = '2px solid #f87171';
+              setTimeout(() => { el.style.outline = ''; }, 3000);
+            }
+            return;
+          }
+        }
+      }
+    }
+
+    function closeVerify() {
+      const overlay = document.getElementById('verifyOverlay');
+      if (!overlay) return;
+      if (overlay._escHandler) document.removeEventListener('keydown', overlay._escHandler);
+      overlay.classList.remove('show');
+      setTimeout(() => overlay.remove(), 300);
+    }
+
+    /* ── Bootstrap ── */
+    window.onload = init;
+
+    // Ctrl+S listener
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveData();
+      }
+    });
+
+  </script>
+</body>
+
+</html>

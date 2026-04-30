@@ -1,0 +1,332 @@
+{# Seun (歲運) Table Component #}
+<style>
+
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+@font-face { font-family: 'Noto Sans KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight: 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight: 700; }
+@font-face { font-family: 'Noto Serif KR'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight: 900; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Noto Sans TC'; src: url('file:///C:/Users/provi/Desktop/banya_web/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight: 700; }
+
+    .seun-container {
+        max-width: 610px;
+        margin: 5px auto;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+    }
+
+    /* Header Box */
+    .seun-header-box {
+        border: 2px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+        margin-bottom: 10px;
+    }
+
+    .seun-header-title {
+        text-align: center;
+        margin: 0;
+        color: #333;
+        border-bottom: 2px solid #333;
+        padding: 8px 12px;
+        background: white;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .seun-info-section {
+        display: flex;
+        padding: 0;
+    }
+
+    .seun-character-wrapper {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border-right: 1px solid #333;
+        padding: 5px;
+    }
+
+    .seun-character-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .seun-info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .seun-info-table td {
+        padding: 2px 12px;
+        border-bottom: 1px solid #333;
+        border-right: 1px solid #333;
+        vertical-align: middle;
+        font-size: 13px;
+    }
+
+    .seun-info-table td:last-child {
+        border-right: none;
+    }
+
+    .seun-info-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .seun-info-label {
+        width: 110px;
+        font-weight: 600;
+        color: #555;
+        background: #fafafa;
+        text-align: center;
+    }
+
+    .seun-info-value {
+        background: white;
+        color: #333;
+    }
+
+    .seun-info-value.highlight {
+        font-weight: 600;
+        color: #c9a227;
+    }
+
+    /* Seun Table */
+    .seun-box {
+        background-color: white;
+        border: 2px solid #333;
+        border-radius: 12px;
+        padding: 0;
+        overflow: hidden;
+        margin-top: 5px;
+    }
+
+    .seun-grid {
+        display: grid;
+        grid-template-columns: 80px repeat(10, 1fr);
+        gap: 0;
+        border: none;
+        align-items: center;
+        min-width: 450px;
+    }
+
+    .seun-cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 42px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #333;
+        border-right: 1px solid #999;
+        border-bottom: 1px solid #999;
+    }
+
+    .seun-cell.last-col {
+        border-right: none;
+    }
+
+    .seun-cell.label {
+        font-weight: 600;
+        color: #555;
+        font-size: 11px;
+        background-color: #f9f9f9;
+    }
+
+    .seun-cell.year {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .seun-cell.year.current {
+        font-weight: 800;
+        color: #1f77b4;
+        font-size: 14px;
+    }
+
+    .seun-cell.current-col {
+        font-family: 'Noto Serif KR', serif;
+        color: #1f77b4;
+        font-weight: 700;
+        background-color: #e6f2ff !important;
+    }
+
+    .seun-cell.current-col .inner-box {
+        color: white !important;
+        font-family: 'Noto Serif KR', serif;
+    }
+
+    .seun-cell.data {
+        background-color: white;
+    }
+
+    .seun-cell.colored {
+        background-color: white;
+        color: #333;
+        padding: 0;
+    }
+
+    .seun-inner-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 76%;
+        height: 70%;
+        border-radius: 6px;
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+
+    .seun-inner-box .sub-text {
+        font-size: 10px;
+        margin-left: 2px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Element Colors */
+    .seun-bg-wood {
+        background-color: #2ca02c;
+    }
+
+    .seun-bg-water {
+        background-color: #1f77b4;
+    }
+
+    .seun-bg-earth-dark {
+        background-color: #8c564b;
+    }
+
+    .seun-bg-earth-brown {
+        background-color: #a06a5f;
+    }
+
+    .seun-bg-fire {
+        background-color: #d62728;
+    }
+
+    .seun-bg-metal {
+        background-color: #7f7f7f;
+    }
+
+    .seun-spacer-top {
+        border-top: 2px solid #bbb;
+    }
+</style>
+
+<div class="seun-container">
+    <!-- Header Box -->
+    <div class="seun-header-box">
+        <h2 class="seun-header-title">{{ user_profile.name }}님의 세운 (歲運) Daily Navigation</h2>
+        <div class="seun-info-section">
+            <div class="seun-character-wrapper">
+                <div class="seun-character-circle">{{ user_profile.year_animal_emoji }}</div>
+            </div>
+            <table class="seun-info-table">
+                <tr>
+                    <td class="seun-info-label">기본정보</td>
+                    <td class="seun-info-value" colspan="3">{{ user_profile.name }}, {{ user_profile.gender_kr }}, {{
+                        user_profile.age }}세</td>
+                </tr>
+                <tr>
+                    <td class="seun-info-label">일주동물</td>
+                    <td class="seun-info-value highlight" colspan="3">{{ saju_data.ilju_animal }}</td>
+                </tr>
+                <tr>
+                    <td class="seun-info-label">양력</td>
+                    <td class="seun-info-value" colspan="3">{{ user_profile.birth_solar }}</td>
+                </tr>
+                <tr>
+                    <td class="seun-info-label">음력</td>
+                    <td class="seun-info-value" colspan="3">{{ user_profile.birth_lunar }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Seun Table -->
+    <div class="seun-box">
+        <div class="seun-grid">
+            <!-- Year Row -->
+            <div class="seun-cell label">년도</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell year {% if period.is_current %}current{% endif %} {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.year }}</div>
+            {% endfor %}
+
+            <!-- Age Row -->
+            <div class="seun-cell label">나이</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.age }}</div>
+            {% endfor %}
+
+            <!-- Heaven Stem Sipseong -->
+            <div class="seun-cell label seun-spacer-top">천간십성</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell data seun-spacer-top {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.hs_sipseong }}</div>
+            {% endfor %}
+
+            <!-- Heaven Stem -->
+            <div class="seun-cell label">천간</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell colored {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                <div class="seun-inner-box seun-{{ period.stem_color }}">{{ period.stem }}</div>
+            </div>
+            {% endfor %}
+
+            <!-- Earth Branch -->
+            <div class="seun-cell label">지지</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell colored {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                <div class="seun-inner-box seun-{{ period.branch_color }}">{{ period.branch }}</div>
+            </div>
+            {% endfor %}
+
+            <!-- Earth Branch Sipseong -->
+            <div class="seun-cell label">지지십성</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.eb_sipseong }}</div>
+            {% endfor %}
+
+            <!-- 12 Unsung -->
+            <div class="seun-cell label seun-spacer-top">12운성</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell data seun-spacer-top {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.unsung }}</div>
+            {% endfor %}
+
+            <!-- 12 Sinsal -->
+            <div class="seun-cell label">12신살</div>
+            {% for period in seun_data %}
+            <div
+                class="seun-cell data {% if period.is_current %}current-col{% endif %} {% if loop.last %}last-col{% endif %}">
+                {{ period.sinsal }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

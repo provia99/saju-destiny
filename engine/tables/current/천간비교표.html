@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>천간비교표 - 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:30px 0;}
+.page{ border:1px solid #333;width:604px;margin:0 auto;background:transparent;border-radius:8px;padding:12px 16px;}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+table{width:100%;border-collapse:collapse;}
+th{background:#1a3a6a;color:white;font-family:'Noto Serif KR',serif;font-size:11px;font-weight:700;padding:5px 5px;border:1px solid #1a3a6a;text-align:center;}
+td{font-size:10px;padding:5px 5px;border:1px solid #333;text-align:center;vertical-align:middle;}
+tr:nth-child(even) td{background:#fafafa;}
+tr:nth-child(odd) td{background:transparent;}
+.hl td{background:#dbeafe !important;border-color:#93c5fd;}
+.han{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:800;}
+.oh-badge{display:inline-block;padding:1px 6px;border-radius:4px;color:white;font-size:10px;font-weight:700;}
+.yy-yang{color:#c0392b;font-weight:700;}
+.yy-eum{color:#1a5276;font-weight:700;}
+.nature{font-size:10px;color:#555;}
+.trait{font-size:10px;color:#333;text-align:left;}
+.legend{margin-top:6px;font-size:8pt;color:#888;text-align:right;}
+@media print{body{background:transparent;padding:0;display:block;}.page{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{ border:1px solid #333;size:604px auto;margin:0;}}
+</style></head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#283593);">
+  <div>
+    <div class="banner-hdr-title">天干 비교표 (십천간 일람)</div>
+    <div class="banner-hdr-sub">10개 천간의 오행 · 음양 · 핵심 기질 비교</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일간 戊(무) · 일주 戊辰(무진)</div>
+  </div>
+</div>
+
+<table>
+<thead><tr>
+  <th style="width:50px;">천간</th>
+  <th style="width:40px;">한글</th>
+  <th style="width:42px;">오행</th>
+  <th style="width:38px;">음양</th>
+  <th style="width:100px;">자연물 비유</th>
+  <th>핵심 기질</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><span class="han" style="color:#1e6b2a;">甲</span></td>
+  <td style="font-weight:600;">갑</td>
+  <td><span class="oh-badge" style="background:#1e6b2a;">木</span></td>
+  <td class="yy-yang">양</td>
+  <td class="nature">큰 나무 / 거목</td>
+  <td class="trait">곧은 리더십, 원칙, 추진력</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#1e6b2a;">乙</span></td>
+  <td style="font-weight:600;">을</td>
+  <td><span class="oh-badge" style="background:#1e6b2a;">木</span></td>
+  <td class="yy-eum">음</td>
+  <td class="nature">풀 / 넝쿨</td>
+  <td class="trait">유연한 적응, 센스, 생존력</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#b92e27;">丙</span></td>
+  <td style="font-weight:600;">병</td>
+  <td><span class="oh-badge" style="background:#b92e27;">火</span></td>
+  <td class="yy-yang">양</td>
+  <td class="nature">태양</td>
+  <td class="trait">밝은 매력, 사교성, 에너지</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#b92e27;">丁</span></td>
+  <td style="font-weight:600;">정</td>
+  <td><span class="oh-badge" style="background:#b92e27;">火</span></td>
+  <td class="yy-eum">음</td>
+  <td class="nature">촛불</td>
+  <td class="trait">집중력, 전문성, 깊이</td>
+</tr>
+<tr class="hl">
+  <td><span class="han" style="color:#9b6f00;">戊</span> <span style="font-size:8px;color:#1a3a6a;font-weight:900;">← 나</span></td>
+  <td style="font-weight:600;">무</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td class="yy-yang">양</td>
+  <td class="nature">큰 산 / 대지</td>
+  <td class="trait">안정감, 포용력, 신뢰</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#9b6f00;">己</span></td>
+  <td style="font-weight:600;">기</td>
+  <td><span class="oh-badge" style="background:#9b6f00;">土</span></td>
+  <td class="yy-eum">음</td>
+  <td class="nature">논밭</td>
+  <td class="trait">세심함, 배려, 관계력</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#3d4f5c;">庚</span></td>
+  <td style="font-weight:600;">경</td>
+  <td><span class="oh-badge" style="background:#3d4f5c;">金</span></td>
+  <td class="yy-yang">양</td>
+  <td class="nature">큰 쇠 / 바위</td>
+  <td class="trait">결단력, 냉철함, 원칙</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#3d4f5c;">辛</span></td>
+  <td style="font-weight:600;">신</td>
+  <td><span class="oh-badge" style="background:#3d4f5c;">金</span></td>
+  <td class="yy-eum">음</td>
+  <td class="nature">보석 / 칼</td>
+  <td class="trait">정밀함, 심미안, 완벽주의</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#1a4e7a;">壬</span></td>
+  <td style="font-weight:600;">임</td>
+  <td><span class="oh-badge" style="background:#1a4e7a;">水</span></td>
+  <td class="yy-yang">양</td>
+  <td class="nature">강 / 바다</td>
+  <td class="trait">전략적 사고, 큰 그림, 유연</td>
+</tr>
+<tr>
+  <td><span class="han" style="color:#1a4e7a;">癸</span></td>
+  <td style="font-weight:600;">계</td>
+  <td><span class="oh-badge" style="background:#1a4e7a;">水</span></td>
+  <td class="yy-eum">음</td>
+  <td class="nature">이슬 / 샘물</td>
+  <td class="trait">직관력, 감수성, 섬세함</td>
+</tr>
+</tbody></table>
+<div class="legend">* 강조 행 = 본인 일간 (戊 무)</div>
+</div></body></html>

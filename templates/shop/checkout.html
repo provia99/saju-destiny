@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제 - 반야 쇼핑몰</title>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #1a3a6a, #2c5aa0); color: white; padding: 20px; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; }
+        nav a { color: white; text-decoration: none; margin-left: 20px; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        .section { background: white; border-radius: 10px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { font-size: 18px; color: #1a3a6a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #eef2ff; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 14px; color: #555; margin-bottom: 6px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; transition: border-color 0.2s; }
+        .form-group input:focus { outline: none; border-color: #1a3a6a; }
+        .required { color: #e53935; }
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+        .order-item:last-of-type { border-bottom: none; }
+        .item-name { font-weight: 500; color: #333; }
+        .item-qty { color: #888; font-size: 13px; margin-top: 3px; }
+        .item-price { font-weight: bold; color: #1a3a6a; }
+        .total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; border-top: 2px solid #1a3a6a; margin-top: 8px; }
+        .total-label { font-size: 16px; font-weight: bold; color: #333; }
+        .total-price { font-size: 22px; font-weight: bold; color: #e53935; }
+        .empty-cart { text-align: center; padding: 40px 20px; color: #999; }
+        .pay-methods { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .pay-method { flex: 1; min-width: 80px; padding: 12px 8px; border: 2px solid #ddd; border-radius: 8px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 500; color: #555; transition: all 0.2s; }
+        .pay-method.active { border-color: #1a3a6a; background: #eef2ff; color: #1a3a6a; }
+        .btn-pay { width: 100%; padding: 16px; background: linear-gradient(135deg, #1a3a6a, #2c5aa0); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+        .btn-pay:hover { opacity: 0.9; }
+        .btn-pay:disabled { opacity: 0.5; cursor: not-allowed; }
+        .notice { background: #f0f7ff; border-left: 3px solid #1a3a6a; padding: 12px 16px; border-radius: 4px; margin-top: 16px; font-size: 13px; color: #555; line-height: 1.6; }
+        .loading { display: none; text-align: center; padding: 20px; color: #666; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo">🔮 반야 쇼핑몰</div>
+        <nav>
+            <a href="/shop/products">상품</a>
+            <a href="/shop/cart">🛒 장바구니</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <!-- 왼쪽: 구매자 정보 -->
+    <div>
+        <div class="section">
+            <h2>구매자 정보</h2>
+            <div class="form-group">
+                <label>이름 <span class="required">*</span></label>
+                <input type="text" id="customer-name" placeholder="홍길동" required>
+            </div>
+            <div class="form-group">
+                <label>이메일 <span class="required">*</span> <small style="color:#888">(PDF 수령 이메일)</small></label>
+                <input type="email" id="customer-email" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>연락처</label>
+                <input type="tel" id="customer-phone" placeholder="010-0000-0000">
+            </div>
+        </div>
+
+        <div class="section" style="margin-top: 20px;">
+            <h2>결제 수단</h2>
+            <div class="pay-methods">
+                <div class="pay-method active" data-method="카드" onclick="selectMethod(this)">💳 카드</div>
+                <div class="pay-method" data-method="가상계좌" onclick="selectMethod(this)">🏦 가상계좌</div>
+                <div class="pay-method" data-method="계좌이체" onclick="selectMethod(this)">💸 계좌이체</div>
+                <div class="pay-method" data-method="휴대폰" onclick="selectMethod(this)">📱 휴대폰</div>
+            </div>
+            <div class="notice">
+                📧 결제 완료 후 입력하신 이메일로 상품이 발송됩니다.<br>
+                즉시 배송 상품은 결제 즉시 전달됩니다.
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽: 주문 요약 -->
+    <div>
+        <div class="section">
+            <h2>주문 상품</h2>
+            <div id="order-items">
+                <div class="empty-cart">장바구니가 비어있습니다.</div>
+            </div>
+            <div class="total-row" id="total-row" style="display:none">
+                <span class="total-label">총 결제금액</span>
+                <span class="total-price" id="total-price">₩0</span>
+            </div>
+        </div>
+
+        <div class="section" style="margin-top: 20px;">
+            <button class="btn-pay" id="btn-pay" onclick="startPayment()" disabled>
+                결제하기
+            </button>
+            <div class="loading" id="loading">⏳ 결제 처리 중...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== 상태 =====
+let cart = [];
+let totalAmount = 0;
+let selectedMethod = '카드';
+
+// ===== 초기화 =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadCart();
+});
+
+function loadCart() {
+    cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const container = document.getElementById('order-items');
+    const totalRow = document.getElementById('total-row');
+    const btnPay = document.getElementById('btn-pay');
+
+    if (cart.length === 0) {
+        container.innerHTML = '<div class="empty-cart">장바구니가 비어있습니다.<br><a href="/shop/products" style="color:#1a3a6a">상품 보러가기</a></div>';
+        btnPay.disabled = true;
+        return;
+    }
+
+    totalAmount = 0;
+    container.innerHTML = '';
+
+    cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        totalAmount += subtotal;
+
+        const div = document.createElement('div');
+        div.className = 'order-item';
+        div.innerHTML = `
+            <div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-qty">수량: ${item.quantity}개</div>
+            </div>
+            <div class="item-price">₩${subtotal.toLocaleString()}</div>
+        `;
+        container.appendChild(div);
+    });
+
+    document.getElementById('total-price').textContent = '₩' + totalAmount.toLocaleString();
+    totalRow.style.display = 'flex';
+    btnPay.disabled = false;
+    btnPay.textContent = `₩${totalAmount.toLocaleString()} 결제하기`;
+}
+
+function selectMethod(el) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+    selectedMethod = el.dataset.method;
+}
+
+// ===== 결제 시작 =====
+async function startPayment() {
+    const name  = document.getElementById('customer-name').value.trim();
+    const email = document.getElementById('customer-email').value.trim();
+    const phone = document.getElementById('customer-phone').value.trim();
+
+    if (!name) { alert('이름을 입력해주세요.'); return; }
+    if (!email || !email.includes('@')) { alert('올바른 이메일을 입력해주세요.'); return; }
+    if (cart.length === 0) { alert('장바구니가 비어있습니다.'); return; }
+
+    document.getElementById('btn-pay').disabled = true;
+    document.getElementById('loading').style.display = 'block';
+
+    try {
+        // 1. 서버에 주문 생성
+        const orderRes = await fetch('/payments/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customer_name:  name,
+                customer_email: email,
+                customer_phone: phone,
+                cart:           cart,
+                total_amount:   totalAmount,
+            })
+        });
+        const orderData = await orderRes.json();
+
+        if (!orderData.success) {
+            alert('주문 생성 실패: ' + orderData.message);
+            resetBtn();
+            return;
+        }
+
+        // 2. Toss Payments 결제창 열기
+        const tossPayments = TossPayments(orderData.client_key);
+
+        const methodMap = {
+            '카드':    '카드',
+            '가상계좌': '가상계좌',
+            '계좌이체': '계좌이체',
+            '휴대폰':  '휴대폰',
+        };
+
+        await tossPayments.requestPayment(methodMap[selectedMethod] || '카드', {
+            amount:        totalAmount,
+            orderId:       orderData.order_id,
+            orderName:     cart.length === 1 ? cart[0].name : `${cart[0].name} 외 ${cart.length - 1}건`,
+            customerName:  name,
+            customerEmail: email,
+            successUrl:    window.location.origin + '/payments/success',
+            failUrl:       window.location.origin + '/payments/fail',
+        });
+
+    } catch (e) {
+        // 사용자가 결제창을 닫은 경우 포함
+        if (e.code !== 'USER_CANCEL') {
+            alert('결제 중 오류가 발생했습니다: ' + e.message);
+        }
+        resetBtn();
+    }
+}
+
+function resetBtn() {
+    const btn = document.getElementById('btn-pay');
+    btn.disabled = false;
+    btn.textContent = `₩${totalAmount.toLocaleString()} 결제하기`;
+    document.getElementById('loading').style.display = 'none';
+}
+</script>
+</body>
+</html>

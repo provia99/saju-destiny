@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>음양비율표 — 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;}
+.page{ border:1px solid #333;width:604px;max-height:600px;padding:10px;margin:10px auto;background:transparent;}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.page{margin:0;}@page{ border:1px solid #333;size:604px 600px;margin:0;}}
+
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;background:linear-gradient(135deg,#1a237e,#283593);margin-bottom:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.7);margin-top:1px;}
+.banner-hdr-right{text-align:right;}
+.banner-hdr-name{font-size:9pt;font-weight:800;background:linear-gradient(90deg,#ffd54f,#fff176);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.banner-hdr-detail{font-size:7pt;color:rgba(255,255,255,.6);}
+
+.pillars-wrap{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
+.pillar{text-align:center;flex:1;max-width:130px;}
+.pillar-label{font-size:7pt;color:#888;font-weight:600;margin-bottom:3px;}
+.pillar-cell{border:1.5px solid #ddd;border-radius:8px;padding:8px 4px;margin-bottom:4px;position:relative;}
+.p-char{font-size:22pt;font-weight:900;display:block;line-height:1.1;}
+.p-kr{font-size:7pt;color:#666;display:block;}
+.p-yy{font-size:8pt;font-weight:800;display:block;margin-top:2px;}
+
+.gauge-section{margin-bottom:10px;}
+.gauge-title{font-size:8.5pt;font-weight:800;color:#1a237e;margin-bottom:6px;padding-left:6px;border-left:3px solid #1a237e;}
+.gauge-row{display:flex;align-items:center;gap:16px;}
+.gauge-circle{flex-shrink:0;}
+.gauge-right{flex:1;}
+.gauge-labels{display:flex;justify-content:space-between;margin-bottom:6px;}
+.gauge-label{font-size:8pt;font-weight:700;}
+.gauge-pct{font-size:13pt;font-weight:900;}
+.bar-track{display:flex;height:28px;border-radius:14px;overflow:hidden;}
+.bar-yang{background:linear-gradient(90deg,#ff6d00,#ffab40);display:flex;align-items:center;justify-content:center;color:white;font-size:8pt;font-weight:800;min-width:40px;}
+.bar-yin{background:linear-gradient(90deg,#1565c0,#42a5f5);display:flex;align-items:center;justify-content:center;color:white;font-size:8pt;font-weight:800;min-width:40px;}
+.dot-row{display:flex;gap:4px;margin-top:6px;justify-content:center;}
+.dot{width:12px;height:12px;border-radius:50%;}
+
+.balance-box{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:10px;margin-bottom:10px;}
+.balance-badge{font-size:14pt;font-weight:900;min-width:80px;text-align:center;}
+.balance-desc{font-size:8pt;color:#555;line-height:1.5;}
+
+.ilgan-box{background:#f8f9fa;border:1.5px solid #ddd;border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.ilgan-char{font-size:28pt;font-weight:900;line-height:1;}
+.ilgan-info{flex:1;}
+.ilgan-yy{font-size:10pt;font-weight:800;margin-bottom:2px;}
+.ilgan-desc{font-size:7.5pt;color:#666;line-height:1.4;}
+
+.legend{display:flex;gap:16px;justify-content:center;margin-top:6px;}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:7pt;color:#666;}
+.leg-dot{width:10px;height:10px;border-radius:3px;}
+</style>
+</head><body>
+<div class="page">
+  <div class="banner-hdr">
+    <div>
+      <div class="banner-hdr-title">음양(陰陽) 비율표</div>
+      <div class="banner-hdr-sub">사주 8글자의 음양 에너지 분석</div>
+    </div>
+    <div class="banner-hdr-right">
+      <div class="banner-hdr-name">임효원 님</div>
+      <div class="banner-hdr-detail">戊辰(무진) 일주</div>
+    </div>
+  </div>
+
+  <div class="pillars-wrap"><div class="pillar">
+      <div class="pillar-label">시주</div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#4caf50">甲</span>
+        <span class="p-kr">갑</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#4caf50">寅</span>
+        <span class="p-kr">인</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+    </div><div class="pillar">
+      <div class="pillar-label">일주</div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#ff9800">戊</span>
+        <span class="p-kr">무</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#ff9800">辰</span>
+        <span class="p-kr">진</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+    </div><div class="pillar">
+      <div class="pillar-label">월주</div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#4caf50">甲</span>
+        <span class="p-kr">갑</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#4caf50">寅</span>
+        <span class="p-kr">인</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+    </div><div class="pillar">
+      <div class="pillar-label">년주</div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#ff9800">戊</span>
+        <span class="p-kr">무</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+      <div class="pillar-cell" style="background:#fff3e0">
+        <span class="p-char" style="color:#9e9e9e">申</span>
+        <span class="p-kr">신</span>
+        <span class="p-yy" style="color:#e65100">陽</span>
+      </div>
+    </div></div>
+
+  <div class="gauge-section">
+    <div class="gauge-title">음양 비율</div>
+    <div class="gauge-row">
+      <div class="gauge-circle"><svg viewBox="0 0 200 200" width="160" height="160">
+    <defs>
+      <linearGradient id="yangGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6d00"/>
+        <stop offset="100%" style="stop-color:#ffab40"/>
+      </linearGradient>
+      <linearGradient id="yinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#0d47a1"/>
+        <stop offset="100%" style="stop-color:#42a5f5"/>
+      </linearGradient>
+      <filter id="glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#eee" stroke-width="18"/>
+    <circle cx="100" cy="100" r="70" fill="none" stroke="url(#yangGrad)" stroke-width="18"
+      stroke-dasharray="439.822971502571 0" stroke-dashoffset="109.95574287564276" stroke-linecap="round" filter="url(#glow)"/>
+    <circle cx="100" cy="100" r="70" fill="none" stroke="url(#yinGrad)" stroke-width="18"
+      stroke-dasharray="0 439.822971502571" stroke-dashoffset="-329.8672286269283" stroke-linecap="round"/>
+    <text x="100" y="90" text-anchor="middle" font-size="28" font-weight="900" fill="#333">100%</text>
+    <text x="100" y="112" text-anchor="middle" font-size="10" fill="#888">양(陽)</text>
+  </svg></div>
+      <div class="gauge-right">
+        <div class="gauge-labels">
+          <div>
+            <div class="gauge-label" style="color:#e65100;">양(陽)</div>
+            <div class="gauge-pct" style="color:#e65100;">8개</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="gauge-label" style="color:#1565c0;">음(陰)</div>
+            <div class="gauge-pct" style="color:#1565c0;">0개</div>
+          </div>
+        </div>
+        <div class="bar-track">
+    <div class="bar-yang" style="width:100%;">
+      <span>陽 8개</span>
+    </div>
+    <div class="bar-yin" style="width:0%;">
+      <span>陰 0개</span>
+    </div>
+  </div>
+        <div class="dot-row">
+          <div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div><div class="dot" style="background:linear-gradient(135deg,#ff6d00,#ffab40);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="balance-box" style="background:#e6510011;border:1.5px solid #e6510044;">
+    <div class="balance-badge" style="color:#e65100;">양 우세</div>
+    <div class="balance-desc">활동적이고 외향적인 에너지가 강합니다. 추진력은 뛰어나지만, 때로 쉬어가는 지혜가 필요해요.</div>
+  </div>
+
+  <div class="ilgan-box">
+    <div>
+      <div class="ilgan-char" style="color:#ff9800">戊</div>
+      <div style="text-align:center;font-size:7pt;color:#888;">무</div>
+    </div>
+    <div class="ilgan-info">
+      <div class="ilgan-yy" style="color:#e65100;">일간(日干) 양(陽)</div>
+      <div class="ilgan-desc">밖으로 드러내고 적극적으로 행동하는 것이 자연스러운 에너지</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:linear-gradient(135deg,#ff9800,#ffb74d);"></div> 양(陽) 》 활동적·외향적·적극적</div>
+    <div class="leg-item"><div class="leg-dot" style="background:linear-gradient(135deg,#1565c0,#42a5f5);"></div> 음(陰) 》 정적·내향적·신중</div>
+  </div>
+</div>
+</body></html>

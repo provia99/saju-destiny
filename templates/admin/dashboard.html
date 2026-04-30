@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}운영자 대시보드{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h3 class="m-0 fw-bold">운영자 대시보드</h3>
+  </div>
+  <div class="col-auto">
+    <a href="/admin/masters/new" class="btn btn-premium fw-bold">+ 마스터 등록</a>
+    <a href="/admin/masters" class="btn btn-outline-secondary ms-2 fw-bold">마스터 목록 전체보기</a>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">전체 마스터</div>
+      <div class="stat-number">{{ stats.전체마스터 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">활성</div>
+      <div class="stat-number text-success">{{ stats.활성 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">대기</div>
+      <div class="stat-number text-warning">{{ stats.대기 }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card text-center p-3">
+      <div class="stat-label">정지</div>
+      <div class="stat-number text-danger">{{ stats.정지 }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white py-3">
+    <h5 class="m-0 fw-bold text-muted">최근 등록 마스터</h5>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle m-0">
+        <thead class="table-light">
+          <tr>
+            <th>브랜드ID</th>
+            <th>선생님이름</th>
+            <th>연락처</th>
+            <th>상태</th>
+            <th>등록일시</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in masters[:5] %}
+          <tr>
+            <td>{{ m.master_id }}</td>
+            <td class="fw-bold">{{ m.선생님이름 }}</td>
+            <td>{{ m.연락처 | phone }}</td>
+            <td>
+              {% if m.status == '활성' %}<span class="badge bg-success">활성</span>
+              {% elif m.status == '대기' %}<span class="badge bg-warning text-dark">대기</span>
+              {% else %}<span class="badge bg-danger">정지</span>{% endif %}
+            </td>
+            <td>{{ m.created_at[:16] }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-center py-4 text-muted">등록된 마스터가 없습니다.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

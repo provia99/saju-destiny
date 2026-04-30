@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<title>일주 핵심 정보 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;color:#222;}
+.page{ border:1px solid #333;width:604px;max-height:840px;padding:6px 12px;background:transparent;display:flex;flex-direction:column;gap:4px;overflow:hidden;}
+@media screen{body{background:#f5f5f5;}.page{ border:1px solid #333;margin:20px auto;border-radius:4px;}}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}body{background:transparent;margin:0;padding:0;}.page{margin:0;width:604px;}@page{ border:1px solid #333;size:604px 840px;margin:0;}}
+/* 헤더 */
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+/* 카드 */
+.card{border:2px solid #ccc;border-radius:10px;overflow:hidden;}
+.card-hd{padding:4px 14px;display:flex;align-items:center;justify-content:space-between;}
+.card-hd-title{font-size:9pt;font-weight:900;color:white;}
+.card-hd-sub{font-size:6.5pt;color:rgba(255,255,255,.82);}
+/* ① 일간·일지 컴팩트 2분할 */
+.ilju-grid{display:grid;grid-template-columns:1fr 1px 1fr;background:transparent;}
+.ilju-divider{background:#e8e8e8;}
+.ilju-col{padding:5px 10px;display:flex;flex-direction:column;gap:3px;}
+.col-label{font-size:7pt;color:#aaa;font-weight:700;letter-spacing:.5px;}
+.hanja-lg{font-family:'Noto Serif KR',serif;font-size:22pt;font-weight:800;line-height:1;}
+.hanja-eum{font-size:7pt;color:#777;margin-top:1px;}
+.badge-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.char-desc{font-size:6.5pt;color:#555;line-height:1.4;padding:3px 7px;background:#f8f9fa;border-radius:5px;border-left:3px solid #ddd;}
+.kw-row{display:flex;flex-wrap:wrap;gap:2px;}
+.kw-chip{font-size:7pt;font-weight:700;padding:1px 6px;border-radius:6px;background:#f0f4ff;color:#3730a3;}
+/* 12운성 인라인 */
+.un12-inline{font-size:6.5pt;color:#1565c0;font-weight:700;padding:2px 7px;background:#f0f4ff;border-radius:5px;display:inline-block;}
+/* ② 지장간 가로 테이블 */
+.jjg-tbl{width:100%;border-collapse:collapse;}
+.jjg-tbl th{font-size:7pt;color:#aaa;font-weight:700;padding:3px 5px;background:#f8f8f8;border-bottom:1px solid #ddd;text-align:center;}
+.jjg-tbl td{font-size:7pt;padding:3px 5px;border-bottom:1px solid #f0f0f0;text-align:center;vertical-align:middle;}
+.jjg-tbl tr:last-child td{border-bottom:none;}
+.jjg-hanja{font-family:'Noto Serif KR',serif;font-size:10pt;font-weight:700;}
+/* ③ 신살 뱃지 그리드 */
+.ss-section{padding:5px 8px;display:flex;gap:10px;}
+.ss-group{flex:1;}
+.ss-group-title{font-size:6pt;font-weight:700;margin-bottom:3px;}
+.ss-chips{display:flex;flex-wrap:wrap;gap:2px;}
+.ss-chip{font-size:6pt;font-weight:700;padding:2px 6px;border-radius:5px;color:white;}
+/* ④ 공망 인라인 */
+.gm-row{padding:4px 8px;display:flex;align-items:center;gap:8px;background:#fff8f0;border-top:1px solid #ffe0b2;}
+.gm-label{font-size:6pt;font-weight:700;color:#e65100;}
+.gm-hanja{font-family:'Noto Serif KR',serif;font-size:12pt;font-weight:900;color:#c62828;}
+.gm-info{font-size:6pt;color:#888;}
+</style>
+</head><body><div class="page">
+
+<!-- 배너 헤더 -->
+<div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#4a148c);">
+  <div>
+    <div class="banner-hdr-title">📋 일주(日柱) 핵심 정보</div>
+    <div class="banner-hdr-sub">일간·일지·12운성·지장간·신살·공망</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+<!-- ① 일간·일지 -->
+<div class="card">
+  <div class="card-hd" style="background:#1565c0;">
+    <div class="card-hd-title">① 일간(日干) · 일지(日支)</div>
+    <div class="card-hd-sub">기질 · 12운성</div>
+  </div>
+  <div class="ilju-grid">
+    <div class="ilju-col">
+      <div class="col-label">일간(天干)</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="hanja-lg" style="color:#bf360c;">戊</div>
+        <div>
+          <div class="hanja-eum">무 · 양(陽) · 土(토)</div>
+          <div style="font-size:6pt;color:#666;margin-top:1px;">큰 산·대지 》 안정·포용·중재</div>
+        </div>
+      </div>
+      <div class="kw-row"><span class="kw-chip">안정성</span><span class="kw-chip">포용력</span><span class="kw-chip">신뢰감</span><span class="kw-chip">중재력</span><span class="kw-chip">근면함</span></div>
+    </div>
+    <div class="ilju-divider"></div>
+    <div class="ilju-col">
+      <div class="col-label">일지(地支)</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="hanja-lg" style="color:#555;">辰</div>
+        <div>
+          <div class="hanja-eum">진 · () · <span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:6pt;font-weight:700;background:#dbeafe;color:#1e40af;">비견</span></div>
+          <div style="font-size:6pt;color:#666;margin-top:1px;">포용·능력·저장. 다양한 재주와 인맥을 품어 큰 성취를 이루는 기질</div>
+        </div>
+      </div>
+      <div class="un12-inline">12운성: 관대 》 사회에 첫발을 내딛는 기운. 포부가 크고 발전 욕구가 …</div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 지장간 -->
+<div class="card">
+  <div class="card-hd" style="background:#283593;">
+    <div class="card-hd-title">② 지장간(支藏干) 》 일지 辰(진) 속 숨은 천간</div>
+  </div>
+  <table class="jjg-tbl">
+    <thead><tr><th>구분</th><th>천간</th><th>음</th><th>오행</th><th>십성</th></tr></thead>
+    <tbody><tr>
+        <td style="font-size:6pt;color:#888;">()</td>
+        <td><span class="jjg-hanja" style="color:#555;"></span></td>
+        <td style="font-size:6.5pt;"></td>
+        <td style="font-size:6.5pt;">()</td>
+        <td><span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:6pt;font-weight:700;background:#f1f5f9;color:#475569;">乙(을) 정관</span></td>
+      </tr><tr>
+        <td style="font-size:6pt;color:#888;">()</td>
+        <td><span class="jjg-hanja" style="color:#555;"></span></td>
+        <td style="font-size:6.5pt;"></td>
+        <td style="font-size:6.5pt;">()</td>
+        <td><span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:6pt;font-weight:700;background:#f1f5f9;color:#475569;">癸(계) 정재</span></td>
+      </tr><tr>
+        <td style="font-size:6pt;color:#888;">()</td>
+        <td><span class="jjg-hanja" style="color:#555;"></span></td>
+        <td style="font-size:6.5pt;"></td>
+        <td style="font-size:6.5pt;">()</td>
+        <td><span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:6pt;font-weight:700;background:#f1f5f9;color:#475569;">戊(무) 비견</span></td>
+      </tr></tbody>
+  </table>
+</div>
+
+<!-- ③ 신살 -->
+<div class="card">
+  <div class="card-hd" style="background:#4a148c;">
+    <div class="card-hd-title">③ 신살(神殺)</div>
+    <div class="card-hd-sub">귀인·길신 / 흉살·주의</div>
+  </div>
+  <div class="ss-section">
+    <div class="ss-group">
+      <div class="ss-group-title" style="color:#1565c0;">귀인·길신</div>
+      <div class="ss-chips">
+        <span class="ss-chip" style="background:#1565c0;" title="">태극귀인&lt;br&gt;문창귀인</span>
+      </div>
+    </div>
+    <div class="ss-group">
+      <div class="ss-group-title" style="color:#c62828;">흉살·주의</div>
+      <div class="ss-chips">
+        <span class="ss-chip" style="background:#c62828;" title="">홍염살</span><span class="ss-chip" style="background:#c62828;" title="">백호대살</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 공망 -->
+<div class="card">
+  <div class="gm-row">
+    <div class="gm-label">④ 공망(空亡)</div>
+    <span class="gm-info">원국 내 공망 해당 없음</span>
+  </div>
+</div>
+
+</div></body></html>

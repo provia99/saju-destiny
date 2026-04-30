@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>지장간 분석표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm; padding:40mm 25mm 25mm 25mm;
+  background:transparent; display:flex; flex-direction:column; gap:8px;
+}
+@media screen {
+  body { background:#ccc; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 공통 박스 ── */
+.card {
+  border:2px solid #e0e0e0;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+/* ── 카드 헤더 띠 ── */
+.card-hd {
+  padding:7px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:10pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+
+/* ──────────────────────────────────────────
+   섹션 1: 네 기둥 지장간 메인 분석표
+   ────────────────────────────────────────── */
+.pillar-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  background:white;
+}
+
+.pillar-col {
+  border-right:1px solid #f0f0f0;
+  display:flex; flex-direction:column;
+}
+.pillar-col:last-child { border-right:none; }
+
+/* 기둥 제목 */
+.pillar-name {
+  text-align:center; padding:6px 6px 5px;
+  border-bottom:1px solid #f0f0f0;
+  background:#fafafa;
+}
+.pn-label { font-size:6.5pt; color:#aaa; font-weight:700; letter-spacing:.5px; }
+.pn-ji {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:17pt; font-weight:800; line-height:1.1;
+  margin:2px 0;
+}
+.pn-ji-kr { font-size:7pt; color:#888; }
+
+/* 공망 배지 */
+.gongmang-badge {
+  display:inline-block;
+  background:#ff5722; color:white;
+  font-size:5.5pt; font-weight:700;
+  padding:1px 6px; border-radius:8px; margin-top:2px;
+}
+
+/* 지장간 행들 */
+.jj-rows { padding:6px 5px; display:flex; flex-direction:column; gap:4px; }
+
+.jj-row {
+  border-radius:8px; padding:5px 7px;
+  display:flex; flex-direction:column; gap:2px;
+}
+.jj-row.yeoqi  { background:#fff3e0; border:1px solid #ffcc80; }
+.jj-row.jungqi { background:#fce4ec; border:1px solid #f48fb1; }
+.jj-row.bonqi  { background:#e8f5e9; border:1px solid #a5d6a7; }
+
+/* 기(氣) 라벨 */
+.qi-label {
+  font-size:5.5pt; font-weight:700;
+  padding:1px 5px; border-radius:4px; color:white;
+  display:inline-block; width:fit-content; margin-bottom:1px;
+}
+.qi-label.yeoqi  { background:#ff9800; }
+.qi-label.jungqi { background:#e91e63; }
+.qi-label.bonqi  { background:#4caf50; }
+
+/* 천간 */
+.jj-stem {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:14pt; font-weight:800; line-height:1;
+}
+.jj-stem-kr { font-size:6.5pt; color:#666; margin-left:2px; }
+
+/* 십성 */
+.jj-sipseong {
+  font-size:7pt; font-weight:700;
+  padding:2px 8px; border-radius:8px; color:white;
+  display:inline-block; width:fit-content; margin-top:2px;
+}
+
+/* 오행 도트 */
+.jj-ohaeng {
+  display:flex; align-items:center; gap:4px; margin-top:2px;
+}
+.oh-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.oh-txt { font-size:6pt; color:#888; }
+
+/* ──────────────────────────────────────────
+   섹션 2: 지장간 심성 분포 요약
+   ────────────────────────────────────────── */
+.sipseong-bar-section {
+  background:white; padding:9px 14px;
+  border-top:1px solid #f0f0f0;
+}
+.sec-mini-title {
+  font-size:7.5pt; font-weight:700; color:#555;
+  margin-bottom:7px; display:flex; align-items:center; gap:6px;
+}
+.sec-mini-title::before {
+  content:''; display:inline-block;
+  width:3px; height:12px; background:#2196f3; border-radius:2px;
+}
+
+.ss-bars { display:flex; flex-direction:column; gap:4px; }
+.ss-row  { display:flex; align-items:center; gap:6px; }
+.ss-name { font-size:7pt; font-weight:700; width:42px; flex-shrink:0; text-align:right; }
+.ss-bar-wrap { flex:1; height:8px; background:#f0f0f0; border-radius:4px; overflow:hidden; }
+.ss-bar  { height:100%; border-radius:4px; }
+.ss-cnt  { font-size:6.5pt; font-weight:700; width:16px; flex-shrink:0; }
+.ss-note { font-size:6pt; color:#aaa; }
+
+/* ──────────────────────────────────────────
+   섹션 3: 활성화 시기 카드
+   ────────────────────────────────────────── */
+.activation-grid {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:6px; padding:9px 14px;
+  background:white; border-top:1px solid #f0f0f0;
+}
+.act-card {
+  border-radius:10px; padding:8px 10px;
+  display:flex; flex-direction:column; gap:3px;
+}
+.act-label { font-size:6pt; font-weight:700; opacity:.9; }
+.act-ohaeng { font-size:8.5pt; font-weight:700; }
+.act-daewoon { font-family:'Nanum Myeongjo',serif; font-size:9pt; font-weight:800; line-height:1.2; }
+.act-detail { font-size:6pt; opacity:.8; margin-top:2px; }
+
+/* ──────────────────────────────────────────
+   십성 컬러 매핑
+   ────────────────────────────────────────── */
+.ss-비견  { background:#4caf50; }
+.ss-겁재  { background:#66bb6a; }
+.ss-식신  { background:#f44336; }
+.ss-상관  { background:#ef5350; }
+.ss-편재  { background:#ff9800; }
+.ss-정재  { background:#ffa726; }
+.ss-편관  { background:#9e9e9e; }
+.ss-정관  { background:#757575; }
+.ss-편인  { background:#2196f3; }
+.ss-정인  { background:#42a5f5; }
+
+/* 오행 컬러 */
+.oh-목 { background:#4caf50; }
+.oh-화 { background:#f44336; }
+.oh-토 { background:#ff9800; }
+.oh-금 { background:#9e9e9e; }
+.oh-수 { background:#2196f3; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ 메인 카드: 네 기둥 지장간 ═══ -->
+  <div class="card">
+    <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#42a5f5);">
+      <div class="card-hd-title">🔑 지장간(地藏干) 분석표 — 숨겨진 기운의 지도</div>
+      <div class="card-hd-sub">최원석 님 · 戊辰(무진) 일주 · 用神 火(화)</div>
+    </div>
+
+    <!-- 네 기둥 그리드 -->
+    <div class="pillar-grid">
+
+      <!-- 년지: 卯 -->
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">년지(年支)</div>
+          <div class="pn-ji" style="color:#4caf50;">卯</div>
+          <div class="pn-ji-kr">묘(卯) · 木</div>
+        </div>
+        <div class="jj-rows">
+          <!-- 본기만 있음 -->
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#4caf50;">乙</span>
+              <span class="jj-stem-kr">을</span>
+            </div>
+            <span class="jj-sipseong ss-정관">정관(正官)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-목"></div><span class="oh-txt">木(목)</span></div>
+          </div>
+          <div style="font-size:6pt;color:#ccc;text-align:center;padding:4px 0;">여기·중기 없음</div>
+        </div>
+      </div>
+
+      <!-- 월지: 丑 -->
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">월지(月支)</div>
+          <div class="pn-ji" style="color:#ff9800;">丑</div>
+          <div class="pn-ji-kr">축(丑) · 土</div>
+          <span class="gongmang-badge" style="background:#2196f3;">天乙貴人·太極貴人</span>
+        </div>
+        <div class="jj-rows">
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div><span class="jj-stem" style="color:#2196f3;">癸</span><span class="jj-stem-kr">계</span></div>
+            <span class="jj-sipseong ss-정재">정재(正財)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-수"></div><span class="oh-txt">水(수)</span></div>
+          </div>
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div><span class="jj-stem" style="color:#9e9e9e;">辛</span><span class="jj-stem-kr">신</span></div>
+            <span class="jj-sipseong ss-상관">상관(傷官)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-금"></div><span class="oh-txt">金(금)</span></div>
+          </div>
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div><span class="jj-stem" style="color:#ff9800;">己</span><span class="jj-stem-kr">기</span></div>
+            <span class="jj-sipseong ss-겁재">겁재(劫財)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 일지: 辰 ★공망 -->
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">일지(日支)</div>
+          <div class="pn-ji" style="color:#ff9800;">辰</div>
+          <div class="pn-ji-kr">진(辰) · 土</div>
+          <span class="gongmang-badge">⚡ 공망(空亡)</span>
+        </div>
+        <div class="jj-rows">
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div><span class="jj-stem" style="color:#4caf50;">乙</span><span class="jj-stem-kr">을</span></div>
+            <span class="jj-sipseong ss-정관">정관(正官)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-목"></div><span class="oh-txt">木(목)</span></div>
+          </div>
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div><span class="jj-stem" style="color:#2196f3;">癸</span><span class="jj-stem-kr">계</span></div>
+            <span class="jj-sipseong ss-정재">정재(正財)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-수"></div><span class="oh-txt">水(수)</span></div>
+          </div>
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div><span class="jj-stem" style="color:#ff9800;">戊</span><span class="jj-stem-kr">무</span></div>
+            <span class="jj-sipseong ss-비견">비견(比肩)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 시지: 巳 ★공망 -->
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">시지(時支)</div>
+          <div class="pn-ji" style="color:#f44336;">巳</div>
+          <div class="pn-ji-kr">사(巳) · 火</div>
+          <span class="gongmang-badge">⚡ 공망(空亡)</span>
+        </div>
+        <div class="jj-rows">
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div><span class="jj-stem" style="color:#ff9800;">戊</span><span class="jj-stem-kr">무</span></div>
+            <span class="jj-sipseong ss-비견">비견(比肩)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div><span class="jj-stem" style="color:#9e9e9e;">庚</span><span class="jj-stem-kr">경</span></div>
+            <span class="jj-sipseong ss-식신">식신(食神)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-금"></div><span class="oh-txt">金(금)</span></div>
+          </div>
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div><span class="jj-stem" style="color:#f44336;">丙</span><span class="jj-stem-kr">병</span></div>
+            <span class="jj-sipseong ss-편인">편인(偏印)</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-화"></div><span class="oh-txt">火(화) ← 用神</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- pillar-grid -->
+
+    <!-- 지장간 심성 분포 -->
+    <div class="sipseong-bar-section">
+      <div class="sec-mini-title">지장간 십성(十星) 분포 — 숨겨진 기운의 강약</div>
+      <div class="ss-bars">
+        <div class="ss-row">
+          <span class="ss-name" style="color:#4caf50;">비견</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-비견" style="width:40%;"></div></div>
+          <span class="ss-cnt">2개</span>
+          <span class="ss-note">일지본기·시지여기 — 강한 자립심</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#66bb6a;">겁재</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-겁재" style="width:20%;"></div></div>
+          <span class="ss-cnt">1개</span>
+          <span class="ss-note">월지본기</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#f44336;">식신</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-식신" style="width:20%;"></div></div>
+          <span class="ss-cnt">1개</span>
+          <span class="ss-note">시지중기 (金) — 창의력</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#ef5350;">상관</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-상관" style="width:20%;"></div></div>
+          <span class="ss-cnt">1개</span>
+          <span class="ss-note">월지중기 (金) — 표현력</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#ff9800;">정재</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-정재" style="width:40%;"></div></div>
+          <span class="ss-cnt">2개</span>
+          <span class="ss-note">월지여기·일지중기 (水) — 재물</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#757575;">정관</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-정관" style="width:40%;"></div></div>
+          <span class="ss-cnt">2개</span>
+          <span class="ss-note">년지·일지여기 (木) — 원칙성</span>
+        </div>
+        <div class="ss-row">
+          <span class="ss-name" style="color:#2196f3;">편인</span>
+          <div class="ss-bar-wrap"><div class="ss-bar ss-편인" style="width:20%;"></div></div>
+          <span class="ss-cnt">1개</span>
+          <span class="ss-note">시지본기 (火 ← 用神!) — 직관력</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 활성화 시기 -->
+    <div class="activation-grid">
+      <div class="act-card" style="background:#fff8e1;border:1.5px solid #ffd54f;">
+        <div class="act-label" style="color:#e65100;">🔥 용신 방향 지장간 활성화</div>
+        <div class="act-ohaeng" style="color:#f44336;">火(화) · 편인</div>
+        <div class="act-daewoon" style="color:#f44336;">己未 대운</div>
+        <div class="act-detail" style="color:#e65100;">2028년 · 64세<br>시지본기 丙火 개화</div>
+      </div>
+      <div class="act-card" style="background:#e8f5e9;border:1.5px solid #a5d6a7;">
+        <div class="act-label" style="color:#2e7d32;">🌱 희신 방향 지장간 활성화</div>
+        <div class="act-ohaeng" style="color:#4caf50;">木(목) · 정관</div>
+        <div class="act-daewoon" style="color:#4caf50;">현재 활성</div>
+        <div class="act-detail" style="color:#388e3c;">년지·일지여기 乙木<br>정관 기운 작동 중</div>
+      </div>
+      <div class="act-card" style="background:#ffebee;border:1.5px solid #ef9a9a;">
+        <div class="act-label" style="color:#c62828;">⚠️ 공망 지장간 주의</div>
+        <div class="act-ohaeng" style="color:#9e9e9e;">일지·시지 공망</div>
+        <div class="act-daewoon" style="color:#9e9e9e;">辰·巳 공망</div>
+        <div class="act-detail" style="color:#999;">배우자궁·자녀궁 기운<br>의도적 강화 필요</div>
+      </div>
+    </div>
+
+  </div><!-- card -->
+
+  <!-- ═══ 핵심 요약 메모 ═══ -->
+  <div style="background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:10px;padding:8px 14px;font-size:7pt;color:#555;line-height:1.8;">
+    <strong style="color:#1565c0;">📌 반야선생의 지장간 핵심 요약</strong><br>
+    최원석 님의 지장간에서 가장 주목할 것은 <strong style="color:#f44336;">시지(巳) 본기 丙火(편인)</strong>입니다. 用神 火가 시지 안에 숨어 있지만 <strong>공망(空亡)</strong>에 걸려 있어 자연스럽게 발현되기 어렵습니다.
+    <strong style="color:#f44336;"> 2028년 己未 대운부터 이 丙火가 깨어납니다</strong> — 64세 이후가 진짜 전성기입니다.
+    또한 일지(辰) 중기의 <strong style="color:#2196f3;">癸水(정재)</strong>도 공망이라 재물이 생기면 빠져나가는 패턴이 반복됩니다. 의식적인 재물 관리가 특히 중요합니다.
+  </div>
+
+</div>
+</body>
+</html>

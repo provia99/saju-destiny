@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><title>공망안내박스 》 임효원님</title><style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; max-height:820px; overflow:hidden; padding:4px 6px; background:transparent; display:flex; flex-direction:column; gap:3px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print {
+  body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; max-height:820px; overflow:hidden; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 820px; margin:0; }
+}
+/* ── 헤더 ── */
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:4px 12px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+/* ── 카드 공통 ── */
+.card { border:1.5px solid #ccc; border-radius:8px; overflow:hidden; }
+.card-hd { padding:3px 8px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:7.5pt; font-weight:900; color:white; letter-spacing:-0.3px; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.82); }
+.card-body { padding:4px 8px; background:transparent; display:flex; flex-direction:column; gap:3px; }
+/* ── Card ①: 핵심 ── */
+.gm-hero { display:flex; align-items:stretch; gap:8px; }
+.gm-chars { display:flex; gap:6px; }
+.gm-char-box { background:#fafafa; border:1.5px solid #ddd; border-radius:6px; text-align:center; padding:5px 10px; min-width:58px; }
+.gm-char-box.active { border-color:#c9a227; background:#fffbf0; }
+.gm-char-num  { font-size:7pt; color:#999; font-weight:700; margin-bottom:1px; }
+.gm-char-hanja { font-size:22pt; font-weight:900; color:#333; line-height:1; font-family:'Noto Serif KR',serif; }
+.gm-char-box.active .gm-char-hanja { color:#c9a227; }
+.gm-char-eum  { font-size:6.5pt; color:#666; margin-top:1px; }
+.gm-char-oh   { font-size:7pt; font-weight:700; padding:1px 5px; border-radius:3px; display:inline-block; margin-top:3px; color:white; }
+.gm-info { flex:1; display:flex; flex-direction:column; gap:5px; justify-content:center; }
+.gm-sun-box { background:#f5f5f5; border-radius:5px; padding:4px 7px; }
+.gm-sun-lbl { font-size:7pt; color:#888; font-weight:700; margin-bottom:2px; }
+.gm-sun-val { font-size:9pt; font-weight:900; color:#333; font-family:'Noto Serif KR',serif; }
+.gm-sun-sub { font-size:7pt; color:#888; margin-top:1px; }
+.gm-pos-badge { display:inline-flex; align-items:center; gap:4px; background:#1a237e; color:white; border-radius:5px; padding:4px 9px; align-self:flex-start; }
+.gm-pos-badge-lbl { font-size:7pt; opacity:.8; }
+.gm-pos-badge-val { font-size:7.5pt; font-weight:900; }
+.gm-desc-box { background:#e8eaf6; border-left:3px solid #3949ab; border-radius:0 5px 5px 0; padding:5px 8px; font-size:6pt; color:#1a237e; line-height:1.5; }
+/* ── Card ②: 4기둥 ── */
+.pillar-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+.pillar-cell { border:1.5px solid #e0e0e0; border-radius:6px; overflow:hidden; text-align:center; }
+.pillar-cell.has-gm { border-color:#c9a227; }
+.pillar-label { font-size:7pt; font-weight:700; color:white; background:#546e7a; padding:2px 0; }
+.pillar-cell.has-gm .pillar-label { background:#b8860b; }
+.pillar-gan { font-size:13pt; font-weight:900; color:#444; padding:3px 0 0; font-family:'Noto Serif KR',serif; }
+.pillar-ji  { font-size:13pt; font-weight:900; color:#333; padding:0 0 3px; font-family:'Noto Serif KR',serif; }
+.pillar-cell.has-gm .pillar-ji { color:#c9a227; }
+.pillar-ji-eum { font-size:7pt; color:#888; padding-bottom:3px; }
+.gm-badge { font-size:7pt; font-weight:900; background:#c9a227; color:white; border-radius:0 0 5px 5px; padding:2px 0 3px; letter-spacing:0.3px; }
+.no-gm-badge { font-size:7pt; color:#bbb; background:#f5f5f5; border-radius:0 0 5px 5px; padding:2px 0 3px; }
+.pillar-area { font-size:7pt; color:#888; padding:1px 0 0; }
+.pillar-cell.has-gm .pillar-area { color:#b8860b; font-weight:700; }
+/* ── Card ③: 영향 분석 ── */
+.impact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.impact-cell { background:#f9f9f9; border-radius:5px; border:1px solid #333; padding:7px 9px; }
+.impact-cell-title { font-size:6pt; font-weight:900; color:#333; margin-bottom:3px; display:flex; align-items:center; gap:4px; }
+.impact-cell-dot { width:6px; height:6px; border-radius:50%; display:inline-block; flex-shrink:0; }
+.impact-cell-text { font-size:7pt; color:#555; line-height:1.5; }
+.gm-meaning-row { display:flex; gap:5px; }
+.gm-meaning-card { flex:1; border-radius:5px; padding:7px 9px; }
+.gm-meaning-title { font-size:7pt; font-weight:900; margin-bottom:3px; }
+.gm-meaning-text  { font-size:7pt; line-height:1.45; color:#444; }
+.pos-detail-box { background:#f3e5f5; border-left:3px solid #7b1fa2; border-radius:0 5px 5px 0; padding:6px 9px; }
+.pos-detail-title { font-size:7pt; font-weight:900; color:#7b1fa2; margin-bottom:3px; }
+.pos-detail-text  { font-size:7pt; color:#444; line-height:1.5; }
+/* ── Card ④: 해소·활용 ── */
+.haeso-row { display:flex; gap:5px; }
+.haeso-card { flex:1; border-radius:6px; padding:7px 9px; }
+.haeso-title { font-size:7pt; font-weight:900; margin-bottom:5px; display:flex; align-items:center; gap:3px; }
+.haeso-title-icon { font-size:7pt; }
+.haeso-item { font-size:7pt; color:#444; line-height:1.45; margin-bottom:3px; padding-left:9px; position:relative; }
+.haeso-item::before { content:'•'; position:absolute; left:2px; color:#888; }
+.chip-row { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.chip { font-size:7pt; font-weight:700; padding:2px 7px; border-radius:4px; border:1px solid; }
+.chip-chung { background:#fff8e1; color:#f57f17; border-color:#ffe082; }
+.chip-hap   { background:#e8f5e9; color:#2e7d32; border-color:#a5d6a7; }
+.chip-active { background:#c9a227; color:white; border-color:#c9a227; }
+.in-chart-note { font-size:7pt; color:#2e7d32; font-weight:700; background:#e8f5e9; border-radius:3px; padding:2px 6px; display:inline-block; margin-top:4px; }
+.advice-block { background:#fff8e1; border-radius:5px; border:1px solid #ffe082; padding:7px 9px; }
+.advice-title { font-size:6pt; font-weight:900; color:#e65100; margin-bottom:5px; }
+.advice-item { font-size:7pt; color:#333; line-height:1.5; margin-bottom:3px; padding-left:11px; position:relative; }
+.advice-item::before { content:'→'; position:absolute; left:0; color:#e65100; font-size:7pt; }
+/* ── 공망없음 ── */
+.no-gm-notice { text-align:center; padding:16px; color:#aaa; font-size:7.5pt; }
+</style></head>
+<body><div class="page">
+  <div class="banner-hdr" style="background:linear-gradient(135deg,#4a148c,#7b1fa2);">
+  <div>
+    <div class="banner-hdr-title">🔮 공망(空亡) 안내</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진)</div>
+  </div>
+</div>
+  <div class="no-gm-notice">✅ 원국에 공망 해당 지지가 없습니다</div>
+</div></body></html>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}주문 상세{% endblock %}
+{% block content %}
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h3 class="m-0 fw-bold">&#128722; 주문 상세</h3>
+  </div>
+  <div class="col-auto">
+    <a href="/admin/orders" class="btn btn-outline-secondary">&#8592; 목록으로</a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <!-- 주문 정보 -->
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white fw-bold">&#128203; 주문 정보</div>
+      <div class="card-body">
+        <table class="table table-sm table-borderless">
+          <tr><th width="120">주문번호</th><td class="font-monospace">{{ order.order_id }}</td></tr>
+          <tr><th>상품명</th><td class="fw-bold">{{ order.product_name or '-' }}</td></tr>
+          <tr><th>결제금액</th><td class="fw-bold text-primary fs-5">&#8361;{{ "{:,}".format(order.amount) }}</td></tr>
+          <tr><th>결제수단</th><td>{{ order.payment_method or '-' }}</td></tr>
+          <tr><th>결제키</th><td><small class="text-muted font-monospace">{{ order.payment_key or '-' }}</small></td></tr>
+          <tr>
+            <th>주문상태</th>
+            <td>
+              {% if order.status == 'paid' %}<span class="badge bg-success fs-6">결제완료</span>
+              {% elif order.status == 'pending' %}<span class="badge bg-warning text-dark fs-6">대기</span>
+              {% elif order.status == 'cancelled' %}<span class="badge bg-danger fs-6">취소</span>
+              {% else %}<span class="badge bg-secondary fs-6">{{ order.status }}</span>{% endif %}
+            </td>
+          </tr>
+          <tr><th>주문일시</th><td>{{ order.created_at[:16] if order.created_at else '-' }}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 고객 정보 -->
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white fw-bold">&#128100; 고객 정보</div>
+      <div class="card-body">
+        <table class="table table-sm table-borderless">
+          <tr><th width="120">이름</th><td class="fw-bold">{{ client.name if client else '-' }}</td></tr>
+          <tr><th>이메일</th><td>{{ client.email if client else '-' }}</td></tr>
+          <tr><th>연락처</th><td>{{ client.phone if client else '-' }}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 배송 정보 -->
+  <div class="col-12">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+        <span>&#128666; 배송 정보</span>
+        {% if delivery and delivery.status == 'pending' %}
+        <form method="post" action="/admin/orders/{{ order.id }}/deliver" class="d-inline">
+          <button type="submit" class="btn btn-sm btn-success"
+                  onclick="return confirm('배송 완료 처리하시겠습니까?')">
+            &#10003; 배송 완료 처리
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        {% if delivery %}
+        <table class="table table-sm table-borderless">
+          <tr><th width="160">배송상태</th>
+            <td>
+              {% if delivery.status == 'delivered' %}<span class="badge bg-success fs-6">배송완료</span>
+              {% elif delivery.status == 'pending' %}<span class="badge bg-info text-dark fs-6">배송대기</span>
+              {% elif delivery.status == 'failed' %}<span class="badge bg-danger fs-6">실패</span>
+              {% else %}<span class="badge bg-secondary fs-6">{{ delivery.status }}</span>{% endif %}
+            </td>
+          </tr>
+          <tr><th>예정 배송시간</th><td>{{ delivery.scheduled_delivery_time or '즉시' }}</td></tr>
+          <tr><th>실제 배송시간</th><td>{{ delivery.actual_delivery_time or '-' }}</td></tr>
+        </table>
+        {% else %}
+        <p class="text-muted mb-0">배송 정보가 없습니다.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

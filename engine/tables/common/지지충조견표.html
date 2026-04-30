@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지지충조견표</title>
+  <style>
+    @font-face { font-family:'Noto Sans KR'; src:local('Noto Sans KR'); }
+    @font-face { font-family:'Noto Serif KR'; src:local('Noto Serif KR'); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR',sans-serif;
+      background: white;
+      padding: 10px;
+    }
+    .page { width:604px; max-height:840px; padding:6px 8px; background:white; overflow:hidden; margin:0 auto; }
+    .banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:5px; }
+    .banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+    .banner-hdr-info { font-size:7pt;color:rgba(255,255,255,.85); }
+    .card { border:1.5px solid #333;border-radius:8px;overflow:hidden; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    thead tr {
+      background: #f5f5f5;
+    }
+    th {
+      padding: 6px 8px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      font-size: 7pt;
+      color: #333;
+    }
+    td {
+      padding: 5px 7px;
+      border: 1px solid #e0e0e0;
+      font-size: 7pt;
+      text-align: center;
+    }
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+    .name-cell {
+      font-weight: bold;
+      font-size: 9pt;
+    }
+    .bidirectional {
+      font-size: 11pt;
+      font-weight: bold;
+      color: #d9534f;
+      letter-spacing: 2px;
+    }
+    .og-cell {
+      font-weight: bold;
+      font-size: 7pt;
+      color: #666;
+    }
+    .effect-cell {
+      text-align: left;
+      font-size: 7pt;
+      line-height: 1.4;
+    }
+    @media print { body{background:white;margin:0;padding:0;} .page{margin:0;box-shadow:none;} @page{size:604px 840px;margin:0;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#b71c1c,#c62828);">
+      <div class="banner-hdr-title">📋 지지충조견표</div>
+      <div class="banner-hdr-info">사주명리학 기초 참조표</div>
+    </div>
+    <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>충</th>
+          <th>지지1</th>
+          <th colspan="3">충돌</th>
+          <th>영향</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: white;">
+          <td class="name-cell" style="border-left: 3px solid #90bfe0;">子午冲</td>
+          <td>子(자·水·北)</td>
+          <td style="background: #e3eef9; color: #1a4e7a; font-weight: bold;">水</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #fde8e7; color: #b92e27; font-weight: bold;">火</td>
+          <td class="effect-cell">감정·이동·변화</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="name-cell" style="border-left: 3px solid #f0d470;">丑未冲</td>
+          <td>丑(축·土·北東)</td>
+          <td style="background: #fff8e0; color: #9b6f00; font-weight: bold;">土</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #fff8e0; color: #9b6f00; font-weight: bold;">土</td>
+          <td class="effect-cell">재물·부동산·이직</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="name-cell" style="border-left: 3px solid #a8dbb5;">寅申冲</td>
+          <td>寅(인·木·東北)</td>
+          <td style="background: #e8f7ec; color: #1e6b2a; font-weight: bold;">木</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #eef1f4; color: #3d4f5c; font-weight: bold;">金</td>
+          <td class="effect-cell">교통사고·수술·이동</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="name-cell" style="border-left: 3px solid #a8dbb5;">卯酉冲</td>
+          <td>卯(묘·木·東)</td>
+          <td style="background: #e8f7ec; color: #1e6b2a; font-weight: bold;">木</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #eef1f4; color: #3d4f5c; font-weight: bold;">金</td>
+          <td class="effect-cell">관재·수술·이별</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="name-cell" style="border-left: 3px solid #f0d470;">辰戌冲</td>
+          <td>辰(진·土·東南)</td>
+          <td style="background: #fff8e0; color: #9b6f00; font-weight: bold;">土</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #fff8e0; color: #9b6f00; font-weight: bold;">土</td>
+          <td class="effect-cell">변동·이사·사고</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="name-cell" style="border-left: 3px solid #f5a9a5;">巳亥冲</td>
+          <td>巳(사·火·南東)</td>
+          <td style="background: #fde8e7; color: #b92e27; font-weight: bold;">火</td>
+          <td class="bidirectional">↔</td>
+          <td style="background: #e3eef9; color: #1a4e7a; font-weight: bold;">水</td>
+          <td class="effect-cell">이동·변화·갈등</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</body>
+</html>

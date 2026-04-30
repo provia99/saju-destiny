@@ -1,0 +1,8 @@
+{
+  "name": "saju-engine",
+  "version": "1.0.0",
+  "dependencies": {
+    "korean-lunar-calendar": "^0.3.6",
+    "puppeteer": "^24.40.0"
+  }
+}

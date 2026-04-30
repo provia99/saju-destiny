@@ -1,0 +1,96 @@
+# ============================================================
+#  banya_web .gitignore  — 코드만 Git, 자산·DB·환경은 별도
+# ============================================================
+
+# ── 환경 / 비밀키 ──
+.env
+.env.local
+.env.*.local
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Node ──
+node_modules/
+engine/node_modules/
+npm-debug.log
+package-lock.json.bak
+
+# ── DB / 캐시 ──
+data/banya.db
+data/banya.db-journal
+data/banya.db-shm
+data/banya.db-wal
+data/cache.db
+data/cache.db-*
+*.db-journal
+*.sqlite-journal
+
+# ── 자산 (USB·NAS 등으로 별도 관리, GitHub에 안 올림) ──
+engine/fonts/
+engine/images/
+engine/_deprecated/
+engine/queue/sample/
+engine/queue/sample_*
+engine/queue/test_*
+engine/tables/sample/
+static/fonts/
+static/filler/
+static/tarot/
+templates/imagefolder/
+
+# ── 출력물 / 임시 ──
+output/
+engine/output/
+engine/queue/*.txt
+engine/queue/*.html
+engine/queue/*.json
+engine/queue/*.pdf
+*.log
+edit_debug.log
+syntax_check*.txt
+mainjs_end.txt
+
+# ── 백업 ──
+*.backup
+*.bak
+*.old
+.git_backup_*/
+backups/
+
+# ── IDE / 에디터 ──
+.vscode/
+.idea/
+*.swp
+*.swo
+.cursor/
+.windsurf/
+
+# ── 운영체제 ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Claude / AI 도구 로컬 설정 (공유 안 할 것만) ──
+.claude/scheduled_tasks.lock
+.claude/projects/*/memory/
+
+# ── 빌드 부산물 ──
+*.pyc
+*.pyo
+.coverage
+htmlcov/

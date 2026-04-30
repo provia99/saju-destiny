@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>{{ master.선생님이름 }} - 사주 정보 입력</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root { --brand: {{ brand_color|default('#1A3A6A') }}; --gold: {{ gold|default('#C8B860') }}; }
+    body { background-color: #1e1433; font-family: 'Noto Sans KR', sans-serif; margin: 0; display: flex; justify-content: center; }
+    .mobile-wrapper { background-color: #271a45; max-width: 480px; width: 100%; min-height: 100vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+    .top-bar { padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(155,89,182,0.25); position: sticky; top: 0; background: #271a45; z-index: 10; }
+    .top-bar a { color: #faf5ff; text-decoration: none; font-size: 1.4rem; }
+    .top-bar .title { flex: 1; text-align: center; font-weight: 700; font-size: 1.1rem; margin-right: 28px; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+    
+    .form-container { flex: 1; padding: 1.5rem 1.25rem; overflow-y: auto; padding-bottom: 100px; }
+    .form-card { background: #271a45; border-radius: 16px; padding: 1.5rem; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
+    .section-title { font-weight: 800; font-size: 1.15rem; color: var(--brand); margin-bottom: 1.25rem; display: flex; align-items: center; }
+    .section-title::before { content: ""; display: inline-block; width: 4px; height: 18px; background-color: var(--gold); margin-right: 10px; border-radius: 2px; }
+    
+    .input-custom { border-radius: 12px; padding: 14px; background-color: #2f2055; border: 1px solid rgba(155,89,182,0.25); font-size: 1rem; }
+    .input-custom:focus { background-color: #fff; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(26,58,106,0.1); outline: none; }
+    
+    .bottom-button { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; background: #271a45; border-top: 1px solid rgba(155,89,182,0.25); z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.02); }
+    .btn-brand { background-color: var(--brand); color: white; border-radius: 14px; font-weight: 700; padding: 16px; border: none; width: 100%; font-size: 1.1rem; }
+    
+    .btn-check + .btn-outline-secondary { border-color: #eee; color: #6c757d; background: #2f2055; padding: 12px; border-radius: 10px; }
+    .btn-check:checked + .btn-outline-secondary { background-color: var(--brand); color: white; border-color: var(--brand); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <div class="top-bar">
+      <a href="/expert/{{ master.master_id }}/mypage"><i class="bi bi-chevron-left"></i></a>
+      <div class="title">사주 정보 입력</div>
+    </div>
+    
+    <form method="post" action="/expert/{{ master.master_id }}/saju/new" id="sajuForm" style="flex: 1; display:flex; flex-direction:column; position:relative;">
+    <div class="form-container">
+      
+      {% if errors %}
+      <div class="alert alert-danger px-3 py-2 small rounded-3 border-0 bg-danger text-white bg-opacity-75 mb-4 shadow-sm">
+        <ul class="mb-0 ps-3">
+          {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      
+      <div class="text-center mb-4">
+        <h4 class="fw-bold mb-2">정확한 분석을 위해</h4>
+        <p class="text-muted small px-2">태어난 시간과 현재 상황을 자세히 알려주실수록 더 정밀한 해석이 가능합니다.</p>
+      </div>
+      
+      <div class="form-card">
+        <h5 class="section-title">1. 생년월일시 (필수)</h5>
+        
+        <div class="row g-2 mb-3">
+          <div class="col-4">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">생년</label>
+            <input type="number" name="birth_year" class="form-control input-custom text-center" min="1900" max="2030" value="{{ existing.birth_year|default('1980') }}" required>
+          </div>
+          <div class="col-4">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">생월</label>
+            <select name="birth_month" class="form-select input-custom px-2" required>
+              {% for i in range(1, 13) %}
+              <option value="{{ i }}" {% if existing.birth_month|string == i|string %}selected{% endif %}>{{ i }}월</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-4">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">생일</label>
+            <select name="birth_day" class="form-select input-custom px-2" required>
+              {% for i in range(1, 32) %}
+              <option value="{{ i }}" {% if existing.birth_day|string == i|string %}selected{% endif %}>{{ i }}일</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label small fw-bold text-muted px-1 mb-1">음/양력</label>
+          <div class="d-flex gap-2">
+            <div style="flex:1;">
+              <input type="radio" class="btn-check" name="lunar_yn" id="lunar0" value="0" {% if not existing.lunar_yn %}checked{% endif %} onchange="toggleLeap(false)">
+              <label class="btn btn-outline-secondary w-100" for="lunar0">양력</label>
+            </div>
+            <div style="flex:1;">
+              <input type="radio" class="btn-check" name="lunar_yn" id="lunar1" value="1" {% if existing.lunar_yn %}checked{% endif %} onchange="toggleLeap(true)">
+              <label class="btn btn-outline-secondary w-100" for="lunar1">음력</label>
+            </div>
+          </div>
+          <!-- 윤달 선택 (음력일 때만 나타남) -->
+          <div id="leap_wrap" class="mt-2" style="display: {% if existing and existing.lunar_yn %}block{% else %}none{% endif %};">
+            <div class="p-3 border rounded-3 d-flex align-items-center animate-fade-in" style="border-color: var(--brand) !important; background-color: rgba(var(--brand-rgb, 26, 58, 106), 0.08);">
+              <div class="form-check m-0">
+                <input class="form-check-input" type="checkbox" name="leap_month_yn" id="leap_month_yn" value="1" {% if existing and existing.leap_month_yn %}checked{% endif %} style="border-color: var(--brand);">
+                <label class="form-check-label fw-bold ms-1" for="leap_month_yn" style="cursor:pointer; color: var(--brand);">
+                  <i class="bi bi-moon-stars-fill me-1"></i> 윤달(閏月) 입니다
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">태어난 시간</label>
+            <select name="birth_time" class="form-select input-custom" required>
+                <option value="모름" {% if existing.birth_time == '모름' %}selected{% endif %}>모름 (12:00 기준)</option>
+                <option value="자시" {% if existing.birth_time == '자시' %}selected{% endif %}>자시(23:30-01:29)</option>
+                <option value="축시" {% if existing.birth_time == '축시' %}selected{% endif %}>축시(01:30-03:29)</option>
+                <option value="인시" {% if existing.birth_time == '인시' %}selected{% endif %}>인시(03:30-05:29)</option>
+                <option value="묘시" {% if existing.birth_time == '묘시' %}selected{% endif %}>묘시(05:30-07:29)</option>
+                <option value="진시" {% if existing.birth_time == '진시' %}selected{% endif %}>진시(07:30-09:29)</option>
+                <option value="사시" {% if existing.birth_time == '사시' %}selected{% endif %}>사시(09:30-11:29)</option>
+                <option value="오시" {% if existing.birth_time == '오시' %}selected{% endif %}>오시(11:30-13:29)</option>
+                <option value="미시" {% if existing.birth_time == '미시' %}selected{% endif %}>미시(13:30-15:29)</option>
+                <option value="신시" {% if existing.birth_time == '신시' %}selected{% endif %}>신시(15:30-17:29)</option>
+                <option value="유시" {% if existing.birth_time == '유시' %}selected{% endif %}>유시(17:30-19:29)</option>
+                <option value="술시" {% if existing.birth_time == '술시' %}selected{% endif %}>술시(19:30-21:29)</option>
+                <option value="해시" {% if existing.birth_time == '해시' %}selected{% endif %}>해시(21:30-23:29)</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">성별</label>
+            <div class="d-flex gap-2">
+              <div style="flex:1;">
+                <input type="radio" class="btn-check" name="gender" id="genderM" value="남" {% if existing.gender == '남' %}checked{% endif %} required>
+                <label class="btn btn-outline-secondary w-100 px-0" for="genderM">남성</label>
+              </div>
+              <div style="flex:1;">
+                <input type="radio" class="btn-check" name="gender" id="genderF" value="여" {% if existing.gender == '여' %}checked{% endif %} required>
+                <label class="btn btn-outline-secondary w-100 px-0" for="genderF">여성</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-card">
+        <h5 class="section-title">2. 현재 상황 (선택)</h5>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">직업 상태</label>
+            <select name="activity_type" class="form-select input-custom">
+              {% for st in ['직장인','사업가','프리랜서','학생','은퇴','주부','무직'] %}
+              <option value="{{ st }}" {% if existing.activity_type|default('직장인') == st %}selected{% endif %}>{{ st }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">결혼 상태</label>
+            <select name="marital_status" class="form-select input-custom">
+              {% for ms in ['미혼','기혼','이혼','사별','재혼'] %}
+              <option value="{{ ms }}" {% if existing.marital_status|default('미혼') == ms %}selected{% endif %}>{{ ms }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        
+        <input type="hidden" name="concern_area" value="{{ existing.concern_area|default('종합') }}">
+        
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">자녀유무</label>
+            <div class="d-flex gap-2">
+              <div style="flex:1;"><input type="radio" class="btn-check" name="has_children" id="child1" value="있음" {% if existing.has_children == '있음' %}checked{% endif %}><label class="btn btn-outline-secondary w-100 px-0" for="child1">있음</label></div>
+              <div style="flex:1;"><input type="radio" class="btn-check" name="has_children" id="child2" value="없음" {% if existing.has_children|default('없음') == '없음' %}checked{% endif %}><label class="btn btn-outline-secondary w-100 px-0" for="child2">없음</label></div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold text-muted px-1 mb-1">형제유무</label>
+            <div class="d-flex gap-2">
+              <div style="flex:1;"><input type="radio" class="btn-check" name="has_siblings" id="sib1" value="있음" {% if existing.has_siblings|default('있음') == '있음' %}checked{% endif %}><label class="btn btn-outline-secondary w-100 px-0" for="sib1">있음</label></div>
+              <div style="flex:1;"><input type="radio" class="btn-check" name="has_siblings" id="sib2" value="없음" {% if existing.has_siblings == '없음' %}checked{% endif %}><label class="btn btn-outline-secondary w-100 px-0" for="sib2">없음</label></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label small fw-bold text-muted px-1 mb-1">부모님 상황</label>
+          <select name="parent_status" class="form-select input-custom">
+            {% for ps in ['양친','편친','없음'] %}
+            {% set val = '양친' if ps=='양친 생존' else ('부친만' if ps=='부친만 생존' else ('모친만' if ps=='모친만 생존' else '없음')) %}
+            <option value="{{ val }}" {% if existing.parent_status|default('양친') == val %}selected{% endif %}>{{ ps }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="mb-3">
+          <input type="hidden" name="health_concern" value="{{ existing.health_concern|default('기본') }}">
+        </div>
+        
+        <div class="mb-2">
+          <label class="form-label small fw-bold text-muted px-1 mb-1">남기고 싶은 말 <span class="fw-normal" style="font-size: 0.8rem;">(최대 1000자)</span></label>
+          <textarea name="memo" id="memoTextarea" class="form-control input-custom" style="padding: 1rem;" rows="4" maxlength="1000" placeholder="자세한 고민이나 상황을 1000자 이내로 자유롭게 적어주시면, 사주 해석 시 더욱 깊이 있는 풀이에 큰 도움이 됩니다.">{{ existing.memo|default('') }}</textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-button">
+      <button type="submit" class="btn btn-brand w-100">입력 완료하고 다음으로</button>
+    </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleLeap(show) {
+      const wrap = document.getElementById('leap_wrap');
+      if (wrap) {
+        wrap.style.display = show ? 'block' : 'none';
+      }
+      if (!show) {
+        const check = document.getElementById('leap_month_yn');
+        if (check) check.checked = false;
+      }
+    }
+  </script>
+</body>
+</html>

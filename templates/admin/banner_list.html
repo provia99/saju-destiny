@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}배너 슬라이더 관리{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="m-0 fw-bold">메인 배너 슬라이더 관리</h3>
+  <a href="/admin/banners/new" class="btn fw-bold text-white" style="background-color:{{ brand_color }};">+ 새 배너</a>
+</div>
+
+<form method="get" action="/admin/banners" class="row g-2 align-items-center mb-3">
+  <div class="col-auto">
+    <label class="small fw-bold text-muted">마스터 필터:</label>
+  </div>
+  <div class="col-auto">
+    <select name="master_id" class="form-select form-select-sm" onchange="this.form.submit()">
+      <option value="" {% if not filter_master %}selected{% endif %}>전체</option>
+      <option value="global" {% if filter_master == 'global' %}selected{% endif %}>전역 배너 (모든 마스터에 노출)</option>
+      {% for m in masters %}
+      <option value="{{ m.master_id }}" {% if filter_master == m.master_id %}selected{% endif %}>{{ m.master_id }} ({{ m.선생님이름 }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto small text-muted">총 {{ banners|length }}개</div>
+</form>
+
+{% if not banners %}
+<div class="alert alert-light border">등록된 배너가 없습니다.</div>
+{% else %}
+<div class="card shadow-sm border-0">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>대상</th>
+          <th>아이콘</th>
+          <th>배지</th>
+          <th>제목</th>
+          <th>본문</th>
+          <th class="text-center">순서</th>
+          <th class="text-center">상태</th>
+          <th>액션</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in banners %}
+        <tr {% if not b.is_active %}style="opacity:0.45;"{% endif %}>
+          <td>{{ b.id }}</td>
+          <td>
+            {% if not b.master_id %}
+            <span class="badge bg-info">전역</span>
+            {% else %}
+            <span class="badge bg-secondary">{{ b.master_id }}</span>
+            {% endif %}
+          </td>
+          <td style="font-size:1.4rem;">{{ b.icon }}</td>
+          <td><span class="text-muted small">{{ b.badge|truncate(20) }}</span></td>
+          <td class="fw-bold">{{ b.title_top }} {{ b.title_bottom }}</td>
+          <td class="small text-muted">{{ b.sub|truncate(40)|safe }}</td>
+          <td class="text-center"><span class="badge bg-warning text-dark">{{ b.position }}</span></td>
+          <td class="text-center">
+            {% if b.is_active %}
+            <span class="badge bg-success">활성</span>
+            {% else %}
+            <span class="badge bg-light text-muted border">비활성</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/admin/banners/{{ b.id }}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
+            <form method="post" action="/admin/banners/{{ b.id }}/delete" style="display:inline;" onsubmit="return confirm('삭제하시겠습니까?');">
+              <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

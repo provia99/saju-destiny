@@ -1,0 +1,177 @@
+/* 사주 프리미엄 디자인 시스템 */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('/static/fonts/NotoSansKR-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('/static/fonts/NotoSansKR-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Noto Serif KR';
+  src: url('/static/fonts/NotoSerifKR-Regular.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Noto Serif KR';
+  src: url('/static/fonts/NotoSerifKR-Bold.otf') format('opentype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('/static/fonts/NotoSansTC-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('/static/fonts/NotoSansTC-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+:root {
+  --brand-navy: #1A1F2C;
+  --accent-gold: #D4AF37;
+  --accent-gold-light: #E9D58E;
+  --soft-cream: #FDFBFA;
+  --slate-gray: #4A5568;
+  --glass-white: rgba(255, 255, 255, 0.85);
+  --premium-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: #F8F9FD;
+  font-family: 'Noto Sans KR', 'Noto Sans TC', sans-serif;
+  color: var(--brand-navy);
+}
+
+/* 글라스모피즘 카드 */
+.glass-card {
+  background: var(--glass-white);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: var(--premium-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* 프리미엄 버튼 */
+.btn-premium {
+  background: linear-gradient(135deg, var(--brand-navy) 0%, #2A3142 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(26, 31, 44, 0.2);
+}
+
+.btn-premium:hover {
+  background: linear-gradient(135deg, #2A3142 0%, var(--brand-navy) 100%);
+  color: var(--accent-gold-light);
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(26, 31, 44, 0.3);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #B8962D 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-gold:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* 레이아웃 & 유틸리티 */
+.page-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--brand-navy), var(--accent-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
+}
+
+/* 기존 'Noto Sans KR' 폰트 클래스 제거 및 Noto Sans 통합 */
+.font-noto { font-family: 'Noto Sans KR', 'Noto Sans TC', sans-serif; }
+
+/* 진행 상태 특수 애니메이션 */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.anim-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .page-title { font-size: 1.6rem; }
+  .glass-card { border-radius: 16px; }
+}
+
+/* === Ohaeng Table Premium Styles (Chapter 4) === */
+.ohaeng-container { font-family: 'Noto Sans KR', 'Noto Sans TC', sans-serif; background: transparent; padding: 20px 0; width: 100%; max-width: 604px; margin: 25px auto; color: #333; line-height: 1.5; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+.ohaeng-container * { box-sizing: border-box; }
+.ohaeng-container .header-unified-box { border: 2.5px solid #333; border-radius: 10px; overflow: hidden; background: transparent; margin-bottom: 25px; }
+.ohaeng-container .info-section { display: flex; gap: 0; background: transparent; border: none; padding: 0; }
+.ohaeng-container .character-wrapper { width: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(51,51,51,0.02); border-right: 2.5px solid #333; padding: 20px; }
+.ohaeng-container .character-circle { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); display: flex; align-items: center; justify-content: center; font-size: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.1), inset 0 0 15px rgba(255,255,255,0.5); border: 2px solid #fff; }
+.ohaeng-container .info-table-container { width: 100%; border-collapse: collapse; border: none; }
+.ohaeng-container .info-table-container td { padding: 12px 15px; border-bottom: 1.5px solid #eee; border-right: 1.5px solid #eee; vertical-align: middle; height: 42px; }
+.ohaeng-container .info-table-container td:last-child { border-right: none; }
+.ohaeng-container .info-table-container tr:last-child td { border-bottom: none; }
+.ohaeng-container .info-cell.label { width: 100px; font-weight: 700; color: #555; background: rgba(51,51,51,0.03); text-align: center; font-size: 13px; border-right: 1.5px solid #eee; }
+.ohaeng-container .info-cell.value { background: transparent; color: #333; font-size: 14px; padding-left: 20px; }
+.ohaeng-container .info-cell.title-cell { font-family: 'Noto Sans KR', 'Noto Sans TC', sans-serif; background: #333; color: #fff; font-size: 18px; font-weight: 600; text-align: center; padding: 12px; border-bottom: none; border-right: none; }
+.ohaeng-container .info-cell.value.highlight { font-weight: 700; color: #b8860b; }
+.ohaeng-container .ohaeng-analysis-box { border: 2.5px solid #333; border-radius: 10px; overflow: hidden; background: transparent; }
+.ohaeng-container .ohaeng-table { width: 100%; border-collapse: collapse; }
+.ohaeng-container .ohaeng-table th { background: rgba(51,51,51,0.05); color: #333; font-weight: 700; padding: 12px; font-size: 13px; border-bottom: 1.5px solid #333; }
+.ohaeng-container .ohaeng-table td { padding: 10px; text-align: center; font-size: 14px; border-bottom: 1px solid #eee; border-right: 1px solid #eee; }
+.ohaeng-container .ohaeng-table td:last-child { border-right: none; }
+.ohaeng-container .ohaeng-table tr:last-child td { border-bottom: none; }
+.ohaeng-container .ohaeng-label { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 28px; border-radius: 14px; font-weight: 700; font-size: 13px; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+.ohaeng-container .wood { background: #4caf50; }
+.ohaeng-container .fire { background: #f44336; }
+.ohaeng-container .earth { background: #ffb300; }
+.ohaeng-container .metal { background: #9e9e9e; }
+.ohaeng-container .water { background: #2196f3; }
+.ohaeng-container .strength-container { width: 100%; height: 10px; border-radius: 5px; overflow: hidden; background: rgba(0,0,0,0.05); margin-top: 5px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+.ohaeng-container .strength-bar { height: 100%; border-radius: 5px; transition: width 1s ease-in-out; }
+.ohaeng-container .balance-section { display: flex; margin-top: 20px; gap: 15px; }
+.ohaeng-container .balance-card { flex: 1; border: 2.5px solid #333; border-radius: 10px; padding: 15px; background: transparent; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+.ohaeng-container .balance-title { font-weight: 700; color: #555; font-size: 14px; }
+.ohaeng-container .balance-value { font-size: 28px; font-weight: 800; line-height: 1; }
+.ohaeng-container .balance-value.yin { color: #2196f3; }
+.ohaeng-container .balance-value.yang { color: #f44336; }
+.ohaeng-container .balance-desc { font-size: 11px; color: #999; margin-top: 4px; }
+.ohaeng-container .detail-table-wrapper { border: 2.5px solid #333; border-radius: 10px; overflow: hidden; background: transparent; margin-top: 20px; }
+.ohaeng-container .ohaeng-detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ohaeng-container .ohaeng-detail-table th { background: rgba(51,51,51,0.05); padding: 12px; font-weight: 700; border-bottom: 2.5px solid #333; }
+.ohaeng-container .ohaeng-detail-table td { padding: 12px 15px; border-bottom: 1px solid #eee; border-right: 1px solid #eee; vertical-align: middle; }
+.ohaeng-container .ohaeng-detail-table td:last-child { border-right: none; }
+.ohaeng-container .ohaeng-detail-table tr:last-child td { border-bottom: none; }
+.ohaeng-container .col-hanja { width: 60px; text-align: center; font-size: 22px; font-weight: 800; font-family: 'Noto Sans KR', 'Noto Sans TC', sans-serif; }
+.ohaeng-container .col-name { width: 70px; text-align: center; font-weight: 600; }
+.ohaeng-container .col-desc { line-height: 1.4; color: #444; }
+.ohaeng-container .col-desc b { color: #000; }
+.ohaeng-container .col-score { width: 110px; text-align: center; font-weight: 700; color: #555; }

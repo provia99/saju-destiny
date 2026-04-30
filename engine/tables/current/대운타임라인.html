@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>대운타임라인 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; max-height:840px; overflow:hidden; padding:5px 6px; background:transparent; display:flex; flex-direction:column; gap:3px; }
+@media screen { body{background:#f5f5f5;} .page{ border:1px solid #333;margin:20px auto;border-radius:4px;} }
+@media print { body{background:transparent;margin:0;padding:0;}
+  .page{ border:1px solid #333;margin:0;width:604px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  @page{size:604px 840px;margin:0;} }
+
+/* 헤더 */
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 10px;border-radius:6px;}
+.banner-hdr-title{font-size:9pt;font-weight:900;color:white;}
+.banner-hdr-name{font-size:9pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:7pt;color:rgba(255,255,255,.75);text-align:right;margin-top:1px;}
+
+/* 운기 분포 + 범례 인라인 */
+.dist-legend{display:flex;align-items:center;gap:3px;padding:2px 0;flex-wrap:wrap;}
+.dist-item{border-radius:4px;padding:2px 5px;text-align:center;border:1px solid;flex:1;}
+.dist-num{font-size:7pt;font-weight:900;line-height:1;}
+.dist-lbl{font-size:6.5pt;font-weight:700;margin-top:0px;}
+.legend-inline{display:flex;gap:6px;margin-left:4px;font-size:6.5pt;color:#777;align-items:center;}
+.legend-inline span{display:flex;align-items:center;gap:1px;}
+
+/* 2행 5열 그리드 */
+.dw-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;flex:1;}
+
+/* 대운 카드 (컴팩트) */
+.dw-card{border:1px solid #333;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;}
+.dw-card.cur{border-width:2px;}
+.dw-top{display:flex;align-items:center;gap:2px;padding:2px 4px;}
+.dw-num{font-size:6pt;font-weight:900;line-height:1;}
+.dw-gangi{font-size:6pt;font-weight:900;color:#222;white-space:nowrap;}
+.cur-badge{font-size:6pt;font-weight:700;color:#e65100;background:#fff3e0;border:1px solid #ffcc80;padding:0px 2px;border-radius:2px;margin-left:auto;}
+.dw-body{padding:2px 4px 3px;display:flex;flex-direction:column;gap:1px;background:transparent;flex:1;}
+.dw-age{font-size:7pt;color:#555;}
+.dw-year{font-size:6.5pt;color:#999;}
+.dw-badges{display:flex;align-items:center;gap:2px;flex-wrap:wrap;}
+.dw-char-badge{font-size:6.5pt;font-weight:700;padding:0px 3px;border-radius:2px;}
+.health-badge{font-size:7pt;line-height:1;}
+.dw-un12{font-size:6.5pt;color:#777;}
+.dw-un12 b{color:#333;font-weight:800;}
+.dw-halves{display:flex;gap:2px;flex-wrap:wrap;}
+.half-badge{font-size:6pt;font-weight:700;padding:0px 3px;border-radius:2px;}
+.dw-ss{display:flex;gap:2px;flex-wrap:wrap;}
+.ss-badge{font-size:6pt;color:#555;background:#f5f5f5;border:1px solid #333;padding:0px 2px;border-radius:2px;}
+.dw-hap{font-size:6pt;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 헤더 -->
+  <div class="banner-hdr" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+  <div>
+    <div class="banner-hdr-title">📅 대운(大運) 흐름 타임라인</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 대운 戊申(무신)</div>
+  </div>
+</div>
+
+  <!-- 운기 분포 + 범례 인라인 -->
+  <div class="dist-legend">
+    <div class="dist-item" style="border-color:#2e7d32;background:#f1fbf4;">
+      <div class="dist-num" style="color:#2e7d32;">0</div>
+      <div class="dist-lbl" style="color:#2e7d32;">용신</div>
+    </div>
+    <div class="dist-item" style="border-color:#1565c0;background:#f0f7ff;">
+      <div class="dist-num" style="color:#1565c0;">2</div>
+      <div class="dist-lbl" style="color:#1565c0;">희신</div>
+    </div>
+    <div class="dist-item" style="border-color:#c62828;background:#fff5f5;">
+      <div class="dist-num" style="color:#c62828;">6</div>
+      <div class="dist-lbl" style="color:#c62828;">기신</div>
+    </div>
+    <div class="dist-item" style="border-color:#757575;background:#fafafa;">
+      <div class="dist-num" style="color:#555;">2</div>
+      <div class="dist-lbl" style="color:#777;">중립</div>
+    </div>
+    <div class="dist-item" style="border-color:#b71c1c44;background:#fff9f9;">
+      <div class="dist-num" style="color:#b71c1c;font-size:8pt;">🏥3</div>
+      <div class="dist-lbl" style="color:#b71c1c;">건강주의</div>
+    </div>
+    <div class="legend-inline">
+      <span>天 천간십성</span>
+      <span>地 지지십성</span>
+      <span>⚡ 합충</span>
+    </div>
+  </div>
+
+  <!-- 대운 카드 2행 5열 그리드 -->
+  <div class="dw-grid">
+    <div class="dw-card" style="border-color:#ddd;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">1기</span>
+    <span class="dw-gangi">癸丑(계축)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">8-17세</div>
+    <div class="dw-year">1976년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>양</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c033;">전희신</span>
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">후기신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天정재</span>
+      <span class="ss-badge">地겁재</span>
+    </div>
+    
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#f0f7ff;">
+  <div class="dw-top" style="background:#e3f2fd;border-bottom:1px solid #1565c022;">
+    <span class="dw-num" style="color:#1565c0;">2기</span>
+    <span class="dw-gangi">壬子(임자)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">18-27세</div>
+    <div class="dw-year">1986년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c0;">희신대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>태</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c033;">전희신</span>
+      <span class="half-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c033;">후희신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天편재</span>
+      <span class="ss-badge">地정재</span>
+    </div>
+    <div class="dw-hap">⚡년지(申)와 합</div>
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#fafafa;">
+  <div class="dw-top" style="background:#f5f5f5;border-bottom:1px solid #75757522;">
+    <span class="dw-num" style="color:#555;">3기</span>
+    <span class="dw-gangi">辛亥(신해)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">28-37세</div>
+    <div class="dw-year">1996년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#555;background:#f5f5f5;border:1px solid #757575;">중립대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>절</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">전중립</span>
+      <span class="half-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c033;">후희신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天상관</span>
+      <span class="ss-badge">地편재</span>
+    </div>
+    <div class="dw-hap">⚡월지(寅)와 합, 시지(寅)와 합</div>
+  </div>
+</div>
+<div class="dw-card health-warn" style="border-color:#ddd;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">4기</span>
+    <span class="dw-gangi">庚戌(경술)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">38-47세</div>
+    <div class="dw-year">2006년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      <span class="health-badge">🏥</span>
+    </div>
+    <div class="dw-un12">12운 <b>묘</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">전중립</span>
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">후기신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天식신</span>
+      <span class="ss-badge">地비견</span>
+    </div>
+    <div class="dw-hap">⚡월지(寅)와 합, 시지(寅)와 합, 일지(辰)와 충</div>
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">5기</span>
+    <span class="dw-gangi">己酉(기유)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">48-57세</div>
+    <div class="dw-year">2016년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>사</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">전기신</span>
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">후중립</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天겁재</span>
+      <span class="ss-badge">地상관</span>
+    </div>
+    <div class="dw-hap">⚡일지(辰)와 합</div>
+  </div>
+</div>
+<div class="dw-card cur health-warn" style="border-color:#c62828;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">6기</span>
+    <span class="dw-gangi">戊申(무신)</span>
+    <span class="cur-badge">▶현재</span>
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">58-67세</div>
+    <div class="dw-year">2026년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      <span class="health-badge">🏥</span>
+    </div>
+    <div class="dw-un12">12운 <b>병</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">전기신</span>
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">후중립</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天비견</span>
+      <span class="ss-badge">地식신</span>
+    </div>
+    <div class="dw-hap">⚡일지(辰)와 합, 월지(寅)와 충, 시지(寅)와 충</div>
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">7기</span>
+    <span class="dw-gangi">丁未(정미)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">68-77세</div>
+    <div class="dw-year">2036년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>쇠</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">전구신</span>
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">후기신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天정인</span>
+      <span class="ss-badge">地겁재</span>
+    </div>
+    
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#fff5f5;">
+  <div class="dw-top" style="background:#ffebee;border-bottom:1px solid #c6282822;">
+    <span class="dw-num" style="color:#c62828;">8기</span>
+    <span class="dw-gangi">丙午(병오)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">78-87세</div>
+    <div class="dw-year">2046년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#c62828;background:#ffebee;border:1px solid #c62828;">기신대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>제왕</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">전구신</span>
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">후구신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天편인</span>
+      <span class="ss-badge">地정인</span>
+    </div>
+    <div class="dw-hap">⚡월지(寅)와 합, 시지(寅)와 합</div>
+  </div>
+</div>
+<div class="dw-card health-warn" style="border-color:#ddd;background:#f0f7ff;">
+  <div class="dw-top" style="background:#e3f2fd;border-bottom:1px solid #1565c022;">
+    <span class="dw-num" style="color:#1565c0;">9기</span>
+    <span class="dw-gangi">乙巳(을사)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">88-97세</div>
+    <div class="dw-year">2056년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#1565c0;background:#e3f2fd;border:1px solid #1565c0;">희신대운</span>
+      <span class="health-badge">🏥</span>
+    </div>
+    <div class="dw-un12">12운 <b>건록</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#2e7d32;background:#e8f5e9;border:1px solid #2e7d3233;">전용신</span>
+      <span class="half-badge" style="color:#555;background:#f5f5f5;border:1px solid #75757533;">후구신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天정관</span>
+      <span class="ss-badge">地편인</span>
+    </div>
+    <div class="dw-hap">⚡년지(申)와 합</div>
+  </div>
+</div>
+<div class="dw-card" style="border-color:#ddd;background:#fafafa;">
+  <div class="dw-top" style="background:#f5f5f5;border-bottom:1px solid #75757522;">
+    <span class="dw-num" style="color:#555;">10기</span>
+    <span class="dw-gangi">甲辰(갑진)</span>
+    
+  </div>
+  <div class="dw-body">
+    <div class="dw-age">98-107세</div>
+    <div class="dw-year">2066년~</div>
+    <div class="dw-badges">
+      <span class="dw-char-badge" style="color:#555;background:#f5f5f5;border:1px solid #757575;">중립대운</span>
+      
+    </div>
+    <div class="dw-un12">12운 <b>관대</b></div>
+    <div class="dw-halves">
+      <span class="half-badge" style="color:#2e7d32;background:#e8f5e9;border:1px solid #2e7d3233;">전용신</span>
+      <span class="half-badge" style="color:#c62828;background:#ffebee;border:1px solid #c6282833;">후기신</span>
+    </div>
+    <div class="dw-ss">
+      <span class="ss-badge">天편관</span>
+      <span class="ss-badge">地비견</span>
+    </div>
+    <div class="dw-hap">⚡년지(申)와 합</div>
+  </div>
+</div>
+  </div>
+
+</div>
+</body>
+</html>

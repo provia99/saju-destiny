@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>오행신체연관표 - 임효원</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:30px 0;}
+.page{ border:1px solid #333;width:604px;margin:0 auto;background:transparent;border-radius:8px;padding:12px 16px;}
+.banner-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:8px;}
+.banner-hdr-title{font-size:10pt;font-weight:900;color:white;}
+.banner-hdr-sub{font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px;}
+.banner-hdr-name{font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.banner-hdr-detail{font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px;}
+table{width:100%;border-collapse:collapse;margin-bottom:6px;}
+th{background:#1a3a6a;color:white;font-family:'Noto Serif KR',serif;font-size:12px;font-weight:700;padding:6px 6px;border:1px solid #1a3a6a;text-align:center;}
+td{font-size:11px;padding:6px 6px;border:1px solid #333;text-align:center;vertical-align:middle;}
+tr:nth-child(even) td{background:#fafafa;}
+tr:nth-child(odd) td{background:transparent;}
+.oh-cell{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:800;}
+.symptom{font-size:10px;color:#b71c1c;}
+.emotion{font-size:10px;font-weight:600;}
+.legend{display:flex;gap:14px;justify-content:flex-end;font-size:8pt;color:#555;}
+.legend-item{display:flex;align-items:center;gap:4px;}
+.legend-dot{width:10px;height:10px;border-radius:2px;border:1px solid #333;}
+@media print{body{background:transparent;padding:0;display:block;}.page{margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@page{ border:1px solid #333;size:604px auto;margin:0;}}
+</style></head><body><div class="page">
+
+<div class="banner-hdr" style="background:linear-gradient(135deg,#b71c1c,#c62828);">
+  <div>
+    <div class="banner-hdr-title">五行 신체 연관표</div>
+    <div class="banner-hdr-sub">오행별 장부 · 신체 · 주의 증상 · 감정 연관</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 일간오행 土 · 최약오행 水</div>
+  </div>
+</div>
+
+<table>
+<thead><tr>
+  <th style="width:52px;">오행</th>
+  <th style="width:62px;">장부(臟)</th>
+  <th style="width:72px;">부(腑)</th>
+  <th>관련 신체</th>
+  <th>주의 증상</th>
+  <th style="width:72px;">감정</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><span class="oh-cell" style="color:#1e6b2a;">木</span><br></td>
+  <td style="font-weight:600;font-size:11px;">간(肝)</td>
+  <td style="font-size:11px;">담(膽)</td>
+  <td style="font-size:11px;">눈 · 근육 · 힘줄</td>
+  <td class="symptom">시력저하 · 근육경직</td>
+  <td class="emotion">분노</td>
+</tr>
+<tr>
+  <td><span class="oh-cell" style="color:#b92e27;">火</span><br></td>
+  <td style="font-weight:600;font-size:11px;">심장(心)</td>
+  <td style="font-size:11px;">소장(小腸)</td>
+  <td style="font-size:11px;">혀 · 혈관</td>
+  <td class="symptom">심장질환 · 불면</td>
+  <td class="emotion">기쁨 (과다 시 불안)</td>
+</tr>
+<tr style="background:#dbeafe;border-left:3px solid #3b82f6;">
+  <td><span class="oh-cell" style="color:#9b6f00;">土</span><br><span style="font-size:8px;color:#3b82f6;font-weight:900;">일간 오행</span></td>
+  <td style="font-weight:600;font-size:11px;">비(脾)</td>
+  <td style="font-size:11px;">위(胃)</td>
+  <td style="font-size:11px;">입 · 살</td>
+  <td class="symptom">소화불량 · 부종</td>
+  <td class="emotion">걱정</td>
+</tr>
+<tr>
+  <td><span class="oh-cell" style="color:#3d4f5c;">金</span><br></td>
+  <td style="font-weight:600;font-size:11px;">폐(肺)</td>
+  <td style="font-size:11px;">대장(大腸)</td>
+  <td style="font-size:11px;">코 · 피부</td>
+  <td class="symptom">호흡기질환 · 피부트러블</td>
+  <td class="emotion">슬픔</td>
+</tr>
+<tr style="background:#fef3c7;border-left:3px solid #f59e0b;">
+  <td><span class="oh-cell" style="color:#1a4e7a;">水</span><br><span style="font-size:8px;color:#f59e0b;font-weight:900;">최약 오행</span></td>
+  <td style="font-weight:600;font-size:11px;">신(腎)</td>
+  <td style="font-size:11px;">방광(膀胱)</td>
+  <td style="font-size:11px;">귀 · 뼈</td>
+  <td class="symptom">신장질환 · 관절</td>
+  <td class="emotion">두려움</td>
+</tr>
+</tbody></table>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;border-color:#3b82f6;"></div>일간 오행 (土)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fef3c7;border-color:#f59e0b;"></div>가장 약한 오행 (水)</div>
+</div>
+</div></body></html>

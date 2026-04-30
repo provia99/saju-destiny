@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>오행 균형 요약표 — 최원석님</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+
+.page {
+  width:210mm; min-height:297mm;
+  padding:40mm 25mm 25mm 25mm;
+  background:transparent;
+  display:flex; flex-direction:column; gap:10px;
+}
+@media screen {
+  body { background:#bbb; }
+  .page { margin:20px auto; box-shadow:0 4px 20px rgba(0,0,0,.2); background:white; }
+}
+@media print {
+  body { background:white; margin:0; padding:0; }
+  .page { margin:0; box-shadow:none; background:transparent !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:A4 portrait; margin:0; }
+}
+
+/* ── 페이지 타이틀 ── */
+.page-title {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  border-bottom:2.5px solid #333; padding-bottom:7px; flex-shrink:0;
+}
+.pt-main { font-family:'DM Serif Display',serif; font-size:20pt; line-height:1; letter-spacing:-1px; }
+.pt-sub  { font-size:7.5pt; color:#666; font-weight:700; margin-top:2px; }
+.pt-name { font-family:'Nanum Myeongjo',serif; font-size:12pt; font-weight:800; color:#c9a227; text-align:right; }
+.pt-info { font-size:6.5pt; color:#aaa; margin-top:2px; text-align:right; }
+
+/* ── 공통 카드 ── */
+.card { border:2px solid #333; border-radius:14px; overflow:hidden; flex-shrink:0; }
+.card-hd {
+  padding:7px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-hd-title { font-size:9.5pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:6.5pt; color:rgba(255,255,255,.85); }
+
+/* ── 섹션1: 원국 오행 배치 ── */
+.pillar-ohaeng {
+  display:grid; grid-template-columns:repeat(8,1fr);
+  gap:0; background:white;
+  border-bottom:1px solid #e0e0e0;
+}
+.po-col {
+  display:flex; flex-direction:column; align-items:center;
+  padding:8px 4px; border-right:1px solid #e0e0e0;
+  gap:3px;
+}
+.po-col:last-child { border-right:none; }
+.po-label { font-size:5.5pt; color:#aaa; font-weight:700; }
+.po-hanja {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:18pt; font-weight:800; line-height:1;
+}
+.po-kr    { font-size:6pt; color:#888; }
+.po-oh    { font-size:6pt; font-weight:700; color:white; padding:1px 7px; border-radius:5px; }
+.po-pillar-label {
+  font-size:5.5pt; font-weight:700; color:#aaa;
+  text-align:center; padding:4px 0 2px;
+  border-top:1px solid #f0f0f0; width:100%; margin-top:2px;
+}
+
+/* ── 섹션2: 오행 강약 분포 ── */
+.balance-section {
+  padding:12px 16px; background:white;
+  border-bottom:1px solid #e0e0e0;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+/* 오행 바 차트 */
+.oh-bars { display:flex; flex-direction:column; gap:6px; }
+.oh-row  { display:flex; align-items:center; gap:8px; }
+.oh-icon {
+  font-family:'Nanum Myeongjo',serif;
+  font-size:11pt; font-weight:800;
+  width:22px; text-align:center; flex-shrink:0;
+}
+.oh-label { font-size:7pt; font-weight:700; width:26px; flex-shrink:0; }
+.oh-bar-wrap { flex:1; height:10px; background:#eee; border-radius:5px; overflow:hidden; position:relative; }
+.oh-bar { height:100%; border-radius:5px; position:relative; }
+.oh-ideal-marker {
+  position:absolute; top:0; height:100%; width:2px; background:rgba(0,0,0,0.2);
+}
+.oh-grade { font-size:6.5pt; font-weight:700; width:34px; flex-shrink:0; }
+.oh-role  { font-size:6pt; color:#888; }
+
+/* 레이더 차트 */
+.radar-wrap { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.radar-title { font-size:7pt; font-weight:700; color:#555; }
+.radar-chart { position:relative; width:100%; height:100px; }
+
+/* ── 섹션3: 5오행 상생상극 ── */
+.cycle-section {
+  padding:10px 16px; background:white;
+  border-bottom:1px solid #e0e0e0;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cycle-title { font-size:7pt; font-weight:700; color:#555; margin-bottom:7px; display:flex; align-items:center; gap:5px; }
+.cycle-title::before { content:''; display:inline-block; width:3px; height:11px; border-radius:2px; }
+
+/* 상생 흐름 */
+.cycle-flow { display:flex; align-items:center; justify-content:center; gap:4px; flex-wrap:wrap; }
+.cf-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.cf-circle {
+  width:30px; height:30px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Nanum Myeongjo',serif; font-size:13pt; font-weight:800; color:white;
+}
+.cf-kr { font-size:5.5pt; color:#888; }
+.cf-arrow { font-size:10pt; color:#bbb; margin-bottom:8px; }
+.cf-weak { opacity:0.4; }
+
+/* 상극 목록 */
+.clash-list { display:flex; flex-direction:column; gap:5px; }
+.cl-row { display:flex; align-items:center; gap:6px; font-size:7pt; }
+.cl-from { font-family:'Nanum Myeongjo',serif; font-size:10pt; font-weight:800; }
+.cl-arrow { color:#f44336; font-size:8pt; }
+.cl-to   { font-family:'Nanum Myeongjo',serif; font-size:10pt; font-weight:800; }
+.cl-note { font-size:6.5pt; color:#555; }
+
+/* ── 섹션4: 5오행 종합 평가표 ── */
+.eval-table { width:100%; border-collapse:collapse; }
+.eval-table th {
+  font-size:6.5pt; font-weight:700; color:#555;
+  background:#f5f5f5; padding:5px 8px;
+  border:1px solid #333; text-align:center;
+}
+.eval-table th:first-child { border-left:none; }
+.eval-table th:last-child  { border-right:none; }
+.eval-table thead tr th    { border-top:none; }
+.eval-table td {
+  border:1px solid #e0e0e0; padding:6px 8px;
+  vertical-align:middle; font-size:7pt; text-align:center;
+}
+.eval-table td:first-child { border-left:none; }
+.eval-table td:last-child  { border-right:none; }
+.eval-table tbody tr:last-child td { border-bottom:none; }
+.eval-table td.left { text-align:left; }
+
+.status-chip {
+  display:inline-block; padding:2px 9px; border-radius:8px;
+  font-size:6.5pt; font-weight:700; color:white;
+}
+.action-chip {
+  display:inline-block; padding:2px 7px; border-radius:5px;
+  font-size:6pt; font-weight:700; margin:1px;
+}
+
+/* ── 메모 ── */
+.memo {
+  background:#f8f9fa; border:1.5px solid #333;
+  border-radius:10px; padding:8px 14px;
+  font-size:6.5pt; color:#555; line-height:1.8; flex-shrink:0;
+}
+
+/* 오행 색상 */
+.oh-목 { background:#4caf50; } .t-목 { color:#4caf50; }
+.oh-화 { background:#f44336; } .t-화 { color:#f44336; }
+.oh-토 { background:#ff9800; } .t-토 { color:#ff9800; }
+.oh-금 { background:#9e9e9e; } .t-금 { color:#9e9e9e; }
+.oh-수 { background:#2196f3; } .t-수 { color:#2196f3; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 페이지 타이틀 -->
+<div class="page-title">
+  <div>
+    <div class="pt-main">오행(五行) 균형 요약표</div>
+    <div class="pt-sub">五行 Balance — 木·火·土·金·水 강약 분석</div>
+  </div>
+  <div>
+    <div class="pt-name">최원석 님</div>
+    <div class="pt-info">반야 백년 사주 연구소 · 반야선생 · 일간 戊土(무토)</div>
+  </div>
+</div>
+
+<!-- ═══ 섹션1: 원국 8글자 오행 배치 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#333,#555);">
+    <div class="card-hd-title">① 사주 원국 — 8글자 오행 배치</div>
+    <div class="card-hd-sub">癸卯-乙丑-戊辰-丁巳 · 각 글자의 오행</div>
+  </div>
+  <div class="pillar-ohaeng">
+    <!-- 년간 癸 水 -->
+    <div class="po-col">
+      <div class="po-label">년간</div>
+      <div class="po-hanja t-수">癸</div>
+      <div class="po-kr">계</div>
+      <div class="po-oh oh-수">水</div>
+      <div class="po-pillar-label">년주(年柱)</div>
+    </div>
+    <!-- 년지 卯 木 -->
+    <div class="po-col">
+      <div class="po-label">년지</div>
+      <div class="po-hanja t-목">卯</div>
+      <div class="po-kr">묘</div>
+      <div class="po-oh oh-목">木</div>
+      <div class="po-pillar-label">&nbsp;</div>
+    </div>
+    <!-- 월간 乙 木 -->
+    <div class="po-col">
+      <div class="po-label">월간</div>
+      <div class="po-hanja t-목">乙</div>
+      <div class="po-kr">을</div>
+      <div class="po-oh oh-목">木</div>
+      <div class="po-pillar-label">월주(月柱)</div>
+    </div>
+    <!-- 월지 丑 土 -->
+    <div class="po-col">
+      <div class="po-label">월지</div>
+      <div class="po-hanja t-토">丑</div>
+      <div class="po-kr">축</div>
+      <div class="po-oh oh-토">土</div>
+      <div class="po-pillar-label">&nbsp;</div>
+    </div>
+    <!-- 일간 戊 土 ★ -->
+    <div class="po-col" style="background:rgba(255,152,0,0.06);border:1px solid #ff9800;border-radius:0;">
+      <div class="po-label" style="color:#ff9800;">일간★</div>
+      <div class="po-hanja t-토">戊</div>
+      <div class="po-kr">무(나)</div>
+      <div class="po-oh oh-토">土</div>
+      <div class="po-pillar-label">일주(日柱)</div>
+    </div>
+    <!-- 일지 辰 土 -->
+    <div class="po-col">
+      <div class="po-label">일지</div>
+      <div class="po-hanja t-토">辰</div>
+      <div class="po-kr">진⚡</div>
+      <div class="po-oh oh-토">土</div>
+      <div class="po-pillar-label">&nbsp;</div>
+    </div>
+    <!-- 시간 丁 火 -->
+    <div class="po-col">
+      <div class="po-label">시간</div>
+      <div class="po-hanja t-화">丁</div>
+      <div class="po-kr">정←用</div>
+      <div class="po-oh oh-화">火</div>
+      <div class="po-pillar-label">시주(時柱)</div>
+    </div>
+    <!-- 시지 巳 火 -->
+    <div class="po-col">
+      <div class="po-label">시지</div>
+      <div class="po-hanja t-화">巳</div>
+      <div class="po-kr">사⚡</div>
+      <div class="po-oh oh-화">火</div>
+      <div class="po-pillar-label">&nbsp;</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 섹션2: 오행 강약 분포 + 레이더 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#0288d1);">
+    <div class="card-hd-title">② 오행 강약 분포 — 이상적 균형 대비</div>
+    <div class="card-hd-sub">이상 균형(각 20%) 대비 실제 분포</div>
+  </div>
+  <div class="balance-section">
+    <!-- 오행 강약 바 -->
+    <div>
+      <div style="font-size:7pt;font-weight:700;color:#555;margin-bottom:8px;display:flex;align-items:center;gap:5px;">
+        <span style="display:inline-block;width:3px;height:11px;background:#1565c0;border-radius:2px;"></span>
+        오행별 강약 (실선=실제 / 점선=이상균형)
+      </div>
+      <div class="oh-bars">
+        <div class="oh-row">
+          <div class="oh-icon t-목">木</div>
+          <div class="oh-label t-목">목(木)</div>
+          <div class="oh-bar-wrap">
+            <div class="oh-bar oh-목" style="width:50%;"></div>
+            <div class="oh-ideal-marker" style="left:20%;"></div>
+          </div>
+          <div class="oh-grade t-목">보통</div>
+          <div class="oh-role">희신(喜神)</div>
+        </div>
+        <div class="oh-row">
+          <div class="oh-icon t-화">火</div>
+          <div class="oh-label t-화">화(火)</div>
+          <div class="oh-bar-wrap">
+            <div class="oh-bar oh-화" style="width:50%;"></div>
+            <div class="oh-ideal-marker" style="left:20%;"></div>
+          </div>
+          <div class="oh-grade t-화">보통</div>
+          <div class="oh-role">용신(用神) ←</div>
+        </div>
+        <div class="oh-row">
+          <div class="oh-icon t-토">土</div>
+          <div class="oh-label t-토">토(土)</div>
+          <div class="oh-bar-wrap">
+            <div class="oh-bar oh-토" style="width:92%;"></div>
+            <div class="oh-ideal-marker" style="left:20%;"></div>
+          </div>
+          <div class="oh-grade t-토" style="font-size:6pt;">매우강</div>
+          <div class="oh-role" style="color:#e65100;">⚠️ 태과(太過)</div>
+        </div>
+        <div class="oh-row">
+          <div class="oh-icon t-금">金</div>
+          <div class="oh-label t-금">금(金)</div>
+          <div class="oh-bar-wrap">
+            <div class="oh-bar oh-금" style="width:10%;"></div>
+            <div class="oh-ideal-marker" style="left:20%;"></div>
+          </div>
+          <div class="oh-grade t-금" style="font-size:6pt;">매우약</div>
+          <div class="oh-role" style="color:#2196f3;">불급(不及)</div>
+        </div>
+        <div class="oh-row">
+          <div class="oh-icon t-수">水</div>
+          <div class="oh-label t-수">수(水)</div>
+          <div class="oh-bar-wrap">
+            <div class="oh-bar oh-수" style="width:25%;"></div>
+            <div class="oh-ideal-marker" style="left:20%;"></div>
+          </div>
+          <div class="oh-grade t-수">약</div>
+          <div class="oh-role" style="color:#2196f3;">불급 · 병신</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;font-size:6pt;color:#aaa;display:flex;align-items:center;gap:4px;">
+        <span style="display:inline-block;width:14px;height:1px;border-top:1.5px dashed rgba(0,0,0,0.25);"></span>
+        점선 = 이상 균형점(각 20%)
+      </div>
+    </div>
+
+    <!-- 오행 도넛 차트 -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <div style="font-size:7pt;font-weight:700;color:#555;">오행 분포 비율</div>
+      <div style="position:relative;width:110px;height:110px;">
+        <canvas id="donutChart"></canvas>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+          <div style="font-size:6pt;color:#888;">일간</div>
+          <div style="font-family:'Nanum Myeongjo',serif;font-size:14pt;font-weight:800;color:#ff9800;line-height:1;">戊</div>
+          <div style="font-size:5.5pt;color:#888;">土(토)</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:3px;">
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:8px;height:8px;border-radius:2px;background:#4caf50;flex-shrink:0;"></span>木 25% · 希神</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:8px;height:8px;border-radius:2px;background:#f44336;flex-shrink:0;"></span>火 25% · 用神</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:8px;height:8px;border-radius:2px;background:#ff9800;flex-shrink:0;"></span>土 37% · 太過</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:8px;height:8px;border-radius:2px;background:#9e9e9e;flex-shrink:0;"></span>金 5% · 不及</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:6.5pt;"><span style="width:8px;height:8px;border-radius:2px;background:#2196f3;flex-shrink:0;"></span>水 8% · 忌神</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 섹션3: 상생·상극 + 균형 평가표 ═══ -->
+<div class="card">
+  <div class="card-hd" style="background:linear-gradient(135deg,#2e7d32,#388e3c);">
+    <div class="card-hd-title">③ 상생(相生)·상극(相剋) 흐름 — 오행 균형 평가</div>
+    <div class="card-hd-sub">내 사주 오행이 서로 어떻게 작용하는가</div>
+  </div>
+
+  <div class="cycle-section">
+    <!-- 상생 흐름 -->
+    <div>
+      <div class="cycle-title" style="--c:#4caf50;">
+        <span style="display:inline-block;width:3px;height:11px;background:#4caf50;border-radius:2px;"></span>
+        상생(相生) 흐름 — 서로 돕는 관계
+      </div>
+      <div class="cycle-flow">
+        <div class="cf-item">
+          <div class="cf-circle oh-목">木</div>
+          <div class="cf-kr">목→화</div>
+        </div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-item">
+          <div class="cf-circle oh-화">火</div>
+          <div class="cf-kr">화→토</div>
+        </div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-item">
+          <div class="cf-circle oh-토">土</div>
+          <div class="cf-kr">토→금</div>
+        </div>
+        <div class="cf-arrow">→</div>
+        <div class="cf-item cf-weak">
+          <div class="cf-circle oh-금">金</div>
+          <div class="cf-kr">금→수</div>
+        </div>
+        <div class="cf-arrow cf-weak">→</div>
+        <div class="cf-item cf-weak">
+          <div class="cf-circle oh-수">水</div>
+          <div class="cf-kr">수→목</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;font-size:6.5pt;color:#555;line-height:1.7;">
+        <strong style="color:#4caf50;">핵심:</strong> 木(희신)→火(용신) 상생 흐름이 활성화되면 운이 열림.<br>
+        土 과다로 火→土 흐름이 너무 강해 용신 설기(洩氣) 주의.
+      </div>
+    </div>
+
+    <!-- 상극 흐름 -->
+    <div>
+      <div class="cycle-title">
+        <span style="display:inline-block;width:3px;height:11px;background:#f44336;border-radius:2px;"></span>
+        상극(相剋) — 내 사주 핵심 긴장 관계
+      </div>
+      <div class="clash-list">
+        <div class="cl-row">
+          <span class="cl-from t-수">水</span>
+          <span class="cl-arrow">→극→</span>
+          <span class="cl-to t-화">火</span>
+          <span class="cl-note">⚠️ 병신 水가 용신 火를 극 — 가장 위험</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-from t-토">土</span>
+          <span class="cl-arrow">→극→</span>
+          <span class="cl-to t-수">水</span>
+          <span class="cl-note">✅ 과다 土가 병신 水를 막아줌 — 길</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-from t-목">木</span>
+          <span class="cl-arrow">→극→</span>
+          <span class="cl-to t-토">土</span>
+          <span class="cl-note">✅ 희신 木이 과다 土를 제어 — 길</span>
+        </div>
+        <div class="cl-row">
+          <span class="cl-from t-금">金</span>
+          <span class="cl-arrow">→극→</span>
+          <span class="cl-to t-목">木</span>
+          <span class="cl-note">⚠️ 金이 희신 木을 극 — 주의</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 오행 균형 평가표 -->
+  <table class="eval-table">
+    <thead>
+      <tr>
+        <th style="width:14mm;">오행</th>
+        <th style="width:16mm;">강약</th>
+        <th style="width:20mm;">4신 역할</th>
+        <th style="width:20mm;">현재 상태</th>
+        <th>강화 방법</th>
+        <th>주의 사항</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="font-family:'Nanum Myeongjo',serif;font-size:13pt;font-weight:800;" class="t-목">木</span><br><span style="font-size:6pt;color:#888;">목(木)</span></td>
+        <td><span class="status-chip oh-목">보통</span></td>
+        <td><span class="status-chip" style="background:#4caf50;">② 희신</span></td>
+        <td style="font-size:6.5pt;color:#388e3c;">유지 필요<br>충분하지 않음</td>
+        <td class="left">
+          <span class="action-chip" style="background:#4caf50;color:white;">초록색 착용</span>
+          <span class="action-chip" style="background:#4caf50;color:white;">봄 집중 행동</span>
+          <span class="action-chip" style="background:#4caf50;color:white;">동쪽 방향</span>
+          <span class="action-chip" style="background:#4caf50;color:white;">나무 소재</span>
+        </td>
+        <td style="font-size:6.5pt;color:#555;">金 대운·세운 시 木 약화 주의</td>
+      </tr>
+      <tr style="background:rgba(244,67,54,0.04);">
+        <td><span style="font-family:'Nanum Myeongjo',serif;font-size:13pt;font-weight:800;" class="t-화">火</span><br><span style="font-size:6pt;color:#888;">화(火)</span></td>
+        <td><span class="status-chip oh-화">보통</span></td>
+        <td><span class="status-chip" style="background:#f44336;">① 용신</span></td>
+        <td style="font-size:6.5pt;color:#c62828;">강화 필수<br>현재 부족</td>
+        <td class="left">
+          <span class="action-chip" style="background:#f44336;color:white;">빨강·주황 착용</span>
+          <span class="action-chip" style="background:#f44336;color:white;">여름 집중</span>
+          <span class="action-chip" style="background:#f44336;color:white;">남쪽 방향</span>
+          <span class="action-chip" style="background:#f44336;color:white;">조명·촛불</span>
+        </td>
+        <td style="font-size:6.5pt;color:#555;">水가 극하므로 겨울·水 기운 방어</td>
+      </tr>
+      <tr style="background:rgba(255,152,0,0.04);">
+        <td><span style="font-family:'Nanum Myeongjo',serif;font-size:13pt;font-weight:800;" class="t-토">土</span><br><span style="font-size:6pt;color:#888;">토(土)</span></td>
+        <td><span class="status-chip oh-토">매우강</span></td>
+        <td><span class="status-chip" style="background:#bdbdbd;">일간 과다</span></td>
+        <td style="font-size:6.5pt;color:#e65100;">태과(太過)<br>설기 필요</td>
+        <td class="left">
+          <span class="action-chip" style="background:#ff9800;color:white;">火로 설기</span>
+          <span class="action-chip" style="background:#4caf50;color:white;">木으로 제어</span>
+        </td>
+        <td style="font-size:6.5pt;color:#555;">土 기운 더하는 것 자제. 황토색 과다 주의</td>
+      </tr>
+      <tr>
+        <td><span style="font-family:'Nanum Myeongjo',serif;font-size:13pt;font-weight:800;" class="t-금">金</span><br><span style="font-size:6pt;color:#888;">금(金)</span></td>
+        <td><span class="status-chip oh-금">매우약</span></td>
+        <td><span class="status-chip" style="background:#9e9e9e;">④ 한신</span></td>
+        <td style="font-size:6.5pt;color:#757575;">중립·방치<br>희신 木 주의</td>
+        <td class="left">
+          <span class="action-chip" style="background:#9e9e9e;color:white;">관리만</span>
+        </td>
+        <td style="font-size:6.5pt;color:#555;">원국 매우 약해 金 세운 시 충격 흡수 준비</td>
+      </tr>
+      <tr>
+        <td><span style="font-family:'Nanum Myeongjo',serif;font-size:13pt;font-weight:800;" class="t-수">水</span><br><span style="font-size:6pt;color:#888;">수(水)</span></td>
+        <td><span class="status-chip oh-수">약</span></td>
+        <td><span class="status-chip" style="background:#2196f3;">③ 병신</span></td>
+        <td style="font-size:6.5pt;color:#1565c0;">방어 필수<br>약해도 위험</td>
+        <td class="left">
+          <span class="action-chip" style="background:#2196f3;color:white;">파랑·검정 자제</span>
+          <span class="action-chip" style="background:#2196f3;color:white;">겨울 주의</span>
+        </td>
+        <td style="font-size:6.5pt;color:#555;">水 대운·세운 시 용신 火 직접 극 — 최위험</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div><!-- card -->
+
+<!-- 핵심 메모 -->
+<div class="memo">
+  <strong style="color:#1565c0;">📌 반야선생의 오행 균형 핵심 요약</strong><br>
+  최원석 님의 사주는 <strong style="color:#ff9800;">土(토)가 압도적으로 강한(약 37%) 불균형 구조</strong>입니다. 이 과한 土를 식혀주는 것이 핵심입니다.
+  <strong style="color:#f44336;">用神 火(화)</strong>와 <strong style="color:#4caf50;">喜神 木(목)</strong>이 함께 작동할 때 — 木이 火를 생(生)하고 Fire가 土를 설기(洩氣)하는 흐름이 완성됩니다.
+  <strong style="color:#2196f3;">忌神 水(수)</strong>는 약하지만 용신 火를 직접 극(剋)하므로 겨울·파란색·북방을 의식적으로 피하는 것이 방어책입니다.
+  이상적인 균형(각 20%)과 비교했을 때 <strong>土 +17%, 金·水 각 -10% 이상</strong> 편차가 있는 구조입니다.
+</div>
+
+</div>
+
+<script>
+const ctx = document.getElementById('donutChart').getContext('2d');
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['木', '火', '土', '金', '水'],
+    datasets: [{
+      data: [25, 25, 37, 5, 8],
+      backgroundColor: ['#4caf50','#f44336','#ff9800','#9e9e9e','#2196f3'],
+      borderColor: '#fff',
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (item) => item.label + ': ' + item.raw + '%'
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

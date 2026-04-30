@@ -1,0 +1,959 @@
+{% extends "brand/_brand_chrome.html" %}
+{% set page = 'newyear' %}
+{% block title %}{{ target_year }} 신년운세 | {{ master.선생님이름 }}{% endblock %}
+
+{% block extra_styles %}
+<style>
+  /* ===== Hero (올해의 캐릭터) ===== */
+  .ny-hero {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    padding: 28px 22px 30px;
+    margin-bottom: 18px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(192,132,252,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(245,200,66,0.25) 0%, transparent 60%),
+      linear-gradient(160deg, #2a1550 0%, #4a2080 50%, #7b3fa8 100%);
+    border: 1px solid rgba(245,200,66,0.45);
+    box-shadow: 0 20px 60px rgba(59,32,104,0.55), inset 0 1px 0 rgba(224,184,255,0.3);
+  }
+  .ny-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,200,66,0.7), transparent);
+  }
+  .ny-year-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--gold-light);
+    background: rgba(245,200,66,0.15);
+    border: 1px solid rgba(245,200,66,0.45);
+    border-radius: 20px;
+    padding: 4px 14px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+  .ny-character-orb {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    margin: 6px auto 14px;
+    background: radial-gradient(circle, var(--ny-color, #d4a017) 0%, rgba(0,0,0,0.4) 80%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+    box-shadow:
+      0 0 30px var(--ny-color, #d4a017),
+      0 0 60px rgba(245,200,66,0.4),
+      inset 0 -10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    animation: ny-float 4s ease-in-out infinite;
+  }
+  @keyframes ny-float {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-6px) rotate(2deg); }
+  }
+  .ny-character-orb::after {
+    content: '';
+    position: absolute;
+    top: 8%; left: 18%;
+    width: 28%; height: 18%;
+    background: rgba(255,255,255,0.35);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+  .ny-character-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 30px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff8dc 0%, var(--gold) 50%, #fde68a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .ny-character-slogan {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .ny-headline {
+    font-size: 14px;
+    color: var(--gold-light);
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 12px;
+    border: 1px dashed rgba(245,200,66,0.4);
+  }
+  .ny-headline em { color: #fff8dc; font-style: normal; font-weight: 900; }
+
+  /* 섹션 헤더 — 홈과 동일한 톤 */
+  .ny-section-header {
+    margin: 24px 0 12px;
+  }
+  .ny-section-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+  }
+  .ny-section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  /* ===== 12개월 글로우 타임라인 ===== */
+  .ny-months-card {
+    background: linear-gradient(160deg, rgba(59,32,104,0.55), rgba(109,63,160,0.28));
+    border: 1px solid rgba(155,89,182,0.4);
+    border-radius: 18px;
+    padding: 22px 12px 14px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ny-months-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(224,184,255,0.5), rgba(245,200,66,0.4), transparent);
+  }
+  .ny-track {
+    position: relative;
+    height: 90px;
+    margin: 4px 4px 8px;
+  }
+  .ny-line {
+    position: absolute;
+    left: 3%; right: 3%;
+    top: 50%;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+      rgba(155,89,182,0.35) 0%,
+      rgba(192,132,252,0.55) 30%,
+      rgba(245,200,66,0.55) 70%,
+      rgba(155,89,182,0.35) 100%);
+    box-shadow: 0 0 8px rgba(155,89,182,0.35);
+  }
+  .ny-now {
+    position: absolute;
+    top: 22%; bottom: 22%;
+    width: 1.5px;
+    background: linear-gradient(180deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+    box-shadow: 0 0 10px rgba(245,200,66,0.7);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .ny-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px; height: 90px;
+    border: none; background: none; padding: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .ny-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: var(--ny-glow, 18px);
+    height: var(--ny-glow, 18px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.55) 0%, rgba(245,200,66,0) 70%);
+    filter: blur(1.5px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .ny-glow.tone-low  { background: radial-gradient(circle, rgba(248,113,113,0.45) 0%, rgba(248,113,113,0) 70%); }
+  .ny-glow.tone-high { background: radial-gradient(circle, rgba(74,222,128,0.5) 0%, rgba(74,222,128,0) 70%); }
+  .ny-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 8px; height: 8px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff8dc 0%, var(--gold) 70%);
+    border: 1.2px solid #fde68a;
+    box-shadow: 0 0 6px rgba(245,200,66,0.7);
+    transition: all 0.25s;
+    pointer-events: none;
+  }
+  .ny-core.tone-low  { background: radial-gradient(circle, #fff 0%, #f87171 70%); border-color: #fca5a5; box-shadow: 0 0 6px rgba(248,113,113,0.7); }
+  .ny-core.tone-high { background: radial-gradient(circle, #fff 0%, #4ade80 70%); border-color: #86efac; box-shadow: 0 0 6px rgba(74,222,128,0.7); }
+  .ny-month-label {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  /* 점 위 점수 — 항상 노출, 톤별 색 */
+  .ny-month-score {
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 900;
+    pointer-events: none;
+    line-height: 1;
+    text-shadow: 0 0 6px rgba(0,0,0,0.5);
+    transition: color 0.2s, font-size 0.2s;
+  }
+  .ny-month-score.tone-high { color: var(--gold);   }
+  .ny-month-score.tone-mid  { color: #ffffff;       }
+  .ny-month-score.tone-low  { color: #f87171;       }
+
+  .ny-dot:hover .ny-core { transform: translate(-50%, -50%) scale(1.3); }
+  .ny-dot:hover .ny-month-label { color: var(--lav-pale); }
+  .ny-dot.active .ny-core {
+    transform: translate(-50%, -50%) scale(1.45);
+    box-shadow: 0 0 14px rgba(245,200,66,0.95);
+  }
+  .ny-dot.active .ny-glow {
+    width: calc(var(--ny-glow, 18px) * 1.5);
+    height: calc(var(--ny-glow, 18px) * 1.5);
+    animation: tl-pulse 2.4s ease-in-out infinite;
+  }
+  .ny-dot.active .ny-month-label { color: var(--gold-light); font-weight: 800; }
+  .ny-dot.active .ny-month-score { font-size: 11px; }
+
+  /* 월별 풀이 펼침 */
+  .ny-month-detail {
+    margin: 6px 6px 0;
+    padding: 12px 14px;
+    background: rgba(30,20,51,0.55);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, max-height 0.35s, padding 0.25s, border-color 0.25s;
+    padding-top: 0; padding-bottom: 0;
+  }
+  .ny-month-detail.visible {
+    opacity: 1;
+    max-height: 220px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  /* 톤별 좌측 보더 색상 */
+  .ny-month-detail.tone-high { border-left-color: #4ade80; }
+  .ny-month-detail.tone-mid  { border-left-color: #ffffff; }
+  .ny-month-detail.tone-low  { border-left-color: #f87171; }
+
+  /* 헤더(월·라벨·점수 한 줄) */
+  .ny-md-head {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .ny-md-month {
+    font-size: 15px; font-weight: 900;
+    color: var(--gold-light);
+    font-family: 'Noto Serif KR', serif;
+  }
+  .ny-md-sep {
+    font-size: 13px; color: var(--text-muted); font-weight: 300;
+  }
+  .ny-md-label {
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 0.3px;
+  }
+  .ny-md-score {
+    margin-left: auto;
+    font-size: 14px; font-weight: 900;
+    letter-spacing: 0.3px;
+  }
+  /* 톤별 텍스트 색상 (라벨 + 점수 동일 적용) */
+  .tone-high { color: var(--gold) !important; }
+  .tone-mid  { color: #ffffff !important; }
+  .tone-low  { color: #f87171 !important; }
+
+  .ny-md-text { font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+
+  /* ===== 분야별 5장 세로 스택 ===== */
+  .ny-fields-wrap {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .ny-fields-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ny-field-card {
+    border-radius: 18px;
+    padding: 18px 18px 20px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(39,26,69,0.95), rgba(47,32,85,0.95));
+  }
+  .ny-field-card.band-high  { border-color: rgba(74,222,128,0.45);  box-shadow: 0 14px 32px rgba(74,222,128,0.15);  }
+  .ny-field-card.band-mid   { border-color: rgba(245,200,66,0.45);  box-shadow: 0 14px 32px rgba(245,200,66,0.15);  }
+  .ny-field-card.band-low   { border-color: rgba(248,113,113,0.45); box-shadow: 0 14px 32px rgba(248,113,113,0.12); }
+  /* 카드 헤더 — 좌(아이콘+라벨)·우(점수 게이지) 가로 배치 */
+  .ny-field-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .ny-field-head-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  .ny-field-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    background: linear-gradient(145deg, rgba(155,89,182,0.25), rgba(245,200,66,0.15));
+    border: 1px solid rgba(245,200,66,0.3);
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59,32,104,0.4);
+  }
+  .ny-field-label {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold-light);
+    line-height: 1.2;
+  }
+  .ny-field-score-wrap {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .ny-field-score-num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--lav-pale), var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(245,200,66,0.4));
+  }
+  .ny-field-score-suffix {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .ny-field-bar {
+    width: 100%; height: 6px;
+    background: rgba(155,89,182,0.18);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .ny-field-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lav-light), var(--gold));
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(245,200,66,0.6);
+  }
+  .ny-field-title {
+    font-size: 16px; font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(245,200,66,0.25);
+  }
+  .ny-field-advice {
+    font-size: 13.5px; color: var(--text-secondary);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+  .ny-field-advice em { color: var(--gold-light); font-style: normal; font-weight: 700; }
+  /* (도트 인디케이터 제거 — 세로 스택으로 전환) */
+
+  /* ===== 공유 카드 ===== */
+  .ny-share-card {
+    border-radius: 22px;
+    padding: 22px 20px 24px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 100% 0%, rgba(245,200,66,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 0% 100%, rgba(192,132,252,0.25) 0%, transparent 50%),
+      linear-gradient(160deg, rgba(39,26,69,0.95), rgba(59,32,104,0.95));
+    border: 1px solid rgba(245,200,66,0.45);
+    box-shadow: 0 16px 40px rgba(59,32,104,0.55);
+  }
+  .ny-share-eyebrow {
+    font-size: 10px; font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .ny-share-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .ny-share-title em { color: var(--gold-light); font-style: normal; font-weight: 900; }
+  .ny-share-fields {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 18px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(245,200,66,0.2);
+    border-bottom: 1px solid rgba(245,200,66,0.2);
+  }
+  .ny-share-field {
+    text-align: center;
+  }
+  .ny-share-field-icon { font-size: 18px; margin-bottom: 3px; }
+  .ny-share-field-score {
+    font-size: 12px; font-weight: 900; color: var(--gold-light);
+  }
+  .ny-share-field-label {
+    font-size: 9px; color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .ny-share-advice {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .ny-share-advice em { color: var(--gold-light); font-style: normal; font-weight: 800; }
+  .ny-share-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: #1e1433;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 6px 18px rgba(245,200,66,0.3);
+  }
+  .ny-share-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(245,200,66,0.45);
+  }
+  .ny-share-btn:active { transform: translateY(0); }
+
+  /* ===== 구매 유도 카드 (premium feel) ===== */
+  .ny-buy-card {
+    position: relative;
+    border-radius: 22px;
+    padding: 22px 18px 20px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 100% 0%, rgba(245,200,66,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(192,132,252,0.22) 0%, transparent 55%),
+      linear-gradient(160deg, #1d0f3a 0%, #2a1550 50%, #3d1d6b 100%);
+    border: 1px solid rgba(245,200,66,0.55);
+    box-shadow:
+      0 24px 60px rgba(59,32,104,0.65),
+      inset 0 1px 0 rgba(255,248,220,0.25),
+      0 0 0 1px rgba(245,200,66,0.18);
+  }
+  .ny-buy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  /* 우상단 한정 뱃지 */
+  .ny-buy-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 5px 11px;
+    border-radius: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+    animation: ny-buy-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes ny-buy-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(239,68,68,0.4); }
+    50%      { box-shadow: 0 4px 18px rgba(239,68,68,0.7); }
+  }
+  /* 메인 카피 */
+  .ny-buy-headline {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .ny-buy-headline em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+  .ny-buy-sub {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  /* 비교 테이블 */
+  .ny-buy-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .ny-buy-col {
+    border-radius: 12px;
+    padding: 12px 12px 14px;
+    border: 1px solid;
+  }
+  .ny-buy-col.preview {
+    background: rgba(0,0,0,0.25);
+    border-color: rgba(155,89,182,0.3);
+    opacity: 0.65;
+  }
+  .ny-buy-col.full {
+    background: linear-gradient(160deg, rgba(245,200,66,0.18), rgba(245,200,66,0.06));
+    border-color: rgba(245,200,66,0.55);
+    box-shadow: 0 4px 14px rgba(245,200,66,0.18);
+  }
+  .ny-buy-col-head {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .ny-buy-col.preview .ny-buy-col-head { color: var(--text-muted); }
+  .ny-buy-col.full    .ny-buy-col-head { color: var(--gold-light); }
+  .ny-buy-col ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .ny-buy-col li {
+    font-size: 11.5px;
+    line-height: 1.4;
+    padding-left: 14px;
+    position: relative;
+  }
+  .ny-buy-col.preview li {
+    color: var(--text-muted);
+  }
+  .ny-buy-col.preview li::before {
+    content: '·';
+    position: absolute; left: 4px;
+    color: var(--text-muted);
+  }
+  .ny-buy-col.full li {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .ny-buy-col.full li::before {
+    content: '✓';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-weight: 900;
+  }
+  /* 가격 */
+  .ny-buy-price {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(245,200,66,0.3);
+    margin-bottom: 14px;
+  }
+  .ny-buy-price-old {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(248,113,113,0.7);
+    text-decoration-thickness: 1.5px;
+  }
+  .ny-buy-price-discount {
+    font-size: 11px;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    padding: 3px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+  }
+  .ny-buy-price-new {
+    margin-left: auto;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff8dc, var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(245,200,66,0.4));
+  }
+  /* 혜택 라인 */
+  .ny-buy-benefits {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+  .ny-buy-benefits span {
+    font-size: 11px;
+    color: var(--lav-pale);
+    background: rgba(155,89,182,0.18);
+    border: 1px solid rgba(155,89,182,0.35);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  /* 메인 CTA 버튼 */
+  .ny-buy-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, #fde68a 100%);
+    background-size: 200% 100%;
+    color: #1e1433;
+    font-size: 16px;
+    font-weight: 900;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow:
+      0 12px 28px rgba(245,200,66,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.5),
+      inset 0 -2px 0 rgba(0,0,0,0.15);
+    animation: ny-buy-shimmer 3s ease-in-out infinite;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+  @keyframes ny-buy-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+  .ny-buy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 18px 38px rgba(245,200,66,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      inset 0 -2px 0 rgba(0,0,0,0.18);
+  }
+  .ny-buy-btn:active { transform: translateY(0); }
+  .ny-buy-arrow {
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+  .ny-buy-btn:hover .ny-buy-arrow { transform: translateX(4px); }
+  /* 긴급 라인 */
+  .ny-buy-urgency {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--gold-light);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .ny-buy-urgency strong { color: #fff; font-weight: 900; }
+</style>
+{% endblock %}
+
+{% block content %}
+{# 캐릭터 컬러 인라인 적용 #}
+<style>.ny-character-orb { --ny-color: {{ fortune.character.color }}; }</style>
+
+<!-- 로딩 오버레이 -->
+<div class="cp-loader" id="cpLoader" aria-live="polite">
+  <div class="cp-loader-orb">
+    <div class="cp-loader-ring"></div>
+    <div class="cp-loader-ring cp-loader-ring--inner"></div>
+    <div class="cp-loader-star">✦</div>
+  </div>
+  <div class="cp-loader-text">
+    <div class="cp-loader-title">{{ master.선생님이름 }}이 올해 사주를 살펴보고 계십니다</div>
+    <div class="cp-loader-sub">
+      <span>운세 캐릭터 · 분야별 점수 · 시기별 흐름</span>
+      <span class="cp-loader-dots"><i></i><i></i><i></i></span>
+    </div>
+  </div>
+</div>
+
+<div class="cp-results" id="cpResults">
+
+<!-- ① Hero — 올해의 캐릭터 -->
+<div class="ny-hero">
+  <div class="ny-year-badge">{{ target_year }} 신년운세</div>
+  <div class="ny-character-orb">{{ fortune.character.emoji }}</div>
+  <div class="ny-character-name">{{ fortune.character.name }}</div>
+  <div class="ny-character-slogan">{{ fortune.character.slogan }}</div>
+  <div class="ny-headline">
+    {{ fortune.headline|replace('*', '<em>', 1)|replace('*', '</em>', 1)|safe }}
+  </div>
+</div>
+
+<!-- ② 12개월 글로우 타임라인 -->
+<div class="ny-section-header">
+  <div class="ny-section-eyebrow">⏳ 1월 ~ 12월</div>
+  <div class="ny-section-title">한 해의 흐름</div>
+</div>
+<div class="ny-months-card" id="nyMonths"
+     data-months='{{ fortune.months|tojson }}'>
+  <div class="ny-track" id="nyTrack">
+    <div class="ny-line"></div>
+    <div class="ny-now" id="nyNow" style="display:none;"></div>
+  </div>
+  <div class="ny-month-detail" id="nyMonthDetail">
+    <div class="ny-md-head">
+      <span class="ny-md-month"></span>
+      <span class="ny-md-sep">·</span>
+      <span class="ny-md-label"></span>
+      <span class="ny-md-score"></span>
+    </div>
+    <div class="ny-md-text"></div>
+  </div>
+</div>
+
+<!-- ③ 분야별 5장 스와이프 -->
+<div class="ny-section-header">
+  <div class="ny-section-eyebrow">✦ 분야별 풀이</div>
+  <div class="ny-section-title">5가지 운의 흐름</div>
+</div>
+<div class="ny-fields-wrap">
+  <div class="ny-fields-slider" id="nyFields">
+    {% for f in fortune.fields %}
+    <div class="ny-field-card band-{{ f.band }}">
+      <div class="ny-field-head">
+        <div class="ny-field-head-left">
+          <div class="ny-field-icon">{{ f.icon }}</div>
+          <div class="ny-field-label">{{ f.label }}</div>
+        </div>
+        <div class="ny-field-score-wrap">
+          <div class="ny-field-score-num">{{ f.score }}</div>
+          <div class="ny-field-score-suffix">/ 100점</div>
+        </div>
+      </div>
+      <div class="ny-field-bar"><div class="ny-field-fill" style="width: {{ f.score }}%;"></div></div>
+      <div class="ny-field-title">{{ f.title }}</div>
+      <div class="ny-field-advice">{{ f.advice|safe }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ⑤ 공유 카드 -->
+<div class="ny-share-card">
+  <div class="ny-share-eyebrow">{{ target_year }} · {{ subject_label|default(client.name) }}님</div>
+  <div class="ny-share-title">
+    {{ fortune.share.headline|replace('*', '<em>', 1)|replace('*', '</em>', 1)|safe }}<br>
+    <span style="color:var(--gold);font-size:14px;font-weight:700;">「{{ fortune.character.name }}」의 한 해</span>
+  </div>
+  <div class="ny-share-fields">
+    {% for f in fortune.share.fields %}
+    <div class="ny-share-field">
+      <div class="ny-share-field-icon">{{ f.icon }}</div>
+      <div class="ny-share-field-score">{{ f.score }}</div>
+      <div class="ny-share-field-label">{{ f.label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="ny-share-advice">
+    {{ fortune.share.key_advice|replace('*', '<em>', 1)|replace('*', '</em>', 1)|safe }}
+  </div>
+  <button type="button" class="ny-share-btn" id="nyShareBtn">
+    <span>📤</span> 친구에게 공유하기
+  </button>
+</div>
+
+<!-- ⑥ 구매 유도 카드 -->
+<div class="ny-buy-card">
+  <div class="ny-buy-badge">⏳ 신년 한정 50% 할인</div>
+  <div class="ny-buy-headline">
+    이 풀이는 <em>1/10</em>입니다
+  </div>
+  <div class="ny-buy-sub">
+    {{ target_year }} 신년운세 풀버전 PDF에는 12개월 모든 흐름과 마스터 친필 코멘트가 담겨 있습니다.
+  </div>
+
+  <div class="ny-buy-compare">
+    <div class="ny-buy-col preview">
+      <div class="ny-buy-col-head">미리보기 (지금)</div>
+      <ul>
+        <li>5분야 요약</li>
+        <li>1년 흐름 그래프</li>
+        <li>캐릭터 슬로건</li>
+      </ul>
+    </div>
+    <div class="ny-buy-col full">
+      <div class="ny-buy-col-head">PDF 풀버전</div>
+      <ul>
+        <li>12분야 깊이 풀이</li>
+        <li>매월 시기 표</li>
+        <li>띠궁합·인연 분석</li>
+        <li>마스터 친필 코멘트</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ny-buy-price">
+    <span class="ny-buy-price-old">79,000원</span>
+    <span class="ny-buy-price-discount">-50%</span>
+    <span class="ny-buy-price-new">39,000원</span>
+  </div>
+
+  <div class="ny-buy-benefits">
+    <span>⚡ 즉시 다운로드</span>
+    <span>📱 평생 소장</span>
+    <span>↩️ 7일 환불</span>
+  </div>
+
+  <a href="{{ base_url }}/shop" class="ny-buy-btn">
+    <span>지금 풀버전 받기</span>
+    <span class="ny-buy-arrow">→</span>
+  </a>
+
+  <div class="ny-buy-urgency">
+    🔥 <strong>{{ target_year }}년 1월 31일까지</strong> · 신년 한정 가격
+  </div>
+</div>
+
+</div><!-- /.cp-results -->
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  /* ===== 12개월 글로우 타임라인 (멱등) ===== */
+  (function initMonths(){
+    const wrap = document.getElementById('nyMonths');
+    if (!wrap) return;
+    let months;
+    try { months = JSON.parse(wrap.dataset.months || '[]'); }
+    catch (e) { console.error('[ny-months] parse fail', e); return; }
+    if (!months || !months.length) return;
+
+    const track  = wrap.querySelector('#nyTrack');
+    const detail = wrap.querySelector('#nyMonthDetail');
+    if (!track || !detail) return;
+    track.querySelectorAll('.ny-dot').forEach(el => el.remove());
+    const LEFT_PCT  = 4;
+    const RIGHT_PCT = 96;
+    const span      = RIGHT_PCT - LEFT_PCT;
+    const monthToPct = m => LEFT_PCT + span * ((m - 0.5) / 12);
+
+    const dotEls = [];
+    months.forEach((m, i) => {
+      const left = monthToPct(m.month);
+      const glowSize = Math.round(12 + (m.score / 100) * 32);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ny-dot';
+      btn.style.left = left + '%';
+      btn.style.setProperty('--ny-glow', glowSize + 'px');
+      btn.dataset.idx = i;
+      btn.innerHTML =
+        '<span class="ny-month-score tone-' + m.tone + '">' + m.score + '</span>' +
+        '<span class="ny-glow tone-' + m.tone + '"></span>' +
+        '<span class="ny-core tone-' + m.tone + '"></span>' +
+        '<span class="ny-month-label">' + m.month + '</span>';
+      btn.addEventListener('click', () => showMonth(i));
+      track.appendChild(btn);
+      dotEls.push(btn);
+    });
+
+    /* 신년운세 연도가 *현재 연도*일 때만 NOW 인디케이터 표시 */
+    const targetYear = {{ target_year }};
+    const today = new Date();
+    const isCurrentYear = (today.getFullYear() === targetYear);
+    if (isCurrentYear) {
+      const start = new Date(targetYear, 0, 1).getTime();
+      const end   = new Date(targetYear + 1, 0, 1).getTime();
+      const yearFrac = (today.getTime() - start) / (end - start);
+      const nowPct = LEFT_PCT + (RIGHT_PCT - LEFT_PCT) * yearFrac;
+      const nowEl = wrap.querySelector('#nyNow');
+      if (nowEl) {
+        nowEl.style.left = nowPct + '%';
+        nowEl.style.display = 'block';
+      }
+    }
+
+    function showMonth(i) {
+      const m = months[i];
+      detail.querySelector('.ny-md-month').textContent = m.month + '월';
+      const labelEl = detail.querySelector('.ny-md-label');
+      labelEl.textContent = m.label;
+      labelEl.className = 'ny-md-label tone-' + m.tone;
+      const scoreEl = detail.querySelector('.ny-md-score');
+      scoreEl.textContent = m.score + '점';
+      scoreEl.className = 'ny-md-score tone-' + m.tone;
+      detail.querySelector('.ny-md-text').textContent = m.text || '';
+      /* 좌측 보더 색도 톤에 맞춤 */
+      detail.classList.remove('tone-high','tone-mid','tone-low');
+      detail.classList.add('tone-' + m.tone, 'visible');
+      dotEls.forEach((el, idx) => el.classList.toggle('active', idx === i));
+    }
+
+    /* 자동 활성: 현재 연도면 *이번 달*, 다음 연도면 *1월* */
+    const curIdx = isCurrentYear ? today.getMonth() : 0;
+    showMonth(curIdx);
+  })();
+
+  /* ===== 공유 버튼 (Web Share API → 폴백 클립보드) ===== */
+  (function initShare(){
+    const btn = document.getElementById('nyShareBtn');
+    if (!btn || btn.dataset.initialized) return;
+    btn.dataset.initialized = '1';
+    btn.addEventListener('click', async () => {
+      const text = '{{ target_year }} 신년운세 — {{ fortune.character.name }}\n{{ fortune.share.headline|replace("*","")|replace("'","\\'")|replace('"','\\"') }}';
+      const url = location.href;
+      if (navigator.share) {
+        try { await navigator.share({ title: '{{ target_year }} 신년운세', text, url }); return; } catch (_) {}
+      }
+      try {
+        await navigator.clipboard.writeText(text + '\n' + url);
+        btn.innerHTML = '<span>✓</span> 복사 완료!';
+        setTimeout(() => btn.innerHTML = '<span>📤</span> 친구에게 공유하기', 1800);
+      } catch (_) {
+        alert('공유가 지원되지 않는 브라우저입니다.');
+      }
+    });
+  })();
+</script>
+{% endblock %}

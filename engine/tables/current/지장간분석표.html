@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>지장간 분석표 》 임효원님</title>
+<style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; padding:6px 20px; background:transparent; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  background:transparent; border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; } .page { margin:0;  background:transparent; width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; } @page { border:1px solid #333; size:604px 820px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:2px solid #e0e0e0; border-radius:14px; overflow:hidden; margin-top:4px; }
+.card-hd { padding:5px 14px; display:flex; align-items:center; justify-content:space-between; }
+.card-hd-title { font-size:10pt; font-weight:900; color:white; }
+.card-hd-sub   { font-size:7pt; color:rgba(255,255,255,.85); }
+.pillar-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; background:transparent; }
+.pillar-col  { border-right:1px solid #f0f0f0; display:flex; flex-direction:column; }
+.pillar-col:last-child { border-right:none; }
+.pillar-name { text-align:center; padding:4px 5px 3px; border-bottom:1px solid #f0f0f0; background:#fafafa; }
+.pn-label { font-size:6.5pt; color:#aaa; font-weight:700; letter-spacing:.5px; }
+.pn-ji    { font-family:'Noto Serif KR',serif; font-size:14pt; font-weight:800; line-height:1.1; margin:1px 0; }
+.pn-ji-kr { font-size:7pt; color:#888; }
+.gongmang-badge { display:inline-block; background:#ff5722; color:white; font-size:7pt; font-weight:700; padding:1px 6px; border-radius:8px; margin-top:2px; }
+.jj-rows { padding:4px 4px; display:flex; flex-direction:column; gap:3px; }
+.jj-row  { border-radius:7px; padding:4px 6px; display:flex; flex-direction:column; gap:1px; }
+.jj-row.yeoqi  { background:#fff3e0; border:1px solid #ffcc80; }
+.jj-row.jungqi { background:#fce4ec; border:1px solid #f48fb1; }
+.jj-row.bonqi  { background:#e8f5e9; border:1px solid #a5d6a7; }
+.qi-label { font-size:7pt; font-weight:700; padding:1px 5px; border-radius:4px; color:white; display:inline-block; width:fit-content; margin-bottom:1px; }
+.qi-label.yeoqi  { background:#ff9800; }
+.qi-label.jungqi { background:#e91e63; }
+.qi-label.bonqi  { background:#4caf50; }
+.jj-stem    { font-family:'Noto Serif KR',serif; font-size:12pt; font-weight:800; line-height:1; }
+.jj-stem-kr { font-size:6.5pt; color:#666; margin-left:2px; }
+.jj-sipseong { font-size:7pt; font-weight:700; padding:1px 7px; border-radius:8px; color:white; display:inline-block; width:fit-content; margin-top:1px; }
+.jj-ohaeng  { display:flex; align-items:center; gap:4px; margin-top:1px; }
+.oh-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.oh-txt { font-size:6pt; color:#888; }
+.oh-목  { background:#4caf50; } .oh-화 { background:#f44336; } .oh-토 { background:#ff9800; } .oh-금 { background:#9e9e9e; } .oh-수 { background:#2196f3; }
+.sipseong-bar-section { background:transparent; padding:6px 12px; border-top:1px solid #f0f0f0; }
+.sec-mini-title { font-size:7.5pt; font-weight:700; color:#555; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+.ss-bars { display:flex; flex-direction:column; gap:3px; }
+.ss-row  { display:flex; align-items:center; gap:6px; }
+.ss-name { font-size:7pt; font-weight:700; width:42px; flex-shrink:0; text-align:right; }
+.ss-bar-wrap { flex:1; height:7px; background:#f0f0f0; border-radius:4px; overflow:hidden; }
+.ss-bar  { height:100%; border-radius:4px; }
+.ss-cnt  { font-size:6.5pt; font-weight:700; width:16px; flex-shrink:0; }
+.activation-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; padding:6px 12px; background:transparent; border-top:1px solid #f0f0f0; }
+.act-card  { border-radius:8px; padding:6px 8px; display:flex; flex-direction:column; gap:2px; }
+.act-label { font-size:6pt; font-weight:700; opacity:.9; }
+.act-ohaeng { font-size:8pt; font-weight:700; }
+.act-daewoon { font-family:'Noto Serif KR',serif; font-size:8.5pt; font-weight:800; line-height:1.2; }
+.act-detail { font-size:6pt; opacity:.8; margin-top:1px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#4a148c);">
+  <div>
+    <div class="banner-hdr-title">🔑 지장간(地藏干) 분석표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 用神 木</div>
+  </div>
+</div>
+
+  <!-- ═══ 메인 카드: 네 기둥 지장간 ═══ -->
+  <div class="card">
+    <div class="card-hd" style="background:linear-gradient(135deg,#1565c0,#42a5f5);">
+      <div class="card-hd-title">🔑 지장간(地藏干) 분석표 》 숨겨진 기운의 지도</div>
+      <div class="card-hd-sub">임효원 님 · 戊辰(무진) 일주 · 用神 木(목)</div>
+    </div>
+
+    <!-- 네 기둥 그리드 -->
+    <div class="pillar-grid">
+      
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">년지(年支)</div>
+          <div class="pn-ji" style="color:#888;">申(신)</div>
+          <div class="pn-ji-kr">(申(신)) · </div>
+          
+          
+        </div>
+        <div class="jj-rows">
+          
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#ff9800;">戊</span>
+              <span class="jj-stem-kr">무</span>
+            </div>
+            <span class="jj-sipseong" style="background:#4caf50;">비견</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#2196f3;">壬</span>
+              <span class="jj-stem-kr">임</span>
+            </div>
+            <span class="jj-sipseong" style="background:#ff9800;">편재</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-수"></div><span class="oh-txt">水(수)</span></div>
+          </div>
+
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#9e9e9e;">庚</span>
+              <span class="jj-stem-kr">경</span>
+            </div>
+            <span class="jj-sipseong" style="background:#f44336;">식신</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-금"></div><span class="oh-txt">金(금)</span></div>
+          </div>
+          
+          
+        </div>
+      </div>
+      
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">월지(月支)</div>
+          <div class="pn-ji" style="color:#888;">寅(인)</div>
+          <div class="pn-ji-kr">(寅(인)) · </div>
+          
+          
+        </div>
+        <div class="jj-rows">
+          
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#ff9800;">戊</span>
+              <span class="jj-stem-kr">무</span>
+            </div>
+            <span class="jj-sipseong" style="background:#4caf50;">비견</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#f44336;">丙</span>
+              <span class="jj-stem-kr">병</span>
+            </div>
+            <span class="jj-sipseong" style="background:#2196f3;">편인</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-화"></div><span class="oh-txt">火(화)</span></div>
+          </div>
+
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#4caf50;">甲</span>
+              <span class="jj-stem-kr">갑</span>
+            </div>
+            <span class="jj-sipseong" style="background:#9e9e9e;">편관</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-목"></div><span class="oh-txt">木(목) ← 用神</span></div>
+          </div>
+          
+          
+        </div>
+      </div>
+      
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">일지(日支) ★</div>
+          <div class="pn-ji" style="color:#ff9800;">辰</div>
+          <div class="pn-ji-kr">진(辰) · 土</div>
+          
+          
+        </div>
+        <div class="jj-rows">
+          
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#4caf50;">乙</span>
+              <span class="jj-stem-kr">을</span>
+            </div>
+            <span class="jj-sipseong" style="background:#757575;">정관</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-목"></div><span class="oh-txt">木(목) ← 用神</span></div>
+          </div>
+
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#2196f3;">癸</span>
+              <span class="jj-stem-kr">계</span>
+            </div>
+            <span class="jj-sipseong" style="background:#ffa726;">정재</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-수"></div><span class="oh-txt">水(수)</span></div>
+          </div>
+
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#ff9800;">戊</span>
+              <span class="jj-stem-kr">무</span>
+            </div>
+            <span class="jj-sipseong" style="background:#4caf50;">비견</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+          
+          
+        </div>
+      </div>
+      
+      <div class="pillar-col">
+        <div class="pillar-name">
+          <div class="pn-label">시지(時支)</div>
+          <div class="pn-ji" style="color:#888;">寅(인)</div>
+          <div class="pn-ji-kr">(寅(인)) · </div>
+          
+          
+        </div>
+        <div class="jj-rows">
+          
+          <div class="jj-row yeoqi">
+            <span class="qi-label yeoqi">여기(餘氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#ff9800;">戊</span>
+              <span class="jj-stem-kr">무</span>
+            </div>
+            <span class="jj-sipseong" style="background:#4caf50;">비견</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-토"></div><span class="oh-txt">土(토)</span></div>
+          </div>
+
+          <div class="jj-row jungqi">
+            <span class="qi-label jungqi">중기(中氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#f44336;">丙</span>
+              <span class="jj-stem-kr">병</span>
+            </div>
+            <span class="jj-sipseong" style="background:#2196f3;">편인</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-화"></div><span class="oh-txt">火(화)</span></div>
+          </div>
+
+          <div class="jj-row bonqi">
+            <span class="qi-label bonqi">본기(本氣)</span>
+            <div>
+              <span class="jj-stem" style="color:#4caf50;">甲</span>
+              <span class="jj-stem-kr">갑</span>
+            </div>
+            <span class="jj-sipseong" style="background:#9e9e9e;">편관</span>
+            <div class="jj-ohaeng"><div class="oh-dot oh-목"></div><span class="oh-txt">木(목) ← 用神</span></div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- 지장간 십성 분포 -->
+    <div class="sipseong-bar-section">
+      <div class="sec-mini-title">
+        <span style="display:inline-block;width:3px;height:12px;background:#2196f3;border-radius:2px;"></span>
+        지장간 십성(十星) 분포 》 숨겨진 기운의 강약
+      </div>
+      <div class="ss-bars">
+        
+        <div class="ss-row">
+          <span class="ss-name" style="color:#4caf50;">비견</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:90%;background:#4caf50;"></div></div>
+          <span class="ss-cnt">4개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#f44336;">식신</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:30%;background:#f44336;"></div></div>
+          <span class="ss-cnt">1개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#ff9800;">편재</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:30%;background:#ff9800;"></div></div>
+          <span class="ss-cnt">1개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#ffa726;">정재</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:30%;background:#ffa726;"></div></div>
+          <span class="ss-cnt">1개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#9e9e9e;">편관</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:50%;background:#9e9e9e;"></div></div>
+          <span class="ss-cnt">2개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#757575;">정관</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:30%;background:#757575;"></div></div>
+          <span class="ss-cnt">1개</span>
+        </div>
+
+        <div class="ss-row">
+          <span class="ss-name" style="color:#2196f3;">편인</span>
+          <div class="ss-bar-wrap"><div class="ss-bar" style="width:50%;background:#2196f3;"></div></div>
+          <span class="ss-cnt">2개</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 활성화 시기 -->
+    <div class="activation-grid">
+      <div class="act-card" style="background:#fff8e1;border:1.5px solid #ffd54f;">
+      <div class="act-label" style="color:#e65100;">🔥 용신 방향 지장간 최적 활성화</div>
+      <div class="act-ohaeng" style="color:#4caf50;">木(목) 기운</div>
+      <div class="act-daewoon" style="color:#4caf50;">丁未대운(2036년, 68세)</div>
+      <div class="act-detail" style="color:#e65100;">木(목) → 乙巳(2056~) 88세, 甲辰(2066~</div>
+    </div><div class="act-card" style="background:#e8f5e9;border:1.5px solid #a5d6a7;">
+      <div class="act-label" style="color:#2e7d32;">🌱 현재 대운 활성화 기운</div>
+      <div class="act-ohaeng" style="color:#4caf50;">土·金(土) 기운이</div>
+      <div class="act-daewoon" style="color:#4caf50;"> 대운</div>
+      <div class="act-detail" style="color:#388e3c;">土·金(土) 기운이 지금 깨어남</div>
+    </div><div class="act-card" style="background:#ffebee;border:1.5px solid #ef9a9a;">
+      <div class="act-label" style="color:#c62828;">⚠️ 공망 지장간 주의</div>
+      <div class="act-ohaeng" style="color:#9e9e9e;">공망 戌·亥</div>
+      <div class="act-daewoon" style="color:#9e9e9e;">공망 기운</div>
+      <div class="act-detail" style="color:#999;">공망 지지 안의 지장간<br>의도적 강화 필요</div>
+    </div>
+    </div>
+
+  </div><!-- card -->
+
+  <!-- ═══ 핵심 요약 메모 ═══ -->
+  <div style="background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:10px;padding:8px 14px;font-size:7pt;color:#555;line-height:1.8;">
+    <strong style="color:#1565c0;">📌 반야선생의 지장간 핵심 요약</strong><br>
+    임효원 님의 지장간에서 핵심은 <strong style="color:#4caf50;">木 오행 기운</strong>의 활성화입니다.
+  용신 木 기운이 있는 지장간이 활성화되는 대운·세운 구간에 가장 큰 기회가 옵니다.
+  <strong style="color:#4caf50;">丁未대운(2036년, 68세)</strong>이 용신 지장간 최적 활성화 시기입니다.
+  공망(戌·亥)에 걸린 지지의 지장간은 자연 발현이 어려우니 의식적인 강화가 필요합니다.
+  </div>
+
+</div>
+</body>
+</html>

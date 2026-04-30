@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>천간일람표</title>
+  <style>
+    @font-face { font-family:'Noto Sans KR'; src:local('Noto Sans KR'); }
+    @font-face { font-family:'Noto Serif KR'; src:local('Noto Serif KR'); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR',sans-serif;
+      background: white;
+      padding: 10px;
+    }
+    .page { width:604px; max-height:840px; padding:6px 8px; background:white; overflow:hidden; margin:0 auto; }
+    .banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px;margin-bottom:5px; }
+    .banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+    .banner-hdr-info { font-size:7pt;color:rgba(255,255,255,.85); }
+    .card { border:1.5px solid #333;border-radius:8px;overflow:hidden; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    thead tr {
+      background: #f5f5f5;
+    }
+    th {
+      padding: 6px 8px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid #ddd;
+      font-size: 7pt;
+      color: #333;
+    }
+    td {
+      padding: 5px 7px;
+      border: 1px solid #e0e0e0;
+      font-size: 7pt;
+      line-height: 1.4;
+    }
+    tr:nth-child(even) td {
+      background: #fafafa;
+    }
+    .tenkan-cell {
+      text-align: center;
+      font-size: 12pt;
+      font-weight: bold;
+      min-width: 25px;
+    }
+    .kor-cell {
+      text-align: center;
+      font-weight: 600;
+      font-size: 7pt;
+    }
+    .og-cell {
+      text-align: center;
+      font-weight: 600;
+      border-left: 3px solid;
+      padding-left: 6px;
+    }
+    .yy-cell {
+      text-align: center;
+      font-size: 7pt;
+    }
+    .feature-cell, .char-cell, .body-cell {
+      font-size: 7pt;
+      text-align: left;
+    }
+    @media print { body{background:white;margin:0;padding:0;} .page{margin:0;box-shadow:none;} @page{size:604px 840px;margin:0;} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#303f9f);">
+      <div class="banner-hdr-title">📋 천간일람표</div>
+      <div class="banner-hdr-info">사주명리학 기초 참조표</div>
+    </div>
+    <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>천간</th>
+          <th>한글</th>
+          <th>오행</th>
+          <th>음양</th>
+          <th>특성</th>
+          <th>대표 성격</th>
+          <th>신체</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: white;">
+          <td class="tenkan-cell" style="border-left: 3px solid #a8dbb5; background: #f3fcf5;">甲</td>
+          <td class="kor-cell">갑</td>
+          <td class="og-cell" style="border-left-color: #1e6b2a; color: #1e6b2a;">木</td>
+          <td class="yy-cell">양</td>
+          <td class="feature-cell">강직한 나무, 도전·개척</td>
+          <td class="char-cell">리더십·정직·추진력</td>
+          <td class="body-cell">담(쓸개)·근육</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="tenkan-cell" style="border-left: 3px solid #a8dbb5; background: #f3fcf5;">乙</td>
+          <td class="kor-cell">을</td>
+          <td class="og-cell" style="border-left-color: #1e6b2a; color: #1e6b2a;">木</td>
+          <td class="yy-cell">음</td>
+          <td class="feature-cell">유연한 초목, 적응·협력</td>
+          <td class="char-cell">친화력·섬세함·유연성</td>
+          <td class="body-cell">간(肝)·힘줄</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="tenkan-cell" style="border-left: 3px solid #f5a9a5; background: #fff5f5;">丙</td>
+          <td class="kor-cell">병</td>
+          <td class="og-cell" style="border-left-color: #b92e27; color: #b92e27;">火</td>
+          <td class="yy-cell">양</td>
+          <td class="feature-cell">태양의 불, 발산·표현</td>
+          <td class="char-cell">열정·사교성·표현력</td>
+          <td class="body-cell">소장·혈관</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="tenkan-cell" style="border-left: 3px solid #f5a9a5; background: #fff5f5;">丁</td>
+          <td class="kor-cell">정</td>
+          <td class="og-cell" style="border-left-color: #b92e27; color: #b92e27;">火</td>
+          <td class="yy-cell">음</td>
+          <td class="feature-cell">촛불, 집중·깊이</td>
+          <td class="char-cell">직관·집중력·예술성</td>
+          <td class="body-cell">심장·혈액</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="tenkan-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">戊</td>
+          <td class="kor-cell">무</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td class="yy-cell">양</td>
+          <td class="feature-cell">큰 산, 안정·포용</td>
+          <td class="char-cell">신뢰성·포용력·중재력</td>
+          <td class="body-cell">위(胃)·근육</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="tenkan-cell" style="border-left: 3px solid #f0d470; background: #fffdf4;">己</td>
+          <td class="kor-cell">기</td>
+          <td class="og-cell" style="border-left-color: #9b6f00; color: #9b6f00;">土</td>
+          <td class="yy-cell">음</td>
+          <td class="feature-cell">논밭, 양육·실용</td>
+          <td class="char-cell">실용성·세심함·인내력</td>
+          <td class="body-cell">비장(脾)·위</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="tenkan-cell" style="border-left: 3px solid #b0c4d0; background: #f7f9fa;">庚</td>
+          <td class="kor-cell">경</td>
+          <td class="og-cell" style="border-left-color: #3d4f5c; color: #3d4f5c;">金</td>
+          <td class="yy-cell">양</td>
+          <td class="feature-cell">광석·바위, 강경·원칙</td>
+          <td class="char-cell">결단력·원칙·카리스마</td>
+          <td class="body-cell">대장·피부</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="tenkan-cell" style="border-left: 3px solid #b0c4d0; background: #f7f9fa;">辛</td>
+          <td class="kor-cell">신</td>
+          <td class="og-cell" style="border-left-color: #3d4f5c; color: #3d4f5c;">金</td>
+          <td class="yy-cell">음</td>
+          <td class="feature-cell">보석·칼날, 정밀·예리</td>
+          <td class="char-cell">완벽주의·예리함·심미안</td>
+          <td class="body-cell">폐(肺)·피부</td>
+        </tr>
+        <tr style="background: white;">
+          <td class="tenkan-cell" style="border-left: 3px solid #90bfe0; background: #f0f6ff;">壬</td>
+          <td class="kor-cell">임</td>
+          <td class="og-cell" style="border-left-color: #1a4e7a; color: #1a4e7a;">水</td>
+          <td class="yy-cell">양</td>
+          <td class="feature-cell">큰 강·바다, 지혜·포용</td>
+          <td class="char-cell">지혜·포용·유연성</td>
+          <td class="body-cell">방광·뼈</td>
+        </tr>
+        <tr style="background: #fafafa;">
+          <td class="tenkan-cell" style="border-left: 3px solid #90bfe0; background: #f0f6ff;">癸</td>
+          <td class="kor-cell">계</td>
+          <td class="og-cell" style="border-left-color: #1a4e7a; color: #1a4e7a;">水</td>
+          <td class="yy-cell">음</td>
+          <td class="feature-cell">빗물·이슬, 섬세·내면</td>
+          <td class="char-cell">섬세함·통찰·기억력</td>
+          <td class="body-cell">신장(腎)·뼈</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</body>
+</html>

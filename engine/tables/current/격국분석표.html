@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>격국 분석표 》 임효원님</title>
+  <style>
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Thin.ttf') format('truetype'); font-weight:100; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraLight.ttf') format('truetype'); font-weight:200; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Light.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Bold.ttf') format('truetype'); font-weight:700; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Sans KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansKR-Black.ttf') format('truetype'); font-weight:900; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-SemiBold.otf') format('opentype'); font-weight:600; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-ExtraBold.ttf') format('truetype'); font-weight:800; }
+@font-face { font-family:'Noto Serif KR'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSerifKR-Black.otf') format('opentype'); font-weight:900; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Noto Sans TC'; src:url('file:///C:/Users/provi/Desktop/banya_web/engine/fonts/NotoSansTC-Bold.ttf') format('truetype'); font-weight:700; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Noto Sans KR',sans-serif; color:#222; }
+.page { border:1px solid #333; width:604px; max-height:840px; overflow:hidden; padding:6px 8px; background:transparent; display:flex; flex-direction:column; gap:5px; }
+@media screen { body { background:#f5f5f5; } .page { border:1px solid #333; margin:20px auto;  border-radius:4px; } }
+@media print { body { background:transparent; margin:0; padding:0; }
+  .page { border:1px solid #333; margin:0;  width:604px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  @page { size:604px 840px; margin:0; } }
+.banner-hdr { display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-radius:8px; }
+.banner-hdr-title { font-size:10pt;font-weight:900;color:white; }
+.banner-hdr-sub { font-size:6.5pt;color:rgba(255,255,255,.75);margin-top:2px; }
+.banner-hdr-name { font-size:10pt;font-weight:800;text-align:right;background:linear-gradient(90deg,#ffd54f,#fff176,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.banner-hdr-detail { font-size:6.5pt;color:rgba(255,255,255,.75);text-align:right;margin-top:2px; }
+.card { border:1.5px solid #ccc;border-radius:8px;overflow:hidden; }
+.card-hd { padding:5px 11px;display:flex;align-items:center;justify-content:space-between; }
+.card-hd-title { font-size:7.5pt;font-weight:900;color:white; }
+.card-hd-sub { font-size:7pt;color:rgba(255,255,255,.85); }
+.card-body { padding:7px 11px;background:transparent; }
+.gk-banner { display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:6px;background:#ffebee;border:1.5px solid #b71c1c; }
+.gk-char   { font-size:26pt;font-weight:900;color:#b71c1c;line-height:1;flex-shrink:0; }
+.gk-info   { flex:1; }
+.gk-name   { font-size:10pt;font-weight:900;color:#b71c1c;margin-bottom:1px; }
+.gk-trait  { font-size:6.5pt;color:#555;font-weight:700;margin-bottom:3px; }
+.gk-badges { display:flex;flex-wrap:wrap;gap:3px; }
+.gk-badge  { font-size:7pt;font-weight:700;padding:1px 6px;border-radius:4px;border:1.5px solid #b71c1c;color:#b71c1c; }
+.attr-grid { display:grid;grid-template-columns:1fr 1fr;gap:5px; }
+.attr-item { border-radius:5px;padding:6px 8px;border:1.5px solid #e0e0e0; }
+.attr-lbl  { font-size:7pt;font-weight:700;color:#888;margin-bottom:2px; }
+.attr-val  { font-size:6pt;font-weight:700;color:#333;line-height:1.4; }
+.yong-row { display:flex;gap:5px; }
+.yong-item { flex:1;border-radius:5px;padding:5px 8px;border:1.5px solid; }
+.yong-lbl  { font-size:7pt;font-weight:700;color:#888;margin-bottom:2px; }
+.yong-val  { font-size:8pt;font-weight:900;line-height:1; }
+.yong-sub  { font-size:7pt;color:#888;margin-top:1px; }
+.class-row { display:flex;gap:5px;flex-wrap:wrap; }
+.class-chip { font-size:7pt;font-weight:700;padding:2px 8px;border-radius:5px;border:1.5px solid; }
+.oh-dist { font-size:7pt;color:#555;padding:5px 8px;background:#f8f8f8;border-radius:5px;line-height:1.7; }
+.oh-dist b { color:#222; }
+.gauge-wrap { display:flex;align-items:center;gap:6px;margin-top:4px; }
+.gauge-bar { flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden; }
+.gauge-fill { height:6px;border-radius:3px; }
+.gauge-label { font-size:7pt;color:#888;min-width:26px;text-align:right; }
+.job-chips { display:flex;flex-wrap:wrap;gap:3px;margin-top:4px; }
+.job-chip { font-size:7pt;font-weight:700;padding:1px 6px;border-radius:4px;border:1.5px solid; }
+.advice-box { padding:6px 10px;border-radius:6px;border:1.5px solid;margin-top:4px; }
+.advice-lbl { font-size:7pt;font-weight:700;margin-bottom:2px; }
+.advice-txt { font-size:7pt;color:#333;line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="banner-hdr" style="background:linear-gradient(135deg,#1a237e,#4a148c);">
+  <div>
+    <div class="banner-hdr-title">📋 격국(格局) 분석표</div>
+  </div>
+  <div>
+    <div class="banner-hdr-name">임효원 님</div>
+    <div class="banner-hdr-detail">일주 戊辰(무진) · 중화형신강</div>
+  </div>
+</div>
+
+    <!-- ① 격국 핵심 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#b71c1c,#b71c1ccc);">
+        <div class="card-hd-title">① 격국(格局) 》 편관격(偏官格)</div>
+        <div class="card-hd-sub">내격(內格) · 중화형신강</div>
+      </div>
+      <div class="card-body">
+        <div class="gk-banner" style="margin-bottom:7px;">
+          <div class="gk-char">편</div>
+          <div class="gk-info">
+            <div class="gk-name">편관격(偏官格)</div>
+            <div class="gk-trait">강한 의지·투쟁·리더십·권위</div>
+            <div class="gk-badges">
+              <span class="gk-badge">군인</span><span class="gk-badge">경찰</span><span class="gk-badge">스포츠</span><span class="gk-badge">외과의</span><span class="gk-badge">정치</span><span class="gk-badge">사업가</span>
+            </div>
+          </div>
+        </div>
+        <div class="attr-grid">
+          <div class="attr-item" style="border-color:#b71c1c33;">
+            <div class="attr-lbl">✅ 강점</div>
+            <div class="attr-val">추진력, 결단력, 리더십, 위기 대처 능력</div>
+          </div>
+          <div class="attr-item" style="border-color:#f4433633;">
+            <div class="attr-lbl">⚠️ 주의</div>
+            <div class="attr-val">독선·과도한 경쟁심·충동적 결정</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 신강약 + 격국 분류 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#37474f,#546e7a);">
+        <div class="card-hd-title">② 신강약(身强弱) 판단</div>
+        <div class="card-hd-sub">일간의 힘·세력 분석 결과</div>
+      </div>
+      <div class="card-body">
+        <div class="attr-grid" style="margin-bottom:5px;">
+          <div class="attr-item" style="border-color:#1565c044;background:#1565c00d;">
+            <div class="attr-lbl">신강약 판정</div>
+            <div class="attr-val" style="font-size:9pt;color:#1565c0;">중화형신강</div>
+            <div class="gauge-wrap">
+              <div class="gauge-bar"><div class="gauge-fill" style="width:50%;background:#1565c0;"></div></div>
+              <span class="gauge-label">50%</span>
+            </div>
+          </div>
+          <div class="attr-item">
+            <div class="attr-lbl">격국 분류 · 월령</div>
+            <div class="class-row" style="margin-top:2px;margin-bottom:3px;">
+              <span class="class-chip" style="border-color:#1565c0;color:#1565c0;background:#e3f2fd;">내격(內格)</span>
+              
+              
+            </div>
+            
+          </div>
+        </div>
+        <div class="oh-dist" style="margin-bottom:5px;">
+          <b>오행 분포</b> · 木(매우강) 火(매우약) 土(매우강) 金(매우약) 水(매우약)
+          <span style="margin-left:6px;color:#c62828;">태과(太過): <b>木·土</b></span>
+          <span style="margin-left:6px;color:#1565c0;">불급(不及): <b>火·金·水</b></span>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- ③ 용신 도출 원리 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#e65100,#f57c00);">
+        <div class="card-hd-title">③ 용신(用神) 도출 원리</div>
+        <div class="card-hd-sub">억부·조후 분석 기반 용신 설정</div>
+      </div>
+      <div class="card-body">
+        <div class="yong-row" style="margin-bottom:5px;">
+          <div class="yong-item" style="border-color:#4caf50;background:#4caf5018;">
+            <div class="yong-lbl">用神 (용신)</div>
+            <div class="yong-val" style="color:#4caf50;">木(목)</div>
+            <div class="yong-sub">방위 동(東) · 색상 청색·녹색</div>
+          </div>
+          <div class="yong-item" style="border-color:#2196f3;background:#2196f318;">
+            <div class="yong-lbl">喜神 (희신)</div>
+            <div class="yong-val" style="color:#2196f3;">水(수)</div>
+          </div>
+          <div class="yong-item" style="border-color:#ff9800;background:#ff980018;">
+            <div class="yong-lbl">忌神 (기신)</div>
+            <div class="yong-val" style="color:#ff9800;">土(토)</div>
+          </div>
+        </div>
+        <div class="attr-grid">
+          <div class="attr-item"><div class="attr-lbl">억부(抑扶) 용신</div><div class="attr-val">木(목)</div></div>
+          <div class="attr-item"><div class="attr-lbl">조후(調候) 용신</div><div class="attr-val">火(화)</div></div>
+          <div class="attr-item" style="grid-column:span 2;"><div class="attr-lbl">도출 원리</div><div class="attr-val">억부 木(목) / 조후 火(화)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ④ 격국별 활용 전략 -->
+    <div class="card">
+      <div class="card-hd" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);">
+        <div class="card-hd-title">④ 격국 활용 전략</div>
+        <div class="card-hd-sub">편관격(偏官格) 특성을 살린 실생활 전략</div>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom:5px;">
+          <div class="attr-lbl" style="margin-bottom:3px;">✦ 적합 직업군</div>
+          <div class="job-chips">
+            <span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">교육</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">의료</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">환경</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">임업</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">목공예</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">원예</span><span class="job-chip" style="border-color:#b71c1c55;color:#b71c1c;background:#ffebee;">출판</span>
+          </div>
+        </div>
+        <div class="attr-grid" style="margin-bottom:5px;">
+          <div class="attr-item" style="border-color:#4caf5033;">
+            <div class="attr-lbl">격국 특성 직업군</div>
+            <div class="attr-val" style="font-size:7pt;">군인·경찰·스포츠·외과의·정치·사업가</div>
+          </div>
+          <div class="attr-item" style="border-color:#ff980033;">
+            <div class="attr-lbl">격국 × 신강약 전략</div>
+            <div class="attr-val" style="font-size:7pt;">인성으로 살인상생하면 길, 식상 제살이면 재능 발휘</div>
+          </div>
+        </div>
+        <div class="advice-box" style="border-color:#b71c1c44;background:#ffebee;">
+          <div class="advice-lbl" style="color:#b71c1c;">💡 格局 활용 핵심 포인트</div>
+          <div class="advice-txt">
+            <b style="color:#b71c1c;">편관격(偏官格)</b> 은(는) <b>강한 의지·투쟁·리더십·권위</b> 의 기운이 강합니다.<br>
+            강점인 <b>추진력, 결단력, 리더십, 위기 대처 능력</b> 을(를) 살리고,<br>
+            <b style="color:#c62828;">독선·과도한 경쟁심·충동적 결정</b> 에 주의하세요.<br>
+            용신(木(목)) 기운이 담긴 직업 》 <b style="color:#4caf50;">교육·의료·환경·임업·목공예·원예·출판</b> 분야가 길합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

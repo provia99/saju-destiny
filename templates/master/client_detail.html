@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}{{ client.name }} 손님 상세{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h3 class="m-0 fw-bold">{{ client.name }} <span class="text-muted small">손님 #{{ client.id }}</span></h3>
+    <div class="small text-muted">{{ client.email or '-' }} · {{ client.phone or '-' }} · 가입 {{ client.created_at|truncate(10, True, '') }}</div>
+  </div>
+  <a href="/clients/list" class="btn btn-sm btn-outline-secondary">목록</a>
+</div>
+
+{# 등급 카드 #}
+{% set ratio = (tier.count / tier.limit * 100) if tier.limit else 0 %}
+{% set near = ratio >= 80 %}
+<div class="card border-0 shadow-sm mb-4" style="background:linear-gradient(135deg,#fff8e1 0%,#fff3cd 100%);">
+  <div class="card-body p-4">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <div class="small text-muted">등록 가능</div>
+        <div class="fw-bold" style="font-size:2rem;color:{{ '#ef4444' if near else '#8b6914' }};">{{ tier.count }} / {{ tier.limit }}</div>
+        <div class="progress mx-auto mt-2" style="height:6px;width:80%;background:#f5e9c7;">
+          <div class="progress-bar" style="width:{{ ratio }}%;background:linear-gradient(90deg,#d4af37 0%,#f4c430 100%);"></div>
+        </div>
+      </div>
+      <div class="col-md-3 text-center border-start">
+        <div class="small text-muted">누적 결제</div>
+        <div class="fw-bold" style="font-size:1.6rem;color:#1A3A6A;">{{ "{:,}".format(tier.paid) }}원</div>
+      </div>
+      <div class="col-md-3 text-center border-start">
+        <div class="small text-muted">현재 등급</div>
+        <div class="fw-bold" style="font-size:1.4rem;color:#8b6914;">한도 {{ tier.limit }}명</div>
+      </div>
+      <div class="col-md-3 text-center border-start">
+        <div class="small text-muted">다음 등급</div>
+        {% if tier.next_threshold %}
+        <div class="fw-bold" style="font-size:1.1rem;color:#0f766e;">
+          +{{ "{:,}".format(tier.next_threshold[0] - tier.paid) }}원 → {{ tier.next_threshold[1] }}명
+        </div>
+        {% else %}
+        <div class="fw-bold" style="font-size:1.1rem;color:#10b981;">최고 등급 ✓</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{# 등록된 회원 목록 #}
+<div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+  <h5 class="m-0 fw-bold">등록된 회원 ({{ members|length }}명)</h5>
+  <a href="/members/new" class="btn btn-sm fw-bold text-white" style="background-color: {{ brand_color }};">+ 회원 등록</a>
+</div>
+{% if not members %}
+<div class="alert alert-light border small">등록된 회원이 없습니다.</div>
+{% else %}
+<div class="card shadow-sm border-0 mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle small">
+      <thead class="table-light">
+        <tr>
+          <th>이름</th>
+          <th>생년월일</th>
+          <th>성별</th>
+          <th>상태</th>
+          <th class="text-end">발급 책</th>
+          <th>액션</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in members %}
+        <tr {% if m.status == '삭제' %}style="opacity:0.5;"{% endif %}>
+          <td class="fw-bold">{{ m.name }}</td>
+          <td>{{ m.birth_year }}-{{ "%02d"|format(m.birth_month) }}-{{ "%02d"|format(m.birth_day) }} {{ m.birth_time }}{% if m.lunar_yn %} (음){% endif %}</td>
+          <td>{{ m.gender }}</td>
+          <td><span class="badge bg-{% if m.status == '활성' %}success{% elif m.status == '비활성' %}warning text-dark{% else %}secondary{% endif %}">{{ m.status }}</span></td>
+          <td class="text-end">
+            {% set bcount = m.books|length %}
+            {% if bcount %}
+              {{ bcount }}권
+              <div class="small text-muted">
+                {% for b in m.books[:3] %}
+                <a href="/saju/edit/{{ b.id }}" class="text-decoration-none">{{ b.product_type }}</a>{% if not loop.last %} · {% endif %}
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="text-muted">-</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/members/{{ m.id }}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{# 결제 이력 #}
+<div class="row g-3">
+  <div class="col-md-6">
+    <h5 class="fw-bold">결제 이력 (orders)</h5>
+    {% if orders %}
+    <div class="card shadow-sm border-0"><div class="table-responsive">
+      <table class="table table-sm mb-0 small">
+        <thead class="table-light"><tr><th>일자</th><th>상태</th><th class="text-end">금액</th></tr></thead>
+        <tbody>
+          {% for o in orders %}
+          <tr><td>{{ o.created_at|truncate(10, True, '') }}</td><td>{{ o.status }}</td><td class="text-end fw-bold">{{ "{:,}".format(o.amount) }}원</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+    {% else %}
+    <div class="alert alert-light border small">B2C 결제 이력 없음</div>
+    {% endif %}
+  </div>
+  <div class="col-md-6">
+    <h5 class="fw-bold">발급 책 (paid)</h5>
+    {% if paid_books %}
+    <div class="card shadow-sm border-0"><div class="table-responsive">
+      <table class="table table-sm mb-0 small">
+        <thead class="table-light"><tr><th>일자</th><th>상품</th><th class="text-end">금액</th></tr></thead>
+        <tbody>
+          {% for b in paid_books %}
+          <tr><td>{{ b.completed_at|truncate(10, True, '') }}</td><td>{{ b.product_type }}</td><td class="text-end fw-bold">{{ "{:,}".format(b.price) }}원</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+    {% else %}
+    <div class="alert alert-light border small">유료 발급 책 없음</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
