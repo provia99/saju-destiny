@@ -31,7 +31,8 @@ npm-debug.log
 package-lock.json.bak
 
 # ── DB / 캐시 ──
-data/banya.db
+# data/banya.db 는 Git 트래킹 (양 PC 동기화 — 서버 정지 후 pull/push 규칙 준수)
+# 임시 파일·캐시·WAL 만 제외
 data/banya.db-journal
 data/banya.db-shm
 data/banya.db-wal
