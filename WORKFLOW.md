@@ -126,11 +126,21 @@ git pull        # 노트북에서 푸시한 거 받음
 
 ---
 
-## 4. 동기화 안 되는 항목 (의식 필요)
+## 4. 동기화 항목
+
+### Git 으로 자동 동기화 (양쪽 동일)
+
+| 항목 | 비고 |
+|---|---|
+| 모든 소스 코드 (`.py`, `.html`, `.js`, `.css`) | 표준 |
+| `CLAUDE.md` / `WORKFLOW.md` / `README.md` | 문서 |
+| `scripts/*.bat` / `banya_control.py` | 자동화 |
+| **`data/banya.db`** | ⚠️ 서버 정지 후 pull/push 필수 (아래 5절 참조) |
+
+### 동기화 안 됨 (각 PC 독립)
 
 | 항목 | 처리 |
 |---|---|
-| `data/banya.db` | PC가 마스터. 노트북에선 DB 쓰기 자제. 필요 시 USB로 PC→노트북 복사 |
 | `.env` | 두 PC 각자 같은 내용 보관 (Git 제외) |
 | `engine/fonts/`, `engine/images/` | 한 번 USB 복사 후 그대로 |
 | `static/fonts/`, `static/filler/`, `static/tarot/` | 한 번 USB 복사 후 그대로 |
@@ -138,8 +148,10 @@ git pull        # 노트북에서 푸시한 거 받음
 | `.venv/` | 각자 따로. requirements.txt 변경 시 `pip install -r requirements.txt` |
 | `engine/node_modules/` | 각자 따로. package.json 변경 시 `npm install` |
 | AI 모델 (Ollama) | 각자 설치. `ollama pull <모델>` |
-| Claude 대화 로그 | PC별 독립 |
-| `CLAUDE.md` | Git으로 자동 동기화 (양쪽 동일) |
+| Claude 대화 로그 (`.jsonl`) | PC별 독립 |
+| `data/cache.db` | 캐시는 각 PC 별도 (메모리 캐시도 PC별) |
+| `data/banya.db-journal/-shm/-wal` | SQLite 런타임 임시파일 (Git 제외) |
+| `banya_control.exe` | 빌드 산출물. 각 PC 에서 build-exe.bat 실행 |
 
 ---
 
@@ -178,16 +190,15 @@ cloudflared tunnel run --url http://localhost:8000 banya-pc
 
 ## 6. 충돌 방지 규칙
 
+### 6-1. 일반 코드 작업
+
 1. **같은 파일을 양쪽에서 동시 수정 X**
    한쪽이 push 한 뒤 다른쪽이 pull → 작업 → push
 
-2. **DB 변경 작업은 PC에서만**
-   노트북에서 회원 추가, 집필, 결제 등 DB 쓰기 자제
-
-3. **작업 시작 = `git pull`, 작업 끝 = `git push`**
+2. **작업 시작 = `git pull`, 작업 끝 = `git push`**
    항상 묶어서 진행
 
-4. **충돌 발생 시**
+3. **충돌 발생 시**
    ```powershell
    git status                    # 충돌 파일 확인
    # 에디터에서 <<<<<<< ======= >>>>>>> 마커 직접 편집
@@ -195,6 +206,44 @@ cloudflared tunnel run --url http://localhost:8000 banya-pc
    git commit -m "충돌 해결"
    git push
    ```
+
+### 6-2. DB 동기화 (★ 가장 중요)
+
+`data/banya.db` 는 **바이너리 파일** 이라 Git 머지가 불가능. 양쪽이 동시에 수정하면 한쪽 변경이 사라집니다.
+
+**필수 절차**:
+
+```
+[작업 시작]
+  1. 서버 정지              ← DB 락 풀기 (바로 pull 하면 락 충돌)
+  2. git pull               ← 다른 PC 의 DB·코드 받기
+  3. 서버 시작              ← 작업 환경
+
+[작업 중]
+  코드·DB 자유롭게 수정
+
+[작업 종료]
+  1. 서버 정지              ← DB 쓰기 끝내고 락 풀기
+  2. git status             ← data/banya.db 변경 확인
+  3. git add .
+  4. git commit -m "..."
+  5. git push               ← 다른 PC 가 받을 수 있게
+
+[다른 PC 로 이동 시 재진입]
+  위 [작업 시작] 절차 반복
+```
+
+**왜 서버 정지가 필요한가**:
+- SQLite WAL 모드는 `-wal`, `-shm` 임시 파일을 작업 중 만듦
+- 실행 중 DB 파일 직접 변경 시 데이터 손상 가능
+- pull 로 받은 새 DB 가 락에 막혀 적용 안 될 수 있음
+
+**위반 시 시나리오**:
+- 노트북·PC 동시에 수정 → 둘 다 push → 두 번째가 reject
+- 강제 push (--force) 시 한쪽 변경 영구 손실
+- 서버 켠 채 pull → 락 충돌 또는 손상
+
+**자동화**: `scripts\dev-up.bat` 가 자동으로 서버 정지 → pull → 서버 시작 흐름 처리 (아래 7절).
 
 ---
 

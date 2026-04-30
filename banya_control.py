@@ -349,13 +349,33 @@ class App:
         kill_all_python_and_cloudflared()
         self._log("정지 완료", "ok")
 
-    # ─── Git ───
+    # ─── Git (DB 안전 — 서버 자동 정지·재시작) ───
+    def _safe_db_op(self, op_name: str, op_fn):
+        """DB 안전 흐름: 서버 정지 → pull/push → (필요 시) 재시작."""
+        was_running = is_port_listening(8000) or proc_alive(state.server_proc)
+        if was_running:
+            self._log(f"{op_name}: DB 안전 위해 서버 일시 정지...", "info")
+            kill_proc_tree(state.server_proc); state.server_proc = None
+            if os.name == "nt":
+                subprocess.run(["taskkill", "/F", "/IM", "python.exe"],
+                               capture_output=True, timeout=5)
+            time.sleep(2)
+
+        op_fn()
+
+        if was_running:
+            self._log("서버 자동 재시작...", "info")
+            time.sleep(0.5)
+            self._start_server()
+
     def _git_pull(self):
-        threading.Thread(target=self._run_git, args=(["pull"], "Pull"),
+        def _do_pull():
+            self._run_git(["pull"], "Pull")
+        threading.Thread(target=lambda: self._safe_db_op("Pull", _do_pull),
                           daemon=True).start()
 
     def _git_push(self):
-        # 변경 점검
+        # 변경 점검 (서버 안 끄고 미리 봄)
         try:
             r = subprocess.run([GIT, "status", "--porcelain"], cwd=str(PROJECT_DIR),
                                capture_output=True, text=True, timeout=10)
@@ -373,7 +393,7 @@ class App:
             self._log("취소됨", "warn")
             return
 
-        def _push():
+        def _do_push():
             steps = [
                 ([GIT, "add", "."], "stage"),
                 ([GIT, "commit", "-m", msg], "commit"),
@@ -388,7 +408,9 @@ class App:
                     self._log(f"  실패: {(r.stderr or r.stdout).strip()}", "err")
                     return
             self._log("Push 완료 ✓", "ok")
-        threading.Thread(target=_push, daemon=True).start()
+
+        threading.Thread(target=lambda: self._safe_db_op("Push", _do_push),
+                          daemon=True).start()
 
     def _git_status(self):
         def _status():
