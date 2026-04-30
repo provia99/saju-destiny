@@ -94,3 +94,9 @@ desktop.ini
 *.pyo
 .coverage
 htmlcov/
+
+# ── PyInstaller (banya_control.exe 빌드) ──
+build/
+dist/
+*.spec
+banya_control.exe
